@@ -1,0 +1,19 @@
+header{
+    height: 100px;
+}
+
+div img {
+    margin-top: 15px;
+}
+
+  
+#page-container {
+    position: relative;
+    min-height: 100vh;
+  }
+  
+  #content-wrap {
+    padding-bottom: 2.5rem; /* Footer height */
+  }
+  
+  
