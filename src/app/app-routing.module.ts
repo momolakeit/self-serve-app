@@ -8,6 +8,8 @@ import { MenuComponent } from './components/menu/menu.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { WaiterComponent } from './components/waiter/waiter.component';
 import { DishDetailComponent } from './dish-detail/dish-detail.component';
+import { TableDetailPageComponent } from './table-detail-page/table-detail-page.component';
+import { RestaurentOrdersComponent } from './restaurent-orders/restaurent-orders.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/acceuil', pathMatch: 'full'},
@@ -16,6 +18,8 @@ const routes: Routes = [
   {path: 'waiter', component: WaiterComponent},
   {path: 'sign-up', component: SignupComponent},
   {path: 'dishDetail', component: DishDetailComponent},
+  {path: 'tableDetail', component: TableDetailPageComponent},
+  {path: 'restaurentOrders', component: RestaurentOrdersComponent},
   {path: 'acceuil', component: StartComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: 'menu', component: MenuComponent},

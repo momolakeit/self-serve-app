@@ -11,6 +11,8 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { StartComponent } from './components/start/start.component';
 import { DishDetailComponent } from './dish-detail/dish-detail.component';
+import { RestaurentOrdersComponent } from './restaurent-orders/restaurent-orders.component';
+import { TableDetailPageComponent } from './table-detail-page/table-detail-page.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { DishDetailComponent } from './dish-detail/dish-detail.component';
     LoginComponent,
     SignupComponent,
     StartComponent,
-    DishDetailComponent
+    DishDetailComponent,
+    RestaurentOrdersComponent,
+    TableDetailPageComponent
   ],
   imports: [
     BrowserModule,
