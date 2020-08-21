@@ -7,9 +7,9 @@ import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { WaiterComponent } from './components/waiter/waiter.component';
-import { DishDetailComponent } from './dish-detail/dish-detail.component';
-import { TableDetailPageComponent } from './table-detail-page/table-detail-page.component';
-import { RestaurentOrdersComponent } from './restaurent-orders/restaurent-orders.component';
+import { TableDetailPageComponent } from './components/table-detail-page/table-detail-page.component';
+import { RestaurentOrdersComponent } from './components/restaurent-orders/restaurent-orders.component';
+import { DishDetailComponent } from './components/dish-detail/dish-detail.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/acceuil', pathMatch: 'full'},

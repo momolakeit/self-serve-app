@@ -10,9 +10,9 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { StartComponent } from './components/start/start.component';
-import { DishDetailComponent } from './dish-detail/dish-detail.component';
-import { RestaurentOrdersComponent } from './restaurent-orders/restaurent-orders.component';
-import { TableDetailPageComponent } from './table-detail-page/table-detail-page.component';
+import { DishDetailComponent } from './components/dish-detail/dish-detail.component';
+import { RestaurentOrdersComponent } from './components/restaurent-orders/restaurent-orders.component';
+import { TableDetailPageComponent } from './components/table-detail-page/table-detail-page.component';
 
 @NgModule({
   declarations: [
