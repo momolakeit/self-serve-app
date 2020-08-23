@@ -1,18 +1,28 @@
-<header class="bg-secondary text-center d-flex justify-content-center">
-  <img src="../assets/logo.PNG" alt="" class="align-self-center">
-</header>
-<div id="page-container" class="bg-dark">
-  <div id="content-wrap">
-    <router-outlet></router-outlet>
+
+
+  <header class="bg-secondary text-center d-flex justify-content-center">
+    <img src="../assets/logo.PNG" alt="" class="align-self-center">
+  </header>
+  
+  
+  <div id="page-container" class="bg-dark">
+    <div id="content-wrap">
+      <router-outlet></router-outlet>
+    </div>
   </div>
-</div>
-<footer class="fixed-bottom ">
-  <div class="btn-group" role="group" aria-label="Basic example">
-    <button type="button" class="btn btn-secondary" routerLink="payment"><img src="../assets/receipt.png" alt="payment" class="img-fluid"
+  
+  
+  <footer class="fixed-bottom ">
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-secondary" routerLink="payment"><img src="../assets/receipt.png" alt="payment" class="img-fluid"
         width="35%"></button>
-    <button type="button" class="btn btn-secondary"  routerLink="menu"><img src="../assets/dinner.png" alt="menu" class="img-fluid"
-        width="35%"> </button>
-    <button type="button" class="btn btn-secondary" routerLink="waiter"><img src="../assets/waiter.png" alt="waiter" class="img-fluid"
-        width="35%"></button>
-  </div>
-</footer>
+        <button type="button" class="btn btn-secondary"  routerLink="menu"><img src="../assets/dinner.png" alt="menu" class="img-fluid"
+          width="35%"> </button>
+          <button type="button" class="btn btn-secondary" routerLink="waiter"><img src="../assets/waiter.png" alt="waiter" class="img-fluid"
+            width="35%"></button>
+          </div>
+        </footer>
+      <!--
+
+        <particles [params]="myParams" [style]="myStyle" [width]="width" [height]="height"></particles>
+      -->
