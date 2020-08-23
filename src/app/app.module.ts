@@ -11,11 +11,9 @@ import { StartComponent } from './components/start/start.component';
 import { DishDetailComponent } from './components/dish-detail/dish-detail.component';
 import { RestaurentOrdersComponent } from './components/restaurent-orders/restaurent-orders.component';
 import { TableDetailPageComponent } from './components/table-detail-page/table-detail-page.component';
-
 import { PaymentChoiceComponent } from './components/payment-choice/payment-choice.component';
 import { PaymentFormComponent } from './components/payment-form/payment-form.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ParticlesModule} from 'angular-particle';
 
 @NgModule({
   declarations: [
