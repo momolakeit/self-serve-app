@@ -14,6 +14,7 @@ import { TableDetailPageComponent } from './components/table-detail-page/table-d
 import { PaymentChoiceComponent } from './components/payment-choice/payment-choice.component';
 import { PaymentFormComponent } from './components/payment-form/payment-form.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ClientRequestListComponent } from './components/client-request-list/client-request-list.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     TableDetailPageComponent,
     PaymentChoiceComponent,
     PaymentFormComponent,
+    ClientRequestListComponent,
   ],
   imports: [
     BrowserModule,
