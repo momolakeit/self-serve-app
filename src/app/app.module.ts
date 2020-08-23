@@ -13,7 +13,6 @@ import { DishDetailComponent } from './components/dish-detail/dish-detail.compon
 import { RestaurentOrdersComponent } from './components/restaurent-orders/restaurent-orders.component';
 import { TableDetailPageComponent } from './components/table-detail-page/table-detail-page.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ParticlesModule} from 'angular-particle';
 
 @NgModule({
   declarations: [
