@@ -11,6 +11,8 @@ import { TableDetailPageComponent } from './components/table-detail-page/table-d
 import { RestaurentOrdersComponent } from './components/restaurent-orders/restaurent-orders.component';
 import { DishDetailComponent } from './components/dish-detail/dish-detail.component';
 import { AdminProductManagmentComponent } from './components/admin-product-managment/admin-product-managment.component';
+import { PaymentChoiceComponent } from './components/payment-choice/payment-choice.component';
+import { PaymentFormComponent } from './components/payment-form/payment-form.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/acceuil', pathMatch: 'full'},
@@ -19,6 +21,8 @@ const routes: Routes = [
   {path: 'waiter', component: WaiterComponent},
   {path: 'sign-up', component: SignupComponent},
   {path: 'dishDetail', component: DishDetailComponent},
+  {path: 'paymentChoice', component: PaymentChoiceComponent},
+  {path: 'paymentForm', component: PaymentFormComponent},
   {path: 'tableDetail', component: TableDetailPageComponent},
   {path: 'restaurentOrders', component: RestaurentOrdersComponent},
   {path: 'acceuil', component: StartComponent},
