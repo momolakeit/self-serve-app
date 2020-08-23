@@ -14,6 +14,9 @@ import { RestaurentOrdersComponent } from './components/restaurent-orders/restau
 import { TableDetailPageComponent } from './components/table-detail-page/table-detail-page.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ParticlesModule} from 'angular-particle';
+import {DemoMaterialModule} from 'src/material-module';
+import { AdminProductManagmentComponent } from './components/admin-product-managment/admin-product-managment.component';
+import { ProductFormComponent } from './components/product-form/product-form.component';
 
 @NgModule({
   declarations: [
@@ -27,12 +30,15 @@ import {ParticlesModule} from 'angular-particle';
     StartComponent,
     DishDetailComponent,
     RestaurentOrdersComponent,
-    TableDetailPageComponent
+    TableDetailPageComponent,
+    AdminProductManagmentComponent,
+    ProductFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    DemoMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

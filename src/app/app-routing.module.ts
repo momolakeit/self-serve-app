@@ -10,6 +10,7 @@ import { WaiterComponent } from './components/waiter/waiter.component';
 import { TableDetailPageComponent } from './components/table-detail-page/table-detail-page.component';
 import { RestaurentOrdersComponent } from './components/restaurent-orders/restaurent-orders.component';
 import { DishDetailComponent } from './components/dish-detail/dish-detail.component';
+import { AdminProductManagmentComponent } from './components/admin-product-managment/admin-product-managment.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/acceuil', pathMatch: 'full'},
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: 'acceuil', component: StartComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: 'menu', component: MenuComponent},
+  {path: 'adminProductManagment', component: AdminProductManagmentComponent},
   {path: '**', redirectTo: '/not-found'}
 ];
 
