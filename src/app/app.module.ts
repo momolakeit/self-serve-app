@@ -32,9 +32,9 @@ import { ProductFormComponent } from './components/product-form/product-form.com
     RestaurentOrdersComponent,
     TableDetailPageComponent,
     AdminProductManagmentComponent,
-    ProductFormComponent
+    ProductFormComponent,
     PaymentChoiceComponent,
-    PaymentFormComponent,
+    PaymentFormComponent
   ],
   imports: [
     BrowserModule,
