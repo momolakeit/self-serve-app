@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import {myParams,myStyle} from '../utilities/particlejsdata';
+import { AuthService } from './services/auth.service';
+import { AuthentificationService } from './services/authentification.service';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,4 +17,14 @@ export class AppComponent {
   myStyle = myStyle;
 
   myParams = myParams;
+
+  constructor(private authService:AuthService,private authentificationService: AuthentificationService){}
+
+  isConnected() : boolean {
+    return this.authService.isAuthenticated();
+  };
+
+  logout(){
+    this.authentificationService.logout();
+  }
 }
