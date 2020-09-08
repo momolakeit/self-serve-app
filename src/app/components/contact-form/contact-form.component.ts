@@ -26,15 +26,19 @@ export class ContactFormComponent implements OnInit {
   }
 
   onSubmitForm(){
+    console.log('heyy');
     if (this.contactForm.valid) {
+      
       const formValue = this.contactForm.value;
       const newContactForm:ContactForm = {
         contactType: formValue['contactType'],
         comment: formValue['comment']
       }
 
+      //TODO: remove this line
       localStorage.setItem('Email','faboryb@gmail.com');
       this.supportService.sendContactForm(newContactForm,localStorage.getItem('Email')).subscribe();
+      this.contactForm.reset();
     }
   }
 

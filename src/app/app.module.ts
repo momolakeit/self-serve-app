@@ -15,6 +15,7 @@ import { PaymentChoiceComponent } from './components/payment-choice/payment-choi
 import { PaymentFormComponent } from './components/payment-form/payment-form.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ParticlesModule} from 'angular-particle';
+import { JwtModule } from '@auth0/angular-jwt';
 import {DemoMaterialModule} from 'src/material-module';
 import { AdminProductManagmentComponent } from './components/admin-product-managment/admin-product-managment.component';
 import { ProductFormComponent } from './components/product-form/product-form.component';
@@ -49,7 +50,16 @@ import { HttpClientModule } from '@angular/common/http';
     DemoMaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem("token");
+        },
+        allowedDomains: ["localhost:8080"],
+        disallowedRoutes: ["localhost:8080/auth/signin", "localhost:8080/auth/signup"]
+      }
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

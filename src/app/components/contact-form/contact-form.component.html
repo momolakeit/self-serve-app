@@ -4,14 +4,14 @@
       <h1 class="text-center">CONTACT US</h1>
     </div>
     <div class="card-body">
-      <form class="bg-white" [formGroup]="contactForm" (ngSubmit)="onSubmitForm()">
+      <form class="bg-white" [formGroup]="contactForm" >
       
         <div class="form-group">
           <label for="exampleFormControlSelect1">Type of issue</label>
-          <select class="form-control" id="exampleFormControlSelect1" formControlName="contatType">
-            <option>Application bug</option>
-            <option>Application advice</option>
-            <option>Application help</option>
+          <select class="form-control" id="exampleFormControlSelect1" formControlName="contactType">
+            <option value="APPLICATIONBUG">Application bug</option>
+            <option value="APPLICATIONADVICE">Application advice</option>
+            <option value="APPLICATIONHELP">Application help</option>
           </select>
         </div>
         <div class="form-group">
@@ -26,7 +26,7 @@
       </form>
     </div>
     <div class="card-footer text-center">
-      <button type="submit" class="btn btn-primary">Send Message</button>
+      <button type="submit" class="btn btn-primary" (click)="onSubmitForm()" >Send Message</button>
     </div>
   </div>
 </div>
