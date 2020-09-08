@@ -18,6 +18,10 @@ import {ParticlesModule} from 'angular-particle';
 import {DemoMaterialModule} from 'src/material-module';
 import { AdminProductManagmentComponent } from './components/admin-product-managment/admin-product-managment.component';
 import { ProductFormComponent } from './components/product-form/product-form.component';
+import { RecipeSocketComponent } from './components/recipe-socket/recipe-socket.component';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { ContactFormComponent } from './components/contact-form/contact-form.component'
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -34,13 +38,18 @@ import { ProductFormComponent } from './components/product-form/product-form.com
     AdminProductManagmentComponent,
     ProductFormComponent,
     PaymentChoiceComponent,
-    PaymentFormComponent
+    PaymentFormComponent,
+    RecipeSocketComponent,
+    ContactFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    DemoMaterialModule
+    DemoMaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

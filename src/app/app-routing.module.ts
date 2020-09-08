@@ -13,6 +13,8 @@ import { DishDetailComponent } from './components/dish-detail/dish-detail.compon
 import { AdminProductManagmentComponent } from './components/admin-product-managment/admin-product-managment.component';
 import { PaymentChoiceComponent } from './components/payment-choice/payment-choice.component';
 import { PaymentFormComponent } from './components/payment-form/payment-form.component';
+import { RecipeSocketComponent } from './components/recipe-socket/recipe-socket.component';
+import { ContactFormComponent } from './components/contact-form/contact-form.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/acceuil', pathMatch: 'full'},
@@ -25,6 +27,8 @@ const routes: Routes = [
   {path: 'paymentForm', component: PaymentFormComponent},
   {path: 'tableDetail', component: TableDetailPageComponent},
   {path: 'restaurentOrders', component: RestaurentOrdersComponent},
+  {path: 'recipeSocket', component: RecipeSocketComponent},
+  {path: 'contactForm', component: ContactFormComponent},
   {path: 'acceuil', component: StartComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: 'menu', component: MenuComponent},
