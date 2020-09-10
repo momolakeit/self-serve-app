@@ -15,7 +15,16 @@ import { PaymentChoiceComponent } from './components/payment-choice/payment-choi
 import { PaymentFormComponent } from './components/payment-form/payment-form.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ClientRequestListComponent } from './components/client-request-list/client-request-list.component';
+import {ParticlesModule} from 'angular-particle';
+import { JwtModule } from '@auth0/angular-jwt';
+import {DemoMaterialModule} from 'src/material-module';
+import { AdminProductManagmentComponent } from './components/admin-product-managment/admin-product-managment.component';
+import { ProductFormComponent } from './components/product-form/product-form.component';
+import { RecipeSocketComponent } from './components/recipe-socket/recipe-socket.component';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { ContactFormComponent } from './components/contact-form/contact-form.component'
 import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,15 +37,31 @@ import { HttpClientModule } from '@angular/common/http';
     DishDetailComponent,
     RestaurentOrdersComponent,
     TableDetailPageComponent,
+    AdminProductManagmentComponent,
+    ProductFormComponent,
     PaymentChoiceComponent,
     PaymentFormComponent,
-    ClientRequestListComponent
+    ClientRequestListComponent,
+    RecipeSocketComponent,
+    ContactFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    DemoMaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem("token");
+        },
+        allowedDomains: ["localhost:8080"],
+        disallowedRoutes: ["localhost:8080/auth/signin", "localhost:8080/auth/signup"]
+      }
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

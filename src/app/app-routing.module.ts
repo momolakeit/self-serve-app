@@ -10,9 +10,12 @@ import { WaiterComponent } from './components/waiter/waiter.component';
 import { TableDetailPageComponent } from './components/table-detail-page/table-detail-page.component';
 import { RestaurentOrdersComponent } from './components/restaurent-orders/restaurent-orders.component';
 import { DishDetailComponent } from './components/dish-detail/dish-detail.component';
+import { AdminProductManagmentComponent } from './components/admin-product-managment/admin-product-managment.component';
 import { PaymentChoiceComponent } from './components/payment-choice/payment-choice.component';
 import { PaymentFormComponent } from './components/payment-form/payment-form.component';
 import { ClientRequestListComponent } from './components/client-request-list/client-request-list.component';
+import { RecipeSocketComponent } from './components/recipe-socket/recipe-socket.component';
+import { ContactFormComponent } from './components/contact-form/contact-form.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/acceuil', pathMatch: 'full'},
@@ -26,9 +29,12 @@ const routes: Routes = [
   {path: 'clientRequestList', component: ClientRequestListComponent},
   {path: 'tableDetail', component: TableDetailPageComponent},
   {path: 'restaurentOrders', component: RestaurentOrdersComponent},
+  {path: 'recipeSocket', component: RecipeSocketComponent},
+  {path: 'contactForm', component: ContactFormComponent},
   {path: 'acceuil', component: StartComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: 'menu', component: MenuComponent},
+  {path: 'adminProductManagment', component: AdminProductManagmentComponent},
   {path: '**', redirectTo: '/not-found'}
 ];
 
