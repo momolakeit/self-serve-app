@@ -15,7 +15,7 @@ import { PaymentChoiceComponent } from './components/payment-choice/payment-choi
 import { PaymentFormComponent } from './components/payment-form/payment-form.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ClientRequestListComponent } from './components/client-request-list/client-request-list.component';
-
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,12 +30,13 @@ import { ClientRequestListComponent } from './components/client-request-list/cli
     TableDetailPageComponent,
     PaymentChoiceComponent,
     PaymentFormComponent,
-    ClientRequestListComponent,
+    ClientRequestListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
