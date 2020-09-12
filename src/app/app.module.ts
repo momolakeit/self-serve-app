@@ -24,6 +24,7 @@ import { RecipeSocketComponent } from './components/recipe-socket/recipe-socket.
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { ContactFormComponent } from './components/contact-form/contact-form.component'
 import { HttpClientModule } from '@angular/common/http';
+import { Particle } from 'angular-particle/lib';
 
 @NgModule({
   declarations: [
