@@ -13,4 +13,6 @@ export interface BillDTO {
     prixTotal: number;
     billStatus: BillStatus;
     restaurant: RestaurantDTO;
+
+    
 }

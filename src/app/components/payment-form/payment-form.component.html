@@ -2,10 +2,8 @@
 <div class="container ">
     <div class="row">
         <div class="col-sm-6 mt-4">
-            <div class="payment-request-button" id="payment-request-button">
-                <!-- A Stripe Element will be inserted here. -->
-              </div>
-                <div class="card-element" id="card-element"><!--Stripe.js injects the Card Element--></div>
+            <form (submit)="handleForm($event)" class="w-75">
+                <div class="card-element "  id="card-element"><!--Stripe.js injects the Card Element--></div>
                 <button id="submit">
                     <div class="spinner hidden" id="spinner"></div>
                     <span id="button-text">Pay</span>
@@ -15,7 +13,7 @@
                     Payment succeeded, see the result in your
                     <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
                 </p>
-            
+            </form>
             <script src="https://js.stripe.com/v3/"></script>
         </div>
     </div>

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { PaymentService } from '../../services/payment.service';
 @Component({
   selector: 'app-payment-form',
   templateUrl: './payment-form.component.html',
@@ -9,7 +10,7 @@ import { catchError, retry } from 'rxjs/operators';
 })
 export class PaymentFormComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private paymentService: PaymentService) { }
 
   @Input() amount: number;
   @Input() description: string;
@@ -18,42 +19,77 @@ export class PaymentFormComponent implements OnInit {
   stripe; // : stripe.Stripe;
   card;
   cardErrors;
+  clientSecret;
 
   loading = false;
   confirmation;
 
 
   ngOnInit() {
-    
-    this.stripe = Stripe('pk_test_your_key');
-    const elements = this.stripe.elements();
 
-    var card = elements.create("card");
-    
-    // Stripe injects an iframe into the DOM
-    card.mount(".card-element");
-    this.card.addEventListener('change', ({ error }) => {
-        this.cardErrors = error && error.message;
+    this.paymentService.getPaymentIntent().subscribe(data => {
+      this.clientSecret = data
+      console.log(this.clientSecret);
     });
+    this.stripe = Stripe('pk_test_51HLwKgC5UoZOX4GRWegBa5FvbtsNbi5Cd7Z5WKYB73jelPNuhpzS69dXKe2V3OWTP4XHt5wjGGD3dzEdJw25duSn00Dlctj1NV');
+    const elements = this.stripe.elements();
+    this.card = elements.create("card");
+    this.card.mount(".card-element");
   }
-
-  async handleForm(e) {
-    e.preventDefault();
-
-    const { source, error } = await this.stripe.createSource(this.card);
-
-    if (error) {
-      // Inform the customer that there was an error.
-      this.cardErrors = error.message;
+ 
+  showSpinner = function (doShow: boolean): void {
+    if (doShow) {
+      // Disable the button and show a spinner
+      document.querySelector("button").disabled = true;
+      document.querySelector("#spinner").classList.remove("hidden");
+      document.querySelector("#button-text").classList.add("hidden");
     } else {
-      // Send the token to your server.
-      this.loading = true;
-      //const user = await this.auth.getUser();
-      //const fun = this.functions.httpsCallable('stripeCreateCharge');
-      //this.confirmation = await fun({ source: source.id, uid: user.uid, amount: this.amount }).toPromise();
-      this.loading = false;
-
+      document.querySelector("button").disabled = false;
+      document.querySelector("#spinner").classList.add("hidden");
+      document.querySelector("#button-text").classList.remove("hidden");
     }
+  };
+
+  showError = function (): void {
+    this.showSpinner(false);
+    var errorMsg = document.querySelector("#card-error");
+    errorMsg.textContent = "Votre payment a echouer , veuillez reesayer";
+    setTimeout(function () {
+      errorMsg.textContent = "";
+    }, 4000);
+  };
+  showSuccess = function (): void {
+    this.showSpinner(false);
+    document
+      .querySelector(".result-message a")
+      .setAttribute(
+        "href",
+        "https://dashboard.stripe.com/test/payments/" + "54545"
+      );
+    document.querySelector(".result-message").classList.remove("hidden");
+    document.querySelector("button").disabled = true;
+  };
+  async handleForm(e) {
+    console.log(this.card);
+    e.preventDefault();
+    this.showSpinner(true);
+    this.stripe
+      .confirmCardPayment(this.clientSecret, {
+        payment_method: {
+          card: this.card
+        }
+      })
+      .then((result) => {
+        if (result.error) {
+          this.showError();
+          // Show error to your customer
+          console.log(result.error)
+        } else {
+          // The payment succeeded!
+          this.showSuccess();
+          console.log("bon")
+        }
+      });
   }
 
 }

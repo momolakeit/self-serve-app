@@ -13,7 +13,8 @@ export const environment = {
   productUrl:`http://${host}:${port}/product`,
   menuUrl:`http://${host}:${port}/menu`,
   billUrl:`http://${host}:${port}/order`,
-  rateUrl:`http://${host}:${port}/rate`
+  rateUrl:`http://${host}:${port}/rate`,
+  paymentIntentUrl:`http://${host}:${port}/order/fetchPaymentIntent`
 };
 
 /*
