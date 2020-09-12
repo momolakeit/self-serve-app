@@ -42,7 +42,21 @@ export class ProductService {
     return this.http.post<[ProductDTO]>(`${environment.productUrl}/findChoixDuChef`,menuDTO);
   }
 
-  
+  setProductSpecial(productDTO:ProductDTO):Observable<ProductDTO>{
+    return this.http.post<ProductDTO>(`${environment.productUrl}/setProductSpecial`,productDTO);
+  }
+
+  removeProductType(productDTO:ProductDTO):Observable<ProductDTO>{
+    return this.http.post<ProductDTO>(`${environment.productUrl}/deleteProductType`,productDTO);
+  }
+
+  setProductChefChoice(productDTO:ProductDTO):Observable<ProductDTO>{
+    return this.http.post<ProductDTO>(`${environment.productUrl}/setMenuChefChoice`,productDTO);
+  }
+
+
+
+
 
 
 
