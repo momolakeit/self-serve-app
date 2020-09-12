@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CsrfService } from 'src/app/services/csrf.service';
 import { WebSocketAPI } from '../../../utilities/websocketapi';
 
 @Component({
@@ -11,8 +12,11 @@ export class RecipeSocketComponent {
   webSocketAPI: WebSocketAPI;
   greeting: any;
   name: string;
+
+  constructor(private csrfService: CsrfService){}
+
   ngOnInit() {
-    this.webSocketAPI = new WebSocketAPI(new RecipeSocketComponent());
+    this.webSocketAPI = new WebSocketAPI(this,this.csrfService);
   }
 
   connect(){
