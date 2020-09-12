@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { SignInForm } from '../../models/sign-in-form';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { Router } from '@angular/router';
 

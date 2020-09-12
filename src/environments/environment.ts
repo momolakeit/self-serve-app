@@ -8,7 +8,12 @@ export const environment = {
   production: false,
   authApiUrl: `http://${host}:${port}/auth`,
   contactFormUrl: `http://${host}:${port}/support`,
-  employeUrl:`http://${host}:${port}/rest/employe`
+  employeUrl:`http://${host}:${port}/rest/employe`,
+  csrfUrl:`http://${host}:${port}/csrf`,
+  productUrl:`http://${host}:${port}/product`,
+  menuUrl:`http://${host}:${port}/menu`,
+  billUrl:`http://${host}:${port}/order`,
+  rateUrl:`http://${host}:${port}/rate`
 };
 
 /*

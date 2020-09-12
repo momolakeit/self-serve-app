@@ -19,7 +19,6 @@ export class AuthentificationService {
   }
 
    //AUTHENTICATION PART
-
    login(email:string,password:string) : Observable<boolean>{
     return this.getToken(email,password).pipe(
       map(response => {

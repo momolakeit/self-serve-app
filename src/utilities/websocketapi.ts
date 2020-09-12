@@ -1,6 +1,7 @@
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { RecipeSocketComponent } from 'src/app/components/recipe-socket/recipe-socket.component';
+import {CsrfService} from '../app/services/csrf.service';
 
 export class WebSocketAPI {
     webSocketEndPoint: string = 'http://localhost:8080/gs-guide-websocket';
@@ -8,21 +9,29 @@ export class WebSocketAPI {
     stompClient: any;
     recipeSocketComponent: RecipeSocketComponent;
 
-    constructor(recipeSocketComponent: RecipeSocketComponent){
+    constructor(recipeSocketComponent: RecipeSocketComponent,private csrf:CsrfService){
         this.recipeSocketComponent = recipeSocketComponent;
     }
 
     _connect() {
-        console.log("Initialize WebSocket Connection");
-        let ws = new SockJS(this.webSocketEndPoint);
-        this.stompClient = Stomp.over(ws);
-        const _this = this;
-        _this.stompClient.connect({}, function (frame) {
-            _this.stompClient.subscribe(_this.topic, function (sdkEvent) {
-                _this.onMessageReceived(sdkEvent);
-            });
-            //_this.stompClient.reconnect_delay = 2000;
-        }, this.errorCallBack);
+        //GET HEADER
+
+        this.csrf.getCsrf().subscribe((data) =>{
+            var headers = {};
+
+            headers[data.headerName] = data.token
+
+            console.log("Initialize WebSocket Connection");
+            let ws = new SockJS(this.webSocketEndPoint);
+            this.stompClient = Stomp.over(ws);
+            const _this = this;
+            _this.stompClient.connect({headers}, function (frame) {
+                _this.stompClient.subscribe(_this.topic, function (sdkEvent) {
+                    _this.onMessageReceived(sdkEvent);
+                });
+                //_this.stompClient.reconnect_delay = 2000;
+            }, this.errorCallBack);
+        })
     };
 
     _disconnect() {
