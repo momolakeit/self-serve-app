@@ -14,6 +14,7 @@ import { TableDetailPageComponent } from './components/table-detail-page/table-d
 import { PaymentChoiceComponent } from './components/payment-choice/payment-choice.component';
 import { PaymentFormComponent } from './components/payment-form/payment-form.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ClientRequestListComponent } from './components/client-request-list/client-request-list.component';
 import {ParticlesModule} from 'angular-particle';
 import { JwtModule } from '@auth0/angular-jwt';
 import {DemoMaterialModule} from 'src/material-module';
@@ -41,6 +42,7 @@ import { Particle } from 'angular-particle/lib';
     ProductFormComponent,
     PaymentChoiceComponent,
     PaymentFormComponent,
+    ClientRequestListComponent,
     RecipeSocketComponent,
     ContactFormComponent
   ],

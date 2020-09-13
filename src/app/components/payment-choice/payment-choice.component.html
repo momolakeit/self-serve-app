@@ -1,34 +1,47 @@
 <div class="container text-white text-center ">
-    <h5 class="pt-4">CHOOSE PAYMENT METHOD</h5>
+    <h3 class="pt-4">CHOOSE PAYMENT METHOD</h3>
     <div class="row">
         <div class="col-sm-6 text-center">
-            <button class="btn  text-white mt-5 w-100" style="background-color: #D11242; border: none; height: 50px;">PAY NOW</button>
+            <button class="btn  text-white  w-100" data-toggle="modal" data-target="#cardPaymentModalLabel"
+                style="background-color: #D11242; border: none; height: 50px;">PAY NOW</button>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-6 text-center">
-            <button class="btn  text-white mt-4 w-100" data-toggle="modal" data-target="#exampleModal" style="background-color: #D11242; border: none; height: 50px;">REQUEST TERMINAL</button>
+            <button class="btn  text-white mt-4 w-100" data-toggle="modal" data-target="#waiterArrivalModal"
+                style="background-color: #D11242; border: none; height: 50px;">REQUEST TERMINAL</button>
         </div>
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="cardPaymentModalLabel" tabindex="-1" aria-labelledby="cardPaymentModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content bg-dark text-white">
-        <div class="modal-header text-center">
-          <h5 class="modal-title " id="exampleModalLabel" >THE WAITER IS ON HIS/HER WAY</h5>
-          
+        <div class="modal-content bg-dark text-white">
+            <app-payment-form></app-payment-form>
         </div>
-        
-        <div class="modal-footer d-flex justify-content-between bg-dark">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-6 text-center">
-                        <button type="button" class="btn btn-success " style="background-color: #D11242;" data-dismiss="modal"> GOT IT</button>              
+    </div>
+
+
+    <div class="modal fade" id="waiterArrivalModal" tabindex="-1" aria-labelledby="waiterArrivalModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header text-center">
+                    <h5 class="modal-title " id="waiterArrivalModalLabel">THE WAITER IS ON HIS/HER WAY</h5>
+
+                </div>
+
+                <div class="modal-footer d-flex justify-content-between bg-dark">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6 text-center">
+                                <button type="button" class="btn btn-success " style="background-color: #D11242;"
+                                    data-dismiss="modal"> GOT IT</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-      </div>
     </div>
-  </div>

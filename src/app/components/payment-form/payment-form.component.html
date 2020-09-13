@@ -1,49 +1,23 @@
+<script src="https://js.stripe.com/v3/"></script>
 <div class="container ">
     <div class="row">
-        <div class="col-sm-6">
-            <div class="card mx-auto mt-5" style="width: 18rem;">
-                <div class="card-body bg-dark rounded ">
-                    <h5 class="card-title text-white ">CARD INFO</h5>
-                    <form class="text-white w-100" style="margin: auto;">
-                        <div class="form-group mt-4">
-                            <input type="number" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp" placeholder="Card Number">
-                            <small id="emailHelp" class="form-text text-muted ">We'll never share your credit card number
-                                else.</small>
-                        </div>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-6 p-0 pb-3">
-                                    Expiration Date
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6 p-0 w-50 pr-1">
-                                    <div class="form-group">
-                                        <input type="password" class="form-control" id="exampleInputPassword1"
-                                            placeholder="MM-YY">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 p-0 w-50">
-                                    <div class="form-group">
-                                        <input type="password" class="form-control" id="exampleInputPassword1"
-                                            placeholder="Postal Code">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <input type="number" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp" placeholder="CVV">
-                        </div>
-                        <div class="form-check mb-3">
-                            <input type="checkbox" class="form-check-input " id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">save my credit card</label>
-                        </div>
-                        <button type="submit" class="btn text-white" style="background-color: #D11242;">Submit</button>
-                    </form>
-                </div>
-            </div>
+        <div class="col-sm-6 mt-4">
+            <h3 class="modal-title text-center " id="waiterArrivalModalLabel">Enter Credit Card Details</h3>
+            <form (submit)="handleForm($event)" class="w-75 mb-5">
+                <div class="card-element "  id="card-element"><!--Stripe.js injects the Card Element--></div>
+                <button id="submit" class="submit">
+                    <div class="spinner hidden" id="spinner"></div>
+                    <span id="button-text">Pay</span>
+                    <span id="button-paymentSuceeded" class="hidden">Payment Succeded !</span>
+                </button>
+                <button id="closeCardModal" class="text-center hidden" style="background-color: #00F919;" data-dismiss="modal"> Close</button>
+                <p id="card-error" role="alert"></p>
+                <p class="result-message hidden">
+                    Payment succeeded, see the result in your
+                    <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
+                </p>
+            </form>
+            <script src="https://js.stripe.com/v3/"></script>
         </div>
     </div>
 </div>
