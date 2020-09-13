@@ -2,13 +2,15 @@
 <div class="container ">
     <div class="row">
         <div class="col-sm-6 mt-4">
-            <form (submit)="handleForm($event)" class="w-75">
+            <h3 class="modal-title text-center " id="waiterArrivalModalLabel">Enter Credit Card Details</h3>
+            <form (submit)="handleForm($event)" class="w-75 mb-5">
                 <div class="card-element "  id="card-element"><!--Stripe.js injects the Card Element--></div>
-                <button id="submit">
+                <button id="submit" class="submit">
                     <div class="spinner hidden" id="spinner"></div>
                     <span id="button-text">Pay</span>
-                    <span id="button-paymentSuceeded" class="hidden">Payment Succeded</span>
+                    <span id="button-paymentSuceeded" class="hidden">Payment Succeded !</span>
                 </button>
+                <button id="closeCardModal" class="text-center hidden" style="background-color: #00F919;" data-dismiss="modal"> Close</button>
                 <p id="card-error" role="alert"></p>
                 <p class="result-message hidden">
                     Payment succeeded, see the result in your
