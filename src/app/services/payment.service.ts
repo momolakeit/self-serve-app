@@ -14,8 +14,7 @@ export class PaymentService {
 
   constructor(private http:HttpClient,private router:Router) { }
   fetchPaymentIntent(billDTO :BillDTO,restaurentStripeAccount :String):Observable<StripeClientIdResponse>{
-    var billString =JSON.stringify(billDTO)
-    return this.http.post<StripeClientIdResponse>(`${environment.paymentIntentUrl}`,{billDTO: billString,restaurentStripeAccount:restaurentStripeAccount});
+    return this.http.post<StripeClientIdResponse>(`${environment.paymentIntentUrl}`,{billDTO: JSON.stringify(billDTO),restaurentStripeAccount:restaurentStripeAccount});
   }
 
   getPaymentIntent() : Observable<String>{

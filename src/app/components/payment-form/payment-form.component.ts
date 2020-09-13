@@ -29,7 +29,6 @@ export class PaymentFormComponent implements OnInit {
 
     this.paymentService.getPaymentIntent().subscribe(data => {
       this.clientSecret = data
-      console.log(this.clientSecret);
     });
     this.stripe = Stripe('pk_test_51HLwKgC5UoZOX4GRWegBa5FvbtsNbi5Cd7Z5WKYB73jelPNuhpzS69dXKe2V3OWTP4XHt5wjGGD3dzEdJw25duSn00Dlctj1NV');
     const elements = this.stripe.elements();
@@ -66,11 +65,12 @@ export class PaymentFormComponent implements OnInit {
         "href",
         "https://dashboard.stripe.com/test/payments/" + "54545"
       );
-    document.querySelector(".result-message").classList.remove("hidden");
     document.querySelector("button").disabled = true;
+    document.querySelector("#button-paymentSuceeded").classList.remove("hidden");
+    document.querySelector("#button-text").classList.add("hidden");
+    document.querySelector("button").style.background='#00F919';
   };
   async handleForm(e) {
-    console.log(this.card);
     e.preventDefault();
     this.showSpinner(true);
     this.stripe
@@ -81,13 +81,11 @@ export class PaymentFormComponent implements OnInit {
       })
       .then((result) => {
         if (result.error) {
-          this.showError();
           // Show error to your customer
           console.log(result.error)
         } else {
           // The payment succeeded!
           this.showSuccess();
-          console.log("bon")
         }
       });
   }
