@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { ProductDTO } from '../models/product-dto';
 import { MenuDTO } from '../models/menu-dto';
@@ -23,11 +22,11 @@ export class ProductService {
   }
 
   create(productDTO:ProductDTO,id:number):Observable<any>{
-    return this.http.post(`${environment.productUrl}/${id}`,productDTO);
+    return this.http.post(`${environment.productUrl}/${id}`,{productDTO:JSON.stringify(productDTO)});
   }
 
   update(productDTO:ProductDTO):Observable<any>{
-    return this.http.put(`${environment.productUrl}`,productDTO);
+    return this.http.put(`${environment.productUrl}`,{productDTO:JSON.stringify(productDTO)});
   }
 
   delete(id:number):Observable<any>{
@@ -35,14 +34,28 @@ export class ProductService {
   }
 
   findMenuSpecial(menuDTO:MenuDTO):Observable<[ProductDTO]>{
-    return this.http.post<[ProductDTO]>(`${environment.productUrl}/findMenuSpecial`,menuDTO);
+    return this.http.post<[ProductDTO]>(`${environment.productUrl}/findMenuSpecial`,{menuDTO:JSON.stringify(menuDTO)});
   }
 
   findChoixDuChef(menuDTO:MenuDTO):Observable<[ProductDTO]>{
-    return this.http.post<[ProductDTO]>(`${environment.productUrl}/findChoixDuChef`,menuDTO);
+    return this.http.post<[ProductDTO]>(`${environment.productUrl}/findChoixDuChef`,{menuDTO:JSON.stringify(menuDTO)});
   }
 
-  
+  setProductSpecial(productDTO:ProductDTO):Observable<ProductDTO>{
+    return this.http.post<ProductDTO>(`${environment.productUrl}/setProductSpecial`,{productDTO:JSON.stringify(productDTO)});
+  }
+
+  removeProductType(productDTO:ProductDTO):Observable<ProductDTO>{
+    return this.http.post<ProductDTO>(`${environment.productUrl}/deleteProductType`,{productDTO:JSON.stringify(productDTO)});
+  }
+
+  setProductChefChoice(productDTO:ProductDTO):Observable<ProductDTO>{
+    return this.http.post<ProductDTO>(`${environment.productUrl}/setMenuChefChoice`,{productDTO:JSON.stringify(productDTO)});
+  }
+
+
+
+
 
 
 

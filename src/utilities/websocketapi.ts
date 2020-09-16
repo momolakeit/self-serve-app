@@ -17,15 +17,21 @@ export class WebSocketAPI {
         //GET HEADER
 
         this.csrf.getCsrf().subscribe((data) =>{
+            // getcsrfToken
             var headers = {};
+            headers[data.headerName] = data.token;
 
-            headers[data.headerName] = data.token
-
+            //get jwt token
+            var token = {};
+            token['Authorization'] = localStorage.getItem("token");
+            console.log(data.headerName);
+            
             console.log("Initialize WebSocket Connection");
             let ws = new SockJS(this.webSocketEndPoint);
             this.stompClient = Stomp.over(ws);
             const _this = this;
-            _this.stompClient.connect({headers}, function (frame) {
+            
+            _this.stompClient.connect({headers,token}, function (frame) {
                 _this.stompClient.subscribe(_this.topic, function (sdkEvent) {
                     _this.onMessageReceived(sdkEvent);
                 });
