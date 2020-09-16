@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ProductDTO } from '../../models/product-dto' 
+import { CurrentBill} from '../../global/current-bill'
 
 @Component({
   selector: 'app-dish-detail',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DishDetailComponent implements OnInit {
 
-  constructor() { }
+  @Input() productDTO :ProductDTO
+  
+  constructor(private currentBill:CurrentBill) { }
 
   ngOnInit(): void {
+    console.log(this.productDTO)
   }
+  updateCurrentBill = function (product :ProductDTO): void {
+   // this.currentBill.ongoingBill.add(product);
+    
+    console.log(this.currentBill);
+  };
 
 }
