@@ -1,1 +1,100 @@
-<p>product-form works!</p>
+<form [formGroup]="productForm">
+    <div id="exampleModal" class="modal span" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Product Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="id">Id:</label>
+                        <input [readonly]="true" type="text" class="form-control" id="id">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">name:</label>
+                        <input type="text" class="form-control" id="name" formControlName="name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">description:</label>
+                        <textarea name="" id="" rows="4" class="form-control"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prix">prix:</label>
+                        <input type="number" class="form-control w-25" id="prix">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="time">Temps De Préparation:</label>
+                        <input type="number" class="form-control w-25" id="time">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productType">Product type:</label>
+                        <select class="form-control" name="productType" id="productType">
+                            <option value="">Entrée</option>
+                            <option value="">Dinner</option>
+                        </select>
+                    </div>
+                    <hr>
+
+                    <div class="container-fluid overflow-auto" style="height: 200px;" formArrayName="options">
+
+                        <h1 class="text-center display-3">Options</h1>
+                        
+                        <!-- this represent the options component and we must loop around it-->
+                        <div class="row" *ngFor="let option of getOptions().controls let i = index">
+                            <div class="col-5">
+                                <div class="form-group">
+                                    <ng-container [formGroupName]="i">
+                                        <label for="option1">Option {{i}}:</label>
+                                        <input type="text" class="form-control" formControlName="optionName"  placeholder="option name">
+                                    </ng-container>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-danger btn-block" >Remove</button>
+                                    <button class="btn btn-success btn-block" (click)="onAddOption()">Add</button>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <ng-container [formGroupName]="i">
+                                    <ng-container formArrayName="checkItems">
+
+                                        <div class="form-group" *ngFor="let item of getCheckItems().controls let j = index">
+                                            <label>Check item {{j}}:</label>
+                                            <input type="text" class="form-control" formControlName="checkItemName">
+                                        </div>
+                                    </ng-container>
+
+                                </ng-container>
+                                <div class="form-group">
+                                    <button class="btn btn-danger btn-block">Remove</button>
+                                    <button class="btn btn-success btn-block" (click)="onAddCheckItem()">Add</button>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer d-flex justify-content-between">
+                    <button type="button" class="btn btn-danger w-25" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success w-25">Save</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</form>

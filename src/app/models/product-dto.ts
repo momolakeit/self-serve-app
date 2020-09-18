@@ -5,13 +5,13 @@ import { ProductType } from "./product-type.enum";
 
 
 export interface ProductDTO {
-    id:number;
+    id?:number;
     name:string;
     description:string;
-    menu:MenuDTO;
-    options:OptionDTO;
+    menu?:MenuDTO;
+    options:[OptionDTO];
     prix:number;
     tempsDePreparation: number;
-    rates:[RateDTO];
+    rates?:[RateDTO];
     productType:ProductType;
 }
