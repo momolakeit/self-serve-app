@@ -25,9 +25,7 @@ export class AuthentificationService {
         if (response && response.accessToken) {
           localStorage.setItem('token',response.accessToken);
           localStorage.setItem('Email',email);
-          console.log(response.accessToken);
           return true;
-          
         }
         return false;
       }));
