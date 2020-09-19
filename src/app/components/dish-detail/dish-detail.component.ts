@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProductDTO } from '../../models/product-dto' 
-import { CurrentBill} from '../../global/current-bill'
+import { ProductDTO } from '../../models/product-dto' ;
+import { CurrentBill} from '../../global/current-bill';
+import { BillService} from '../../services/bill.service';
+import {CheckItemDTO} from '../../models/check-item-dto'
+import {OptionDTO} from '../../models/option-dto'
 
 @Component({
   selector: 'app-dish-detail',
@@ -11,15 +14,25 @@ export class DishDetailComponent implements OnInit {
 
   @Input() productDTO :ProductDTO
   
-  constructor(private currentBill:CurrentBill) { }
+  constructor(private currentBill:CurrentBill,private billService :BillService) { }
 
   ngOnInit(): void {
-    console.log(this.productDTO)
   }
   updateCurrentBill = function (product :ProductDTO): void {
-   // this.currentBill.ongoingBill.add(product);
-    
-    console.log(this.currentBill);
+   this.billService.makeOrder(product).subscribe(data => 
+    localStorage.setItem("ongoingBill",JSON.stringify(data)));
   };
+
+  updateCheckItem = function (checkItemDTO:CheckItemDTO,optionDTO:OptionDTO): void {
+    var currentOption =this.productDTO.options.find(x =>x.id==optionDTO.id);
+    console.log(currentOption.checkItemList);
+    currentOption.checkItemList.forEach(element => {
+        element.isActive=false;
+    });
+    var currentCheckItem =currentOption.checkItemList.find(x=> x.id ==checkItemDTO.id);
+    currentCheckItem.isActive=true;
+    console.log(this.productDTO);
+  };
+   
 
 }

@@ -16,6 +16,10 @@ export class MenuComponent implements OnInit {
   constructor(private menuService :MenuService) { }
 
   ngOnInit(): void {
+    if(localStorage.getItem("ongoingBill")==null){
+      localStorage.setItem("ongoingBill",JSON.stringify({prixTotal :null,id :null ,date :null,billStatus: null,orderCustomer:null,orderItems :null, restaurant :null}));  
+      console.log(localStorage.getItem("ongoingBill"))
+    }
     this.menuService.getMenuById().subscribe(data =>{
       this.menu=data;
       console.log(this.menu);
