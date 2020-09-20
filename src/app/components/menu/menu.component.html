@@ -7,16 +7,23 @@
             <ng-container *ngIf='menu'>
                 <ng-container *ngFor="let product of menu.speciaux; let i = index">
                     <div *ngIf="i =='0';else nonActive" class="carousel-item active">
-
-                        <div class="container m-0 p-0">
+                        <div class="container mat-elevation-z8 mb-3 pb-2 w-75">
+                            <h1 class="text-center text-white">{{product.name}}</h1>
                             <div class="row">
-                                <div class="col ">
-                                    <img [src]="listeUrlImagesSpeciaux[i]" class="d-block w-100" alt="...">
+                                <div class="col-12">
+                                    <img [src]="listeUrlImagesSpeciaux[i]"
+                                        class="img-fluid border border-white text-center" alt="image">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col mt-1 text-white">
-                                    29.99
+                                <div class="col-12">
+                                    <p class="text-white">Prix: {{product.prix}}$</p>
+                                    <p class="text-white">Description: </p>
+                                    <p class="text-white">{{product.description}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
                                     <button class="btn btn-success w-25 float-right"
                                         (click)="changeProductToSeeDetail(product)" data-toggle="modal"
                                         data-target="#exampleModal">
@@ -28,15 +35,23 @@
                     </div>
                     <ng-template #nonActive>
                         <div class="carousel-item ">
-                            <div class="container m-0 p-0">
+                            <div class="container mat-elevation-z8 mb-3 pb-2 w-75">
+                                <h1 class="text-center text-white">{{product.name}}</h1>
                                 <div class="row">
-                                    <div class="col ">
-                                        <img [src]="listeUrlImagesSpeciaux[i]" class="d-block w-100" alt="...">
+                                    <div class="col-12">
+                                        <img [src]="listeUrlImagesSpeciaux[i]"
+                                            class="img-fluid border border-white text-center" alt="image">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col mt-1 text-white">
-                                        29.99
+                                    <div class="col-12">
+                                        <p class="text-white">Prix: {{product.prix}}$</p>
+                                        <p class="text-white">Description: </p>
+                                        <p class="text-white">{{product.description}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
                                         <button class="btn btn-success w-25 float-right"
                                             (click)="changeProductToSeeDetail(product)" data-toggle="modal"
                                             data-target="#exampleModal">
@@ -69,16 +84,23 @@
             <ng-container *ngIf='menu'>
                 <ng-container *ngFor="let product of menu.speciaux; let i = index">
                     <div *ngIf="i =='0';else nonActive" class="carousel-item active">
-
-                        <div class="container m-0 p-0">
+                        <div class="container mat-elevation-z8 mb-3 pb-2 w-75">
+                            <h1 class="text-center text-white">{{product.name}}</h1>
                             <div class="row">
-                                <div class="col ">
-                                    <img [src]="listeUrlImagesSpeciaux[i]" class="d-block w-100" alt="...">
+                                <div class="col-12">
+                                    <img [src]="listeUrlImagesSpeciaux[i]"
+                                        class="img-fluid border border-white text-center" alt="image">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col mt-1 text-white">
-                                    29.99
+                                <div class="col-12">
+                                    <p class="text-white">Prix: {{product.prix}}$</p>
+                                    <p class="text-white">Description: </p>
+                                    <p class="text-white">{{product.description}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
                                     <button class="btn btn-success w-25 float-right"
                                         (click)="changeProductToSeeDetail(product)" data-toggle="modal"
                                         data-target="#exampleModal">
@@ -90,15 +112,23 @@
                     </div>
                     <ng-template #nonActive>
                         <div class="carousel-item ">
-                            <div class="container m-0 p-0">
+                            <div class="container mat-elevation-z8 mb-3 pb-2 w-75">
+                                <h1 class="text-center text-white">{{product.name}}</h1>
                                 <div class="row">
-                                    <div class="col ">
-                                        <img [src]="listeUrlImagesSpeciaux[i]" class="d-block w-100" alt="...">
+                                    <div class="col-12">
+                                        <img [src]="listeUrlImagesSpeciaux[i]"
+                                            class="img-fluid border border-white text-center" alt="image">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col mt-1 text-white">
-                                        29.99
+                                    <div class="col-12">
+                                        <p class="text-white">Prix: {{product.prix}}$</p>
+                                        <p class="text-white">Description: </p>
+                                        <p class="text-white">{{product.description}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
                                         <button class="btn btn-success w-25 float-right"
                                             (click)="changeProductToSeeDetail(product)" data-toggle="modal"
                                             data-target="#exampleModal">
