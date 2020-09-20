@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuDTO } from 'src/app/models/menu-dto';
 import {MenuService} from '../../services/menu.service'
 import {ProductDTO} from '../../models/product-dto'
+import {environment} from '../../../environments/environment'
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -11,7 +12,10 @@ export class MenuComponent implements OnInit {
 
 
   menu: MenuDTO;
-  productToSeeDetail :ProductDTO
+  productToSeeDetail :ProductDTO;
+  listeUrlImagesSpeciaux =[];
+  listeUrlImagesFeatured =[];
+  
 
   constructor(private menuService :MenuService) { }
 
@@ -23,6 +27,7 @@ export class MenuComponent implements OnInit {
     this.menuService.getMenuById().subscribe(data =>{
       this.menu=data;
       console.log(this.menu);
+      this.menu.speciaux.forEach(element =>this.listeUrlImagesSpeciaux.push(environment.baseImgPath+element.imgFileDTO.id));
     })
   }
   changeProductToSeeDetail = function (product :ProductDTO): void {
