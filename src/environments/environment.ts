@@ -15,6 +15,7 @@ export const environment = {
   billUrl:`http://${host}:${port}/order`,
   rateUrl:`http://${host}:${port}/rate`,
   paymentIntentUrl:`http://${host}:${port}/order/fetchPaymentIntent`,
+  baseImgPath:`http://${host}:${port}/product/getProductImg/`,
 };
 
 /*

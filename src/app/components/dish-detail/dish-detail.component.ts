@@ -4,6 +4,7 @@ import { CurrentBill} from '../../global/current-bill';
 import { BillService} from '../../services/bill.service';
 import {CheckItemDTO} from '../../models/check-item-dto'
 import {OptionDTO} from '../../models/option-dto'
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-dish-detail',
@@ -15,8 +16,11 @@ export class DishDetailComponent implements OnInit {
   @Input() productDTO :ProductDTO
   
   constructor(private currentBill:CurrentBill,private billService :BillService) { }
+  imgUrl :string
 
   ngOnInit(): void {
+    //console.log(this.productDTO.imgFileDTO)
+    this.imgUrl = environment.baseImgPath + this.productDTO.imgFileDTO.id;
   }
   updateCurrentBill = function (product :ProductDTO): void {
    this.billService.makeOrder(product).subscribe(data => 
