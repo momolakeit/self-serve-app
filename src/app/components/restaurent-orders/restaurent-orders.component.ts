@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./restaurent-orders.component.css']
 })
 export class RestaurentOrdersComponent implements OnInit {
-
+  panelOpenState :boolean
   constructor() { }
 
   ngOnInit(): void {

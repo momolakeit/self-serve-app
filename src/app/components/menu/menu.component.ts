@@ -14,7 +14,7 @@ export class MenuComponent implements OnInit {
   menu: MenuDTO;
   productToSeeDetail :ProductDTO;
   listeUrlImagesSpeciaux =[];
-  listeUrlImagesFeatured =[];
+  listeUrlImagesFeatured =[String];
   
 
   constructor(private menuService :MenuService) { }
@@ -28,6 +28,7 @@ export class MenuComponent implements OnInit {
       this.menu=data;
       console.log(this.menu);
       this.menu.speciaux.forEach(element =>this.listeUrlImagesSpeciaux.push(environment.baseImgPath+element.imgFileDTO.id));
+      console.log(this.listeUrlImagesSpeciaux);
     })
   }
   changeProductToSeeDetail = function (product :ProductDTO): void {
