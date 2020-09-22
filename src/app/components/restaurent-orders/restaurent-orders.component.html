@@ -3,79 +3,33 @@
         ALL ORDERS
     </h4>
 </div>
-<mat-accordion>
-    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                Table 1
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-
-        <mat-card class="example-card">
-            <img mat-card-image src="../../../assets/plate.jpg" alt="Photo of a Shiba Inu">
-            <h4>COMMENTAIRES :</h4>
-            <mat-card-content>
-                <p>
-                    The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-                    A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-                    bred for hunting.
-                </p>
-                <div class="container">
-                    <div class="row">
-                        <div class=" col-lg-6 w-75 p-0 ">
-                            <mat-progress-bar class="mb-3 mt-3" mode="determinate" value="40"></mat-progress-bar>
-                        </div>
-                        <div class=" col-lg-6 w-25">
-                            <button mat-button>+</button>
+<ng-container *ngIf="allTables">
+    <mat-accordion *ngFor="let table of allTables;let i = index">
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col w-25">
+                                <h2>Table {{table.tableNumber}}</h2>                                
+                            </div>
+                            <div class="col w-75">
+                                <h2>{{nombreDeItemDansTable}} orders </h2>                                
+                            </div>
                         </div>
                     </div>
-                </div>
-                <h4>Mode de Cuisson</h4>
-                <mat-radio-group aria-label="Select an option">
-                    <mat-radio-button class="mr-2" value="1">Option 1</mat-radio-button>
-                    <mat-radio-button class="mr-2" value="2">Option 2</mat-radio-button>
-                </mat-radio-group>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button>Done</button>
-            </mat-card-actions>
-        </mat-card>
-    </mat-expansion-panel>
-    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                Steak Chico
-            </mat-panel-title>
-        </mat-expansion-panel-header>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ng-container *ngFor='let bill of table.billDTOList'>
+                <h3 class="border-bottom">
+                    {{bill.orderCustomer.username}}
+                </h3>
+                <mat-card class="example-card mt-4" *ngFor='let orderItem of bill.orderItems'>
+                       <app-restaurent-dish-detail-view  [orderItem]="orderItem"></app-restaurent-dish-detail-view> 
+                </mat-card>
 
-        <mat-card class="example-card">
-            <img mat-card-image src="../../../assets/plate.jpg" alt="Photo of a Shiba Inu">
-            <h4>COMMENTAIRES :</h4>
-            <mat-card-content>
-                <p>
-                    The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-                    A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-                    bred for hunting.
-                </p>
-                <div class="container">
-                    <div class="row">
-                        <div class=" col-lg-6 w-75 p-0 ">
-                            <mat-progress-bar class="mb-3 mt-3" mode="determinate" value="40"></mat-progress-bar>
-                        </div>
-                        <div class=" col-lg-6 w-25">
-                            <button mat-button>+</button>
-                        </div>
-                    </div>
-                </div>
-                <h4>Mode de Cuisson</h4>
-                <mat-radio-group aria-label="Select an option">
-                    <mat-radio-button class="mr-2" value="1">Option 1</mat-radio-button>
-                    <mat-radio-button class="mr-2" value="2">Option 2</mat-radio-button>
-                </mat-radio-group>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button>Done</button>
-            </mat-card-actions>
-        </mat-card>
-    </mat-expansion-panel>
-</mat-accordion>
+            </ng-container>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+</ng-container>
