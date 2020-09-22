@@ -49,7 +49,7 @@ export class AdminProductManagmentComponent implements OnInit {
   }
   
   
-  //BACKEND LOGIQUE
+  // SERVICES
   delete(id:number){
 
   }

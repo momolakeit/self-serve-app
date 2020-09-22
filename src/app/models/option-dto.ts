@@ -1,7 +1,7 @@
 import { CheckItemDTO } from "./check-item-dto";
 
 export interface OptionDTO {
-    id:number;
+    id?:number;
     name:string;
-    checkItemList:[CheckItemDTO];
+    checkItemList:CheckItemDTO[];
 }
