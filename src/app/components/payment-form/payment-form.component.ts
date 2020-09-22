@@ -29,7 +29,6 @@ export class PaymentFormComponent implements OnInit {
 
     this.paymentService.getPaymentIntent().subscribe(data => {
       this.clientSecret = data
-      console.log(this.clientSecret);
     });
     this.stripe = Stripe('pk_test_51HLwKgC5UoZOX4GRWegBa5FvbtsNbi5Cd7Z5WKYB73jelPNuhpzS69dXKe2V3OWTP4XHt5wjGGD3dzEdJw25duSn00Dlctj1NV');
     const elements = this.stripe.elements();
@@ -74,7 +73,6 @@ export class PaymentFormComponent implements OnInit {
     document.getElementById("closeCardModal").classList.remove("hidden")
   };
   async handleForm(e) {
-    console.log(this.card);
     e.preventDefault();
     this.showSpinner(true);
     this.stripe
@@ -89,6 +87,8 @@ export class PaymentFormComponent implements OnInit {
           console.log(result.error)
         } else {
           // The payment succeeded!
+          console.log(result);
+          localStorage.setItem("ongoingBill",JSON.stringify({prixTotal :null,id :null ,date :null,billStatus: null,orderCustomer:null,orderItems :null, restaurant :null}));
           this.showSuccess();
         }
       });

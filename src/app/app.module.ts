@@ -25,6 +25,9 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { ContactFormComponent } from './components/contact-form/contact-form.component'
 import { HttpClientModule } from '@angular/common/http';
 import { Particle } from 'angular-particle/lib';
+import { MenuproductComponent } from './components/menuproduct/menuproduct.component';
+import { CommonModule } from '@angular/common';
+import { RestaurentDishDetailViewComponent } from './components/restaurent-dish-detail-view/restaurent-dish-detail-view.component';  
 
 @NgModule({
   declarations: [
@@ -44,9 +47,12 @@ import { Particle } from 'angular-particle/lib';
     PaymentFormComponent,
     ClientRequestListComponent,
     RecipeSocketComponent,
-    ContactFormComponent
+    ContactFormComponent,
+    MenuproductComponent,
+    RestaurentDishDetailViewComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

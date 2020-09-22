@@ -26,7 +26,6 @@ export class ContactFormComponent implements OnInit {
   }
 
   onSubmitForm(){
-    console.log('heyy');
     if (this.contactForm.valid) {
       
       const formValue = this.contactForm.value;
