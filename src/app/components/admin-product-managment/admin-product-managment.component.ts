@@ -1,25 +1,13 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-
-export interface UserData {
-  id: string;
-  name: string;
-  category: string;
-  edit: string;
-  delete: string;
-}
-
-/** Constants used to fill up our data base. */
-const COLORS: string[] = [
-  'maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple', 'fuchsia', 'lime', 'teal',
-  'aqua', 'blue', 'navy', 'black', 'gray'
-];
-const NAMES: string[] = [
-  'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
-  'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
-];
+import { MenuDTO } from 'src/app/models/menu-dto';
+import { ProductDTO } from 'src/app/models/product-dto';
+import { RestaurantSelectionDTO } from 'src/app/models/restaurant-selection-dto';
+import { MenuService } from 'src/app/services/menu.service';
+import { ProductService } from 'src/app/services/product.service';
 
 
 @Component({
@@ -30,31 +18,70 @@ const NAMES: string[] = [
 export class AdminProductManagmentComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'name', 'category', 'edit','delete'];
-  dataSource: MatTableDataSource<UserData>;
+  dataSource:MatTableDataSource<ProductDTO>;
+  restaurantSelectionDTOS: [RestaurantSelectionDTO];
+  productDTOList: [ProductDTO];
+  currentProductToEdit: ProductDTO;
+  restaurantSelectionFormControl: FormControl;
+  
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor() {
-    // Create 100 users
-    const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
+  constructor(private menuService: MenuService, private productService: ProductService) {
+    this.restaurantSelectionFormControl = new FormControl('',Validators.required);
   }
 
   ngOnInit() {
+    this.getAllRestaurantSelectionDTO();
+  }
+  
+  initTable(){
+    this.dataSource = new MatTableDataSource(this.productDTOList);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
   
   
   // SERVICES
-  delete(id:number){
 
+  //RESEARCH
+
+  getAllProductsFromRestaurant(){
+    if (this.restaurantSelectionFormControl.valid) {
+      this.menuService.fetchMenuById(this.restaurantSelectionFormControl.value).subscribe(data =>{
+
+        this.productDTOList = data.products;
+
+        this.initTable();  
+
+        console.log(this.productDTOList);
+      });
+    }
   }
 
   
+  //UPDATE
+
+    changeCurrentProductToEdit(product: ProductDTO){
+      this.currentProductToEdit = product;
+    }
+
+  //DELETE
+
+  deleteProduct(id:number){
+    this.productService.delete(id).subscribe(() =>{
+      this.getAllProductsFromRestaurant();
+    });
+  }
+
+  getAllRestaurantSelectionDTO(){
+    this.menuService.getAllRestaurantName().subscribe(data =>{
+      this.restaurantSelectionDTOS = data;
+      console.log(this.restaurantSelectionDTOS);
+    })
+  }
+
   //TABLE LOGIQUE
 
   applyFilter(event: Event) {
@@ -66,17 +93,4 @@ export class AdminProductManagmentComponent implements OnInit {
     }
   }
 
-}
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-
-  return {
-    id: id.toString(),
-    name: name,
-    category: Math.round(Math.random() * 100).toString(),
-    edit: '',
-    delete: ''
-  };
 }

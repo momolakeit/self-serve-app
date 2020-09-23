@@ -51,6 +51,7 @@ export class ProductFormComponent implements OnInit {
       })])
     });
 
+    //make sure to listen to image change
     this.productForm.get('image').valueChanges.subscribe((files: any) => {
       if (!Array.isArray(files))
         this.files = [files];
@@ -58,14 +59,15 @@ export class ProductFormComponent implements OnInit {
 
       console.log(this.files);
     })
-
-    console.log(this.getOptions());
-    console.log(this.getCheckItems(0));
+    
+    console.log(this.product);
+    
   }
 
   //ARRAY SERVICES (CRUD)
 
   //CREATE
+
   onAddOption() {
     const option = new FormGroup({
       optionName: new FormControl('', Validators.required),
@@ -107,13 +109,13 @@ export class ProductFormComponent implements OnInit {
   }
 
 
-
-  //create an observable for the array
+  //UPDATE
+  //ce code est a refactor
   updateOptionDtoList() {
-    for (let index = 0; index < this.getOptions().length; index++) {
-      console.log('log la stupiditer');
 
-      console.log(this.getCheckItems(0).at(0).value);
+     var options: [OptionDTO] = [{name:'',checkItemList:<CheckItemDTO[]>[]}];
+    
+     for (let index = 0; index < this.getOptions().length; index++) {
 
       //add option name
       var option: OptionDTO = {
@@ -122,12 +124,27 @@ export class ProductFormComponent implements OnInit {
       };
 
       //add option checkItemList  by looping
-      for (let index2 = 0; index2 < this.getCheckItems(index2).length; index2++) {
-        option.checkItemList[index2].name = this.getCheckItems(index).at(index2).value;
+      for (let index2 = 0; index2 < this.getCheckItems(index).length; index2++) {
+
+        var checkItemDTO: CheckItemDTO = {
+          name : this.getCheckItems(index).at(index2).value
+        }
+
+        if (option.checkItemList.length > 0) 
+          option.checkItemList.push(checkItemDTO);
+        else
+          option.checkItemList[0] = checkItemDTO;
+        
       }
 
-      this.options.push(option);
+      if (options.length > 0) 
+        options.push(option);
+      else
+        options[0] = option;
+      
     }
+
+    this.options = options;
 
     console.log(this.options);
   }
@@ -135,23 +152,29 @@ export class ProductFormComponent implements OnInit {
   // VALIDATE FORMS THEN SUBMIT IT
   onSubmitForm() {
     if (this.productForm.valid) {
+
+      this.updateOptionDtoList();
+
       const formValue = this.productForm.value;
 
       const product: ProductDTO = {
         name: formValue['name'],
         description: formValue['description'],
+        options: this.options,
         prix: formValue['prix'],
         tempsDePreparation: formValue['tempsDepreparation'],
         productType: formValue['productType'],
-        options: formValue['options']
+        productMenuType: formValue['productMenuType']
       }
 
       //make request to save data or update data depending on product dto 
 
-      if (this.product)
+      if (this.product.id)
         this.productService.update(product).subscribe();
-      else
+      else{
+        product.id = this.product.id;
         this.productService.create(product, this.menuId).subscribe();
+      }
 
     }
   }

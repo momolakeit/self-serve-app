@@ -1,4 +1,4 @@
-<form [formGroup]="productForm">
+<form [formGroup]="productForm" (ngSubmit)="onSubmitForm()">
     <div id="exampleModal" class="modal span" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
 
@@ -13,8 +13,10 @@
 
                 <div class="modal-body">
                     <div class="form-group" *ngIf="product">
-                        <label for="id">Id:</label>
-                        <input [readonly]="true" type="text" class="form-control" id="id">
+                        <mat-form-field class="w-100">
+                            <mat-label>Id:</mat-label>
+                            <input [readonly]="true" matInput type="text" formControlName="id">
+                        </mat-form-field>
                     </div>
 
                     <div class="form-group">
@@ -55,13 +57,27 @@
                           </mat-form-field>
                     </div>
 
+                    <div class="form-group">
                         <mat-form-field  class="w-100">
                             <mat-label>Product type:</mat-label>
                             <mat-select>
-                              <mat-option value="option">Entrée</mat-option>
-                              <mat-option value="option">Dinner</mat-option>
+                                <mat-option value="WAITERREQUEST">WAITERREQUEST</mat-option>
+                                <mat-option value="SPECIAL">SPECIAL</mat-option>
+                                <mat-option value="CHEFCHOICE">CHEFCHOICE</mat-option>
                             </mat-select>
-                          </mat-form-field>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group">
+                        <mat-form-field  class="w-100">
+                            <mat-label>Product Menu type:</mat-label>
+                            <mat-select>
+                                <mat-option value="SOUPER">SOUPER</mat-option>
+                                <mat-option value="DEJEUNER">DEJEUNER</mat-option>
+                                <mat-option value="DINER">DINER</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
 
                     <hr>
 

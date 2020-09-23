@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { MenuDTO} from '../models/menu-dto'
+import { MenuDTO} from '../models/menu-dto';
+import { RestaurantSelectionDTO} from '../models/restaurant-selection-dto';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
@@ -10,6 +11,7 @@ import { map, catchError } from 'rxjs/operators';
 export class MenuService {
 
   constructor(private http:HttpClient) { }
+
   fetchMenuById(menuID:number):Observable<MenuDTO>{
     return this.http.post<MenuDTO>(`${environment.menuUrl}/getMenu`,{menuId :menuID});
   }
@@ -20,5 +22,10 @@ export class MenuService {
       map(response => {
         return response;
       }));
+  }
+
+  getAllRestaurantName():Observable<[RestaurantSelectionDTO]>{
+      const ownerUsername = localStorage.getItem('Email');
+      return this.http.get<[RestaurantSelectionDTO]>(`${environment.menuUrl}/restaurantName/${localStorage.getItem('Email')}`);
   }
 }

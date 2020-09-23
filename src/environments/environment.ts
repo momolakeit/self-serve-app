@@ -16,7 +16,7 @@ export const environment = {
   rateUrl:`http://${host}:${port}/rate`,
   paymentIntentUrl:`http://${host}:${port}/order/fetchPaymentIntent`,
   baseImgPath:`http://${host}:${port}/product/getProductImg/`,
-  restaurantTables:`http://${host}:${port}/rest/kitchen`
+  restaurantTables:`http://${host}:${port}/rest/kitchen`,
 };
 
 /*

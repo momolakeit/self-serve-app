@@ -53,12 +53,8 @@ export class ProductService {
     return this.http.post<ProductDTO>(`${environment.productUrl}/setMenuChefChoice`,{productDTO:JSON.stringify(productDTO)});
   }
 
-
-
-
-
-
-
-
+  saveProductImage(file:FormData,productDTO:ProductDTO):Observable<ProductDTO>{
+    return this.http.post<ProductDTO>(`${environment.productUrl}/saveProductImg`,{file,productDTO})
+  }
   
 }
