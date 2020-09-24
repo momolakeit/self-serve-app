@@ -1,5 +1,5 @@
 import { MaxSizeValidator } from '@angular-material-components/file-input';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CheckItemDTO } from 'src/app/models/check-item-dto';
 import { OptionDTO } from 'src/app/models/option-dto';
@@ -11,41 +11,48 @@ import { ProductService } from '../../services/product.service';
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.css']
 })
-export class ProductFormComponent implements OnInit {
+export class ProductFormComponent implements OnInit, OnDestroy {
 
   @Input() product: ProductDTO;
   @Input() menuId: number;
+  @Output() refreshCurrentProduct = new EventEmitter<ProductDTO>();
+  @Output() refreshProductList = new EventEmitter<number>();
+  @Output() refreshWholePage = new EventEmitter<number>();
   productForm: FormGroup;
   panelOpenState: boolean = false;
   disabled: boolean = false;
+  isHidden: boolean = false;
   multiple: boolean = false;
-  options: [OptionDTO];
+  options: OptionDTO[] = [];
   files: any;
   maxSize: number = 6;
 
 
-  constructor(private productService: ProductService, private formBuiler: FormBuilder) { }
+  constructor(private productService: ProductService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.initForm();
-    //find all products from user
   }
 
+  ngOnDestroy() {
+    console.log('Items destroyed');
+  }
 
   //CREATE FORMS
   initForm() {
-    this.productForm = this.formBuiler.group({
-      id: [this.product == null ? '' : this.product.id],
-      name: [this.product == null ? '' : this.product.name, Validators.required],
-      description: [this.product == null ? '' : this.product.description, Validators.required],
-      prix: [this.product == null ? '' : this.product.prix, Validators.required],
-      tempsDePreparation: [this.product == null ? '' : this.product.tempsDePreparation, Validators.required],
-      productType: [this.product == null ? '' : this.product.productType, Validators.required],
-      image: [this.files, [Validators.required, MaxSizeValidator(this.maxSize * 1024)]],
-      options: this.formBuiler.array([new FormGroup({
+    this.productForm = this.formBuilder.group({
+      id: [this.product.id],
+      name: [this.product.name, Validators.required],
+      description: [this.product.description, Validators.required],
+      prix: [this.product.prix, Validators.required],
+      tempsDePreparation: [this.product.tempsDePreparation, Validators.required],
+      productType: [this.product.productType, Validators.required],
+      productMenuType: [this.product.productMenuType, Validators.required],
+      image: [this.files, [MaxSizeValidator(this.maxSize * 1024)]],
+      options: this.formBuilder.array([new FormGroup({
         optionName: new FormControl('', Validators.required),
 
-        checkItems: this.formBuiler.array([new FormGroup({
+        checkItems: this.formBuilder.array([new FormGroup({
           checkItemName: new FormControl('', Validators.required)
         })])
       })])
@@ -67,17 +74,20 @@ export class ProductFormComponent implements OnInit {
   //ARRAY SERVICES (CRUD)
 
   //CREATE
+  initOptions(){
+    // bind option list to option form array
+  }
+
 
   onAddOption() {
     const option = new FormGroup({
       optionName: new FormControl('', Validators.required),
-      checkItems: this.formBuiler.array([new FormGroup({
+      checkItems: this.formBuilder.array([new FormGroup({
         checkItemName: new FormControl('', Validators.required)
       })])
     });
 
     this.getOptions().push(option);
-    this.updateOptionDtoList();
   }
 
   onAddCheckItem(id: number) {
@@ -113,7 +123,7 @@ export class ProductFormComponent implements OnInit {
   //ce code est a refactor
   updateOptionDtoList() {
 
-     var options: [OptionDTO] = [{name:'',checkItemList:<CheckItemDTO[]>[]}];
+     var options: any[] = [];
     
      for (let index = 0; index < this.getOptions().length; index++) {
 
@@ -126,21 +136,17 @@ export class ProductFormComponent implements OnInit {
       //add option checkItemList  by looping
       for (let index2 = 0; index2 < this.getCheckItems(index).length; index2++) {
 
-        var checkItemDTO: CheckItemDTO = {
-          name : this.getCheckItems(index).at(index2).value
-        }
+        var name = this.getCheckItems(index).at(index2).value;
 
-        if (option.checkItemList.length > 0) 
-          option.checkItemList.push(checkItemDTO);
+        if (option.checkItemList.length > 1) 
+          option.checkItemList.push(name);
         else
-          option.checkItemList[0] = checkItemDTO;
+          option.checkItemList[0] = name;
         
       }
 
-      if (options.length > 0) 
+
         options.push(option);
-      else
-        options[0] = option;
       
     }
 
@@ -158,6 +164,7 @@ export class ProductFormComponent implements OnInit {
       const formValue = this.productForm.value;
 
       const product: ProductDTO = {
+        id: formValue['id'],
         name: formValue['name'],
         description: formValue['description'],
         options: this.options,
@@ -167,16 +174,26 @@ export class ProductFormComponent implements OnInit {
         productMenuType: formValue['productMenuType']
       }
 
+      console.log('le produit que je mapprete a log');
+      console.log(product);
+      
+      
       //make request to save data or update data depending on product dto 
-
-      if (this.product.id)
-        this.productService.update(product).subscribe();
-      else{
-        product.id = this.product.id;
-        this.productService.create(product, this.menuId).subscribe();
-      }
+      this.productService.update(product).subscribe(() => {
+        this.updateProduct();
+        // find solution for location reload
+        location.reload();
+        this.refreshWholePage.emit();
+      },error =>{
+        //handle error
+      });
 
     }
   }
 
+
+
+  updateProduct() {
+    this.refreshCurrentProduct.emit(null);
+  }
 }

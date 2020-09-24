@@ -27,7 +27,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { Particle } from 'angular-particle/lib';
 import { MenuproductComponent } from './components/menuproduct/menuproduct.component';
 import { CommonModule } from '@angular/common';
-import { RestaurentDishDetailViewComponent } from './components/restaurent-dish-detail-view/restaurent-dish-detail-view.component';  
+import { RestaurentDishDetailViewComponent } from './components/restaurent-dish-detail-view/restaurent-dish-detail-view.component';
+import { ProductCreationFormComponent } from './components/product-creation-form/product-creation-form.component';  
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { RestaurentDishDetailViewComponent } from './components/restaurent-dish-
     RecipeSocketComponent,
     ContactFormComponent,
     MenuproductComponent,
-    RestaurentDishDetailViewComponent
+    RestaurentDishDetailViewComponent,
+    ProductCreationFormComponent
   ],
   imports: [
     CommonModule,

@@ -1,24 +1,17 @@
-<form [formGroup]="productForm" (ngSubmit)="onSubmitForm()">
-    <div id="exampleModal" class="modal span" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<form [formGroup]="productCreationForm" (ngSubmit)="onSubmitForm()">
+    <div id="createProductModal" class="modal span" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
 
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">EDIT A PRODUCT</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="updateProduct()">
+                    <h5 class="modal-title" id="exampleModalLabel">CREATE A PRODUCT</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
 
                 <div class="modal-body">
-                    <div class="form-group" *ngIf="product">
-                        <mat-form-field class="w-100">
-                            <mat-label>Id:</mat-label>
-                            <input [readonly]="true" matInput type="text" formControlName="id">
-                        </mat-form-field>
-                    </div>
-
                     <div class="form-group">
                         <mat-form-field class="w-100">
                             <mat-label>name:</mat-label>
@@ -148,7 +141,7 @@
                 </div>
 
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="button" class="btn-danger w-25" data-dismiss="modal" mat-raised-button (click)="updateProduct()">Close</button>
+                    <button type="button" class="btn-danger w-25" data-dismiss="modal" mat-raised-button>Close</button>
                     <button type="submit" class="btn-success w-25" mat-raised-button >Save</button>
                 </div>
 

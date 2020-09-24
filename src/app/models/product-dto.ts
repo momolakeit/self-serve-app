@@ -12,7 +12,7 @@ export interface ProductDTO {
     name:string;
     description:string;
     menu?:MenuDTO;
-    options:[OptionDTO];
+    options?:OptionDTO[];
     imgUrl?:string;
     prix:number;
     tempsDePreparation: number;

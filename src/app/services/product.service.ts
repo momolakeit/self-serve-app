@@ -22,11 +22,11 @@ export class ProductService {
   }
 
   create(productDTO:ProductDTO,id:number):Observable<any>{
-    return this.http.post(`${environment.productUrl}/${id}`,{productDTO:JSON.stringify(productDTO)});
+    return this.http.post(`${environment.productUrl}/${id}`,productDTO);
   }
 
   update(productDTO:ProductDTO):Observable<any>{
-    return this.http.put(`${environment.productUrl}`,{productDTO:JSON.stringify(productDTO)});
+    return this.http.put(`${environment.productUrl}`,productDTO);
   }
 
   delete(id:number):Observable<any>{

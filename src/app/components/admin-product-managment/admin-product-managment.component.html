@@ -22,7 +22,7 @@
           </div>
 
           <div class="col-lg-4 col-md-2 col-2">
-            <button mat-raised-button (click)="getAllProductsFromRestaurant()">Show products</button>
+            <button mat-raised-button (click)="getAllProductsFromRestaurant(restaurantSelectionFormControl.value)">Show products</button>
 
           </div>
         </div>
@@ -100,7 +100,7 @@
       </div>
     </div>
     <div class="container">
-      <button class="btn-block" mat-raised-button color="accent" (click)="changeCurrentProductToEdit(null)" data-toggle="modal" data-target="#exampleModal">
+      <button class="btn-block" mat-raised-button color="accent" data-toggle="modal" data-target="#createProductModal">
         Add Product
       </button>
     </div>
@@ -109,4 +109,5 @@
 </div>
 
 <!-- product form -->
-<app-product-form [product]="currentProductToEdit" [menuId]="restaurantSelectionDTOS.menuId" *ngIf="currentProductToEdit && restaurantSelectionDTOS"></app-product-form>
+<app-product-form [product]="currentProductToEdit" [menuId]="restaurantSelectionFormControl.value" *ngIf="currentProductToEdit && restaurantSelectionDTOS" (refreshProductList)="getAllProductsFromRestaurant($event)" (refreshWholePage)="ngOnInit()" (refreshCurrentProduct)="changeCurrentProductToEdit($event)"></app-product-form>
+<app-product-creation-form [menuId]="restaurantSelectionFormControl.value" *ngIf="restaurantSelectionDTOS"></app-product-creation-form>

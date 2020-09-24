@@ -1,8 +1,8 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { MenuDTO } from 'src/app/models/menu-dto';
 import { ProductDTO } from 'src/app/models/product-dto';
 import { RestaurantSelectionDTO } from 'src/app/models/restaurant-selection-dto';
@@ -17,70 +17,83 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class AdminProductManagmentComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'category', 'edit','delete'];
-  dataSource:MatTableDataSource<ProductDTO>;
+  displayedColumns: string[] = ['id', 'name', 'category', 'edit', 'delete'];
+  dataSource: MatTableDataSource<ProductDTO>;
   restaurantSelectionDTOS: [RestaurantSelectionDTO];
   productDTOList: [ProductDTO];
   currentProductToEdit: ProductDTO;
   restaurantSelectionFormControl: FormControl;
-  
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private menuService: MenuService, private productService: ProductService) {
-    this.restaurantSelectionFormControl = new FormControl('',Validators.required);
+    this.restaurantSelectionFormControl = new FormControl('', Validators.required);
   }
 
   ngOnInit() {
     this.getAllRestaurantSelectionDTO();
+
+    //if local storage has menu id already then fetch product list
+    if (localStorage.getItem('menuId')) {
+      console.log('hey friend');
+      this.restaurantSelectionFormControl = new FormControl(localStorage.getItem('menuId'), Validators.required);
+      this.getAllProductsFromRestaurant(parseInt(localStorage.getItem('menuId')));
+    }else console.log('i dont sorry');
+    
   }
-  
-  initTable(){
+
+  initTable() {
     this.dataSource = new MatTableDataSource(this.productDTOList);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  
-  
+
+
   // SERVICES
 
   //RESEARCH
 
-  getAllProductsFromRestaurant(){
+  getAllRestaurantSelectionDTO() {
+    this.menuService.getAllRestaurantName().subscribe(data => {
+      this.restaurantSelectionDTOS = data;
+    })
+  }
+
+  getAllProductsFromRestaurant(menuId: number) {
+    console.log('you tring');
+    
     if (this.restaurantSelectionFormControl.valid) {
-      this.menuService.fetchMenuById(this.restaurantSelectionFormControl.value).subscribe(data =>{
+      this.menuService.fetchMenuById(menuId).subscribe(data => {
 
         this.productDTOList = data.products;
 
-        this.initTable();  
+        this.initTable();
 
+        localStorage.setItem('menuId', JSON.stringify(menuId));
         console.log(this.productDTOList);
       });
     }
   }
 
-  
+
   //UPDATE
 
-    changeCurrentProductToEdit(product: ProductDTO){
-      this.currentProductToEdit = product;
-    }
+  changeCurrentProductToEdit(product: ProductDTO) {
+    this.currentProductToEdit = product;
+  }
 
   //DELETE
 
-  deleteProduct(id:number){
-    this.productService.delete(id).subscribe(() =>{
-      this.getAllProductsFromRestaurant();
+  deleteProduct(id: number) {
+    this.productService.delete(id).subscribe(() => {
+      this.getAllProductsFromRestaurant(this.restaurantSelectionFormControl.value);
     });
   }
 
-  getAllRestaurantSelectionDTO(){
-    this.menuService.getAllRestaurantName().subscribe(data =>{
-      this.restaurantSelectionDTOS = data;
-      console.log(this.restaurantSelectionDTOS);
-    })
-  }
+
 
   //TABLE LOGIQUE
 
@@ -92,5 +105,6 @@ export class AdminProductManagmentComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
 
 }
