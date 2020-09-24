@@ -16,6 +16,7 @@ import { PaymentFormComponent } from './components/payment-form/payment-form.com
 import { ClientRequestListComponent } from './components/client-request-list/client-request-list.component';
 import { RecipeSocketComponent } from './components/recipe-socket/recipe-socket.component';
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
+import { ProductFormComponent } from './components/product-form/product-form.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/acceuil', pathMatch: 'full'},
@@ -35,6 +36,7 @@ const routes: Routes = [
   {path: 'not-found', component: NotFoundComponent},
   {path: 'menu', component: MenuComponent},
   {path: 'adminProductManagment', component: AdminProductManagmentComponent},
+  {path: 'product-form-test', component: ProductFormComponent},
   {path: '**', redirectTo: '/not-found'}
 ];
 

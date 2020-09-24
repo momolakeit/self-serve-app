@@ -7,7 +7,8 @@ export interface UserData {
   id: string;
   name: string;
   category: string;
-  color: string;
+  edit: string;
+  delete: string;
 }
 
 /** Constants used to fill up our data base. */
@@ -28,7 +29,7 @@ const NAMES: string[] = [
 })
 export class AdminProductManagmentComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'category', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'category', 'edit','delete'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -48,7 +49,7 @@ export class AdminProductManagmentComponent implements OnInit {
   }
   
   
-  //BACKEND LOGIQUE
+  // SERVICES
   delete(id:number){
 
   }
@@ -75,6 +76,7 @@ function createNewUser(id: number): UserData {
     id: id.toString(),
     name: name,
     category: Math.round(Math.random() * 100).toString(),
-    color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
+    edit: '',
+    delete: ''
   };
 }

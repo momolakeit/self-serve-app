@@ -1,1 +1,138 @@
-<p>product-form works!</p>
+<form [formGroup]="productForm">
+    <div id="exampleModal" class="modal span" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">CREATE A PRODUCT</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group" *ngIf="product">
+                        <label for="id">Id:</label>
+                        <input [readonly]="true" type="text" class="form-control" id="id">
+                    </div>
+
+                    <div class="form-group">
+                        <mat-form-field class="w-100">
+                            <mat-label>name:</mat-label>
+                            <input matInput placeholder="Ex. Pizza" formControlName="name" type="text">
+                          </mat-form-field>
+                    </div>
+
+                    <div class="form-group">
+                        <mat-form-field class="w-100 mt-0">
+                            <ngx-mat-file-input multiple="false" accept="" color="" placeholder="image:" formControlName="image">
+                            </ngx-mat-file-input>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="form-group">
+                        <mat-form-field class="w-100" >
+                            <mat-label>description:</mat-label>
+                            <textarea  rows="4"  matInput placeholder="Enter the product description"></textarea>
+                          </mat-form-field>
+                    </div>
+
+                    <div class="form-group">
+                        <mat-form-field class="w-50" >
+                            <mat-label>price:</mat-label>
+                            <input matInput type="text">
+                            <span matPrefix>$&nbsp;</span>
+                            <span matSuffix>CAD</span>
+                          </mat-form-field>
+                    </div>
+
+                    <div class="form-group">
+                        <mat-form-field class="w-50" >
+                            <mat-label>Temps De Préparation:</mat-label>
+                            <input matInput type="number" placeholder="Ex. mm:ss">
+                          </mat-form-field>
+                    </div>
+
+                        <mat-form-field  class="w-100">
+                            <mat-label>Product type:</mat-label>
+                            <mat-select>
+                              <mat-option value="option">Entrée</mat-option>
+                              <mat-option value="option">Dinner</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+
+                    <hr>
+
+                    <mat-accordion>
+                        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Add Options
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Create options
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+
+
+                            <div class="overflow-auto mt-2 w-100" style="height: 400px;" formArrayName="options">
+
+                                <!-- this represent the options component and we must loop around it -->
+                                <div class="row mt-2 mat-elevation-z4 p-2" *ngFor="let option of getOptions().controls let i = index">
+                                    <ng-container [formGroup]="option">
+                                        <div class="col-12">
+                                            <div class="form-group d-flex justify-content-between">
+                                                <mat-form-field appearance="standard" class="w-100">
+                                                    <mat-label>option {{i + 1}}:</mat-label>
+                                                    <input type="text" class="w-100" matInput placeholder="Ex: mode de cuisson" formControlName="optionName">
+                                                    <mat-icon (click)="deleteOption(i)" matSuffix>disabled_by_default
+                                                    </mat-icon>
+                                                </mat-form-field>
+
+                                            </div>
+                                        </div>
+                                        <ng-container>
+                                            <div class="col-12">
+                                                <ng-container  formArrayName="checkItems">
+                                                    <div class="form-group d-flex justify-content-between"
+                                                        *ngFor="let checkItems of getCheckItems(i).controls let j = index">
+
+                                                        <ng-container [formGroup]="checkItems" >
+                                                            <mat-form-field appearance="standard" class="w-100">
+                                                                <mat-label>check item {{j + 1}}:</mat-label>
+                                                                <input type="text" class="w-75" matInput placeholder="Ex: medium bien" formControlName="checkItemName">
+                                                                <mat-icon (click)="deleteCheckItem(i,j)" matSuffix>clear
+                                                                </mat-icon>
+                                                            </mat-form-field>
+                                                        </ng-container>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                    <div class="col-12 text-center d-flex flex-column justify-content-center align-items-end">
+                                        <button mat-mini-fab class="bg-dark" (click)="onAddCheckItem(i)">
+                                            <mat-icon>add</mat-icon>
+                                          </button>
+                                    </div>
+                                    <mat-divider></mat-divider>
+                                </div>
+                                
+                                <button class="btn-block mt-4 mb-5 bg-dark text-white" mat-raised-button (click)="onAddOption()">Add an option</button>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+
+                <div class="modal-footer d-flex justify-content-between">
+                    <button type="button" class="btn-danger w-25" data-dismiss="modal" mat-raised-button>Close</button>
+                    <button type="submit" class="btn-success w-25" mat-raised-button>Save</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</form>

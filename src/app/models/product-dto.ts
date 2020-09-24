@@ -7,7 +7,7 @@ import { ImgFileDTO } from "./img-file-dto";
 
 
 export interface ProductDTO {
-    id:number;
+    id?:number;
     name:string;
     description:string;
     menu:MenuDTO;
