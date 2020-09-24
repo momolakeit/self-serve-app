@@ -10,12 +10,12 @@ export interface ProductDTO {
     id?:number;
     name:string;
     description:string;
-    menu:MenuDTO;
+    menu?:MenuDTO;
     options:[OptionDTO];
-    imgUrl :string;
+    imgUrl? :string;
     prix:number;
     tempsDePreparation: number;
-    imgFileDTO: ImgFileDTO;
-    rates:[RateDTO];
+    imgFileDTO?: ImgFileDTO;
+    rates?:[RateDTO];
     productType:ProductType;
 }
