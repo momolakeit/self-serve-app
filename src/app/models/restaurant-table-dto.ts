@@ -8,4 +8,5 @@ export interface RestaurantTableDTO {
     billDTOList:[BillDTO];
     menuDTO:MenuDTO;
     restaurant:RestaurantDTO;
+    nombreItemParTable:number;
 }

@@ -19,7 +19,6 @@ export class PaymentService {
 
   getPaymentIntent() : Observable<String>{
     const restaurentStripeAccount="acct_1HQe4hAEW5t84Hq2";
-    const billDTO : BillDTO ={prixTotal :50,id :0 ,date :null,billStatus: null,orderCustomer:null,orderItems :null, restaurant :null}
     localStorage.getItem("ongoingBill");
     console.log(JSON.parse(localStorage.getItem("ongoingBill")));
     return this.fetchPaymentIntent(JSON.parse(localStorage.getItem("ongoingBill")),restaurentStripeAccount).pipe(

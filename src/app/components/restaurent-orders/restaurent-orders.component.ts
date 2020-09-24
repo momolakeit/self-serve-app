@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { KitchenService } from '../../services/kitchen.service';
 import { RestaurantTableDTO } from '../../models/restaurant-table-dto'
+import { BillDTO } from '../../models/bill-dto';
 import { environment } from '../../../environments/environment'
 import { timer } from 'rxjs';
+import { OrderItemDTO } from 'src/app/models/order-item-dto';
 
 @Component({
   selector: 'app-restaurent-orders',
@@ -14,15 +16,15 @@ export class RestaurentOrdersComponent implements OnInit {
   imgUrl: string;
   allTables: [RestaurantTableDTO];
   allCheckItems = [];
+  allBills :[BillDTO];
   nombreDeMinuteRequis =30;
   nombreDeMinuteRestant =30;
   nombreDeMinutesSur100 =100;
-  nombreDeItemDansTable =0;
+  isBillDone =false;
   constructor(private kitchenService: KitchenService) { }
 
   ngOnInit(): void {
     this.imgUrl = environment.baseImgPath;
-    this.setUpTimeout();
     this.initValues();
   }
 
@@ -31,26 +33,19 @@ export class RestaurentOrdersComponent implements OnInit {
     console.log(currentCheckItem);
     return currentCheckItem.isActive;
   }
-  setUpTimeout = function(): void{
-    const source = timer(1000,1000);
-    source.subscribe(val=>{this.nombreDeMinuteRestant=this.nombreDeMinuteRestant -1;
-                           this.nombreDeMinutesSur100 =(this.nombreDeMinuteRestant *100 ) /this.nombreDeMinuteRequis ;
-                          });
-  }
-  addTime = function (): void{
-    this.nombreDeMinuteRestant= this.nombreDeMinuteRestant +5;
-  }
+  
   initValues = function (): void {
     this.kitchenService.getAllRestaurantTables().subscribe(data => {
       this.allTables = data;
-      console.log(this.allTables);
-      this.allTables.forEach(element => {
-        element.billDTOList.forEach(element => {
-          element.orderItems.forEach(element => {
-            this.nombreDeItemDansTable = this.nombreDeItemDansTable +1;
-            element.option.forEach(element => {
-              element.checkItemList.forEach(element => {
-                this.allCheckItems.push(element);
+      this.allTables.forEach(table => {
+        table.nombreItemParTable=0;
+        table.billDTOList.forEach(bill => {
+          bill.isBillEmpty = true;
+          bill.orderItems.forEach(orderItem => {
+            this.setNumberOfItemInTable(table,orderItem,bill)
+            orderItem.option.forEach(option => {
+              option.checkItemList.forEach(checkItem => {
+                this.allCheckItems.push(checkItem);
               })
             })
           })
@@ -59,4 +54,15 @@ export class RestaurentOrdersComponent implements OnInit {
     });
   }
 
+  setNumberOfItemInTable = function (table,orderItem,bill ): void{
+    if(orderItem.orderStatus!="READY"){
+      if(table.nombreItemParTable==0){
+        console.log("yioooooooo");
+        bill.isBillEmpty =false;
+      }
+      console.log("tabarnakkkk");
+      table.nombreItemParTable = table.nombreItemParTable +1;
+    }
+  }
+  
 }

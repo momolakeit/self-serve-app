@@ -3,31 +3,30 @@
         ALL ORDERS
     </h4>
 </div>
-<ng-container *ngIf="allTables">
+<ng-container   *ngIf="allTables">
     <mat-accordion *ngFor="let table of allTables;let i = index">
         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    <div class="container">
+                    <div class="container" >
                         <div class="row">
                             <div class="col w-25">
-                                <h2>Table {{table.tableNumber}}</h2>                                
+                                <h2>Table {{table.tableNumber}}</h2>
                             </div>
-                            <div class="col w-75">
-                                <h2>{{nombreDeItemDansTable}} orders </h2>                                
+                            <div class="col w-75" >
+                                <h2>{{table.nombreItemParTable}} orders </h2>
                             </div>
                         </div>
                     </div>
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <ng-container *ngFor='let bill of table.billDTOList'>
-                <h3 class="border-bottom">
+                <h3 class="border-bottom" *ngIf="!bill.isBillEmpty">
                     {{bill.orderCustomer.username}}
                 </h3>
-                <mat-card class="example-card mt-4" *ngFor='let orderItem of bill.orderItems'>
-                       <app-restaurent-dish-detail-view  [orderItem]="orderItem"></app-restaurent-dish-detail-view> 
-                </mat-card>
-
+                <ng-container *ngFor='let orderItem of bill.orderItems'>
+                    <app-restaurent-dish-detail-view (countChanged)="initValues($event)" [orderItem]="orderItem"></app-restaurent-dish-detail-view>  
+                </ng-container>
             </ng-container>
         </mat-expansion-panel>
     </mat-accordion>
