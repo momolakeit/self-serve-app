@@ -21,12 +21,12 @@ export class ProductService {
     return this.http.get<[ProductDTO]>(`${environment.productUrl}/menu/${menuId}`);
   }
 
-  create(productDTO:ProductDTO,id:number):Observable<any>{
-    return this.http.post(`${environment.productUrl}/${id}`,{productDTO:JSON.stringify(productDTO)});
+  create(productDTO:ProductDTO,id:number):Observable<ProductDTO>{
+    return this.http.post<ProductDTO>(`${environment.productUrl}/${id}`,productDTO);
   }
 
   update(productDTO:ProductDTO):Observable<any>{
-    return this.http.put(`${environment.productUrl}`,{productDTO:JSON.stringify(productDTO)});
+    return this.http.put(`${environment.productUrl}`,productDTO);
   }
 
   delete(id:number):Observable<any>{
@@ -53,12 +53,8 @@ export class ProductService {
     return this.http.post<ProductDTO>(`${environment.productUrl}/setMenuChefChoice`,{productDTO:JSON.stringify(productDTO)});
   }
 
-
-
-
-
-
-
-
+  saveProductImage(file:FormData,productDTO:ProductDTO):Observable<ProductDTO>{
+    return this.http.post<ProductDTO>(`${environment.productUrl}/saveProductImg`,{file,productDTO})
+  }
   
 }
