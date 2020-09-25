@@ -15,37 +15,43 @@ export class RestaurentDishDetailViewComponent implements OnInit {
   @Output() countChanged: EventEmitter<number> = new EventEmitter();
   constructor(private kitchenService: KitchenService) { }
   nombreDeMinuteRequis = 30;
-  nombreDeMinuteRestant = 30;
+  nombreDeMinuteRestant = 0;
   nombreDeMinutesSur100 = 100;
   isReady = false
   imgUrl: string;
   ngOnInit(): void {
     console.log(this.isReady);
     this.imgUrl = environment.baseImgPath;
+    if(localStorage.getItem(this.orderItem.id.toString())==null){
+      localStorage.setItem(this.orderItem.id.toString(),this.nombreDeMinuteRequis.toString());
+    }
     this.setUpTimeout();
     this.changeOrderStatus();
   }
   setUpTimeout = function (): void {
     var source = timer(1000, 1000).subscribe(val => {
-      if (this.nombreDeMinuteRestant == 0) {
+      if (parseInt(localStorage.getItem(this.orderItem.id.toString())) == 0) {
+        this.nombreDeMinutesSur100 =0;
         source.unsubscribe();
       }
       else {
+        this.nombreDeMinuteRestant =  parseInt(localStorage.getItem(this.orderItem.id.toString()));
         this.nombreDeMinuteRestant = this.nombreDeMinuteRestant - 1;
         this.nombreDeMinutesSur100 = (this.nombreDeMinuteRestant * 100) / this.nombreDeMinuteRequis;
+        localStorage.setItem(this.orderItem.id.toString(),this.nombreDeMinuteRestant.toString());
       }
     });
   
   }
   addTime = function (): void {
-    console.log(this.nombreDeMinuteRestant);
-    console.log(this.nombreDeMinuteRequis);
+    this.nombreDeMinuteRestant =  parseInt(localStorage.getItem(this.orderItem.id.toString()));
     if (this.nombreDeMinuteRestant >= this.nombreDeMinuteRequis) {
       this.nombreDeMinuteRestant = this.nombreDeMinuteRequis;
     }
     else {
       this.nombreDeMinuteRestant = this.nombreDeMinuteRestant + 5;
     }
+    localStorage.setItem(this.orderItem.id.toString(),this.nombreDeMinuteRestant.toString());
   }
   terminerCommande = function (orderItem: OrderItemDTO): void {
     console.log(this.kitchenService);
