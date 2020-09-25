@@ -21,8 +21,8 @@ export class ProductService {
     return this.http.get<[ProductDTO]>(`${environment.productUrl}/menu/${menuId}`);
   }
 
-  create(productDTO:ProductDTO,id:number):Observable<any>{
-    return this.http.post(`${environment.productUrl}/${id}`,productDTO);
+  create(productDTO:ProductDTO,id:number):Observable<ProductDTO>{
+    return this.http.post<ProductDTO>(`${environment.productUrl}/${id}`,productDTO);
   }
 
   update(productDTO:ProductDTO):Observable<any>{

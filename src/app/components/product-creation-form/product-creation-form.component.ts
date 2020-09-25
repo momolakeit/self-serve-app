@@ -1,4 +1,4 @@
-import { MaxSizeValidator } from '@angular-material-components/file-input';
+import { MaxSizeValidator, NgxMatFileInputComponent } from '@angular-material-components/file-input';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CheckItemDTO } from 'src/app/models/check-item-dto';
@@ -20,9 +20,9 @@ export class ProductCreationFormComponent implements OnInit {
   multiple: boolean = false;
   options: OptionDTO[] = [];
   files: any;
-  maxSize: number = 6;
+  maxSize: number = 10;
 
-  constructor(private productService: ProductService,private formBuilder: FormBuilder) {
+  constructor(private productService: ProductService, private formBuilder: FormBuilder) {
 
   }
 
@@ -32,9 +32,9 @@ export class ProductCreationFormComponent implements OnInit {
 
   //FORM CREATION
 
-  initForm(){
+  initForm() {
     this.productCreationForm = this.formBuilder.group({
-      name:['sdfsd',Validators.required],
+      name: ['sdfsd', Validators.required],
       description: ['ssdfds', Validators.required],
       prix: ['45', Validators.required],
       tempsDePreparation: ['45', Validators.required],
@@ -42,12 +42,22 @@ export class ProductCreationFormComponent implements OnInit {
       productMenuType: ['SOUPER', Validators.required],
       image: [this.files, [MaxSizeValidator(this.maxSize * 1024)]],
       options: this.formBuilder.array([new FormGroup({
-        optionName: new FormControl('dfgd',Validators.required),
+        optionName: new FormControl('dfgd', Validators.required),
         checkItems: this.formBuilder.array([new FormGroup({
           checkItemName: new FormControl('12312', Validators.required)
         })])
       })])
     });
+
+    //make sure to listen to image change
+    this.productCreationForm.get('image').valueChanges.subscribe((files: any) => {
+      if (!Array.isArray(files))
+        this.files = [files];
+      else this.files = files;
+
+      console.log(this.files);
+    })
+
   }
 
   //FORM SUBMIT
@@ -71,16 +81,26 @@ export class ProductCreationFormComponent implements OnInit {
 
       console.log('le produit que je mapprete a log');
       console.log(product);
-      
-      
+
+
       //make request to save data or update data depending on product dto 
-      this.productService.create(product,this.menuId).subscribe(() => {
-      //  this.updateProduct();
+      this.productService.create(product, this.menuId).subscribe((product) => {
+        
+        //recuperer limage
+        const file = this.productCreationForm.get('image').value;
+        const formData = new FormData();
+        formData.append('file', file); 
+        console.log(formData);
+        console.log(file);
+        
+        
+        //faire le http request
+        this.productService.saveProductImage(formData,product).subscribe();
 
         // find solution for location reload
-        location.reload();
-       // this.refreshWholePage.emit();
-      },error =>{
+        //location.reload();
+        // this.refreshWholePage.emit();
+      }, error => {
         //handle error
       });
 
@@ -120,41 +140,41 @@ export class ProductCreationFormComponent implements OnInit {
     return this.productCreationForm.get('options') as FormArray;
   }
 
-   //UPDATE
+  //UPDATE
   //ce code est a refactor
   updateOptionDtoList() {
 
     var options: any[] = [];
-   
+
     for (let index = 0; index < this.getOptions().length; index++) {
 
-     //add option name
-     var option: OptionDTO = {
-       name: this.getOptions().at(index).get('optionName').value,
-       checkItemList: <CheckItemDTO[]>[]
-     };
+      //add option name
+      var option: OptionDTO = {
+        name: this.getOptions().at(index).get('optionName').value,
+        checkItemList: <CheckItemDTO[]>[]
+      };
 
-     //add option checkItemList  by looping
-     for (let index2 = 0; index2 < this.getCheckItems(index).length; index2++) {
+      //add option checkItemList  by looping
+      for (let index2 = 0; index2 < this.getCheckItems(index).length; index2++) {
 
-       var name = this.getCheckItems(index).at(index2).value;
+        var name = this.getCheckItems(index).at(index2).value;
 
-       if (option.checkItemList.length > 1) 
-         option.checkItemList.push(name);
-       else
-         option.checkItemList[0] = name;
-       
-     }
+        if (option.checkItemList.length > 1)
+          option.checkItemList.push(name);
+        else
+          option.checkItemList[0] = name;
+
+      }
 
 
-       options.push(option);
-     
-   }
+      options.push(option);
 
-   this.options = options;
+    }
 
-   console.log(this.options);
- }
+    this.options = options;
+
+    console.log(this.options);
+  }
 
   //DELETE
 
