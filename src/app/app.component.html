@@ -1,4 +1,4 @@
-<header class="bg-secondary text-center d-flex justify-content-center">
+<header class="bg-secondary text-center d-flex justify-content-center" *ngIf="isConnected()">
   <img src="../assets/logo.PNG" alt="" class="align-self-center">
 </header>
 
@@ -6,12 +6,11 @@
 <div id="page-container" class="bg-dark">
   <div id="content-wrap" class="pt-3">
     <router-outlet></router-outlet>
-
   </div>
 </div>
 
 
-<footer class="fixed-bottom">
+<footer class="fixed-bottom" *ngIf="isConnected()">
   <div class="btn-group" role="group" aria-label="Basic example">
     <button type="button" class="btn btn-secondary" routerLink="paymentChoice"><img src="../assets/receipt.png"
         alt="payment" class="img-fluid" width="35%"></button>

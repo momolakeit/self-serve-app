@@ -56,6 +56,8 @@ export class AdminProductManagmentComponent implements OnInit {
   getAllRestaurantSelectionDTO() {
     this.menuService.getAllRestaurantName().subscribe(data => {
       this.restaurantSelectionDTOS = data;
+      console.log(data);
+      
     })
   }
 

@@ -18,12 +18,13 @@ import { ContactFormComponent } from './components/contact-form/contact-form.com
 import { WaiterRequestListComponent } from './components/waiter-request-list/waiter-request-list.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { RoleGuardService } from './services/role-guard.service';
+import { LoginGuardService } from './services/login-guard.service';
 
 const routes: Routes = [
   {path: '', redirectTo: '/start', pathMatch: 'full'},
-  {path: 'start', component: StartComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'sign-up', component: SignupComponent},
+  {path: 'start',canActivate:[LoginGuardService] ,component: StartComponent},
+  {path: 'login',canActivate:[LoginGuardService] , component: LoginComponent},
+  {path: 'sign-up',canActivate:[LoginGuardService] , component: SignupComponent},
   {path: 'payment',canActivate:[AuthGuardService], component: PaymentComponent},
   {path: 'waiter',canActivate:[AuthGuardService], component: WaiterComponent},
   {path: 'waiter-request',canActivate:[AuthGuardService], component: WaiterRequestListComponent},
@@ -34,7 +35,7 @@ const routes: Routes = [
   {path: 'tableDetail',canActivate:[AuthGuardService], component: TableDetailPageComponent},
   {path: 'restaurentOrders',canActivate:[AuthGuardService], component: RestaurentOrdersComponent},
   {path: 'contactForm',canActivate:[AuthGuardService], component: ContactFormComponent},
-  {path: 'not-found',canActivate:[AuthGuardService], component: NotFoundComponent},
+  {path: 'not-found', component: NotFoundComponent},
   {path: 'menu',canActivate:[AuthGuardService], component: MenuComponent},
   {path: 'adminProductManagment',canActivate:[AuthGuardService,RoleGuardService], component: AdminProductManagmentComponent},
   {path: '**', redirectTo: '/not-found'}
