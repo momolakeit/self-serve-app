@@ -15,7 +15,7 @@
               <mat-label class="text-white">Select Restaurant</mat-label>
               <mat-select [formControl]="restaurantSelectionFormControl">
                 <ng-container *ngIf="restaurantSelectionDTOS">
-                  <mat-option value="option" *ngFor="let restaurantSelection of restaurantSelectionDTOS" [value]="restaurantSelection.menuId">{{restaurantSelection.restaurantName}}</mat-option>
+                  <mat-option *ngFor="let restaurantSelection of restaurantSelectionDTOS" [value]="restaurantSelection.menuId">{{restaurantSelection.restaurantName}}</mat-option>
                 </ng-container>
               </mat-select>
             </mat-form-field>

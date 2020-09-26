@@ -26,11 +26,13 @@
     "angular-particle": "^1.0.4",
     "bootstrap": "^4.5.2",
     "jquery": "^3.5.1",
+    "jwt-decode": "^3.0.0-beta.2",
     "net": "^1.0.2",
+    "ngx-particle": "^1.5.0",
     "rxjs": "~6.5.5",
     "sockjs-client": "^1.5.0",
     "stompjs": "^2.3.3",
-    "tslib": "^2.0.0",
+    "tslib": "^2.0.1",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {

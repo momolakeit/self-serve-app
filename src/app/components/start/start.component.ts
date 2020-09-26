@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {myParams,myStyle} from '../../../utilities/particlejsdata';
 
 @Component({
   selector: 'app-start',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StartComponent implements OnInit {
 
+    myStyle: object = {};
+    myParams: object = {};
+    width: number = 110;
+    height: number = 200;
+
   constructor() { }
 
+  
+
   ngOnInit(): void {
+   
   }
 
 }

@@ -3,12 +3,10 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MenuDTO } from 'src/app/models/menu-dto';
 import { ProductDTO } from 'src/app/models/product-dto';
 import { RestaurantSelectionDTO } from 'src/app/models/restaurant-selection-dto';
 import { MenuService } from 'src/app/services/menu.service';
 import { ProductService } from 'src/app/services/product.service';
-
 
 @Component({
   selector: 'app-admin-product-managment',
@@ -38,11 +36,10 @@ export class AdminProductManagmentComponent implements OnInit {
 
     //if local storage has menu id already then fetch product list
     if (localStorage.getItem('menuId')) {
-      console.log('hey friend');
       this.restaurantSelectionFormControl = new FormControl(localStorage.getItem('menuId'), Validators.required);
       this.getAllProductsFromRestaurant(parseInt(localStorage.getItem('menuId')));
-    }else console.log('i dont sorry');
-    
+    }
+
   }
 
   initTable() {
@@ -59,12 +56,12 @@ export class AdminProductManagmentComponent implements OnInit {
   getAllRestaurantSelectionDTO() {
     this.menuService.getAllRestaurantName().subscribe(data => {
       this.restaurantSelectionDTOS = data;
+      console.log(data);
+      
     })
   }
 
   getAllProductsFromRestaurant(menuId: number) {
-    console.log('you tring');
-    
     if (this.restaurantSelectionFormControl.valid) {
       this.menuService.fetchMenuById(menuId).subscribe(data => {
 
