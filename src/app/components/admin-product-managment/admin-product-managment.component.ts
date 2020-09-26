@@ -72,7 +72,7 @@ export class AdminProductManagmentComponent implements OnInit {
 
         this.initTable();
 
-        localStorage.setItem('menuId', JSON.stringify(menuId));
+        localStorage.setItem('menuId', menuId+"");
         console.log(this.productDTOList);
       });
     }
