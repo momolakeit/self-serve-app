@@ -19,7 +19,7 @@ import { ContactFormComponent } from './components/contact-form/contact-form.com
 import { ProductFormComponent } from './components/product-form/product-form.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/acceuil', pathMatch: 'full'},
+  {path: '', redirectTo: '/start', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'payment', component: PaymentComponent},
   {path: 'waiter', component: WaiterComponent},
@@ -32,12 +32,12 @@ const routes: Routes = [
   {path: 'restaurentOrders', component: RestaurentOrdersComponent},
   {path: 'recipeSocket', component: RecipeSocketComponent},
   {path: 'contactForm', component: ContactFormComponent},
-  {path: 'acceuil', component: StartComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: 'menu', component: MenuComponent},
   {path: 'adminProductManagment', component: AdminProductManagmentComponent},
   {path: 'product-form-test', component: ProductFormComponent},
-  {path: '**', redirectTo: '/not-found'}
+  {path: 'start', component: StartComponent},
+ // {path: '**', redirectTo: '/not-found'}
 ];
 
 

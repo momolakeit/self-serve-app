@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   initForm() {
     this.userForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(formValue['email'], formValue['password']).subscribe((success: boolean) => {
       if (success) {
         // this.authService.getEmployeDetails(formValue['email']).subscribe();
-        this.route.navigate(['/acceuil']);
+        this.route.navigate(['/menu']);
       } else {
         console.log("Error could not login");
       }
