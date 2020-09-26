@@ -14,17 +14,17 @@ export class AuthentificationService {
 
   constructor(private http: HttpClient,public auth:AuthService,private route:Router) { }
 
-  getToken(email:string,password:string):Observable<JwtResponse>{
-    return this.http.post<JwtResponse>(`${environment.authApiUrl}/signin`,{username: email,password:password});
+  getToken(username:string,password:string):Observable<JwtResponse>{
+    return this.http.post<JwtResponse>(`${environment.authApiUrl}/signin`,{username,password});
   }
 
    //AUTHENTICATION PART
-   login(email:string,password:string) : Observable<boolean>{
-    return this.getToken(email,password).pipe(
+   login(username:string,password:string) : Observable<boolean>{
+    return this.getToken(username,password).pipe(
       map(response => {
         if (response && response.accessToken) {
           localStorage.setItem('token',response.accessToken);
-          localStorage.setItem('Email',email);
+          localStorage.setItem('username',username);
           return true;
         }
         return false;
@@ -37,7 +37,7 @@ export class AuthentificationService {
 
   logout(){
     localStorage.removeItem('token');
-    localStorage.removeItem('email');
+    localStorage.removeItem('username');
   }
 
    // OBTAINING USER DETAILS 

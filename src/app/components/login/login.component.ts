@@ -19,14 +19,9 @@ export class LoginComponent implements OnInit {
 
   initForm() {
     this.userForm = this.formBuilder.group({
-      email: ['', Validators.required],
+      username: ['', Validators.required],
       password: ['', Validators.required]
     });
-  }
-
-  getErrorMessage() {
-    return this.userForm.controls['email'].hasError('required') ? 'You must enter a value' :
-      this.userForm.controls['email'].hasError('email') ? 'Not a valid email' : '';
   }
 
   get f() {
@@ -37,7 +32,7 @@ export class LoginComponent implements OnInit {
   onSubmitForm() {
     const formValue = this.userForm.value;
 
-    this.authService.login(formValue['email'], formValue['password']).subscribe((success: boolean) => {
+    this.authService.login(formValue['username'], formValue['password']).subscribe((success: boolean) => {
       if (success) {
         // this.authService.getEmployeDetails(formValue['email']).subscribe();
         this.route.navigate(['/menu']);

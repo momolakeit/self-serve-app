@@ -29,6 +29,7 @@ export class KitchenService {
         return response;
       }));
   }
+  
   setOrderItemReady(orderItemDTO :OrderItemDTO) :Observable<OrderItemDTO>{
     const restaurantId =2;
     return this.postOrderItemStatusReady(orderItemDTO).pipe(

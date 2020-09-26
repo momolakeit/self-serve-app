@@ -15,7 +15,6 @@ import { PaymentChoiceComponent } from './components/payment-choice/payment-choi
 import { PaymentFormComponent } from './components/payment-form/payment-form.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ClientRequestListComponent } from './components/client-request-list/client-request-list.component';
-import {ParticlesModule} from 'angular-particle';
 import { JwtModule } from '@auth0/angular-jwt';
 import {DemoMaterialModule} from 'src/material-module';
 import { AdminProductManagmentComponent } from './components/admin-product-managment/admin-product-managment.component';
@@ -24,11 +23,12 @@ import { RecipeSocketComponent } from './components/recipe-socket/recipe-socket.
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { ContactFormComponent } from './components/contact-form/contact-form.component'
 import { HttpClientModule } from '@angular/common/http';
-import { Particle } from 'angular-particle/lib';
 import { MenuproductComponent } from './components/menuproduct/menuproduct.component';
 import { CommonModule } from '@angular/common';
 import { RestaurentDishDetailViewComponent } from './components/restaurent-dish-detail-view/restaurent-dish-detail-view.component';
 import { ProductCreationFormComponent } from './components/product-creation-form/product-creation-form.component';  
+import { ParticlesModule } from 'ngx-particle';
+import { WaiterRequestListComponent } from './components/waiter-request-list/waiter-request-list.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +51,8 @@ import { ProductCreationFormComponent } from './components/product-creation-form
     ContactFormComponent,
     MenuproductComponent,
     RestaurentDishDetailViewComponent,
-    ProductCreationFormComponent
+    ProductCreationFormComponent,
+    WaiterRequestListComponent
   ],
   imports: [
     CommonModule,
@@ -62,6 +63,7 @@ import { ProductCreationFormComponent } from './components/product-creation-form
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    ParticlesModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

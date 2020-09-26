@@ -32,6 +32,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initForm();
+    this.initOptions();
   }
 
   ngOnDestroy() {
@@ -58,6 +59,8 @@ export class ProductFormComponent implements OnInit, OnDestroy {
       })])
     });
 
+    this.deleteOption(0);
+    
     //make sure to listen to image change
     this.productForm.get('image').valueChanges.subscribe((files: any) => {
       if (!Array.isArray(files))
@@ -66,19 +69,44 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
       console.log(this.files);
     })
-    
-    console.log(this.product);
-    
   }
 
-  //init options
+  initOptions() {
+    // bind option list to option form array
+    for (let index = 0; index < this.product.options.length; index++) {
+
+      const element: OptionDTO = this.product.options[index];
+      const option: FormGroup = new FormGroup({
+        optionName: new FormControl(element.name, Validators.required),
+        checkItems: this.formBuilder.array([new FormGroup({
+          checkItemName: new FormControl('', Validators.required)
+        })])
+      });
+
+
+      this.getOptions().push(option);
+
+      //build checkitem const 
+      for (let j = 0; j < element.checkItemList.length; j++) {
+        const checkItem: CheckItemDTO = element.checkItemList[j];
+
+        const group = new FormGroup({
+          checkItemName: new FormControl(checkItem.name, Validators.required)
+        })
+
+        if (j == 0)
+          this.getCheckItems(index).removeAt(0);
+
+        this.getCheckItems(index).push(group);
+      }
+
+    }
+  }
 
   //ARRAY SERVICES (CRUD)
 
   //CREATE
-  initOptions(){
-    // bind option list to option form array
-  }
+
 
 
   onAddOption() {
@@ -125,9 +153,9 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   //ce code est a refactor
   updateOptionDtoList() {
 
-     var options: any[] = [];
-    
-     for (let index = 0; index < this.getOptions().length; index++) {
+    var options: any[] = [];
+
+    for (let index = 0; index < this.getOptions().length; index++) {
 
       //add option name
       var option: OptionDTO = {
@@ -140,16 +168,16 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
         var name = this.getCheckItems(index).at(index2).value;
 
-        if (option.checkItemList.length > 1) 
+        if (option.checkItemList.length > 1)
           option.checkItemList.push(name);
         else
           option.checkItemList[0] = name;
-        
+
       }
 
 
-        options.push(option);
-      
+      options.push(option);
+
     }
 
     this.options = options;
@@ -178,15 +206,15 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
       console.log('le produit que je mapprete a log');
       console.log(product);
-      
-      
+
+
       //make request to save data or update data depending on product dto 
       this.productService.update(product).subscribe(() => {
         this.updateProduct();
         // find solution for location reload
         location.reload();
         this.refreshWholePage.emit();
-      },error =>{
+      }, error => {
         //handle error
       });
 

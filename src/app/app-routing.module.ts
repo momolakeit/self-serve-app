@@ -14,30 +14,30 @@ import { AdminProductManagmentComponent } from './components/admin-product-manag
 import { PaymentChoiceComponent } from './components/payment-choice/payment-choice.component';
 import { PaymentFormComponent } from './components/payment-form/payment-form.component';
 import { ClientRequestListComponent } from './components/client-request-list/client-request-list.component';
-import { RecipeSocketComponent } from './components/recipe-socket/recipe-socket.component';
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
-import { ProductFormComponent } from './components/product-form/product-form.component';
+import { WaiterRequestListComponent } from './components/waiter-request-list/waiter-request-list.component';
+import { AuthGuardService } from './services/auth-guard.service';
+import { RoleGuardService } from './services/role-guard.service';
 
 const routes: Routes = [
   {path: '', redirectTo: '/start', pathMatch: 'full'},
-  {path: 'login', component: LoginComponent},
-  {path: 'payment', component: PaymentComponent},
-  {path: 'waiter', component: WaiterComponent},
-  {path: 'sign-up', component: SignupComponent},
-  {path: 'dishDetail', component: DishDetailComponent},
-  {path: 'paymentChoice', component: PaymentChoiceComponent},
-  {path: 'paymentForm', component: PaymentFormComponent},
-  {path: 'clientRequestList', component: ClientRequestListComponent},
-  {path: 'tableDetail', component: TableDetailPageComponent},
-  {path: 'restaurentOrders', component: RestaurentOrdersComponent},
-  {path: 'recipeSocket', component: RecipeSocketComponent},
-  {path: 'contactForm', component: ContactFormComponent},
-  {path: 'not-found', component: NotFoundComponent},
-  {path: 'menu', component: MenuComponent},
-  {path: 'adminProductManagment', component: AdminProductManagmentComponent},
-  {path: 'product-form-test', component: ProductFormComponent},
   {path: 'start', component: StartComponent},
- // {path: '**', redirectTo: '/not-found'}
+  {path: 'login', component: LoginComponent},
+  {path: 'sign-up', component: SignupComponent},
+  {path: 'payment',canActivate:[AuthGuardService], component: PaymentComponent},
+  {path: 'waiter',canActivate:[AuthGuardService], component: WaiterComponent},
+  {path: 'waiter-request',canActivate:[AuthGuardService], component: WaiterRequestListComponent},
+  {path: 'dishDetail',canActivate:[AuthGuardService], component: DishDetailComponent},
+  {path: 'paymentChoice',canActivate:[AuthGuardService], component: PaymentChoiceComponent},
+  {path: 'paymentForm',canActivate:[AuthGuardService], component: PaymentFormComponent},
+  {path: 'clientRequestList', component: ClientRequestListComponent},
+  {path: 'tableDetail',canActivate:[AuthGuardService], component: TableDetailPageComponent},
+  {path: 'restaurentOrders',canActivate:[AuthGuardService], component: RestaurentOrdersComponent},
+  {path: 'contactForm',canActivate:[AuthGuardService], component: ContactFormComponent},
+  {path: 'not-found',canActivate:[AuthGuardService], component: NotFoundComponent},
+  {path: 'menu',canActivate:[AuthGuardService], component: MenuComponent},
+  {path: 'adminProductManagment',canActivate:[AuthGuardService,RoleGuardService], component: AdminProductManagmentComponent},
+  {path: '**', redirectTo: '/not-found'}
 ];
 
 

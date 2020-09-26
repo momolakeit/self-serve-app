@@ -13,10 +13,8 @@ export class AppComponent {
   title = 'self-serve-app';
   width: number = 100;
   height: number = 100;
-
-  myStyle = myStyle;
-
-  myParams = myParams;
+  myStyle: object = {};
+  myParams: object = {};
 
   constructor(private authService:AuthService,private authentificationService: AuthentificationService){}
 
