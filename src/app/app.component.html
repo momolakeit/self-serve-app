@@ -22,7 +22,7 @@
             class="img-fluid" width="35%"></button>
           </div>
   </ng-container>
-  <ng-container *ngIf="false">
+  <ng-container >
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
       <mat-button-toggle value="bold" class="w-100"><mat-icon>payment</mat-icon></mat-button-toggle>
       <mat-button-toggle value="italic" class="w-100"><mat-icon>restaurant_menu</mat-icon></mat-button-toggle>
@@ -30,11 +30,18 @@
     </mat-button-toggle-group>
   </ng-container>
 
-  <!--WAITER AND COOK VIEW-->
-  <ng-container>
+  <!--WAITER VIEW-->
+  <ng-container *ngIf="false">
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
       <mat-button-toggle value="italic" class="w-100"><mat-icon>receipt_long</mat-icon></mat-button-toggle>
       <mat-button-toggle value="underline" class="w-100"><mat-icon matBadge="15" matBadgeColor="warn" matBadgeOverlap="true">room_service</mat-icon></mat-button-toggle>
+    </mat-button-toggle-group>
+  </ng-container>
+
+  <!--WAITER VIEW-->
+  <ng-container *ngIf="false">
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
+      <mat-button-toggle value="italic" class="w-100"><mat-icon matBadge="15" matBadgeColor="warn" matBadgeOverlap="true">receipt_long</mat-icon></mat-button-toggle>
     </mat-button-toggle-group>
   </ng-container>
       

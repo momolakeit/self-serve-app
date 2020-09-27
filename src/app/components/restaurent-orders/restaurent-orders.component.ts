@@ -3,8 +3,6 @@ import { KitchenService } from '../../services/kitchen.service';
 import { RestaurantTableDTO } from '../../models/restaurant-table-dto'
 import { BillDTO } from '../../models/bill-dto';
 import { environment } from '../../../environments/environment'
-import { timer } from 'rxjs';
-import { OrderItemDTO } from 'src/app/models/order-item-dto';
 
 @Component({
   selector: 'app-restaurent-orders',
@@ -57,10 +55,8 @@ export class RestaurentOrdersComponent implements OnInit {
   setNumberOfItemInTable = function (table,orderItem,bill ): void{
     if(orderItem.orderStatus!="READY"){
       if(table.nombreItemParTable==0){
-        console.log("yioooooooo");
         bill.isBillEmpty =false;
       }
-      console.log("tabarnakkkk");
       table.nombreItemParTable = table.nombreItemParTable +1;
     }
   }
