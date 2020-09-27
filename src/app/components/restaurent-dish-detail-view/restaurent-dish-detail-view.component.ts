@@ -22,8 +22,16 @@ export class RestaurentDishDetailViewComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.isReady);
     this.imgUrl = environment.baseImgPath;
+    var today = new Date();
+    console.log(today.getTime());
+    console.log(this.nombreDeMinuteRequis);
+    localStorage.setItem(this.orderItem.id.toString(),Math.round((Date.parse(this.orderItem.tempsDePreparation.toString())-today.getTime())/60000).toString());
+    this.nombreDeMinuteRequis = this.orderItem.product.tempsDePreparation;
     if(localStorage.getItem(this.orderItem.id.toString())==null){
-      localStorage.setItem(this.orderItem.id.toString(),this.nombreDeMinuteRequis.toString());
+      console.log(Math.round((Date.parse(this.orderItem.tempsDePreparation.toString())-today.getTime())/60000).toString())
+      this.nombreDeMinuteRequis = parseInt(localStorage.getItem(this.orderItem.id.toString()));
+      console.log(this.nombreDeMinuteRequis);
+     // localStorage.setItem(this.orderItem.id.toString(),this.nombreDeMinuteRequis.toString());
     }
     this.setUpTimeout();
     this.changeOrderStatus();
@@ -32,6 +40,7 @@ export class RestaurentDishDetailViewComponent implements OnInit {
     var source = timer(1000, 1000).subscribe(val => {
       if (parseInt(localStorage.getItem(this.orderItem.id.toString())) == 0) {
         this.nombreDeMinutesSur100 =0;
+        this.nombreDeMinuteRestant =0;
         source.unsubscribe();
       }
       else {
@@ -45,6 +54,7 @@ export class RestaurentDishDetailViewComponent implements OnInit {
   }
   addTime = function (): void {
     this.nombreDeMinuteRestant =  parseInt(localStorage.getItem(this.orderItem.id.toString()));
+    this.kitchenService.postMoreTimeForOrder(this.orderItem,5).subscribe();
     if (this.nombreDeMinuteRestant >= this.nombreDeMinuteRequis) {
       this.nombreDeMinuteRestant = this.nombreDeMinuteRequis;
     }

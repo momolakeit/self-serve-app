@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { timer } from 'rxjs';
 import { OrderItemDTO } from 'src/app/models/order-item-dto';
-import { BillDTO} from '../../models/bill-dto'
+import { BillDTO } from '../../models/bill-dto'
+import { BillService } from '../../services/bill.service'
 
 @Component({
   selector: 'app-client-request-list',
@@ -9,20 +11,28 @@ import { BillDTO} from '../../models/bill-dto'
 })
 export class ClientRequestListComponent implements OnInit {
 
-  constructor() { }
-  billDTO : BillDTO
-  orderItemToPassToModal :OrderItemDTO
-  listeTempsRestant =[];
+  constructor(private billService: BillService) { }
+  billDTO: BillDTO
+  orderItemToPassToModal: OrderItemDTO
+  listeTempsRestant = [];
 
 
   ngOnInit(): void {
-    this.billDTO = JSON.parse(localStorage.getItem("ongoingBill"));
-    this.billDTO.orderItems.forEach(orderItem =>{
-      this.listeTempsRestant.push(orderItem.product.tempsDePreparation);
+    this.setUpTimeout();
+  }
+
+  setUpTimeout = function (): void {
+    var source = timer(1000, 50000).subscribe(val => {
+      var billDTO = JSON.parse(localStorage.getItem("ongoingBill"));
+      this.billService.getBill(billDTO).subscribe(data => {
+        this.billDTO = data;
+        console.log(data);
+        console.log(this.billDTO);
+      })
     });
   }
 
-  changeOrderItemToPassToModal =function (orderItemDTO:OrderItemDTO) : void {
+  changeOrderItemToPassToModal = function (orderItemDTO: OrderItemDTO): void {
     console.log("/***************************************salope*********************************************/");
     console.log(orderItemDTO);
     this.orderItemToPassToModal = orderItemDTO;
