@@ -18,6 +18,11 @@ export class BillService {
      return returnValue;
   }
 
+  getBill(billDTO :BillDTO):Observable<BillDTO>{
+    const returnValue  = this.http.post<BillDTO>(`${environment.billUrl}/getBill`,{billId: billDTO.id});
+    return returnValue;
+ }
+
   makeOrder(product :ProductDTO) : Observable<BillDTO>{
     this.billDTO =JSON.parse(localStorage.getItem("ongoingBill"));
     return this.postNewOrder(this.billDTO,"1",product).pipe(

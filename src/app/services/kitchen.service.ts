@@ -19,7 +19,9 @@ export class KitchenService {
   postOrderItemStatusReady(orderItemDTO:OrderItemDTO):Observable<OrderItemDTO>{
     return this.http.post<OrderItemDTO>(`${environment.kitchenUrl}/changeOrderItemStatus`,{orderItemDTO :JSON.stringify(orderItemDTO)});
   }
-
+  postMoreTimeForOrder(orderItemDTO :OrderItemDTO,tempsAjoute :number): Observable<OrderItemDTO>{
+    return this.http.post<OrderItemDTO>(`${environment.kitchenUrl}/changeOrderItemTime`,{orderItemId:orderItemDTO.id,tempsAjoute:tempsAjoute});
+  }
   
   getAllRestaurantTables() :Observable<[RestaurantTableDTO]>{
     const restaurantId =2;
@@ -28,7 +30,7 @@ export class KitchenService {
         console.log(response);
         return response;
       }));
-  }
+  } 
   setOrderItemReady(orderItemDTO :OrderItemDTO) :Observable<OrderItemDTO>{
     const restaurantId =2;
     return this.postOrderItemStatusReady(orderItemDTO).pipe(
