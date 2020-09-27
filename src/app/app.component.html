@@ -10,13 +10,43 @@
 </div>
 
 
-<footer class="fixed-bottom" *ngIf="isConnected()">
-  <div class="btn-group" role="group" aria-label="Basic example">
-    <button type="button" class="btn btn-secondary" routerLink="paymentChoice"><img src="../assets/receipt.png"
+<footer class="fixed-bottom">
+  <!--CLIENT VIEW-->
+  <ng-container *ngIf="false" >
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-secondary" routerLink="paymentChoice"><img src="../assets/receipt.png"
         alt="payment" class="img-fluid" width="35%"></button>
-    <button type="button" class="btn btn-secondary" routerLink="menu"><img src="../assets/dinner.png" alt="menu"
-        class="img-fluid" width="35%"> </button>
-    <button type="button" class="btn btn-secondary" routerLink="waiter"><img src="../assets/waiter.png" alt="waiter"
-        class="img-fluid" width="35%"></button>
-  </div>
+        <button type="button" class="btn btn-secondary" routerLink="menu"><img src="../assets/dinner.png" alt="menu"
+          class="img-fluid" width="35%"> </button>
+          <button type="button" class="btn btn-secondary" routerLink="waiter"><img src="../assets/waiter.png" alt="waiter"
+            class="img-fluid" width="35%"></button>
+          </div>
+  </ng-container>
+  <ng-container *ngIf="false">
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
+      <mat-button-toggle value="bold" class="w-100"><mat-icon>payment</mat-icon></mat-button-toggle>
+      <mat-button-toggle value="italic" class="w-100"><mat-icon>restaurant_menu</mat-icon></mat-button-toggle>
+      <mat-button-toggle value="underline" class="w-100"><mat-icon>room_service</mat-icon></mat-button-toggle>
+    </mat-button-toggle-group>
+  </ng-container>
+
+  <!--WAITER AND COOK VIEW-->
+  <ng-container>
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
+      <mat-button-toggle value="italic" class="w-100"><mat-icon>receipt_long</mat-icon></mat-button-toggle>
+      <mat-button-toggle value="underline" class="w-100"><mat-icon matBadge="15" matBadgeColor="warn" matBadgeOverlap="true">room_service</mat-icon></mat-button-toggle>
+    </mat-button-toggle-group>
+  </ng-container>
+      
+  <!--ADMIN VIEW-->
+  <ng-container *ngIf="false">
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-secondary" routerLink="paymentChoice"><img src="../assets/receipt.png"
+        alt="payment" class="img-fluid" width="35%"></button>
+        <button type="button" class="btn btn-secondary" routerLink="menu"><img src="../assets/dinner.png" alt="menu"
+          class="img-fluid" width="35%"> </button>
+          <button type="button" class="btn btn-secondary" routerLink="waiter"><img src="../assets/waiter.png" alt="waiter"
+            class="img-fluid" width="35%"></button>
+          </div>
+  </ng-container>
 </footer>
