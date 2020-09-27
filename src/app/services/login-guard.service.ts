@@ -11,10 +11,12 @@ export class LoginGuardService {
   constructor(private authService: AuthService, private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.authService.isAuthenticated())
+    if (this.authService.isAuthenticated()){
+      this.router.navigate(['/not-found']);
       return false;
+    }
     else {
-      this.router.navigate(['/not-found'])
+      return true;
     }
   }
 }
