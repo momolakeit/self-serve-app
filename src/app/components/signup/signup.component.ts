@@ -1,3 +1,4 @@
+import { error } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -43,7 +44,12 @@ export class SignupComponent implements OnInit {
         role: 'client'
       }
 
-      this.authentificationService.signup(signUpForm).subscribe(() => this.router.navigate(['login']));
+      this.authentificationService.signup(signUpForm).subscribe(() => {
+        this.router.navigate(['login']);
+      },error =>{
+        console.log(error);
+        
+      })
     }
   }
 
