@@ -1,15 +1,15 @@
-<div class="container text-white text-center ">
-    <h3 class="pt-4">CHOOSE PAYMENT METHOD</h3>
+<div class="container  text-center ">
+    <h3 class="pt-4 ">CHOOSE PAYMENT METHOD</h3>
     <div class="row">
         <div class="col-sm-6 text-center">
-            <button class="btn  text-white  w-100" data-toggle="modal" data-target="#cardPaymentModalLabel"
-                style="background-color: #D11242; border: none; height: 50px;">PAY NOW</button>
+            <button class="btn bg-success  text-white  w-100" mat-button data-toggle="modal" data-target="#cardPaymentModalLabel"
+                style="border: none; height: 50px;">PAY NOW</button>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-6 text-center">
-            <button class="btn  text-white mt-4 w-100" data-toggle="modal" data-target="#waiterArrivalModal"
-                style="background-color: #D11242; border: none; height: 50px;">REQUEST TERMINAL</button>
+            <button class="btn bg-success  text-white mt-4 w-100" mat-button data-toggle="modal" data-target="#waiterArrivalModal"
+                style=" border: none; height: 50px;">REQUEST TERMINAL</button>
         </div>
     </div>
 </div>
@@ -17,22 +17,21 @@
 <div class="modal fade" id="cardPaymentModalLabel" tabindex="-1" aria-labelledby="cardPaymentModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content bg-dark text-white">
+        <div class="modal-content ">
             <app-payment-form></app-payment-form>
         </div>
     </div>
+</div>
 
 
     <div class="modal fade" id="waiterArrivalModal" tabindex="-1" aria-labelledby="waiterArrivalModal"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content bg-dark text-white">
-                <div class="modal-header text-center">
-                    <h5 class="modal-title " id="waiterArrivalModalLabel">THE WAITER IS ON HIS/HER WAY</h5>
-
+            <div class="modal-content text-center ">
+                <div class="modal-header">
+                    <h3 class="modal-title " id="waiterArrivalModalLabel">THE WAITER IS ON HIS/HER WAY</h3>
                 </div>
-
-                <div class="modal-footer d-flex justify-content-between bg-dark">
+                <div class="modal-footer d-flex justify-content-between">
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-6 text-center">
