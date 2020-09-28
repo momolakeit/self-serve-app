@@ -1,65 +1,45 @@
 <div>
-    <div style="border-bottom: 2px solid white;" class="pt-3 mb-2">
-        <h1 style="font-size:larger; " class="text-center text-white">SPECIAUX</h1>
+    <div class=" mb-2">
+        <h1 style="font-size:larger; " class="text-center text-black">SPECIAUX</h1>
     </div>
-    <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
+    <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel" style="box-shadow: 10px 10px 61px -16px rgba(0,0,0,0.75);">
         <div class="carousel-inner ">
             <ng-container *ngIf='menu'>
                 <ng-container *ngFor="let product of menu.speciaux; let i = index">
                     <div *ngIf="i =='0';else nonActive" class="carousel-item active">
-                        <div class="container mat-elevation-z8 mb-3 pb-2 w-75">
-                            <h1 class="text-center text-white">{{product.name}}</h1>
-                            <div class="row">
-                                <div class="col-12">
-                                    <img [src]="listeUrlImagesSpeciaux[i]"
-                                        class="img-fluid border border-white text-center" alt="image">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <p class="text-white">Prix: {{product.prix}}$</p>
-                                    <p class="text-white">Description: </p>
-                                    <p class="text-white">{{product.description}}</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <button class="btn btn-success w-25 float-right"
-                                        (click)="changeProductToSeeDetail(product)" data-toggle="modal"
-                                        data-target="#exampleModal">
-                                        add
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <mat-card class="example-card">
+                            <mat-card-header>
+                                <div mat-card-avatar class="example-header-image"></div>
+                                <mat-card-title>{{product.name}}</mat-card-title>
+                            </mat-card-header>
+                            <img mat-card-image [src]="listeUrlImagesSpeciaux[i]">
+                            <mat-card-content>
+                                <p>Prix: {{product.prix}}$</p>
+                            </mat-card-content>
+                            <mat-card-actions>
+                                <button (click)="changeProductToSeeDetail(product)" data-toggle="modal"
+                                    data-target="#exampleModal" class="bg-success w-100 text-white"
+                                    mat-button>ADD</button>
+                            </mat-card-actions>
+                        </mat-card>
                     </div>
                     <ng-template #nonActive>
                         <div class="carousel-item ">
-                            <div class="container mat-elevation-z8 mb-3 pb-2 w-75">
-                                <h1 class="text-center text-white">{{product.name}}</h1>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <img [src]="listeUrlImagesSpeciaux[i]"
-                                            class="img-fluid border border-white text-center" alt="image">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <p class="text-white">Prix: {{product.prix}}$</p>
-                                        <p class="text-white">Description: </p>
-                                        <p class="text-white">{{product.description}}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <button class="btn btn-success w-25 float-right"
-                                            (click)="changeProductToSeeDetail(product)" data-toggle="modal"
-                                            data-target="#exampleModal">
-                                            add
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <mat-card class="example-card">
+                                <mat-card-header>
+                                    <div mat-card-avatar class="example-header-image"></div>
+                                    <mat-card-title>{{product.name}}</mat-card-title>
+                                </mat-card-header>
+                                <img mat-card-image [src]="listeUrlImagesSpeciaux[i]">
+                                <mat-card-content>
+                                    <p>Prix: {{product.prix}}$</p>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <button (click)="changeProductToSeeDetail(product)" data-toggle="modal"
+                                        data-target="#exampleModal" class="bg-success w-100 text-white"
+                                        mat-button>ADD</button>
+                                </mat-card-actions>
+                            </mat-card>
                         </div>
                     </ng-template>
                 </ng-container>
@@ -76,67 +56,47 @@
     </div>
 </div>
 <div>
-    <div style="border-bottom: 2px solid white;" class="pt-3">
-        <h1 style="font-size:larger; " class="text-center text-white">CHOIX DU CHEF</h1>
+    <div style="border-bottom: 2px solid white;" class="mt-4 pt-3">
+        <h1 style="font-size:larger; " class="text-center text-black">CHOIX DU CHEF</h1>
     </div>
-    <div id="carouselExampleInterval2" class="carousel slide mb-4" data-ride="carousel">
+    <div id="carouselExampleInterval2" class="carousel slide mb-4" style="box-shadow: 10px 10px 61px -16px rgba(0,0,0,0.75);" data-ride="carousel">
         <div class="carousel-inner">
             <ng-container *ngIf='menu'>
                 <ng-container *ngFor="let product of menu.speciaux; let i = index">
                     <div *ngIf="i =='0';else nonActive" class="carousel-item active">
-                        <div class="container mat-elevation-z8 mb-3 pb-2 w-75">
-                            <h1 class="text-center text-white">{{product.name}}</h1>
-                            <div class="row">
-                                <div class="col-12">
-                                    <img [src]="listeUrlImagesSpeciaux[i]"
-                                        class="img-fluid border border-white text-center" alt="image">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <p class="text-white">Prix: {{product.prix}}$</p>
-                                    <p class="text-white">Description: </p>
-                                    <p class="text-white">{{product.description}}</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <button class="btn btn-success w-25 float-right"
-                                        (click)="changeProductToSeeDetail(product)" data-toggle="modal"
-                                        data-target="#exampleModal">
-                                        add
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <mat-card class="example-card">
+                            <mat-card-header>
+                                <div mat-card-avatar class="example-header-image"></div>
+                                <mat-card-title>{{product.name}}</mat-card-title>
+                            </mat-card-header>
+                            <img mat-card-image [src]="listeUrlImagesSpeciaux[i]">
+                            <mat-card-content>
+                                <p>Prix: {{product.prix}}$</p>
+                            </mat-card-content>
+                            <mat-card-actions>
+                                <button (click)="changeProductToSeeDetail(product)" data-toggle="modal"
+                                    data-target="#exampleModal" class="bg-success w-100 text-white"
+                                    mat-button>ADD</button>
+                            </mat-card-actions>
+                        </mat-card>
                     </div>
                     <ng-template #nonActive>
                         <div class="carousel-item ">
-                            <div class="container mat-elevation-z8 mb-3 pb-2 w-75">
-                                <h1 class="text-center text-white">{{product.name}}</h1>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <img [src]="listeUrlImagesSpeciaux[i]"
-                                            class="img-fluid border border-white text-center" alt="image">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <p class="text-white">Prix: {{product.prix}}$</p>
-                                        <p class="text-white">Description: </p>
-                                        <p class="text-white">{{product.description}}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <button class="btn btn-success w-25 float-right"
-                                            (click)="changeProductToSeeDetail(product)" data-toggle="modal"
-                                            data-target="#exampleModal">
-                                            add
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <mat-card class="example-card">
+                                <mat-card-header>
+                                    <div mat-card-avatar class="example-header-image"></div>
+                                    <mat-card-title>{{product.name}}</mat-card-title>
+                                </mat-card-header>
+                                <img mat-card-image [src]="listeUrlImagesSpeciaux[i]">
+                                <mat-card-content>
+                                    <p>Prix: {{product.prix}}$</p>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <button (click)="changeProductToSeeDetail(product)" data-toggle="modal"
+                                        data-target="#exampleModal" class="bg-success w-100 text-white"
+                                        mat-button>ADD</button>
+                                </mat-card-actions>
+                            </mat-card>
                         </div>
                     </ng-template>
                 </ng-container>
@@ -153,82 +113,64 @@
     </div>
 </div>
 
-
 <!--MENU TITLE + IMAGE + LIST OF ITEMS-->
-<div class="accordion" id="accordionExample" class="mb-4">
-    <div class="card" style="border: none;">
-        <div class="card-header" id="headingOne" style="background-color: #D11242;">
-            <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-center text-white" type="button" data-toggle="collapse"
-                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    DEJEUNER
-                </button>
-            </h2>
-        </div>
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-            <div class="card-body bg-dark text-white">
-                <ul style="list-style-type: none;" class=" p-0">
-                    <ng-container *ngIf='menu'>
-                        <li style="border-bottom: 2px solid white;"
-                            *ngFor="let product of  menu.dejeuner; index as i; trackBy: trackByFn " class="mb-2 pb-1">
-                            <h1 style="font-size: medium;" class="mb-0">{{product.name}}</h1>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p style="font-size: small;" class="m-0 p-0">{{product.description}}</p>
-                                <button class="btn btn-success w-25" (click)="changeProductToSeeDetail(product)"
-                                    data-toggle="modal" data-target="#exampleModal">
-                                    add
-                                </button>
-                            </div>
-                        </li>
-                    </ng-container>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="card" style="border: none;">
-        <div class="card-header" id="headingOne" style="background-color: #D11242;">
-            <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-center text-white" type="button" data-toggle="collapse"
-                    data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    DINER
-                </button>
-            </h2>
-        </div>
-        <div id="collapseTwo" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-            <div class="card-body bg-dark text-white">
-                <ul style="list-style-type: none;" class=" p-0">
-                    <ng-container *ngIf='menu'>
-                        <li style="border-bottom: 2px solid white;"
-                            *ngFor="let product of  menu.diner; index as i; trackBy: trackByFn " class="mb-2 pb-1">
-                            <h1 style="font-size: medium;" class="mb-0">{{product.name}}</h1>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p style="font-size: small;" class="m-0 p-0">{{product.description}}</p>
-                                <button class="btn btn-success w-25" (click)="changeProductToSeeDetail(product)"
-                                    data-toggle="modal" data-target="#exampleModal">
-                                    add
-                                </button>
-                            </div>
-                        </li>
-                    </ng-container>
+<mat-accordion>
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                DEJEUNER
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ul style="list-style-type: none;" class=" p-0">
+            <ng-container *ngIf='menu'>
+                <li style="border-bottom: 2px solid white;"
+                    *ngFor="let product of  menu.dejeuner; index as i; trackBy: trackByFn " class="mb-2 pb-1">
+                    <h1 style="font-size: medium;" class="mb-0">{{product.name}}</h1>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p style="font-size: small;" class="m-0 p-0">{{product.description}}</p>
+                        <button class="btn btn-success w-25" (click)="changeProductToSeeDetail(product)"
+                            data-toggle="modal" data-target="#exampleModal">
+                            add
+                        </button>
+                    </div>
+                </li>
+            </ng-container>
+        </ul>
+    </mat-expansion-panel>
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                DINER
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ul style="list-style-type: none;" class=" p-0">
+            <ng-container *ngIf='menu'>
+                <li style="border-bottom: 2px solid white;"
+                    *ngFor="let product of  menu.diner; index as i; trackBy: trackByFn " class="mb-2 pb-1">
+                    <h1 style="font-size: medium;" class="mb-0">{{product.name}}</h1>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p style="font-size: small;" class="m-0 p-0">{{product.description}}</p>
+                        <button class="btn btn-success w-25" (click)="changeProductToSeeDetail(product)"
+                            data-toggle="modal" data-target="#exampleModal">
+                            add
+                        </button>
+                    </div>
+                </li>
+            </ng-container>
+        </ul>
+    </mat-expansion-panel>
 
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
+</mat-accordion>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content" *ngIf='productToSeeDetail'>
-            <div class="modal-body bg-dark" *ngFor="let productDTO of menu.dejeuner; index as i;">
-                <div class="modal-header text-center p-0">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <app-dish-detail [productDTO]='productToSeeDetail'></app-dish-detail>
+            <div class="modal-header text-center p-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-
+            <app-dish-detail [productDTO]='productToSeeDetail'></app-dish-detail>
         </div>
     </div>
 </div>
