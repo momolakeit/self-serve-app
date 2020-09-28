@@ -19,7 +19,7 @@ export class DishDetailComponent implements OnInit {
   imgUrl :string
 
   ngOnInit(): void {
-    //console.log(this.productDTO.imgFileDTO)
+    console.log(this.productDTO)
     this.imgUrl = environment.baseImgPath + this.productDTO.imgFileDTO.id;
   }
   updateCurrentBill = function (product :ProductDTO): void {

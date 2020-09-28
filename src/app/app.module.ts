@@ -21,6 +21,7 @@ import { AdminProductManagmentComponent } from './components/admin-product-manag
 import { ProductFormComponent } from './components/product-form/product-form.component';
 import { RecipeSocketComponent } from './components/recipe-socket/recipe-socket.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { MatCarouselModule } from '@ngbmodule/material-carousel';
 import { ContactFormComponent } from './components/contact-form/contact-form.component'
 import { HttpClientModule } from '@angular/common/http';
 import { MenuproductComponent } from './components/menuproduct/menuproduct.component';
@@ -61,6 +62,7 @@ import { WaiterRequestListComponent } from './components/waiter-request-list/wai
   imports: [
     CommonModule,
     BrowserModule,
+    MatCarouselModule.forRoot(),
     AppRoutingModule,
     BrowserAnimationsModule,
     DemoMaterialModule,
