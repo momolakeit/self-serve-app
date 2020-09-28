@@ -19,9 +19,16 @@
                         </mat-radio-button>
                     </mat-radio-group>
                 </ng-container>
+
+                <mat-form-field class="w-100" >
+                    <mat-label><h4>Requetes Specials</h4></mat-label>
+                    <textarea  matInput cdkTextareaAutosize [(ngModel)]="commentaire" #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="5"></textarea>
+                </mat-form-field>
             </mat-card-content>
             <mat-card-actions>
-                <button data-dismiss="modal" (click)="updateCurrentBill(productDTO)" mat-raised-button class="btn-block bg-success text-white">Order</button>
+                <button data-dismiss="modal" (click)="updateCurrentBill(productDTO)" mat-raised-button
+                    class="btn-block bg-success text-white">Order</button>
             </mat-card-actions>
         </mat-card>
     </ng-container>

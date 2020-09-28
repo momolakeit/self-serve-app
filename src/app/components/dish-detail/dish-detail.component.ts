@@ -17,13 +17,16 @@ export class DishDetailComponent implements OnInit {
   
   constructor(private currentBill:CurrentBill,private billService :BillService) { }
   imgUrl :string
+  commentaire:string =""
 
   ngOnInit(): void {
     console.log(this.productDTO)
     this.imgUrl = environment.baseImgPath + this.productDTO.imgFileDTO.id;
   }
+
+  
   updateCurrentBill = function (product :ProductDTO): void {
-   this.billService.makeOrder(product).subscribe(data => 
+   this.billService.makeOrder(product,this.commentaire).subscribe(data => 
     localStorage.setItem("ongoingBill",JSON.stringify(data)));
   };
 
