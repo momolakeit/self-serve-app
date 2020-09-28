@@ -1,7 +1,7 @@
-<div class="container" *ngIf ="billDTO">
+<div class="container" *ngIf="billDTO">
     <div class="row">
-        <div class="col-sm-6 text-center text-white mb-5">
-            <h3>MY ORDERS</h3>
+        <div class="col-sm-6 float-left  mt-3 mb-2">
+            <h2 class="font-weight-normal">MY ORDERS</h2>
         </div>
     </div>
     <div class="row mt-3" *ngFor="let orderItem of billDTO.orderItems;let i = index">

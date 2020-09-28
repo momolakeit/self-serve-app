@@ -13,8 +13,8 @@ export class BillService {
   constructor(private http:HttpClient) { }
   billDTO :BillDTO
 
-  postNewOrder(billDTO :BillDTO,restaurentTableId :String,product:ProductDTO):Observable<BillDTO>{
-     const returnValue  = this.http.post<BillDTO>(`${environment.billUrl}/makeOrder`,{billDTO: JSON.stringify(billDTO),restaurentTableId:restaurentTableId,productDTO:JSON.stringify(product),guestUsername:"client1@mail.com"});
+  postNewOrder(billDTO :BillDTO,restaurentTableId :String,product:ProductDTO,commentaire:String):Observable<BillDTO>{
+     const returnValue  = this.http.post<BillDTO>(`${environment.billUrl}/makeOrder`,{billDTO: JSON.stringify(billDTO),restaurentTableId:restaurentTableId,productDTO:JSON.stringify(product),guestUsername:"client1@mail.com",commentaire:commentaire});
      return returnValue;
   }
 
@@ -23,9 +23,9 @@ export class BillService {
     return returnValue;
  }
 
-  makeOrder(product :ProductDTO) : Observable<BillDTO>{
+  makeOrder(product :ProductDTO,commentaire :String) : Observable<BillDTO>{
     this.billDTO =JSON.parse(localStorage.getItem("ongoingBill"));
-    return this.postNewOrder(this.billDTO,"1",product).pipe(
+    return this.postNewOrder(this.billDTO,"1",product,commentaire).pipe(
       map(response => {
         return response;
       }));

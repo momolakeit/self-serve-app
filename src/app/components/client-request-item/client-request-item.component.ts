@@ -26,9 +26,12 @@ export class ClientRequestItemComponent implements OnInit {
     var today = new Date();
     console.log(this.orderItemDTO);
     this.nombreDeMinuteRestant = Math.round((Date.parse(this.orderItemDTO.tempsDePreparation.toString()) - today.getTime()) / 60000);
-    this.nombreDeMinuteRestant = this.nombreDeMinuteRestant - 1;
-    this.nombreDeMinutesSur100 = (this.nombreDeMinuteRestant * 100) / this.nombreDeMinuteRequis;
-    localStorage.setItem(this.orderItemDTO.id.toString(), this.nombreDeMinuteRestant.toString());
+    if (this.nombreDeMinuteRestant > 0) {
+      this.nombreDeMinuteRestant = this.nombreDeMinuteRestant - 1;
+      this.nombreDeMinutesSur100 = (this.nombreDeMinuteRestant * 100) / this.nombreDeMinuteRequis;
+      localStorage.setItem(this.orderItemDTO.id.toString(), this.nombreDeMinuteRestant.toString());
+    }
+
   }
   sendOrderItemToDetail = function (): void {
     this.orderItemDetailChanged.emit(this.orderItemDTO);

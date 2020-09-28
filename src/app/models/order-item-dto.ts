@@ -7,6 +7,7 @@ export interface OrderItemDTO {
     product:ProductDTO;
     orderStatus:OrderStatus;
     prix:number;
+    commentaires:string;
     delaiDePreparation:Date;
     tempsDePreparation :Date;
     option:[OptionDTO]
