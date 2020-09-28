@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 const host = "localhost";
 const port = "8080";
+const rolePrefix = 'ROLE_';
 
 export const environment = {
   production: false,
@@ -18,6 +19,13 @@ export const environment = {
   baseImgPath:`http://${host}:${port}/product/getProductImg/`,
   kitchenUrl:`http://${host}:${port}/rest/kitchen`
 };
+
+export const roles={
+  owner: `${rolePrefix}OWNER`,
+  cook: `${rolePrefix}COOK`,
+  waiter: `${rolePrefix}WAITER`,
+  client: `${rolePrefix}CLIENT`,
+}
 
 /*
  * For easier debugging in development mode, you can import the following file

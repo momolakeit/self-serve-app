@@ -2,7 +2,7 @@
     <div class="row d-flex justify-content-center flex-column align-items-center col-10 col-lg-6 mx-auto" style="position: relative;top: 220px;">
         <button mat-raised-button class="m-2 w-100 btn-dark text-white" routerLink="../login">Login</button>
         <button mat-raised-button class="m-2 w-100 btn-dark text-white">Continue as guest</button>
-        <span class="text-black">Don't have an account yet? <a class="text-primary" routerLink="../sign-up">sign up</a></span>
+        <span class="text-black">Don't have an account yet? <a class="text-primary" [routerLink]="['../sign-up','client']">sign up</a></span>
     </div>
 
     

@@ -28,32 +28,18 @@ export class AppComponent {
   }
 
   isOwner() : boolean{
-    const expectedRole ="ROLE_OWNER";
-
-    const token = localStorage.getItem('token');
-    // decode the token to get its payload
-    const tokenPayload = decode(token);
-
-    return tokenPayload.role == expectedRole;
+    return this.authService.isOwner();
   }
 
   isWaiter():boolean{
-    const expectedRole ="ROLE_WAITER";
-
-    const token = localStorage.getItem('token');
-    // decode the token to get its payload
-    const tokenPayload = decode(token);
-
-    return tokenPayload.role == expectedRole;
+    return this.authService.isWaiter();
   }
 
   isClient():boolean{
-    const expectedRole ="ROLE_CLIENT";
+    return this.authService.isClient();
+  }
 
-    const token = localStorage.getItem('token');
-    // decode the token to get its payload
-    const tokenPayload = decode(token);
-
-    return tokenPayload.role == expectedRole;
+  isCook():boolean{
+    return this.authService.isCook();
   }
 }

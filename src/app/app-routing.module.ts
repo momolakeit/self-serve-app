@@ -22,21 +22,26 @@ import { LoginGuardService } from './services/login-guard.service';
 
 const routes: Routes = [
   {path: '', redirectTo: '/start', pathMatch: 'full'},
+  //all about authentification
   {path: 'start',canActivate:[LoginGuardService] ,component: StartComponent},
   {path: 'login',canActivate:[LoginGuardService] , component: LoginComponent},
-  {path: 'sign-up',canActivate:[LoginGuardService] , component: SignupComponent},
+  {path: 'sign-up/:role',canActivate:[LoginGuardService] , component: SignupComponent},
+
+  //all about clients
   {path: 'payment',canActivate:[AuthGuardService], component: PaymentComponent},
   {path: 'waiter',canActivate:[AuthGuardService], component: WaiterComponent},
-  {path: 'waiter-request',canActivate:[AuthGuardService], component: WaiterRequestListComponent},
+  {path: 'clientRequestList', component: ClientRequestListComponent},
   {path: 'dishDetail',canActivate:[AuthGuardService], component: DishDetailComponent},
+  {path: 'menu',canActivate:[AuthGuardService], component: MenuComponent},
   {path: 'paymentChoice',canActivate:[AuthGuardService], component: PaymentChoiceComponent},
   {path: 'paymentForm',canActivate:[AuthGuardService], component: PaymentFormComponent},
-  {path: 'clientRequestList', component: ClientRequestListComponent},
+  //all about waiter
+  {path: 'waiter-request',canActivate:[AuthGuardService], component: WaiterRequestListComponent},
   {path: 'tableDetail',canActivate:[AuthGuardService], component: TableDetailPageComponent},
   {path: 'restaurentOrders',canActivate:[AuthGuardService], component: RestaurentOrdersComponent},
   {path: 'contactForm',canActivate:[AuthGuardService], component: ContactFormComponent},
-  {path: 'not-found', component: NotFoundComponent},
-  {path: 'menu',canActivate:[AuthGuardService], component: MenuComponent},
+  {path: 'not-found',canActivate:[AuthGuardService], component: NotFoundComponent},
+  //all about admin
   {path: 'adminProductManagment',canActivate:[AuthGuardService,RoleGuardService], component: AdminProductManagmentComponent},
   {path: '**', redirectTo: '/not-found'}
 ];
