@@ -12,48 +12,34 @@
 
 <footer class="fixed-bottom">
   <!--CLIENT VIEW-->
-  <ng-container *ngIf="false" >
-    <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-secondary" routerLink="paymentChoice"><img src="../assets/receipt.png"
-        alt="payment" class="img-fluid" width="35%"></button>
-        <button type="button" class="btn btn-secondary" routerLink="menu"><img src="../assets/dinner.png" alt="menu"
-          class="img-fluid" width="35%"> </button>
-          <button type="button" class="btn btn-secondary" routerLink="waiter"><img src="../assets/waiter.png" alt="waiter"
-            class="img-fluid" width="35%"></button>
-          </div>
-  </ng-container>
-  <ng-container >
+  <ng-container *ngIf="isClient() && isConnected()" >
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
-      <mat-button-toggle value="bold" class="w-100" routerLink="paymentChoice" ><mat-icon>payment</mat-icon></mat-button-toggle>
-      <mat-button-toggle value="italic" class="w-100" routerLink="menu"><mat-icon>restaurant_menu</mat-icon></mat-button-toggle>
-      <mat-button-toggle value="underline" class="w-100"><mat-icon>room_service</mat-icon></mat-button-toggle>
+      <mat-button-toggle value="bold" class="w-100" routerLink="paymentChoice"><mat-icon>receipt_long</mat-icon></mat-button-toggle>
+      <mat-button-toggle value="italic" class="w-100"  routerLink="menu"><mat-icon>restaurant_menu</mat-icon></mat-button-toggle>
+      <mat-button-toggle value="underline" class="w-100"  routerLink="waiter"><mat-icon>room_service</mat-icon></mat-button-toggle>
     </mat-button-toggle-group>
   </ng-container>
 
   <!--WAITER VIEW-->
-  <ng-container *ngIf="false">
+  <ng-container *ngIf="isWaiter() && isConnected()">
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
       <mat-button-toggle value="italic" class="w-100"><mat-icon>receipt_long</mat-icon></mat-button-toggle>
       <mat-button-toggle value="underline" class="w-100"><mat-icon matBadge="15" matBadgeColor="warn" matBadgeOverlap="true">room_service</mat-icon></mat-button-toggle>
     </mat-button-toggle-group>
   </ng-container>
 
-  <!--WAITER VIEW-->
-  <ng-container *ngIf="false">
+  <!--COOK VIEW-->
+  <ng-container *ngIf="isCook() && isConnected()">
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
       <mat-button-toggle value="italic" class="w-100"><mat-icon matBadge="15" matBadgeColor="warn" matBadgeOverlap="true">receipt_long</mat-icon></mat-button-toggle>
     </mat-button-toggle-group>
   </ng-container>
-      
+
   <!--ADMIN VIEW-->
-  <ng-container *ngIf="false">
-    <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-secondary" routerLink="paymentChoice"><img src="../assets/receipt.png"
-        alt="payment" class="img-fluid" width="35%"></button>
-        <button type="button" class="btn btn-secondary" routerLink="menu"><img src="../assets/dinner.png" alt="menu"
-          class="img-fluid" width="35%"> </button>
-          <button type="button" class="btn btn-secondary" routerLink="waiter"><img src="../assets/waiter.png" alt="waiter"
-            class="img-fluid" width="35%"></button>
-          </div>
+  <ng-container *ngIf="isOwner() && isConnected()">
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
+      <mat-button-toggle value="italic" class="w-100"><mat-icon>account_circle</mat-icon></mat-button-toggle>
+      <mat-button-toggle value="underline" class="w-100"><mat-icon>settings</mat-icon></mat-button-toggle>
+    </mat-button-toggle-group>
   </ng-container>
 </footer>
