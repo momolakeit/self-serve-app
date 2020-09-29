@@ -21,13 +21,13 @@ export class PaymentFormComponent implements OnInit {
   cardErrors;
   clientSecret;
   isError: boolean;
-  errorMsg :string;
+  errorMsg: string;
   loading = false;
   confirmation;
 
 
   ngOnInit() {
-    this.isError=false;
+    this.isError = false;
     this.paymentService.getPaymentIntent().subscribe(data => {
       this.clientSecret = data
     });
@@ -36,7 +36,7 @@ export class PaymentFormComponent implements OnInit {
     this.card = elements.create("card");
     this.card.mount(".card-element");
   }
- 
+
   showSpinner = function (doShow: boolean): void {
     if (doShow) {
       // Disable the button and show a spinner
@@ -85,7 +85,7 @@ export class PaymentFormComponent implements OnInit {
       .then((result) => {
         if (result.error) {
           // Show error to your customer
-          this.isError=true;
+          this.isError = true;
           this.errorMsg = result.error.message;
           console.log(result.error)
           this.showSpinner(false);
@@ -93,7 +93,7 @@ export class PaymentFormComponent implements OnInit {
         } else {
           // The payment succeeded!
           console.log(result);
-          localStorage.setItem("ongoingBill",JSON.stringify({prixTotal :null,id :null ,date :null,billStatus: null,orderCustomer:null,orderItems :null, restaurant :null}));
+          localStorage.clear();
           this.showSuccess();
         }
       });
