@@ -20,6 +20,9 @@ export class ProductService {
   findAllProductFromMenu(menuId:number):Observable<[ProductDTO]>{
     return this.http.get<[ProductDTO]>(`${environment.productUrl}/menu/${menuId}`);
   }
+  findAllWaiterRequestProduct(menuId:number):Observable<[ProductDTO]>{
+    return this.http.get<[ProductDTO]>(`${environment.productUrl}/findWaiterRequestProducts/${menuId}`)
+  }
 
   create(productDTO:ProductDTO,id:number):Observable<ProductDTO>{
     return this.http.post<ProductDTO>(`${environment.productUrl}/${id}`,productDTO);

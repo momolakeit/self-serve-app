@@ -1,10 +1,10 @@
 <!--<div style="border-bottom: 2px solid white; border-top: 2px solid white;" class="pt-3">
     <h1 style="font-size:larger; " class="text-center text-white">NEED HELP ?</h1>
 </div>-->
-<div class="container">
+<div class="container" *ngIf="requestProductList">
     <div class="row">
-        <div class="col-sm-6 text-center mt-5">
-            <button mat-button class="btn text-white w-75 btn-dark">CALL WAITER</button>
+        <div class="col-sm-6 text-center mt-5" >
+            <button mat-button data-toggle="modal" data-target="#exampleModal" (click)="sendClientRequest(waiterCallProduct)" class="btn text-white w-75 btn-dark">CALL WAITER</button>
         </div>
     </div>
 
@@ -17,107 +17,23 @@
     <div class="row">
         <div class="col-sm-12 text-center ">
             <ul class="list-group list-group-flush ">
-                <li class="list-group-item">
+                <li class="list-group-item" *ngFor="let product of requestProductList;">
                     <div class="container">
                         <div class="row  align-items-center">
                             <div class="col p-0">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col pr-0">
-                                            <img src="../../../assets/sauce.png" style="width: 80% ;" alt="">
+                                            <img [src]="imgUrl +product.imgFileDTO.id" style="width: 80% ;" alt="">
                                         </div>
                                         <div class="col">
-                                            <p class="m-0 mt-2 align-middle">KETCHUP</p>
+                                            <p class="m-0 mt-2 align-middle">{{product.name}}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col ">
-                                <button mat-button class="btn text-white w-75 btn-dark">Request</button>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item ">
-                    <div class="container">
-                        <div class="row  align-items-center">
-                            <div class="col p-0">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col pr-0">
-                                            <img src="../../../assets/salt.png" style="width: 80% ;" alt="">
-                                        </div>
-                                        <div class="col">
-                                            <p class="m-0 mt-2 align-middle">SALT</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col ">
-                                <button mat-button class="btn text-white w-75 btn-dark">Request</button>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="container">
-                        <div class="row  align-items-center">
-                            <div class="col p-0">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col pr-0">
-                                            <img src="../../../assets/sugar.png" style="width: 80% ;" alt="">
-                                        </div>
-                                        <div class="col">
-                                            <p class="m-0 mt-2 align-middle">SUGAR</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col ">
-                                <button mat-button class="btn text-white w-75 btn-dark">Request</button>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="container">
-                        <div class="row  align-items-center">
-                            <div class="col p-0">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col pr-0">
-                                            <img src="../../../assets/knife.png" style="width: 80% ;" alt="">
-                                        </div>
-                                        <div class="col">
-                                            <p class="m-0 mt-2 align-middle">knife</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col ">
-                                <button mat-button class="btn text-white w-75 btn-dark">Request</button>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="container">
-                        <div class="row  align-items-center">
-                            <div class="col p-0">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col pr-0">
-                                            <img src="../../../assets/fork.png" style="width: 80% ;" alt="">
-                                        </div>
-                                        <div class="col">
-                                            <p class="m-0 mt-2 align-middle">FORK</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col ">
-                                <button mat-button class="btn text-white w-75 btn-dark">Request</button>
+                                <button data-toggle="modal" data-target="#exampleModal" (click)="sendClientRequest(product)" mat-button class="btn text-white w-75 btn-dark">Request</button>
                             </div>
                         </div>
                     </div>
@@ -126,4 +42,13 @@
         </div>
     </div>
 
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content" >
+            <div  style="height: 50px;">
+                <p class="mt-3 text-center">The waiter is on his/her way</p>
+            </div>
+        </div>
+    </div>
 </div>
