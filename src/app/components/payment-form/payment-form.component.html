@@ -13,7 +13,7 @@
                     <span id="button-text">Pay</span>
                     <span id="button-paymentSuceeded" class="hidden">Payment Succeded !</span>
                 </button>
-                <button id="closeCardModal" class="text-center hidden" style="background-color: #00F919;" data-dismiss="modal"> Close</button>
+                <button id="closeCardModal" (click)="changePage()" class="text-center hidden" style="background-color: #00F919;" data-dismiss="modal"> Close</button>
                 <p id="card-error" role="alert"></p>
                 <p class="result-message hidden">
                     Payment succeeded, see the result in your

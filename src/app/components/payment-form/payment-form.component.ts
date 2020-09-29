@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { PaymentService } from '../../services/payment.service';
+import {Router} from '@angular/router';
 @Component({
   selector: 'app-payment-form',
   templateUrl: './payment-form.component.html',
@@ -10,7 +11,7 @@ import { PaymentService } from '../../services/payment.service';
 })
 export class PaymentFormComponent implements OnInit {
 
-  constructor(private http: HttpClient, private paymentService: PaymentService) { }
+  constructor(private http: HttpClient, private paymentService: PaymentService,private router:Router) { }
 
   @Input() amount: number;
   @Input() description: string;
@@ -73,6 +74,9 @@ export class PaymentFormComponent implements OnInit {
     document.getElementById("submit").classList.add("hidden");
     document.getElementById("closeCardModal").classList.remove("hidden")
   };
+  changePage = function (): void{
+    this.router.navigateByUrl("/start");
+  }
   async handleForm(e) {
     e.preventDefault();
     this.showSpinner(true);

@@ -31,6 +31,10 @@ export class ClientRequestItemComponent implements OnInit {
       this.nombreDeMinutesSur100 = (this.nombreDeMinuteRestant * 100) / this.nombreDeMinuteRequis;
       localStorage.setItem(this.orderItemDTO.id.toString(), this.nombreDeMinuteRestant.toString());
     }
+    else{
+        this.nombreDeMinuteRestant =0;
+        this.nombreDeMinutesSur100 =0;
+    }
 
   }
   sendOrderItemToDetail = function (): void {
