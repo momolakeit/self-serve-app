@@ -3,6 +3,9 @@
     <div class="row">
         <div class="col-sm-6 mt-4">
             <h3 class="modal-title text-center " id="waiterArrivalModalLabel">Enter Credit Card Details</h3>
+            <div *ngIf="isError" class="text-center text-danger">
+                    {{errorMsg}}
+            </div>
             <form (submit)="handleForm($event)" class="w-75 mb-5">
                 <div class="card-element "  id="card-element"><!--Stripe.js injects the Card Element--></div>
                 <button id="submit" class="submit">

@@ -20,13 +20,14 @@ export class PaymentFormComponent implements OnInit {
   card;
   cardErrors;
   clientSecret;
-
+  isError: boolean;
+  errorMsg :string;
   loading = false;
   confirmation;
 
 
   ngOnInit() {
-
+    this.isError=false;
     this.paymentService.getPaymentIntent().subscribe(data => {
       this.clientSecret = data
     });
@@ -84,7 +85,11 @@ export class PaymentFormComponent implements OnInit {
       .then((result) => {
         if (result.error) {
           // Show error to your customer
+          this.isError=true;
+          this.errorMsg = result.error.message;
           console.log(result.error)
+          this.showSpinner(false);
+
         } else {
           // The payment succeeded!
           console.log(result);
