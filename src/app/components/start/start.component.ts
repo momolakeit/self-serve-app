@@ -39,11 +39,11 @@ export class StartComponent implements OnInit {
 
     //sign up guest and if success login guest
     this.authentificationService.signup(signUpForm).subscribe(() => {
-      this.loginGuest(signUpForm);
+      this.loginGuest(signInForm);
     }, error => {
 
       if (error.status == 200)
-        this.loginGuest(signUpForm);
+        this.loginGuest(signInForm);
 
       if (error.error == "Fail -> Email is already in use!")
         console.log('Username is already in use');

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ProductDTO } from '../models/product-dto';
@@ -11,53 +11,56 @@ import { MenuDTO } from '../models/menu-dto';
 })
 export class ProductService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  find(id:number):Observable<ProductDTO>{
+  find(id: number): Observable<ProductDTO> {
     return this.http.get<ProductDTO>(`${environment.productUrl}/${id}`);
   }
 
-  findAllProductFromMenu(menuId:number):Observable<[ProductDTO]>{
+  findAllProductFromMenu(menuId: number): Observable<[ProductDTO]> {
     return this.http.get<[ProductDTO]>(`${environment.productUrl}/menu/${menuId}`);
   }
-  findAllWaiterRequestProduct(menuId:number):Observable<[ProductDTO]>{
+  findAllWaiterRequestProduct(menuId: number): Observable<[ProductDTO]> {
     return this.http.get<[ProductDTO]>(`${environment.productUrl}/findWaiterRequestProducts/${menuId}`)
   }
 
-  create(productDTO:ProductDTO,id:number):Observable<ProductDTO>{
-    return this.http.post<ProductDTO>(`${environment.productUrl}/${id}`,productDTO);
+  create(productDTO: ProductDTO, id: number): Observable<ProductDTO> {
+    return this.http.post<ProductDTO>(`${environment.productUrl}/${id}`, productDTO);
   }
 
-  update(productDTO:ProductDTO):Observable<any>{
-    return this.http.put(`${environment.productUrl}`,productDTO);
+  update(productDTO: ProductDTO): Observable<any> {
+    return this.http.put(`${environment.productUrl}`, productDTO);
   }
 
-  delete(id:number):Observable<any>{
+  delete(id: number): Observable<any> {
     return this.http.delete(`${environment.productUrl}/${id}`);
   }
 
-  findMenuSpecial(menuDTO:MenuDTO):Observable<[ProductDTO]>{
-    return this.http.post<[ProductDTO]>(`${environment.productUrl}/findMenuSpecial`,{menuDTO:JSON.stringify(menuDTO)});
+  findMenuSpecial(menuDTO: MenuDTO): Observable<[ProductDTO]> {
+    return this.http.post<[ProductDTO]>(`${environment.productUrl}/findMenuSpecial`, { menuDTO: JSON.stringify(menuDTO) });
   }
 
-  findChoixDuChef(menuDTO:MenuDTO):Observable<[ProductDTO]>{
-    return this.http.post<[ProductDTO]>(`${environment.productUrl}/findChoixDuChef`,{menuDTO:JSON.stringify(menuDTO)});
+  findChoixDuChef(menuDTO: MenuDTO): Observable<[ProductDTO]> {
+    return this.http.post<[ProductDTO]>(`${environment.productUrl}/findChoixDuChef`, { menuDTO: JSON.stringify(menuDTO) });
   }
 
-  setProductSpecial(productDTO:ProductDTO):Observable<ProductDTO>{
-    return this.http.post<ProductDTO>(`${environment.productUrl}/setProductSpecial`,{productDTO:JSON.stringify(productDTO)});
+  setProductSpecial(productDTO: ProductDTO): Observable<ProductDTO> {
+    return this.http.post<ProductDTO>(`${environment.productUrl}/setProductSpecial`, { productDTO: JSON.stringify(productDTO) });
   }
 
-  removeProductType(productDTO:ProductDTO):Observable<ProductDTO>{
-    return this.http.post<ProductDTO>(`${environment.productUrl}/deleteProductType`,{productDTO:JSON.stringify(productDTO)});
+  removeProductType(productDTO: ProductDTO): Observable<ProductDTO> {
+    return this.http.post<ProductDTO>(`${environment.productUrl}/deleteProductType`, { productDTO: JSON.stringify(productDTO) });
   }
 
-  setProductChefChoice(productDTO:ProductDTO):Observable<ProductDTO>{
-    return this.http.post<ProductDTO>(`${environment.productUrl}/setMenuChefChoice`,{productDTO:JSON.stringify(productDTO)});
+  setProductChefChoice(productDTO: ProductDTO): Observable<ProductDTO> {
+    return this.http.post<ProductDTO>(`${environment.productUrl}/setMenuChefChoice`, { productDTO: JSON.stringify(productDTO) });
   }
 
-  saveProductImage(file:FormData,productDTO:ProductDTO):Observable<ProductDTO>{
-    return this.http.post<ProductDTO>(`${environment.productUrl}/saveProductImg`,{file,productDTO})
+  saveProductImage(file: FormData, productDTO: ProductDTO): Observable<ProductDTO> {
+    console.log('file for the second time');
+    console.log(file);
+
+    return this.http.post<ProductDTO>(`${environment.productUrl}/saveProductImg`, { file, productDTO })
   }
-  
+
 }

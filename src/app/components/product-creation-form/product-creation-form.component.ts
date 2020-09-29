@@ -88,6 +88,8 @@ export class ProductCreationFormComponent implements OnInit {
         
         //recuperer limage
         const file = this.productCreationForm.get('image').value;
+        console.log(file);
+        
         const formData = new FormData();
         formData.append('file', file); 
         console.log(formData);

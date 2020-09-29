@@ -175,9 +175,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
       }
 
-
       options.push(option);
-
     }
 
     this.options = options;
