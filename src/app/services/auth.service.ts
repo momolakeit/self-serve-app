@@ -23,20 +23,27 @@ export class AuthService {
   
   isOwner(): boolean{
     this.token = localStorage.getItem('token');
-
     return this.token ? decode(this.token).role == roles.owner : false; 
   }
+
   isCook(): boolean{
     this.token = localStorage.getItem('token');
     return this.token ? decode(this.token).role == roles.cook : false; 
   }
+
   isWaiter(): boolean{
     this.token = localStorage.getItem('token');
     return this.token ? decode(this.token).role == roles.waiter : false; 
   }
+  
   isClient(): boolean{
     this.token = localStorage.getItem('token');
     return this.token ? decode(this.token).role == roles.client : false; 
+  }
+
+  isGuest(): boolean{
+    this.token = localStorage.getItem('token');
+    return this.token ? decode(this.token).role == roles.guest : false; 
   }
 
 }

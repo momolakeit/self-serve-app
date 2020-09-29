@@ -7,6 +7,7 @@ import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { SignUpForm } from '../models/sign-up-form';
+import { SignInForm } from '../models/sign-in-form';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,17 +15,17 @@ export class AuthentificationService {
 
   constructor(private http: HttpClient,public auth:AuthService,private route:Router) { }
 
-  getToken(username:string,password:string):Observable<JwtResponse>{
-    return this.http.post<JwtResponse>(`${environment.authApiUrl}/signin`,{username,password});
+  getToken(signInForm: SignInForm):Observable<JwtResponse>{
+    return this.http.post<JwtResponse>(`${environment.authApiUrl}/signin`,signInForm);
   }
 
    //AUTHENTICATION PART
-   login(username:string,password:string) : Observable<boolean>{
-    return this.getToken(username,password).pipe(
+   login(signInForm: SignInForm) : Observable<boolean>{
+    return this.getToken(signInForm).pipe(
       map(response => {
         if (response && response.accessToken) {
           localStorage.setItem('token',response.accessToken);
-          localStorage.setItem('username',username);
+          localStorage.setItem('username',signInForm.username);
           return true;
         }
         return false;

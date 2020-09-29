@@ -39,6 +39,10 @@ export class AppComponent {
     return this.authService.isClient();
   }
 
+  isGuest():boolean{
+    return this.authService.isGuest();
+  }
+
   isCook():boolean{
     return this.authService.isCook();
   }

@@ -25,6 +25,7 @@ export const roles={
   cook: `${rolePrefix}COOK`,
   waiter: `${rolePrefix}WAITER`,
   client: `${rolePrefix}CLIENT`,
+  guest: `${rolePrefix}GUEST`,
 }
 
 /*
