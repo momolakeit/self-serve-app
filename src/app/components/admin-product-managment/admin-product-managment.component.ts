@@ -33,19 +33,20 @@ export class AdminProductManagmentComponent implements OnInit {
 
   ngOnInit() {
     this.getAllRestaurantSelectionDTO();
-
+  }
+  
+  initTable() {
+    this.dataSource = new MatTableDataSource(this.productDTOList);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+  
+  initProductTable(){
     //if local storage has menu id already then fetch product list
     if (localStorage.getItem('menuId')) {
       this.restaurantSelectionFormControl = new FormControl(localStorage.getItem('menuId'), Validators.required);
       this.getAllProductsFromRestaurant(parseInt(localStorage.getItem('menuId')));
     }
-
-  }
-
-  initTable() {
-    this.dataSource = new MatTableDataSource(this.productDTOList);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
 
@@ -56,8 +57,6 @@ export class AdminProductManagmentComponent implements OnInit {
   getAllRestaurantSelectionDTO() {
     this.menuService.getAllRestaurantName().subscribe(data => {
       this.restaurantSelectionDTOS = data;
-      console.log(data);
-      
     })
   }
 
@@ -69,7 +68,7 @@ export class AdminProductManagmentComponent implements OnInit {
 
         this.initTable();
 
-        localStorage.setItem('menuId', menuId+"");
+        localStorage.setItem('menuId', `${menuId}`);
         console.log(this.productDTOList);
       });
     }

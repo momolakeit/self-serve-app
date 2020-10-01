@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { myParams, myStyle } from '../../../utilities/particlejsdata';
-import { v4 as uuidv4 } from 'uuid';
+import { v1 as uuidv1 } from 'uuid';
 import { SignUpForm } from 'src/app/models/sign-up-form';
 import { SignInForm } from 'src/app/models/sign-in-form';
 import { roles } from 'src/environments/environment';
@@ -27,7 +27,7 @@ export class StartComponent implements OnInit {
   onGuestClicked() {
     //sign up guest
     const signUpForm: SignUpForm = {
-      username: `Guest-${uuidv4()}`,
+      username: `Guest-${uuidv1()}`,
       password: `Guest`,
       role: 'guest'
     }

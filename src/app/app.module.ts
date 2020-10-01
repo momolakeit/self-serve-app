@@ -32,6 +32,8 @@ import { ClientRequestItemComponent } from './components/client-request-item/cli
 import { ClientRequestItemDetailComponent } from './components/client-request-item-detail/client-request-item-detail.component';  
 import { ParticlesModule } from 'ngx-particle';
 import { WaiterRequestListComponent } from './components/waiter-request-list/waiter-request-list.component';
+import { RestaurantOwnerListComponent } from './components/restaurant-owner-list/restaurant-owner-list.component';
+import { RestaurantFormComponent } from './components/restaurant-form/restaurant-form.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,9 @@ import { WaiterRequestListComponent } from './components/waiter-request-list/wai
     ProductCreationFormComponent,
     ClientRequestItemComponent,
     ClientRequestItemDetailComponent,
-    WaiterRequestListComponent
+    WaiterRequestListComponent,
+    RestaurantOwnerListComponent,
+    RestaurantFormComponent
   ],
   imports: [
     CommonModule,
