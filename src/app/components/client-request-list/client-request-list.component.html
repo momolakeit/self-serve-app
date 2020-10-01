@@ -1,17 +1,23 @@
-<div class="container" *ngIf="billDTO">
-    <div class="row">
-        <div class="col-sm-6 float-left  mt-3 mb-2">
-            <h2 class="font-weight-normal">MY ORDERS</h2>
+<ng-container *ngIf="billDTO">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 float-left  mt-3 mb-2">
+                <h2 class="font-weight-normal">MY ORDERS</h2>
+            </div>
+        </div>
+        <div class="row mt-3" *ngFor="let orderItem of billDTO.orderItems;let i = index">
+            <ng-container
+                *ngIf="orderItem.productType.toString()!='WAITERCALL'&& orderItem.productType.toString()!='WAITERREQUEST'">
+                <app-client-request-item (orderItemDetailChanged)="changeOrderItemToPassToModal($event)"
+                    [orderItemDTO]="orderItem"></app-client-request-item>
+            </ng-container>
         </div>
     </div>
-    <div class="row mt-3" *ngFor="let orderItem of billDTO.orderItems;let i = index">
-        <ng-container *ngIf="orderItem.productType.toString()!='WAITERCALL'&& orderItem.productType.toString()!='WAITERREQUEST'">
-            <app-client-request-item (orderItemDetailChanged)="changeOrderItemToPassToModal($event)"
-                [orderItemDTO]="orderItem"></app-client-request-item>
-        </ng-container>
-    </div>
-</div>
-<button class="btn  float-right mt-2 btn-dark mt-5  mr-4 text-white" routerLink="/paymentChoice"
-    mat-button>Checkout</button>
-<!-- Modal -->
-<app-client-request-item-detail [orderItemDTO]="orderItemToPassToModal"></app-client-request-item-detail>
+    <button class="btn  float-right mt-2 btn-dark mt-5  mr-4 text-white" routerLink="/paymentChoice"
+        mat-button>Checkout</button>
+    <!-- Modal -->
+    <app-client-request-item-detail [orderItemDTO]="orderItemToPassToModal"></app-client-request-item-detail>
+</ng-container>
+<ng-container *ngIf="!billDTO">
+    <h3 class="text-center">You have no ongoing orders</h3>
+</ng-container>

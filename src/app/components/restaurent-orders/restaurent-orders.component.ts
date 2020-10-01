@@ -35,9 +35,18 @@ export class RestaurentOrdersComponent implements OnInit {
   initValues = function (): void {
     this.kitchenService.getAllRestaurantTables().subscribe(data => {
       this.allTables = data;
+      console.log("*************************");
+      console.log(this.allTables);
+      
+      this.allTables =this.allTables.filter(table=>{
+        return (table.bills !=null || table.bills.lenght >0)
+      })
+      console.log("*************************");
+      console.log(this.allTables);
+      
       this.allTables.forEach(table => {
         table.nombreItemParTable=0;
-        table.billDTOList.forEach(bill => {
+        table.bills.forEach(bill => {
           bill.isBillEmpty = true;
           bill.orderItems.forEach(orderItem => {
             this.setNumberOfItemInTable(table,orderItem,bill)

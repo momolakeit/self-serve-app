@@ -20,7 +20,7 @@
                     </div>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <ng-container *ngFor='let bill of table.billDTOList'>
+            <ng-container *ngFor='let bill of table.bills'>
                 <h3 class="border-bottom" *ngIf="!bill.isBillEmpty">
                     {{bill.orderCustomer.username}}
                 </h3>

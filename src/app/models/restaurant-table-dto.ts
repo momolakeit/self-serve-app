@@ -5,7 +5,7 @@ import { RestaurantDTO } from "./restaurant-dto";
 export interface RestaurantTableDTO {
     id:number;
     tableNumber:number;
-    billDTOList:[BillDTO];
+    bills:[BillDTO];
     menuDTO:MenuDTO;
     restaurant:RestaurantDTO;
     nombreItemParTable:number;
