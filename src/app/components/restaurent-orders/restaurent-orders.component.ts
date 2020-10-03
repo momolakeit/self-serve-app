@@ -30,9 +30,6 @@ export class RestaurentOrdersComponent implements OnInit {
     this.initValues();
   }
 
-
-
-  
   seeIfCheckItemSelected = function (checkItemName: string): boolean {
     var currentCheckItem = this.allCheckItems.filter(checkItem => checkItem.name == checkItemName);
     console.log(currentCheckItem);
