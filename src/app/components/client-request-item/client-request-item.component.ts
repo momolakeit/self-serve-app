@@ -25,6 +25,7 @@ export class ClientRequestItemComponent implements OnInit {
   setUpTimeout = function (): void {
     var today = new Date();
     console.log(this.orderItemDTO);
+    this.nombreDeMinuteRequis = this.orderItemDTO.product.tempsDePreparation;
     this.nombreDeMinuteRestant = Math.round((Date.parse(this.orderItemDTO.tempsDePreparation.toString()) - today.getTime()) / 60000);
     if (this.nombreDeMinuteRestant > 0) {
       this.nombreDeMinuteRestant = this.nombreDeMinuteRestant - 1;

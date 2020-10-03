@@ -23,25 +23,39 @@ export class RestaurentDishDetailViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.imgUrl = environment.baseImgPath;
-    this.handleTime();
+    var today = new Date();
+    console.log(this.orderItem);
+    this.nombreDeMinuteRequis = this.orderItem.product.tempsDePreparation;
+    this.nombreDeMinuteRestant = Math.round((Date.parse(this.orderItem.tempsDePreparation.toString()) - today.getTime()) / 60000);
+    if (this.nombreDeMinuteRestant > 0) {
+      this.nombreDeMinuteRestant = this.nombreDeMinuteRestant - 1;
+      this.nombreDeMinutesSur100 = (this.nombreDeMinuteRestant * 100) / this.nombreDeMinuteRequis;
+      localStorage.setItem(this.orderItem.id.toString(), this.nombreDeMinuteRestant.toString());
+    }
+    else {
+      this.nombreDeMinuteRestant = 0;
+      this.nombreDeMinutesSur100 = 0;
+    }
+
+    //this.handleTime();
     this.changeOrderStatus();
   }
-  
-  handleTime(){
+
+  handleTime() {
     //handle time
     var today = new Date();
-  
+
     localStorage.setItem(this.orderItem.id.toString(), Math.round((Date.parse(this.orderItem.tempsDePreparation.toString()) - today.getTime()) / 60000).toString());
-  
+
     this.nombreDeMinuteRequis = this.orderItem.product.tempsDePreparation;
-  
+
     if (localStorage.getItem(this.orderItem.id.toString()) == null) {
       this.nombreDeMinuteRequis = parseInt(localStorage.getItem(this.orderItem.id.toString()));
     }
     this.setUpTimeout();
   }
 
-  setUpTimeout = (): void =>{
+  setUpTimeout = (): void => {
     var source = timer(1000, 1000).subscribe(() => {
       if (parseInt(localStorage.getItem(this.orderItem.id.toString())) == 0) {
         this.nombreDeMinutesSur100 = 0;
@@ -61,7 +75,7 @@ export class RestaurentDishDetailViewComponent implements OnInit {
   addTime = (): void => {
     this.nombreDeMinuteRestant = parseInt(localStorage.getItem(this.orderItem.id.toString()));
     this.kitchenService.postMoreTimeForOrder(this.orderItem, 5).subscribe();
-    
+
     if (this.nombreDeMinuteRestant >= this.nombreDeMinuteRequis) {
       this.nombreDeMinuteRestant = this.nombreDeMinuteRequis;
     }
