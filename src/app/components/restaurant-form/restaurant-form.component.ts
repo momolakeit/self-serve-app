@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RestaurantSelectionDTO } from 'src/app/models/restaurant-selection-dto';
+import { RestaurantFormDTO } from 'src/app/models/restaurant-form-dto';
+import { KitchenService } from 'src/app/services/kitchen.service';
 
 @Component({
   selector: 'app-restaurant-form',
@@ -9,13 +11,53 @@ import { RestaurantSelectionDTO } from 'src/app/models/restaurant-selection-dto'
   styleUrls: ['./restaurant-form.component.css']
 })
 export class RestaurantFormComponent implements OnInit {
-
-  constructor(public dialogRef: MatDialogRef<RestaurantFormComponent>,@Inject(MAT_DIALOG_DATA) public data: RestaurantSelectionDTO,private formBuilder: FormBuilder) { }
+  title: string;
+  restaurantForm: FormGroup;
+  constructor(public dialogRef: MatDialogRef<RestaurantFormComponent>, @Inject(MAT_DIALOG_DATA) public data: RestaurantSelectionDTO, private formBuilder: FormBuilder, private kitchenService: KitchenService) { }
 
   ngOnInit(): void {
-    console.log(this.data);
-    
+    this.initForm();
   }
+
+  initForm() {
+    this.restaurantForm = this.formBuilder.group({
+      name: [this.data ? this.data.restaurantName : '', Validators.required],
+      tableAmount: [this.data ? this.data.tableAmount : '', Validators.required]
+    })
+
+    this.title = this.data ? 'Restaurant update' : 'Restaurant creation';
+  }
+
+  onSubmitForm() {
+    if (this.restaurantForm.valid) {
+
+      const formValues = this.restaurantForm.value;
+
+      const restaurantFormDTO: RestaurantFormDTO = {
+        ownerUsername: localStorage.getItem('username'),
+        nombreDeTable: formValues['tableAmount'],
+        restaurantName: formValues['name']
+      }
+
+      if (this.data)
+        this.onUpdate(restaurantFormDTO);
+      else
+        this.onCreate(restaurantFormDTO);
+    }
+  }
+
+  onCreate(restaurantFormDTO: RestaurantFormDTO) {
+    this.kitchenService.createRestaurant(restaurantFormDTO).subscribe(() => {
+      this.dialogRef.close('refresh');
+    }, error => {
+
+    });
+  }
+
+  onUpdate(restaurantFormDTO: RestaurantFormDTO) {
+      this.dialogRef.close('laguel');
+  }
+
 
   onNoClick(): void {
     this.dialogRef.close('close');

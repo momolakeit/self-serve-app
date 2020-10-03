@@ -13,7 +13,7 @@ import { RestaurantFormComponent } from '../restaurant-form/restaurant-form.comp
   styleUrls: ['./restaurant-owner-list.component.css']
 })
 export class RestaurantOwnerListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'date', 'edit','delete'];
+  displayedColumns: string[] = ['id', 'name', 'date','tableAmount', 'edit','delete'];
   restaurantList: RestaurantSelectionDTO[];
   dataSource: MatTableDataSource<RestaurantSelectionDTO>;
   ownerId: string = localStorage.getItem('username');
@@ -30,7 +30,6 @@ export class RestaurantOwnerListComponent implements OnInit {
   initRestaurants(){
     this.menuService.getAllRestaurantName().subscribe(data =>{
       this.restaurantList = data;
-      console.log(this.restaurantList);
       this.initTable();
     },error =>{
       console.log(error);

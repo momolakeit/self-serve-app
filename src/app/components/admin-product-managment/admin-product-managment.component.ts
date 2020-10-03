@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -7,6 +8,7 @@ import { ProductDTO } from 'src/app/models/product-dto';
 import { RestaurantSelectionDTO } from 'src/app/models/restaurant-selection-dto';
 import { MenuService } from 'src/app/services/menu.service';
 import { ProductService } from 'src/app/services/product.service';
+import { ProductFormEditCreateComponent } from '../product-form-edit-create/product-form-edit-create.component';
 
 @Component({
   selector: 'app-admin-product-managment',
@@ -27,32 +29,58 @@ export class AdminProductManagmentComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private menuService: MenuService, private productService: ProductService) {
-    this.restaurantSelectionFormControl = new FormControl('', Validators.required);
+  constructor(private menuService: MenuService, private productService: ProductService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
     this.getAllRestaurantSelectionDTO();
+    this.initForm();
+    this.initProductTable();
   }
-  
+
+  initForm() {
+    const name = localStorage.getItem('restaurantName');
+    console.log('my name:' + name);
+    
+    this.restaurantSelectionFormControl = new FormControl(name ? name : 'heyy', Validators.required);
+  }
+
   initTable() {
     this.dataSource = new MatTableDataSource(this.productDTOList);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  
-  initProductTable(){
+
+  initProductTable() {
     //if local storage has menu id already then fetch product list
     if (localStorage.getItem('menuId')) {
-      this.restaurantSelectionFormControl = new FormControl(localStorage.getItem('menuId'), Validators.required);
       this.getAllProductsFromRestaurant(parseInt(localStorage.getItem('menuId')));
     }
+  }
+
+  //DIALOG
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ProductFormEditCreateComponent, {
+      width: '550px',
+      height: '600px',
+      data: this.currentProductToEdit
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 'refresh')
+        this.initProductTable();
+
+      if (result == 'close') {
+        this.currentProductToEdit = null;
+      }
+    });
   }
 
 
   // SERVICES
 
-  //RESEARCH
+  //GET
 
   getAllRestaurantSelectionDTO() {
     this.menuService.getAllRestaurantName().subscribe(data => {
@@ -61,6 +89,7 @@ export class AdminProductManagmentComponent implements OnInit {
   }
 
   getAllProductsFromRestaurant(menuId: number) {
+
     if (this.restaurantSelectionFormControl.valid) {
       this.menuService.fetchMenuById(menuId).subscribe(data => {
 
@@ -69,6 +98,12 @@ export class AdminProductManagmentComponent implements OnInit {
         this.initTable();
 
         localStorage.setItem('menuId', `${menuId}`);
+
+        const restaurantName = this.restaurantSelectionDTOS.find((item) =>{
+          return item.menuId === menuId;
+        })
+
+        localStorage.setItem('restaurantName', restaurantName.restaurantName);
         console.log(this.productDTOList);
       });
     }
@@ -79,6 +114,7 @@ export class AdminProductManagmentComponent implements OnInit {
 
   changeCurrentProductToEdit(product: ProductDTO) {
     this.currentProductToEdit = product;
+    this.openDialog();
   }
 
   //DELETE

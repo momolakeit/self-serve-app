@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { RestaurantTableDTO} from '../models/restaurant-table-dto'
 import { OrderItemDTO } from '../models/order-item-dto';
+import { RestaurantFormDTO } from '../models/restaurant-form-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,6 @@ export class KitchenService {
     const restaurantId =2;
     return this.fetchKitchenRestaurentTables(restaurantId).pipe(
       map(response =>{
-        console.log(response);
         return response;
       }));
   } 
@@ -35,9 +35,12 @@ export class KitchenService {
     const restaurantId =2;
     return this.postOrderItemStatusReady(orderItemDTO).pipe(
       map(response =>{
-        console.log(response);
         return response;
       }));
+  }
+
+  createRestaurant(restaurantFormDTO: RestaurantFormDTO){
+    return this.http.post(`${environment.kitchenUrl}/createRestaurant`,restaurantFormDTO);
   }
 
 }
