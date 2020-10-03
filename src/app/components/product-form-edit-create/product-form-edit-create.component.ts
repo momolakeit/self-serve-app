@@ -34,6 +34,8 @@ export class ProductFormEditCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    console.log(this.data);
+    
   }
 
   //INITS
@@ -115,10 +117,13 @@ export class ProductFormEditCreateComponent implements OnInit {
         description: formValue['description'],
         options: this.options,
         prix: formValue['prix'],
-        tempsDePreparation: formValue['tempsDepreparation'],
+        tempsDePreparation: formValue['tempsDePreparation'],
         productType: formValue['productType'],
         productMenuType: formValue['productMenuType']
       }
+      
+
+      console.log('Mes options: ' + this.options);
       
       if (this.data) 
         this.onUpdateProduct(product);
