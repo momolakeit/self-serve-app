@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { RestaurantDTO } from 'src/app/models/restaurant-dto';
 import { RestaurantSelectionDTO } from 'src/app/models/restaurant-selection-dto';
 import { MenuService } from 'src/app/services/menu.service';
 import { RestaurantFormComponent } from '../restaurant-form/restaurant-form.component';
@@ -37,10 +38,10 @@ export class RestaurantOwnerListComponent implements OnInit {
   }
 
   // ALL ABOUT THE DIALOG
-  openDialog(){
+  openDialog(restaurant:RestaurantSelectionDTO){
     const dialogRef = this.dialog.open(RestaurantFormComponent, {
       width: '350px',
-      data: this.currentRestaurantToEdit
+      data: restaurant
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -54,7 +55,7 @@ export class RestaurantOwnerListComponent implements OnInit {
 
   changeCurrentRestaurant(restaurant:RestaurantSelectionDTO){
     this.currentRestaurantToEdit = restaurant;
-    this.openDialog();
+    this.openDialog(this.currentRestaurantToEdit);
   }
 
   //ALL ABOUT THE TABLE
