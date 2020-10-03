@@ -29,6 +29,10 @@ export class RestaurentOrdersComponent implements OnInit {
     this.imgUrl = environment.baseImgPath;
     this.initValues();
   }
+     
+
+
+  
 
   seeIfCheckItemSelected = function (checkItemName: string): boolean {
     var currentCheckItem = this.allCheckItems.filter(checkItem => checkItem.name == checkItemName);
