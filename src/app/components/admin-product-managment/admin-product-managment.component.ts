@@ -60,11 +60,11 @@ export class AdminProductManagmentComponent implements OnInit {
 
   //DIALOG
 
-  openDialog(): void {
+  openDialog(product:ProductDTO): void {
     const dialogRef = this.dialog.open(ProductFormEditCreateComponent, {
       width: '550px',
       height: '600px',
-      data: this.currentProductToEdit
+      data: product
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -114,7 +114,7 @@ export class AdminProductManagmentComponent implements OnInit {
 
   changeCurrentProductToEdit(product: ProductDTO) {
     this.currentProductToEdit = product;
-    this.openDialog();
+    this.openDialog(this.currentProductToEdit);
   }
 
   //DELETE
