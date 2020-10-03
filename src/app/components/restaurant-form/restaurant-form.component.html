@@ -1,1 +1,36 @@
-<p>restaurant-form works!</p>
+<form [formGroup]="restaurantForm">
+    <!--HEADER-->
+  <h1 mat-dialog-title class="text-center">{{title}}</h1>
+  <mat-divider></mat-divider>
+
+  <!--BODY-->
+  <div class="text-center mx-auto col-lg-12">
+          <!--restaurant name-->
+          <p>
+            <mat-form-field appearance="outline">
+              <mat-label>Restaurant name</mat-label>
+              <input matInput placeholder="Ex. The Keg" formControlName="name" autocomplete="off">
+              <mat-hint>name</mat-hint>
+              <mat-error>name cannot be blank</mat-error>
+            </mat-form-field>
+          </p>
+
+             <!--tables count-->
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Table count</mat-label>
+          <input type="number" matInput placeholder="Ex. 5" formControlName="tableAmount" autocomplete="off">
+          <mat-hint>amount</mat-hint>
+          <mat-error>tables cannot be blank</mat-error>
+        </mat-form-field>
+      </p>
+
+      <mat-divider></mat-divider>
+
+      <div class="d-flex justify-content-between mt-2">
+        <button mat-raised-button class="btn-dark text-white" (click)="onNoClick()">Cancel</button>
+        <button  mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()" *ngIf="!data">Create</button>
+        <button  mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()" *ngIf="data">Update</button>
+      </div>
+  </div>
+</form>

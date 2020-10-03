@@ -18,7 +18,6 @@ import { ClientRequestListComponent } from './components/client-request-list/cli
 import { JwtModule } from '@auth0/angular-jwt';
 import {DemoMaterialModule} from 'src/material-module';
 import { AdminProductManagmentComponent } from './components/admin-product-managment/admin-product-managment.component';
-import { ProductFormComponent } from './components/product-form/product-form.component';
 import { RecipeSocketComponent } from './components/recipe-socket/recipe-socket.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { MatCarouselModule } from '@ngbmodule/material-carousel';
@@ -27,13 +26,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { MenuproductComponent } from './components/menuproduct/menuproduct.component';
 import { CommonModule } from '@angular/common';
 import { RestaurentDishDetailViewComponent } from './components/restaurent-dish-detail-view/restaurent-dish-detail-view.component';
-import { ProductCreationFormComponent } from './components/product-creation-form/product-creation-form.component';
 import { ClientRequestItemComponent } from './components/client-request-item/client-request-item.component';
 import { ClientRequestItemDetailComponent } from './components/client-request-item-detail/client-request-item-detail.component';  
 import { ParticlesModule } from 'ngx-particle';
 import { WaiterRequestListComponent } from './components/waiter-request-list/waiter-request-list.component';
 import { RestaurantOwnerListComponent } from './components/restaurant-owner-list/restaurant-owner-list.component';
 import { RestaurantFormComponent } from './components/restaurant-form/restaurant-form.component';
+import { ProductFormEditCreateComponent } from './components/product-form-edit-create/product-form-edit-create.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +47,6 @@ import { RestaurantFormComponent } from './components/restaurant-form/restaurant
     RestaurentOrdersComponent,
     TableDetailPageComponent,
     AdminProductManagmentComponent,
-    ProductFormComponent,
     PaymentChoiceComponent,
     PaymentFormComponent,
     ClientRequestListComponent,
@@ -56,12 +54,12 @@ import { RestaurantFormComponent } from './components/restaurant-form/restaurant
     ContactFormComponent,
     MenuproductComponent,
     RestaurentDishDetailViewComponent,
-    ProductCreationFormComponent,
     ClientRequestItemComponent,
     ClientRequestItemDetailComponent,
     WaiterRequestListComponent,
     RestaurantOwnerListComponent,
-    RestaurantFormComponent
+    RestaurantFormComponent,
+    ProductFormEditCreateComponent
   ],
   imports: [
     CommonModule,
