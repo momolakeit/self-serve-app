@@ -29,16 +29,14 @@ export class ProductFormEditCreateComponent implements OnInit {
   productTypes:string[] = Object.keys(ProductType);
   productMenuTypes:string[] = Object.keys(ProductMenuType);
 
-
   constructor(public dialogRef: MatDialogRef<ProductFormEditCreateComponent>, @Inject(MAT_DIALOG_DATA) public data: ProductDTO, private productService: ProductService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.initForm();
-    console.log(this.data);
-    
   }
 
   //INITS
+
   initForm() {
     this.productForm = this.formBuilder.group({
       id:[this.data? this.data.id : ''],
@@ -121,9 +119,6 @@ export class ProductFormEditCreateComponent implements OnInit {
         productType: formValue['productType'],
         productMenuType: formValue['productMenuType']
       }
-      
-
-      console.log('Mes options: ' + this.options);
       
       if (this.data) 
         this.onUpdateProduct(product);
