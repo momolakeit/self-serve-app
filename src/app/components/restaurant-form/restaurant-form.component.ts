@@ -22,7 +22,7 @@ export class RestaurantFormComponent implements OnInit {
   initForm() {
     this.restaurantForm = this.formBuilder.group({
       name: [this.data ? this.data.restaurantName : '', Validators.required],
-      tableAmount: [this.data ? this.data.tableAmount : '', Validators.required]
+      tableAmount: [this.data ? this.data.restaurentTablesDTO.length : '', Validators.required]
     })
 
     this.title = this.data ? 'Restaurant update' : 'Restaurant creation';
@@ -58,6 +58,9 @@ export class RestaurantFormComponent implements OnInit {
       this.dialogRef.close('laguel');
   }
 
+  onDeleteTable(tableId:number){
+    this.kitchenService.deleteTable(tableId).subscribe();
+  }
 
   onNoClick(): void {
     this.dialogRef.close('close');

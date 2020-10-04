@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { RestaurantDTO } from 'src/app/models/restaurant-dto';
 import { RestaurantSelectionDTO } from 'src/app/models/restaurant-selection-dto';
+import { KitchenService } from 'src/app/services/kitchen.service';
 import { MenuService } from 'src/app/services/menu.service';
 import { RestaurantFormComponent } from '../restaurant-form/restaurant-form.component';
 
@@ -22,7 +23,7 @@ export class RestaurantOwnerListComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  constructor(private menuService: MenuService,public dialog: MatDialog) { }
+  constructor(private menuService: MenuService,private kitchenService:KitchenService,public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.initRestaurants();
@@ -31,10 +32,16 @@ export class RestaurantOwnerListComponent implements OnInit {
   initRestaurants(){
     this.menuService.getAllRestaurantName().subscribe(data =>{
       this.restaurantList = data;
+      console.log(data);
+      
       this.initTable();
     },error =>{
       console.log(error);
     })
+  }
+
+  onDeleteRestaurant(restaurantId:number){
+    this.kitchenService.deleteRestaurant(restaurantId).subscribe();
   }
 
   // ALL ABOUT THE DIALOG

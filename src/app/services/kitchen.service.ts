@@ -6,6 +6,7 @@ import { map, catchError } from 'rxjs/operators';
 import { RestaurantTableDTO} from '../models/restaurant-table-dto'
 import { OrderItemDTO } from '../models/order-item-dto';
 import { RestaurantFormDTO } from '../models/restaurant-form-dto';
+import { RestaurantDTO } from '../models/restaurant-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,22 @@ export class KitchenService {
 
   createRestaurant(restaurantFormDTO: RestaurantFormDTO){
     return this.http.post(`${environment.kitchenUrl}/createRestaurant`,restaurantFormDTO);
+  }
+
+  updateRestaurantName(restaurantName:string,restaurantId: number):Observable<RestaurantDTO>{
+    return this.http.post<RestaurantDTO>(`${environment.kitchenUrl}/modifierNomTable`,{restaurantName,restaurantId});
+  }
+
+  deleteTable(restaurantTableId:number){
+    return this.http.post(`${environment.kitchenUrl}/deleteTable`,restaurantTableId);
+  }
+
+  addTable(restaurantId:number):Observable<RestaurantDTO>{
+    return this.http.post<RestaurantDTO>(`${environment.kitchenUrl}/addTable`,restaurantId);
+  }
+
+  deleteRestaurant(restaurantId: number){
+    return this.http.post(`${environment.kitchenUrl}/deleteRestaurant`,restaurantId);
   }
 
 }
