@@ -31,7 +31,7 @@
                 <!-- Table Column -->
                 <ng-container matColumnDef="tableAmount">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Tables</th>
-                    <td mat-cell *matCellDef="let row">{{row.tableAmount}}</td>
+                    <td mat-cell *matCellDef="let row">{{row.restaurentTablesDTO.length}}</td>
                 </ng-container>
 
                 <!-- Edit Column -->
@@ -48,7 +48,7 @@
                 <ng-container matColumnDef="delete">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Delete</th>
                     <td mat-cell *matCellDef="let row">
-                        <button mat-icon-button aria-label="Example icon button with a home icon">
+                        <button mat-icon-button (click)="onDeleteRestaurant(row.id)">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </td>
@@ -69,7 +69,7 @@
         </div>
     </div>
     <div class="container">
-        <button class="btn-block bg-dark text-white" mat-raised-button (click)="openDialog()">
+        <button class="btn-block bg-dark text-white" mat-raised-button (click)="openDialog(null)">
             Add Restaurant
         </button>
     </div>

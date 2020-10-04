@@ -1,36 +1,64 @@
 <form [formGroup]="restaurantForm">
-    <!--HEADER-->
+  <!--HEADER-->
   <h1 mat-dialog-title class="text-center">{{title}}</h1>
   <mat-divider></mat-divider>
 
   <!--BODY-->
-  <div class="text-center mx-auto col-lg-12">
-          <!--restaurant name-->
-          <p>
-            <mat-form-field appearance="outline">
-              <mat-label>Restaurant name</mat-label>
-              <input matInput placeholder="Ex. The Keg" formControlName="name" autocomplete="off">
-              <mat-hint>name</mat-hint>
-              <mat-error>name cannot be blank</mat-error>
-            </mat-form-field>
-          </p>
+  <div class="text-center mx-auto col-lg-12 mt-2">
+    <!--restaurant name-->
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Restaurant name</mat-label>
+        <input matInput placeholder="Ex. The Keg" formControlName="name" autocomplete="off">
+        <mat-hint>name</mat-hint>
+        <mat-error>name cannot be blank</mat-error>
+      </mat-form-field>
+    </p>
 
-             <!--tables count-->
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Table count</mat-label>
-          <input type="number" matInput placeholder="Ex. 5" formControlName="tableAmount" autocomplete="off">
-          <mat-hint>amount</mat-hint>
-          <mat-error>tables cannot be blank</mat-error>
-        </mat-form-field>
-      </p>
+    <p *ngIf="!data">
+      <mat-form-field appearance="outline">
+        <mat-label>Table count</mat-label>
+        <input matInput type="number" placeholder="Ex. 15" formControlName="tableAmount" autocomplete="off">
+        <mat-hint>amount</mat-hint>
+        <mat-error>amount cannot be blank</mat-error>
+      </mat-form-field>
+    </p>
 
+    <!--tables count-->
+    <ng-container *ngIf="data">
       <mat-divider></mat-divider>
+        <div class="text-center">
+        <!--HEADER-->
+        <h1 class="text-center">Restaurant tables</h1>
 
-      <div class="d-flex justify-content-between mt-2">
-        <button mat-raised-button class="btn-dark text-white" (click)="onNoClick()">Cancel</button>
-        <button  mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()" *ngIf="!data">Create</button>
-        <button  mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()" *ngIf="data">Update</button>
+        <!--BODY-->
+
+        <mat-divider></mat-divider>
+        <div class="d-flex justify-content-between">
+          <p class="text-bold">Table number</p>
+          <p>Action</p>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div style="height: 200px;" class="overflow-auto">
+          <div class="d-flex justify-content-between mt-2" *ngFor="let table of data.restaurentTablesDTO">
+            <p>{{table.tableNumber}}</p>
+            <button mat-raised-button class="btn-dark text-white" (click)="onDeleteTable(table.id)">Delete</button>
+          </div>
+        </div>
       </div>
+
+    </ng-container>
+
+    <mat-divider></mat-divider>
+
+    <div class="d-flex justify-content-between mt-2">
+      <button mat-raised-button class="btn-dark text-white" (click)="onNoClick()">Cancel</button>
+      <button mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()"
+        *ngIf="!data">Create</button>
+      <button mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()"
+        *ngIf="data">Update</button>
+    </div>
   </div>
 </form>
