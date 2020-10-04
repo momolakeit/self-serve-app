@@ -57,7 +57,7 @@ export class KitchenService {
   }
 
   deleteRestaurant(restaurantId: number){
-    return this.http.post(`${environment.kitchenUrl}/deleteRestaurant`,restaurantId);
+    return this.http.post(`${environment.kitchenUrl}/deleteRestaurant`,{restaurantId:restaurantId});
   }
 
 }

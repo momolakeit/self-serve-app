@@ -121,7 +121,7 @@ export class AdminProductManagmentComponent implements OnInit {
 
   deleteProduct(id: number) {
     this.productService.delete(id).subscribe(() => {
-      this.getAllProductsFromRestaurant(this.restaurantSelectionFormControl.value);
+      this.getAllProductsFromRestaurant(parseInt(localStorage.getItem('menuId')));
     });
   }
 
