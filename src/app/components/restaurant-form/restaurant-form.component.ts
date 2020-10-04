@@ -34,6 +34,7 @@ export class RestaurantFormComponent implements OnInit {
       const formValues = this.restaurantForm.value;
 
       const restaurantFormDTO: RestaurantFormDTO = {
+        restaurantId: this.data.restaurantId,
         ownerUsername: localStorage.getItem('username'),
         nombreDeTable: formValues['tableAmount'],
         restaurantName: formValues['name']
@@ -55,11 +56,17 @@ export class RestaurantFormComponent implements OnInit {
   }
 
   onUpdate(restaurantFormDTO: RestaurantFormDTO) {
-      this.dialogRef.close('laguel');
+    this.kitchenService.updateRestaurantName(restaurantFormDTO.restaurantName,restaurantFormDTO.restaurantId).subscribe(() => this.dialogRef.close('refresh'))
   }
 
   onDeleteTable(tableId:number){
-    this.kitchenService.deleteTable(tableId).subscribe();
+    this.kitchenService.deleteTable(tableId,this.data.restaurantId).subscribe(() => this.refreshTables(tableId));
+  }
+
+  refreshTables(tableId:number){
+    this.data.restaurentTablesDTO = this.data.restaurentTablesDTO.filter((table) =>{
+      return table.id != tableId;
+    })
   }
 
   onNoClick(): void {
