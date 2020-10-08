@@ -33,6 +33,7 @@ import { WaiterRequestListComponent } from './components/waiter-request-list/wai
 import { RestaurantOwnerListComponent } from './components/restaurant-owner-list/restaurant-owner-list.component';
 import { RestaurantFormComponent } from './components/restaurant-form/restaurant-form.component';
 import { ProductFormEditCreateComponent } from './components/product-form-edit-create/product-form-edit-create.component';
+import { AddTableFormComponent } from './components/add-table-form/add-table-form.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { ProductFormEditCreateComponent } from './components/product-form-edit-c
     RestaurantOwnerListComponent,
     RestaurantFormComponent,
     ProductFormEditCreateComponent,
+    AddTableFormComponent
   ],
   imports: [
     CommonModule,

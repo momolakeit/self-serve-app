@@ -28,14 +28,20 @@ export class PaymentFormComponent implements OnInit {
 
 
   ngOnInit() {
+    this.initStripe();
+  }
+  
+  initStripe(){
     this.isError = false;
     this.paymentService.getPaymentIntent().subscribe(data => {
       this.clientSecret = data
     });
+
     this.stripe = Stripe('pk_test_51HLwKgC5UoZOX4GRWegBa5FvbtsNbi5Cd7Z5WKYB73jelPNuhpzS69dXKe2V3OWTP4XHt5wjGGD3dzEdJw25duSn00Dlctj1NV');
     const elements = this.stripe.elements();
     this.card = elements.create("card");
     this.card.mount(".card-element");
+
   }
 
   showSpinner = function (doShow: boolean): void {
@@ -59,6 +65,7 @@ export class PaymentFormComponent implements OnInit {
       errorMsg.textContent = "";
     }, 4000);
   };
+
   showSuccess = function (): void {
     this.showSpinner(false);
     document
@@ -74,9 +81,11 @@ export class PaymentFormComponent implements OnInit {
     document.getElementById("submit").classList.add("hidden");
     document.getElementById("closeCardModal").classList.remove("hidden")
   };
+
   changePage = function (): void{
     this.router.navigateByUrl("/start");
   }
+
   async handleForm(e) {
     e.preventDefault();
     this.showSpinner(true);
