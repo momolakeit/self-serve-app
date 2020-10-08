@@ -7,6 +7,7 @@ import { RestaurantTableDTO} from '../models/restaurant-table-dto'
 import { OrderItemDTO } from '../models/order-item-dto';
 import { RestaurantFormDTO } from '../models/restaurant-form-dto';
 import { RestaurantDTO } from '../models/restaurant-dto';
+import { MenuDTO } from '../models/menu-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,9 @@ export class KitchenService {
   postMoreTimeForOrder(orderItemDTO :OrderItemDTO,tempsAjoute :number): Observable<OrderItemDTO>{
     return this.http.post<OrderItemDTO>(`${environment.kitchenUrl}/changeOrderItemTime`,{orderItemId:orderItemDTO.id,tempsAjoute:tempsAjoute});
   }
-  
+  fetchMenuByRestaurantTable (restaurantTableId :number) :Observable<MenuDTO> {
+    return this.http.post<MenuDTO>(`${environment.kitchenUrl}/findMenuByRestaurantId`,{restaurantTableId:restaurantTableId});
+  }
   getAllRestaurantTables() :Observable<[RestaurantTableDTO]>{
     const restaurantId =2;
     return this.fetchKitchenRestaurentTables(restaurantId).pipe(

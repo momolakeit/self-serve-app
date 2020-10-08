@@ -18,7 +18,8 @@ export const environment = {
   paymentRequestIntentUrl:`http://${host}:${port}/stripe/fetchPaymentRquestPaymentIntent`,
   domainFiLE:`http://${host}:${port}/order/fetchDomainFile`,
   baseImgPath:`http://${host}:${port}/product/getProductImg/`,
-  kitchenUrl:`http://${host}:${port}/rest/kitchen`
+  kitchenUrl:`http://${host}:${port}/rest/kitchen`,
+  menuId :Number
 };
 
 export const roles={

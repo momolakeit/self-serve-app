@@ -5,20 +5,22 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { ConstanteService } from './constante-service.service';
 @Injectable({
   providedIn: 'root'
 })
 export class MenuService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private constanteService : ConstanteService) { }
 
   fetchMenuById(menuID: number): Observable<MenuDTO> {
     return this.http.post<MenuDTO>(`${environment.menuUrl}/getMenu`, { menuId: menuID });
   }
 
   getMenuById(): Observable<MenuDTO> {
-    const menuId = 1;
-    return this.fetchMenuById(menuId).pipe(
+    console.log(this.constanteService.menuId);
+    var menuId =1;
+    return this.fetchMenuById(JSON.parse(localStorage.getItem("menuId"))).pipe(
       map(response => {
         return response;
       }));
