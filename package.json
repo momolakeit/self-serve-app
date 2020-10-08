@@ -27,6 +27,7 @@
     "@ngmodule/material-carousel": "^0.6.0",
     "angular-particle": "^1.0.4",
     "bootstrap": "^4.5.2",
+    "file-saver": "^2.0.2",
     "jquery": "^3.5.1",
     "jwt-decode": "^3.0.0-beta.2",
     "net": "^1.0.2",

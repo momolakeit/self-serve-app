@@ -41,7 +41,9 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
+              { "glob": "*", "input": "./src/asserts/.well-known", "output": "." },
               "src/favicon.ico",
+              "src/.well-known/apple-developer-merchantid-domain-association",
               "src/assets"
             ],
             "styles": [

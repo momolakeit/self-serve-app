@@ -59,7 +59,7 @@ import { ProductFormEditCreateComponent } from './components/product-form-edit-c
     WaiterRequestListComponent,
     RestaurantOwnerListComponent,
     RestaurantFormComponent,
-    ProductFormEditCreateComponent
+    ProductFormEditCreateComponent,
   ],
   imports: [
     CommonModule,

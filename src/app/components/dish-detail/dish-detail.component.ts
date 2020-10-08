@@ -5,6 +5,7 @@ import { BillService} from '../../services/bill.service';
 import {CheckItemDTO} from '../../models/check-item-dto'
 import {OptionDTO} from '../../models/option-dto'
 import { environment } from '../../../environments/environment';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-dish-detail',
@@ -15,7 +16,7 @@ export class DishDetailComponent implements OnInit {
 
   @Input() productDTO :ProductDTO
   
-  constructor(private currentBill:CurrentBill,private billService :BillService) { }
+  constructor(private currentBill:CurrentBill,private billService :BillService,private snackBar :MatSnackBar) { }
   imgUrl :string
   commentaire:string =""
 
@@ -26,9 +27,16 @@ export class DishDetailComponent implements OnInit {
 
   
   updateCurrentBill = function (product :ProductDTO): void {
-   this.billService.makeOrder(product,this.commentaire).subscribe(data => 
-    localStorage.setItem("ongoingBill",JSON.stringify(data)));
+   this.billService.makeOrder(product,this.commentaire).subscribe(data =>{
+    localStorage.setItem("ongoingBill",JSON.stringify(data)) 
+    this.openSnackBar();
+  });
   };
+  openSnackBar() {
+    this.snackBar.open("Item ordered", "Close", {
+      duration: 2000,
+    });
+  }
 
   updateCheckItem = function (checkItemDTO:CheckItemDTO,optionDTO:OptionDTO): void {
     var currentOption =this.productDTO.options.find(x =>x.id==optionDTO.id);

@@ -16,7 +16,13 @@ export class PaymentService {
   fetchPaymentIntent(billDTO :BillDTO,restaurentStripeAccount :String):Observable<StripeClientIdResponse>{
     return this.http.post<StripeClientIdResponse>(`${environment.paymentIntentUrl}`,{billDTO: JSON.stringify(billDTO),restaurentStripeAccount:restaurentStripeAccount});
   }
-
+  
+  fetchPaymentRequestPaymentIntent(billDTO :BillDTO,restaurentStripeAccount :String) : Observable<StripeClientIdResponse>{
+     return this.http.post<StripeClientIdResponse>(`${environment.paymentRequestIntentUrl}`,{billDTO: JSON.stringify(billDTO),restaurentStripeAccount:restaurentStripeAccount});
+  }
+  getDomainFile():Observable<Blob>{
+    return this.http.get<Blob>(`${environment.domainFiLE}`)
+  }
   getPaymentIntent() : Observable<String>{
     const restaurentStripeAccount="acct_1HQe4hAEW5t84Hq2";
     localStorage.getItem("ongoingBill");
@@ -27,5 +33,17 @@ export class PaymentService {
         return response.value;
       }));
   }
-  
+
+  getPaymentRequestPaymentIntent() : Observable<String>{
+    const restaurentStripeAccount="acct_1HQe4hAEW5t84Hq2";
+    localStorage.getItem("ongoingBill");
+    console.log(JSON.parse(localStorage.getItem("ongoingBill")));
+    return this.fetchPaymentRequestPaymentIntent(JSON.parse(localStorage.getItem("ongoingBill")),restaurentStripeAccount).pipe(
+      map(response => {
+        console.log(response.value)
+        return response.value;
+      }));
+  }
+
+
 }
