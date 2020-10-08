@@ -1,24 +1,24 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-const host = "37a61d1e2594.ngrok.io";
-const port = "";
+const host = "localhost";
+const port = "8080";
 const rolePrefix = 'ROLE_';
 export const environment = {
   production: false,
-  authApiUrl: `https://${host}:${port}/auth`,
-  contactFormUrl: `https://${host}:${port}/support`,
-  employeUrl:`https://${host}:${port}/rest/employe`,
-  csrfUrl:`https://${host}:${port}/csrf`,
-  productUrl:`https://${host}:${port}/product`,
-  menuUrl:`https://${host}:${port}/menu`,
-  billUrl:`https://${host}:${port}/order`,
-  rateUrl:`https://${host}:${port}/rate`,
-  paymentIntentUrl:`https://${host}:${port}/stripe/fetchPaymentIntent`,
-  paymentRequestIntentUrl:`https://${host}:${port}/stripe/fetchPaymentRquestPaymentIntent`,
-  domainFiLE:`https://${host}:${port}/order/fetchDomainFile`,
-  baseImgPath:`https://${host}:${port}/product/getProductImg/`,
-  kitchenUrl:`https://${host}:${port}/rest/kitchen`
+  authApiUrl: `http://${host}:${port}/auth`,
+  contactFormUrl: `http://${host}:${port}/support`,
+  employeUrl:`http://${host}:${port}/rest/employe`,
+  csrfUrl:`http://${host}:${port}/csrf`,
+  productUrl:`http://${host}:${port}/product`,
+  menuUrl:`http://${host}:${port}/menu`,
+  billUrl:`http://${host}:${port}/order`,
+  rateUrl:`http://${host}:${port}/rate`,
+  paymentIntentUrl:`http://${host}:${port}/stripe/fetchPaymentIntent`,
+  paymentRequestIntentUrl:`http://${host}:${port}/stripe/fetchPaymentRquestPaymentIntent`,
+  domainFiLE:`http://${host}:${port}/order/fetchDomainFile`,
+  baseImgPath:`http://${host}:${port}/product/getProductImg/`,
+  kitchenUrl:`http://${host}:${port}/rest/kitchen`
 };
 
 export const roles={
