@@ -6,11 +6,14 @@
             </div>
         </div>
         <div class="row mt-3" *ngFor="let orderItem of billDTO.orderItems;let i = index">
-            <ng-container
+            <ng-container *ngIf="orderItem.productType">
+
+                <ng-container
                 *ngIf="orderItem.productType.toString()!='WAITERCALL'&& orderItem.productType.toString()!='WAITERREQUEST'">
                 <app-client-request-item (orderItemDetailChanged)="changeOrderItemToPassToModal($event)"
-                    [orderItemDTO]="orderItem"></app-client-request-item>
+                [orderItemDTO]="orderItem"></app-client-request-item>
             </ng-container>
+        </ng-container>
         </div>
     </div>
     <button class="btn  float-right mt-2 btn-dark mt-5  mr-4 text-white" routerLink="/paymentChoice"
