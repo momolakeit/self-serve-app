@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 const host = "localhost";
-const port = "8080";
+const port = "8081";
 const rolePrefix = 'ROLE_';
 export const environment = {
   production: false,
