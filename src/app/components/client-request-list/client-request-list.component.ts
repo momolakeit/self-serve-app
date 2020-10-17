@@ -28,6 +28,7 @@ export class ClientRequestListComponent implements OnInit {
         this.billDTO = data;
         console.log(data);
         console.log(this.billDTO);
+        
       })
     });
   }

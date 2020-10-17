@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { Router } from '@angular/router';
 import { SignInForm } from 'src/app/models/sign-in-form';
+import { error } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  get f() {
+  getF() {
     return this.userForm.controls;
   }
 
@@ -34,16 +35,19 @@ export class LoginComponent implements OnInit {
     const formValue = this.userForm.value;
 
     const signInForm: SignInForm = {
-      username:formValue['username'],
-      password:formValue['password']
+      username: formValue['username'],
+      password: formValue['password']
     }
 
     this.authService.login(signInForm).subscribe((success: boolean) => {
-      if (success) {
+      if (success)
         this.route.navigate(['/menu']);
-      } else {
-        console.log("Error could not login");
-      }
+      else
+        this.getF().username.setErrors({ badCredentials: true });
+
+    }, error => {
+      this.getF().username.setErrors({ badCredentials: true });
+      this.getF().password.setErrors({ badCredentials: true });
     });
 
   }
