@@ -34,7 +34,7 @@ export class RestaurantFormComponent implements OnInit {
       const formValues = this.restaurantForm.value;
 
       const restaurantFormDTO: RestaurantFormDTO = {
-        restaurantId: this.data.restaurantId,
+        restaurantId: this.data ? this.data.restaurantId : null,
         ownerUsername: localStorage.getItem('username'),
         nombreDeTable: formValues['tableAmount'],
         restaurantName: formValues['name']

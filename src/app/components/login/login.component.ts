@@ -40,10 +40,8 @@ export class LoginComponent implements OnInit {
     }
 
     this.authService.login(signInForm).subscribe((success: boolean) => {
-      if (success)
-        this.route.navigate(['/menu']);
-      else
-        this.getF().username.setErrors({ badCredentials: true });
+      if (success) this.route.navigate(['/menu']);
+      else this.getF().username.setErrors({ badCredentials: true });
 
     }, error => {
       this.getF().username.setErrors({ badCredentials: true });
@@ -51,5 +49,4 @@ export class LoginComponent implements OnInit {
     });
 
   }
-
 }

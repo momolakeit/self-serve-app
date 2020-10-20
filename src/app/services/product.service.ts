@@ -56,11 +56,8 @@ export class ProductService {
     return this.http.post<ProductDTO>(`${environment.productUrl}/setMenuChefChoice`, { productDTO: JSON.stringify(productDTO) });
   }
 
-  saveProductImage(file: FormData, productDTO: ProductDTO): Observable<ProductDTO> {
-    console.log('file for the second time');
-    console.log(file);
-
-    return this.http.post<ProductDTO>(`${environment.productUrl}/saveProductImg`, { file, productDTO })
+  saveProductImage(file: FormData, productId: number): Observable<ProductDTO> {
+    return this.http.post<ProductDTO>(`${environment.productUrl}/image/${productId}`, file)
   }
 
 }

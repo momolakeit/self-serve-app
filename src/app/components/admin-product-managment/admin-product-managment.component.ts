@@ -8,6 +8,7 @@ import { ProductDTO } from 'src/app/models/product-dto';
 import { RestaurantSelectionDTO } from 'src/app/models/restaurant-selection-dto';
 import { MenuService } from 'src/app/services/menu.service';
 import { ProductService } from 'src/app/services/product.service';
+import { environment } from 'src/environments/environment';
 import { ProductFormEditCreateComponent } from '../product-form-edit-create/product-form-edit-create.component';
 
 @Component({
@@ -17,7 +18,7 @@ import { ProductFormEditCreateComponent } from '../product-form-edit-create/prod
 })
 export class AdminProductManagmentComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'category', 'edit', 'delete'];
+  displayedColumns: string[] = ['image', 'name', 'category', 'edit', 'delete'];
   dataSource: MatTableDataSource<ProductDTO>;
   restaurantSelectionDTOS: [RestaurantSelectionDTO];
   productDTOList: [ProductDTO];
@@ -109,6 +110,9 @@ export class AdminProductManagmentComponent implements OnInit {
     }
   }
 
+  getImage(imageId:number):string{
+    return environment.baseImgPath + imageId;
+  }
 
   //UPDATE
 
