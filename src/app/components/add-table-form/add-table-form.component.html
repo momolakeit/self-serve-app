@@ -1,1 +1,23 @@
-<p>add-table-form works!</p>
+<div class="container">
+    <h1 class="text-center">Add table</h1>
+   
+    <mat-divider class="m-2"></mat-divider>
+
+    <p class="text-center">
+        <mat-form-field appearance="outline">
+            <mat-label>Table number</mat-label>
+            <input matInput type="number" [formControl]="tableNumber" autocomplete="off">
+            <mat-hint>number</mat-hint>
+            <mat-error>table number cannot be blank</mat-error>
+        </mat-form-field>
+    </p>
+
+    <mat-divider class="m-2"></mat-divider>
+
+    <div class="d-flex justify-content-between">
+
+        <button mat-raised-button class="text-white bg-dark" (click)="onNoClick()">Cancel</button>
+        <button mat-raised-button class="text-white bg-dark" (click)="onCreateTable()">Create Table</button>
+    </div>
+
+</div>

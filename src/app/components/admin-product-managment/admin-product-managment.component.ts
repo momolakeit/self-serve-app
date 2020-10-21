@@ -43,7 +43,7 @@ export class AdminProductManagmentComponent implements OnInit {
     const name = localStorage.getItem('restaurantName');
     console.log('my name:' + name);
     
-    this.restaurantSelectionFormControl = new FormControl(name ? name : 'heyy', Validators.required);
+    this.restaurantSelectionFormControl = new FormControl(name ? name : '', Validators.required);
   }
 
   initTable() {
@@ -53,10 +53,9 @@ export class AdminProductManagmentComponent implements OnInit {
   }
 
   initProductTable() {
-    //if local storage has menu id already then fetch product list
-    if (localStorage.getItem('menuId')) {
+    if (localStorage.getItem('menuId')) 
       this.getAllProductsFromRestaurant(parseInt(localStorage.getItem('menuId')));
-    }
+    
   }
 
   //DIALOG
@@ -77,7 +76,6 @@ export class AdminProductManagmentComponent implements OnInit {
       }
     });
   }
-
 
   // SERVICES
 
@@ -128,8 +126,6 @@ export class AdminProductManagmentComponent implements OnInit {
       this.getAllProductsFromRestaurant(parseInt(localStorage.getItem('menuId')));
     });
   }
-
-
 
   //TABLE LOGIQUE
 

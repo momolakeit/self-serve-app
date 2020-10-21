@@ -55,8 +55,8 @@ export class KitchenService {
     return this.http.post(`${environment.kitchenUrl}/deleteTable`,{restaurantTableId,restaurantId});
   }
 
-  addTable(restaurantId:number):Observable<RestaurantDTO>{
-    return this.http.post<RestaurantDTO>(`${environment.kitchenUrl}/addTable`,restaurantId);
+  addRestaurantTable(restaurantId:number,tableNumber:number):Observable<RestaurantDTO>{
+    return this.http.post<RestaurantDTO>(`${environment.kitchenUrl}/addTable/${restaurantId}/${tableNumber}`,{});
   }
 
   deleteRestaurant(restaurantId: number){

@@ -32,18 +32,13 @@ export class RestaurantOwnerListComponent implements OnInit {
   initRestaurants(){
     this.menuService.getAllRestaurantName().subscribe(data =>{
       this.restaurantList = data;
-      console.log(data);
-      
       this.initTable();
-    },error =>{
-      console.log(error);
-    })
+    });
   }
 
   onDeleteRestaurant(restaurantId:number){
     this.kitchenService.deleteRestaurant(restaurantId).subscribe(data =>{
       this.initRestaurants();
-      
     });
 
     //remove restaurant in data too
@@ -52,7 +47,7 @@ export class RestaurantOwnerListComponent implements OnInit {
   // ALL ABOUT THE DIALOG
   openDialog(restaurant:RestaurantSelectionDTO){
     const dialogRef = this.dialog.open(RestaurantFormComponent, {
-      width: '350px',
+      width: '550px',
       data: restaurant
     });
 
@@ -64,6 +59,7 @@ export class RestaurantOwnerListComponent implements OnInit {
         this.currentRestaurantToEdit = null;
     });
   }
+  
 
   changeCurrentRestaurant(restaurant:RestaurantSelectionDTO){
     this.currentRestaurantToEdit = restaurant;
