@@ -3,6 +3,7 @@ import { error } from '@angular/compiler/src/util';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FileInput } from 'ngx-material-file-input';
 import { CheckItemDTO } from 'src/app/models/check-item-dto';
 import { OptionDTO } from 'src/app/models/option-dto';
 import { ProductDTO } from 'src/app/models/product-dto';
@@ -19,15 +20,18 @@ export class ProductFormEditCreateComponent implements OnInit {
 
   menuId: number = parseInt(localStorage.getItem("menuId"));
   productForm: FormGroup;
-  disabled: boolean = false;
-  isHidden: boolean = false;
-  multiple: boolean = false;
   options: OptionDTO[] = [];
-  files: any;
-  maxSize: number = 10;
-  title:string;
-  productTypes:string[] = Object.keys(ProductType);
-  productMenuTypes:string[] = Object.keys(ProductMenuType);
+  isHidden: boolean = false;
+  title: string;
+  productTypes: string[] = Object.keys(ProductType);
+  productMenuTypes: string[] = Object.keys(ProductMenuType);
+
+  //file setup 
+  disabled: boolean = false;
+  multiple: boolean = false;
+  maxSize: number = 1024;
+  accept: string = "image/*";
+
 
   constructor(public dialogRef: MatDialogRef<ProductFormEditCreateComponent>, @Inject(MAT_DIALOG_DATA) public data: ProductDTO, private productService: ProductService, private formBuilder: FormBuilder) { }
 
@@ -39,33 +43,23 @@ export class ProductFormEditCreateComponent implements OnInit {
 
   initForm() {
     this.productForm = this.formBuilder.group({
-      id:[this.data? this.data.id : ''],
-      name: [this.data? this.data.name : '', Validators.required],
-      description: [this.data? this.data.description : '', Validators.required],
-      prix: [this.data? this.data.prix : '', Validators.required],
-      tempsDePreparation: [this.data? this.data.tempsDePreparation : '', Validators.required],
-      productType: [this.data? this.data.productType : '', Validators.required],
-      productMenuType: [this.data? this.data.productMenuType : '', Validators.required],
-      image: [this.files, [MaxSizeValidator(this.maxSize * 1024)]],
+      id: [this.data ? this.data.id : ''],
+      name: [this.data ? this.data.name : '', Validators.required],
+      description: [this.data ? this.data.description : '', Validators.required],
+      prix: [this.data ? this.data.prix : '', Validators.required],
+      tempsDePreparation: [this.data ? this.data.tempsDePreparation : '', Validators.required],
+      productType: [this.data ? this.data.productType : '', Validators.required],
+      productMenuType: [this.data ? this.data.productMenuType : '', Validators.required],
+      image: ['', [MaxSizeValidator(this.maxSize * 1024)]],
       options: this.formBuilder.array([])
     });
 
 
     //set up options based on data presence
-    if (this.data) 
+    if (this.data)
       this.initOptions();
 
-    this.title = this.data? 'Product update' : 'Product creation';
-    
-
-    //make sure to listen to image change
-    this.productForm.get('image').valueChanges.subscribe((files: any) => {
-      if (!Array.isArray(files))
-        this.files = [files];
-      else this.files = files;
-
-      console.log(this.files);
-    })
+    this.title = this.data ? 'Product update' : 'Product creation';
   }
 
   initOptions() {
@@ -102,9 +96,9 @@ export class ProductFormEditCreateComponent implements OnInit {
 
   //SERVICES
 
-  onSubmitForm(){
+  onSubmitForm() {
     if (this.productForm.valid) {
-      
+
       this.updateOptionDtoList();
 
       const formValue = this.productForm.value;
@@ -119,8 +113,8 @@ export class ProductFormEditCreateComponent implements OnInit {
         productType: formValue['productType'],
         productMenuType: formValue['productMenuType']
       }
-      
-      if (this.data) 
+
+      if (this.data)
         this.onUpdateProduct(product);
       else this.onCreateProduct(product);
 
@@ -129,44 +123,32 @@ export class ProductFormEditCreateComponent implements OnInit {
   }
 
   onCreateProduct(product: ProductDTO) {
-    this.productService.create(product, this.menuId).subscribe((product) => {
-
-      //sauvegarder l'image
-      //this.onSaveImage(product);
-    }, error => {
-      console.log(error);
-    });
+    this.productService.create(product, this.menuId).subscribe((data) => this.onUploadImage(data.id));
   }
 
   onUpdateProduct(product: ProductDTO) {
-    this.productService.update(product).subscribe(() =>{
-      //resave l'image si elle a changer
-
-    },error =>{
-      console.log(error);
-      
-    })
+    this.productService.update(product).subscribe(() => this.onUploadImage(product.id));
   }
 
-  onSaveImage(product: ProductDTO) {
-     //recuperer limage
-     const file = this.productForm.get('image').value;
-     console.log(file);
+  onUploadImage(productId: number) {
+    const file_form: FileInput = this.productForm.get('image').value;
+    const file = file_form.files == undefined ? undefined : file_form.files[0];
 
-     const formData = new FormData();
-     formData.append('file', file);
-    this.productService.saveProductImage(formData, product).subscribe(() => {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
 
-    }, error => {
-      console.log(error);
-    });
+    if (file != undefined) 
+      this.productService.saveProductImage(formData, productId).subscribe(() => this.dialogRef.close('refresh'));
+    else 
+      this.dialogRef.close('refresh');
   }
 
   onNoClick(): void {
     this.dialogRef.close('close');
   }
 
-  //OPTIONS HANDLING
+  //ALL ABOUT THE OPTIONS
+
   //create
 
   onAddOption() {

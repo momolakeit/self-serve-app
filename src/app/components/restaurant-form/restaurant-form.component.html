@@ -7,7 +7,7 @@
   <div class="text-center mx-auto col-lg-12 mt-2">
     <!--restaurant name-->
     <p>
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" [ngClass]="{'w-75': data,'w-50': !data}">
         <mat-label>Restaurant name</mat-label>
         <input matInput placeholder="Ex. The Keg" formControlName="name" autocomplete="off">
         <mat-hint>name</mat-hint>
@@ -15,8 +15,8 @@
       </mat-form-field>
     </p>
 
-    <p *ngIf="!data">
-      <mat-form-field appearance="outline">
+    <p *ngIf="!data" >
+      <mat-form-field appearance="outline" class="w-50">
         <mat-label>Table count</mat-label>
         <input matInput type="number" placeholder="Ex. 15" formControlName="tableAmount" autocomplete="off">
         <mat-hint>amount</mat-hint>
@@ -34,20 +34,20 @@
         <!--BODY-->
 
         <mat-divider></mat-divider>
-        <div class="d-flex justify-content-between">
-          <p class="text-bold">Table number</p>
-          <p>Action</p>
+        <div class="d-flex justify-content-between p-3">
+          <p class="font-weight-bold">Table Number</p>
+          <p class="font-weight-bold">Action</p>
         </div>
 
         <mat-divider></mat-divider>
 
-        <div style="height: 200px;" class="overflow-auto">
+        <div style="min-height: 300px; max-height: 350px;" class="overflow-auto">
           <div class="d-flex justify-content-between mt-2" *ngFor="let table of data.restaurentTablesDTO">
-            <p>{{table.tableNumber}}</p>
-            <button mat-raised-button class="btn-dark text-white" (click)="onDeleteTable(table.id)">Delete</button>
+            <p class="m-1">{{table.tableNumber}}</p>
+            <button mat-raised-button class="btn-dark text-white m-1" (click)="onDeleteTable(table.id)">Delete</button>
           </div>
         </div>
-        <button mat-raised-button class="btn-dark text-white btn-block">Add table</button>
+        <button mat-raised-button class="btn-dark text-white btn-block" (click)="openDialog()">Add table</button>
       </div>
 
     </ng-container>

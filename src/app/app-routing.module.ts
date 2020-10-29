@@ -35,12 +35,14 @@ const routes: Routes = [
   {path: 'menu',canActivate:[AuthGuardService], component: MenuComponent},
   {path: 'paymentChoice',canActivate:[AuthGuardService], component: PaymentChoiceComponent},
   {path: 'paymentForm',canActivate:[AuthGuardService], component: PaymentFormComponent},
+
   //all about waiter
   {path: 'waiter-request',canActivate:[AuthGuardService], component: WaiterRequestListComponent},
   {path: 'tableDetail',canActivate:[AuthGuardService], component: TableDetailPageComponent},
   {path: 'restaurentOrders',canActivate:[AuthGuardService], component: RestaurentOrdersComponent},
   {path: 'contactForm',canActivate:[AuthGuardService], component: ContactFormComponent},
   {path: 'not-found',canActivate:[AuthGuardService], component: NotFoundComponent},
+  
   //all about admin
   {path: 'adminProductManagment',canActivate:[AuthGuardService,RoleGuardService], component: AdminProductManagmentComponent},
   {path: '**', redirectTo: '/not-found'}
