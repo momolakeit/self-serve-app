@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { AuthService } from './auth.service';
+import {roles} from '../../environments/environment';
 import decode from 'jwt-decode';
-import { roles } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class OwnerRoleGuardService implements CanActivate {
+export class ClientGuardService implements CanActivate {
 
   constructor(private router: Router, private authService: AuthService) { }
 
@@ -17,7 +17,7 @@ export class OwnerRoleGuardService implements CanActivate {
     // decode the token to get its payload
     const tokenPayload = decode(token);
     
-    if (!this.authService.isAuthenticated() || tokenPayload.role !== roles.owner) {
+    if (!this.authService.isAuthenticated() || tokenPayload.role !== roles.client) {
       this.router.navigate(['not-found']);
       return false;
     }
