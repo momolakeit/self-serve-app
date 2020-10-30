@@ -1,5 +1,6 @@
 FROM node:latest as node
 ARG environement
+
 ENV environement $environement
 WORKDIR /app
 COPY . .
