@@ -1,8 +1,10 @@
 FROM node:latest as node
+ARG environement
+ENV environement $environement
 WORKDIR /app
 COPY . .
 RUN npm install
-RUN npm run build 
+RUN node_modules/.bin/ng build --configuration=${environement}
 
 #stage 2
 FROM nginx:1.16.0-alpine

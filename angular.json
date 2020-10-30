@@ -5,28 +5,29 @@
   "projects": {
     "self-serve-app": {
       "projectType": "application",
-      "schematics": {  "@schematics/angular:class": {
-        "skipTests": true
+      "schematics": {
+        "@schematics/angular:class": {
+          "skipTests": true
+        },
+        "@schematics/angular:component": {
+          "skipTests": true
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        },
+        "@schematics/angular:module": {
+          "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
+        }
       },
-      "@schematics/angular:component": {
-        "skipTests": true
-      },
-      "@schematics/angular:directive": {
-        "skipTests": true
-      },
-      "@schematics/angular:guard": {
-        "skipTests": true
-      },
-      "@schematics/angular:module": {
-        "skipTests": true
-      },
-      "@schematics/angular:pipe": {
-        "skipTests": true
-      },
-      "@schematics/angular:service": {
-        "skipTests": true
-      }
-    },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -41,7 +42,11 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
-              { "glob": "*", "input": "./src/asserts/.well-known", "output": "." },
+              {
+                "glob": "*",
+                "input": "./src/asserts/.well-known",
+                "output": "."
+              },
               "src/favicon.ico",
               "src/.well-known/apple-developer-merchantid-domain-association",
               "src/assets"
@@ -53,6 +58,14 @@
             "scripts": []
           },
           "configurations": {
+            "dev": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
+                }
+              ]
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -115,7 +128,9 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": ["src/assets/stripe/stripePayment.js"]
+            "scripts": [
+              "src/assets/stripe/stripePayment.js"
+            ]
           }
         },
         "lint": {
