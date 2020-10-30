@@ -1,7 +1,7 @@
 FROM node:latest as node
 ARG environement
 
-ENV environement $environement
+ENV environement = $environement
 WORKDIR /app
 COPY . .
 RUN npm install
