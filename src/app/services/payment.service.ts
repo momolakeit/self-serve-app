@@ -6,6 +6,10 @@ import { environment } from '../../environments/environment';
 import { BillDTO} from '../models/bill-dto'
 import { map, catchError } from 'rxjs/operators';
 import { StripeClientIdResponse} from '../models/stripe-client-id-response'
+import { StripeSubscriptionProducts} from '../models/stripe-subscription-products'
+import {CreateSubscriptionRequestDTO} from '../models/create-subscription-request-dto'
+import {StripeSessionCustomerIdDTO} from '../models/stripe-session-customer-id-dto'
+import {SubscriptionEntityDTO} from '../models/subscription-entity-dto'
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +20,25 @@ export class PaymentService {
   fetchPaymentIntent(billDTO :BillDTO,restaurentStripeAccount :String):Observable<StripeClientIdResponse>{
     return this.http.post<StripeClientIdResponse>(`${environment.paymentIntentUrl}`,{billDTO: JSON.stringify(billDTO),restaurentStripeAccount:restaurentStripeAccount});
   }
+
+  createPaymentSubscription(customerId:string,paymentMethodId:string,priceId:string):Observable<SubscriptionEntityDTO>{
+    return this.http.post<SubscriptionEntityDTO>(`${environment.createSubscriptionUrl}`,{customerId:customerId,paymentMethodId:paymentMethodId,priceId:priceId});
+  }
+  cancelSubscription(ownerEmail:string):Observable<SubscriptionEntityDTO>{
+    return this.http.post<SubscriptionEntityDTO>(`${environment.cancelSubscriptionUrl}`,{ownerEmail:ownerEmail});
+  }
+  fetchOwnerCustomerId(ownerEmail:string):Observable<StripeSessionCustomerIdDTO>{
+    return this.http.post<StripeSessionCustomerIdDTO>(`${environment.fetchSubscriptionSessionUrl}`,{ownerEmail:ownerEmail});
+  }
+
+  fetchSubscriptionProduct():Observable<[StripeSubscriptionProducts]>{
+    return this.http.get<[StripeSubscriptionProducts]>(`${environment.subscriptionProductUrl}`);
+  }
   
+  fetchSubscription(ownerEmail:string):Observable<SubscriptionEntityDTO>{
+    return this.http.post<SubscriptionEntityDTO>(`${environment.fetchSubscription}`,{ownerEmail:ownerEmail});
+  }
+
   fetchPaymentRequestPaymentIntent(billDTO :BillDTO,restaurentStripeAccount :String) : Observable<StripeClientIdResponse>{
      return this.http.post<StripeClientIdResponse>(`${environment.paymentRequestIntentUrl}`,{billDTO: JSON.stringify(billDTO),restaurentStripeAccount:restaurentStripeAccount});
   }
@@ -42,6 +64,13 @@ export class PaymentService {
       map(response => {
         console.log(response.value)
         return response.value;
+      }));
+  }
+
+  getSubscriptionProduct() : Observable<[StripeSubscriptionProducts]>{
+    return this.fetchSubscriptionProduct().pipe(
+      map(response => {
+        return response;
       }));
   }
 

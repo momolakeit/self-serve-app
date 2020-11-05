@@ -34,10 +34,7 @@ export class ClientRequestListComponent implements OnInit {
   }
 
   changeOrderItemToPassToModal = function (orderItemDTO: OrderItemDTO): void {
-    console.log("/***************************************salope*********************************************/");
-    console.log(orderItemDTO);
     this.orderItemToPassToModal = orderItemDTO;
-
   }
 
 }

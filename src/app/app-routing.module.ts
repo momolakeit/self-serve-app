@@ -19,6 +19,8 @@ import { WaiterRequestListComponent } from './components/waiter-request-list/wai
 import { AuthGuardService } from './services/auth-guard.service';
 import { RoleGuardService } from './services/role-guard.service';
 import { LoginGuardService } from './services/login-guard.service';
+import { OwnerSubscriptionComponent } from './components/owner-subscription/owner-subscription.component';
+import { SubscriptionDetailsComponent } from './components/subscription-details/subscription-details.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/start', pathMatch: 'full'},
@@ -45,6 +47,8 @@ const routes: Routes = [
   
   //all about admin
   {path: 'adminProductManagment',canActivate:[AuthGuardService,RoleGuardService], component: AdminProductManagmentComponent},
+  {path: 'subscription',canActivate:[AuthGuardService,RoleGuardService], component: OwnerSubscriptionComponent},
+  {path: 'subscriptionDetail',canActivate:[AuthGuardService,RoleGuardService], component: SubscriptionDetailsComponent},
   {path: '**', redirectTo: '/not-found'}
 ];
 

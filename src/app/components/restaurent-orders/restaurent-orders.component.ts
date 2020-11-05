@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment'
 import { OrderItemDTO } from 'src/app/models/order-item-dto';
 import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 import { BillService } from 'src/app/services/bill.service';
-
+import {PaymentService} from '../../services/payment.service';
 @Component({
   selector: 'app-restaurent-orders',
   templateUrl: './restaurent-orders.component.html',
@@ -23,11 +23,24 @@ export class RestaurentOrdersComponent implements OnInit {
   nombreDeMinuteRestant = 0;
   nombreDeMinutesSur100 = 100;
   isBillDone = false;
-  constructor(private kitchenService: KitchenService) { }
+  constructor(private kitchenService: KitchenService,private paymentService :PaymentService) { }
 
+
+  isActive :Boolean
   ngOnInit(): void {
     this.imgUrl = environment.baseImgPath;
-    this.initValues();
+    this.isSubscriptionActive();
+  }
+  isSubscriptionActive(){
+    this.paymentService.fetchSubscription("owner@mail.com").subscribe(data =>{
+      if(data.status !="active"){
+        this.isActive = false;
+      }
+      else{
+        this.isActive=true;
+        this.initValues();
+      }      
+    })
   }
 
   seeIfCheckItemSelected = function (checkItemName: string): boolean {

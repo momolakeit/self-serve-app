@@ -34,6 +34,8 @@ import { RestaurantOwnerListComponent } from './components/restaurant-owner-list
 import { RestaurantFormComponent } from './components/restaurant-form/restaurant-form.component';
 import { ProductFormEditCreateComponent } from './components/product-form-edit-create/product-form-edit-create.component';
 import { AddTableFormComponent } from './components/add-table-form/add-table-form.component';
+import { OwnerSubscriptionComponent } from './components/owner-subscription/owner-subscription.component';
+import { SubscriptionDetailsComponent } from './components/subscription-details/subscription-details.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { AddTableFormComponent } from './components/add-table-form/add-table-for
     RestaurantOwnerListComponent,
     RestaurantFormComponent,
     ProductFormEditCreateComponent,
-    AddTableFormComponent
+    AddTableFormComponent,
+    OwnerSubscriptionComponent,
+    SubscriptionDetailsComponent
   ],
   imports: [
     CommonModule,

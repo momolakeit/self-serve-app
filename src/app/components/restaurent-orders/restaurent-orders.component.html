@@ -1,34 +1,47 @@
-<div class="bg-white  text-center">
-    <h4>
-        ALL ORDERS
-    </h4>
-</div>
-<ng-container   *ngIf="allTables">
-    <mat-accordion *ngFor="let table of allTables;let i = index">
-        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <div class="container" >
-                        <div class="row">
-                            <div class="col w-25">
-                                <h2>Table {{table.tableNumber}}</h2>
-                            </div>
-                            <div class="col w-75" >
-                                <h2>{{table.nombreItemParTable}} orders </h2>
+<ng-container *ngIf="isActive">
+    <div class="bg-white  text-center">
+        <h4>
+            ALL ORDERS
+        </h4>
+    </div>
+    <ng-container *ngIf="allTables">
+        <mat-accordion *ngFor="let table of allTables;let i = index">
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col w-25">
+                                    <h2>Table {{table.tableNumber}}</h2>
+                                </div>
+                                <div class="col w-75">
+                                    <h2>{{table.nombreItemParTable}} orders </h2>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <ng-container *ngFor='let bill of table.bills'>
-                <h3 class="border-bottom" *ngIf="!bill.isBillEmpty">
-                    {{bill.orderCustomer.username}}
-                </h3>
-                <ng-container *ngFor='let orderItem of bill.orderItems'>
-                    <app-restaurent-dish-detail-view (countChanged)="initValues($event)" [orderItem]="orderItem"></app-restaurent-dish-detail-view>  
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-container *ngFor='let bill of table.bills'>
+                    <h3 class="border-bottom" *ngIf="!bill.isBillEmpty">
+                        {{bill.orderCustomer.username}}
+                    </h3>
+                    <ng-container *ngFor='let orderItem of bill.orderItems'>
+                        <app-restaurent-dish-detail-view (countChanged)="initValues($event)" [orderItem]="orderItem">
+                        </app-restaurent-dish-detail-view>
+                    </ng-container>
                 </ng-container>
-            </ng-container>
-        </mat-expansion-panel>
-    </mat-accordion>
+            </mat-expansion-panel>
+        </mat-accordion>
 
+    </ng-container>
+</ng-container>
+<ng-container *ngIf="!isActive">
+    <div class="container">
+        <div class="row">
+            <div class="col w-100 text-center">
+                <h4>Veuillez vous abonner pour avoir pouvoir acceder aux options de IServe</h4>
+            </div>
+        </div>
+    </div>
+        
 </ng-container>
