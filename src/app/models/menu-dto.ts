@@ -7,6 +7,7 @@ export interface MenuDTO {
     products:[ProductDTO];
     restaurant:[RestaurantDTO];
     speciaux:[ProductDTO];
+    featured:[ProductDTO];
     souper:[ProductDTO];
     dejeuner:[ProductDTO];
     diner:[ProductDTO];

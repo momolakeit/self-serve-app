@@ -62,7 +62,7 @@
     <div id="carouselExampleInterval2" class="carousel slide mb-4" style="box-shadow: 10px 10px 61px -16px rgba(0,0,0,0.75);" data-ride="carousel">
         <div class="carousel-inner">
             <ng-container *ngIf='menu'>
-                <ng-container *ngFor="let product of menu.speciaux; let i = index">
+                <ng-container *ngFor="let product of menu.featured; let i = index">
                     <div *ngIf="i =='0';else nonActive" class="carousel-item active">
                         <mat-card class="example-card">
                             <mat-card-header>
