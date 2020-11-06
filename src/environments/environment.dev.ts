@@ -3,10 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 // const host = "18.221.184.6";
 const host = "18.188.8.244";
+const port = "";
 const rolePrefix = 'ROLE_';
 
 export const environment = {
-  production: false,
   production: false,
   authApiUrl: `http://${host}${port}/auth`,
   contactFormUrl: `http://${host}${port}/support`,
