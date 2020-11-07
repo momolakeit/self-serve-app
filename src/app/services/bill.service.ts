@@ -14,7 +14,7 @@ export class BillService {
   billDTO :BillDTO
 
   postNewOrder(billDTO :BillDTO,restaurentTableId :String,product:ProductDTO,commentaire:String):Observable<BillDTO>{
-     const returnValue  = this.http.post<BillDTO>(`${environment.billUrl}/makeOrder`,{billDTO: JSON.stringify(billDTO),restaurentTableId:restaurentTableId,productDTO:JSON.stringify(product),guestUsername:"client1@mail.com",commentaire:commentaire});
+     const returnValue  = this.http.post<BillDTO>(`${environment.billUrl}/makeOrder`,{billDTO: JSON.stringify(billDTO),restaurentTableId:restaurentTableId,productDTO:JSON.stringify(product),guestUsername:localStorage.getItem("username"),commentaire:commentaire});
      return returnValue;
   }
 
@@ -30,7 +30,5 @@ export class BillService {
         return response;
       }));
   }
-
-  
 
 }

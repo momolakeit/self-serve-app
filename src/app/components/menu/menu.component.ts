@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuDTO } from 'src/app/models/menu-dto';
-import {MenuService} from '../../services/menu.service'
-import {ProductDTO} from '../../models/product-dto';
-import {environment} from '../../../environments/environment';
+import { MenuService } from '../../services/menu.service'
+import { ProductDTO } from '../../models/product-dto';
+import { environment } from '../../../environments/environment';
 import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
 @Component({
   selector: 'app-menu',
@@ -13,30 +13,33 @@ export class MenuComponent implements OnInit {
 
 
   menu: MenuDTO;
-  productToSeeDetail :ProductDTO;
-  listeUrlImagesSpeciaux =[];
+  productToSeeDetail: ProductDTO;
+  listeUrlImagesSpeciaux = [];
   panelOpenState: boolean
-  listeUrlImagesFeatured =[String];
-  
-  slides = [{'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}, {'image': 'https://gsr.dev/material2-carousel/assets/demo.png'},{'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}, {'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}, {'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}];
+  listeUrlImagesFeatured = [String];
 
-  
+  slides = [{ 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }];
 
-  constructor(private menuService :MenuService) { }
+
+
+  constructor(private menuService: MenuService) { }
 
   ngOnInit(): void {
-    if(localStorage.getItem("ongoingBill")==null){
-      localStorage.setItem("ongoingBill",JSON.stringify({prixTotal :null,id :null ,date :null,billStatus: null,orderCustomer:null,orderItems :null, restaurant :null}));  
+    if (localStorage.getItem("ongoingBill") == null) {
+      localStorage.setItem("ongoingBill", JSON.stringify({ prixTotal: null, id: null, date: null, billStatus: null, orderCustomer: null, orderItems: null, restaurant: null }));
       console.log(localStorage.getItem("ongoingBill"))
     }
-    this.menuService.getMenuById().subscribe(data =>{
-      this.menu=data;
+    this.menuService.getMenuById().subscribe(data => {
+      this.menu = data;
       console.log(this.menu);
-      this.menu.speciaux.forEach(element =>this.listeUrlImagesSpeciaux.push(environment.baseImgPath+element.imgFileDTO.id));
-      console.log(this.listeUrlImagesSpeciaux);
     })
   }
-  changeProductToSeeDetail = function (product :ProductDTO): void {
-    this.productToSeeDetail =product;
+
+  getImage(imageId: number): string {
+    return environment.baseImgPath + imageId;
+  }
+
+  changeProductToSeeDetail = function (product: ProductDTO): void {
+    this.productToSeeDetail = product;
   };
 }

@@ -102,8 +102,7 @@
                                     <mat-label>option {{i + 1}}:</mat-label>
                                     <input type="text" class="w-100" matInput placeholder="Ex: mode de cuisson"
                                         formControlName="optionName">
-                                    <mat-icon (click)="deleteOption(i)" matSuffix>disabled_by_default
-                                    </mat-icon>
+                                    <mat-icon (click)="deleteOption(i)" matSuffix>disabled_by_default</mat-icon>
                                 </mat-form-field>
 
                             </div>
@@ -119,8 +118,8 @@
                                                 <mat-label>check item {{j + 1}}:</mat-label>
                                                 <input type="text" class="w-75" matInput placeholder="Ex: medium bien"
                                                     formControlName="checkItemName">
-                                                <mat-icon (click)="deleteCheckItem(i,j)" matSuffix>clear
-                                                </mat-icon>
+                                                <mat-icon (click)="deleteCheckItem(i,j)" matSuffix>clear</mat-icon>
+                                                <mat-error>Check item name cannot be empty</mat-error>
                                             </mat-form-field>
                                         </ng-container>
                                     </div>

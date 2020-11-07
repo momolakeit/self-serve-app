@@ -6,7 +6,6 @@ import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { WaiterComponent } from './components/waiter/waiter.component';
-import { TableDetailPageComponent } from './components/table-detail-page/table-detail-page.component';
 import { RestaurentOrdersComponent } from './components/restaurent-orders/restaurent-orders.component';
 import { DishDetailComponent } from './components/dish-detail/dish-detail.component';
 import { AdminProductManagmentComponent } from './components/admin-product-managment/admin-product-managment.component';
@@ -33,7 +32,7 @@ const routes: Routes = [
   
   //all about clients
   { path: 'waiter', canActivate: [ClientGuardService], component: WaiterComponent },
-  { path: 'clientRequestList', canActivate: [,ClientGuardService], component: ClientRequestListComponent },
+  { path: 'clientRequestList', canActivate: [ClientGuardService], component: ClientRequestListComponent },
   { path: 'menu', canActivate: [ClientGuardService], component: MenuComponent },
   { path: 'paymentChoice', canActivate: [ClientGuardService], component: PaymentChoiceComponent },
   //{path: 'dishDetail',canActivate:[AuthGuardService], component: DishDetailComponent},
@@ -41,7 +40,6 @@ const routes: Routes = [
   //all about waiter
   { path: 'waiter-request', canActivate: [WaiterGuardService], component: WaiterRequestListComponent },
   { path: 'restaurentOrders', canActivate: [WaiterGuardService,CookGuardService], component: RestaurentOrdersComponent },
-  // {path: 'tableDetail',canActivate:[AuthGuardService], component: TableDetailPageComponent},
   
   //all about admin
   { path: 'adminProductManagment', canActivate: [OwnerRoleGuardService], component: AdminProductManagmentComponent },

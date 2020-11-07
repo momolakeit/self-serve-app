@@ -1,9 +1,8 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-const host = "18.188.8.244";
-// const host = "localhost:";
-const port = "";
+const host = "localhost:";
+const port = "8080";
 const rolePrefix = 'ROLE_';
 
 export const environment = {
@@ -21,6 +20,7 @@ export const environment = {
   domainFiLE:`http://${host}${port}/order/fetchDomainFile`,
   baseImgPath:`http://${host}${port}/product/getProductImg/`,
   kitchenUrl:`http://${host}${port}/rest/kitchen`,
+  qrCodeUrl:`http://${host}${port}/qrcode`,
 };
 
 export const roles={

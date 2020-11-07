@@ -1,8 +1,8 @@
 import {OptionDTO} from './option-dto';
 
 export interface CheckItemDTO {
-    id?:number;
+    id:number;
     name:string;
-    isActive? : boolean;
-    option?:OptionDTO;
+    isActive: boolean;
+    option:OptionDTO;
 }

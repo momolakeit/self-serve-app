@@ -10,7 +10,6 @@ import { SignupComponent } from './components/signup/signup.component';
 import { StartComponent } from './components/start/start.component';
 import { DishDetailComponent } from './components/dish-detail/dish-detail.component';
 import { RestaurentOrdersComponent } from './components/restaurent-orders/restaurent-orders.component';
-import { TableDetailPageComponent } from './components/table-detail-page/table-detail-page.component';
 import { PaymentChoiceComponent } from './components/payment-choice/payment-choice.component';
 import { PaymentFormComponent } from './components/payment-form/payment-form.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -34,6 +33,7 @@ import { RestaurantOwnerListComponent } from './components/restaurant-owner-list
 import { RestaurantFormComponent } from './components/restaurant-form/restaurant-form.component';
 import { ProductFormEditCreateComponent } from './components/product-form-edit-create/product-form-edit-create.component';
 import { AddTableFormComponent } from './components/add-table-form/add-table-form.component';
+import { OwnerPageComponent } from './pages/owner-page/owner-page.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,6 @@ import { AddTableFormComponent } from './components/add-table-form/add-table-for
     StartComponent,
     DishDetailComponent,
     RestaurentOrdersComponent,
-    TableDetailPageComponent,
     AdminProductManagmentComponent,
     PaymentChoiceComponent,
     PaymentFormComponent,
@@ -61,7 +60,8 @@ import { AddTableFormComponent } from './components/add-table-form/add-table-for
     RestaurantOwnerListComponent,
     RestaurantFormComponent,
     ProductFormEditCreateComponent,
-    AddTableFormComponent
+    AddTableFormComponent,
+    OwnerPageComponent
   ],
   imports: [
     CommonModule,

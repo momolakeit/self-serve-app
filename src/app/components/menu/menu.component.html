@@ -12,7 +12,7 @@
                                 <div mat-card-avatar class="example-header-image"></div>
                                 <mat-card-title>{{product.name}}</mat-card-title>
                             </mat-card-header>
-                            <img mat-card-image [src]="listeUrlImagesSpeciaux[i]">
+                            <img mat-card-image [src]="getImage(product.imgFileDTO.id)">
                             <mat-card-content>
                                 <p>Prix: {{product.prix}}$</p>
                             </mat-card-content>

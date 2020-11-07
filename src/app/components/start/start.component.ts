@@ -33,10 +33,10 @@ export class StartComponent implements OnInit {
       let restaurantTableId = params['restaurantTableId'];
       this.kitchenService.fetchMenuByRestaurantTable(restaurantTableId).subscribe(data => {
         localStorage.setItem("menuId",data.id.toString())
-        console.log(this.constanteService.menuId);
       });
   });
   }
+
   onGuestClicked() {
     //sign up guest
     const signUpForm: SignUpForm = {
@@ -71,7 +71,6 @@ export class StartComponent implements OnInit {
         this.route.navigate(['/menu']);
       else
         console.log("Error could not login");
-
     })
   }
 
