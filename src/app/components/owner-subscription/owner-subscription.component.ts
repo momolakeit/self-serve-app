@@ -90,6 +90,8 @@ export class OwnerSubscriptionComponent implements OnInit {
     this.hideComponent(document.getElementById("subscriptionContainer"));
     this.showComponent(document.getElementById("spinner"));
     if (this.priceId == null) {
+      this.hideComponent(document.getElementById("spinner"));
+      this.showComponent(document.getElementById("subscriptionContainer"));
       var element = document.getElementById("subscriptionErrorTxt");
       element.classList.remove("d-none");
     }
