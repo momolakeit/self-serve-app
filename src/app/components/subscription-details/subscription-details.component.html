@@ -1,4 +1,4 @@
-<ng-container *ngIf="subscriptionEntity">
+<ng-container *ngIf="subscriptionEntity && !loading">
     <div class="container">
         <div class="row">
             <div class="col">
@@ -7,7 +7,7 @@
                         <mat-card-title>Bonjour</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                        <ng-container *ngIf="(subscriptionEntity.created && subscriptionEntity.periodEnd)" >
+                        <ng-container *ngIf="(subscriptionEntity.created && subscriptionEntity.periodEnd)">
                             <p class="ml-3">Début de l'abonement :{{setUpDates(subscriptionEntity.created)}}</p>
                             <p class="ml-3">Fin du cycle de payment : {{setUpDates(subscriptionEntity.periodEnd)}}</p>
                         </ng-container>
@@ -40,7 +40,7 @@
                                             mois</p>
                                     </div>
                                     <div class="col w-25">
-                                        <button (click) ="cancelSubscription()" class="w-100 bg-danger text-white"
+                                        <button (click)="cancelSubscription()" class="w-100 bg-danger text-white"
                                             mat-button>Annuler
                                             abonnement</button>
                                     </div>
@@ -62,4 +62,7 @@
             </div>
         </div>
     </div>
+</ng-container>
+<ng-container *ngIf ="!subscriptionEntity || loading">
+    <div class="loader text-center"></div>
 </ng-container>

@@ -10,7 +10,7 @@ import {SubscriptionEntityDTO} from '../../models/subscription-entity-dto'
 export class SubscriptionDetailsComponent implements OnInit {
 
   constructor(private paymentService:PaymentService) { }
-
+  loading : boolean;
   ngOnInit(): void {
     this.fetchSubscription();
   }
@@ -21,8 +21,10 @@ export class SubscriptionDetailsComponent implements OnInit {
     })
   }
   cancelSubscription(){
+    this.loading = true;
     this.paymentService.cancelSubscription(localStorage.getItem("username")).subscribe(data =>{
       this.subscriptionEntity = data;
+      this.loading = false;
     })
   }
   setUpDates(time:number){

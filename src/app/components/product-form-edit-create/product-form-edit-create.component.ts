@@ -123,6 +123,7 @@ export class ProductFormEditCreateComponent implements OnInit {
   }
 
   onCreateProduct(product: ProductDTO) {
+    console.log(product);
     this.productService.create(product, this.menuId).subscribe((data) => this.onUploadImage(data.id));
   }
 
@@ -167,6 +168,7 @@ export class ProductFormEditCreateComponent implements OnInit {
       checkItemName: new FormControl('', Validators.required)
     })
     this.getCheckItems(id).push(group);
+    console.log(this.getCheckItems(id).length);
   }
 
   //get

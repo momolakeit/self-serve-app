@@ -25,9 +25,10 @@ export class RestaurentOrdersComponent implements OnInit {
   isBillDone = false;
   constructor(private kitchenService: KitchenService,private paymentService :PaymentService) { }
 
-
+  loading : Boolean ;
   isActive :Boolean
   ngOnInit(): void {
+    this.loading = true;
     this.imgUrl = environment.baseImgPath;
     this.isSubscriptionActive();
   }
@@ -35,6 +36,7 @@ export class RestaurentOrdersComponent implements OnInit {
     this.paymentService.fetchSubscription("owner@mail.com").subscribe(data =>{
       if(data.status !="active"){
         this.isActive = false;
+        this.loading = false;
       }
       else{
         this.isActive=true;
@@ -52,6 +54,7 @@ export class RestaurentOrdersComponent implements OnInit {
   initValues = function (): void {
     var source = timer(1000, 50000).subscribe(() => {
       this.kitchenService.getAllRestaurantTables().subscribe(data => {
+        this.loading=false;
         this.allTables = data;
         this.allTables = this.filterTableArray(this.allTables);
         this.allTables.forEach(table => {

@@ -21,6 +21,7 @@ export class OwnerSubscriptionComponent implements OnInit {
   customerId: string;
   priceId: string;
   subscriptionProducts: [StripeSubscriptionProducts];
+  loader: boolean;
   confirmation;
   style = {
     base: {
@@ -40,10 +41,10 @@ export class OwnerSubscriptionComponent implements OnInit {
 
 
   ngOnInit() {
+    this.hideComponent(document.getElementById("subscriptionContainer"));
+    this.showComponent(document.getElementById("spinner"));
     this.fetchCustomerId();
     this.getSubscriptionProducts();
-    this.initStripe();
-
   }
 
   initStripe() {
@@ -63,10 +64,31 @@ export class OwnerSubscriptionComponent implements OnInit {
     this.paymentService.fetchOwnerCustomerId(localStorage.getItem("username")).subscribe(data => this.customerId = data.customerId);
   }
   getSubscriptionProducts() {
-    this.paymentService.fetchSubscriptionProduct().subscribe(data => this.subscriptionProducts = data);
+    this.paymentService.fetchSubscriptionProduct().subscribe(data => {
+      this.hideComponent(document.getElementById("spinner"));
+      this.showComponent(document.getElementById("subscriptionContainer"));
+      this.subscriptionProducts = data;
+      this.initStripe();
+    });
   }
-
+  showLoader(isShown: boolean) {
+    this.loader = isShown;
+  }
+  hideContentContainer() {
+    document.getElementById("subscriptionContainer").classList.add("d-none");
+  }
+  hideSpinner() {
+    document.getElementById("spinner").classList.remove("d-none");
+  }
+  hideComponent(element) {
+    element.classList.add("d-none")
+  }
+  showComponent(element) {
+    element.classList.remove("d-none")
+  }
   submitForm() {
+    this.hideComponent(document.getElementById("subscriptionContainer"));
+    this.showComponent(document.getElementById("spinner"));
     if (this.priceId == null) {
       var element = document.getElementById("subscriptionErrorTxt");
       element.classList.remove("d-none");
@@ -135,7 +157,11 @@ export class OwnerSubscriptionComponent implements OnInit {
             // Create the subscription
             this.paymentService
             this.paymentService.createPaymentSubscription(this.customerId, result.paymentMethod.id, this.priceId).subscribe(result => {
+
+              this.showLoader(false);
               if (result.status != "active") {
+                this.hideComponent(document.getElementById("spinner"));
+                this.showComponent(document.getElementById("subscriptionContainer"));
                 this.handleError();
               }
               else {
@@ -156,7 +182,7 @@ export class OwnerSubscriptionComponent implements OnInit {
         }
       });
   }
-  handleError(){
+  handleError() {
     var element = document.getElementById("paymentErrorTxt");
     element.classList.remove("d-none");
   }
