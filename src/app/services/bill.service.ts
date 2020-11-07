@@ -18,6 +18,10 @@ export class BillService {
      return returnValue;
   }
 
+  initBill(){
+    return this.http.post<BillDTO>(`${environment.billUrl}/initBill`,{});
+  }
+
   getBill(billDTO :BillDTO):Observable<BillDTO>{
     const returnValue  = this.http.post<BillDTO>(`${environment.billUrl}/getBill`,{billId: billDTO.id});
     return returnValue;

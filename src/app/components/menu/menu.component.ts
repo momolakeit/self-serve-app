@@ -4,6 +4,7 @@ import {MenuService} from '../../services/menu.service'
 import {ProductDTO} from '../../models/product-dto';
 import {environment} from '../../../environments/environment';
 import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
+import {BillService} from '../../services/bill.service'
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -22,10 +23,14 @@ export class MenuComponent implements OnInit {
 
   
 
-  constructor(private menuService :MenuService) { }
+  constructor(private menuService :MenuService, private billService:BillService) { }
 
   ngOnInit(): void {
+
     if(localStorage.getItem("ongoingBill")==null){
+      this.billService.initBill().subscribe(data => {
+        localStorage.setItem("ongoingBill",JSON.stringify(data));   
+      });
       localStorage.setItem("ongoingBill",JSON.stringify({prixTotal :null,id :null ,date :null,billStatus: null,orderCustomer:null,orderItems :null, restaurant :null}));  
       console.log(localStorage.getItem("ongoingBill"))
     }
