@@ -41,15 +41,4 @@ export class AuthentificationService {
     localStorage.removeItem('username');
   }
 
-   // OBTAINING USER DETAILS 
-
-  /* getClientDetails(email: string): Observable<Client> {
-    if (this.auth.isAuthenticated()) {
-      return this.http.get<Client>(`${environment.clientUrl}/${email}`).pipe(map((client: Client) => {
-        return client;
-      }));
-    }
-  }*/
-
- 
 }

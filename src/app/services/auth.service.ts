@@ -13,12 +13,7 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     let token = localStorage.getItem('token');
-
-    if (token) {
-      return !this.jwtHelper.isTokenExpired(token);
-    } else {
-      return false;
-    }
+    return token ? !this.jwtHelper.isTokenExpired(token) : false;
   }
 
   isOwner(): boolean {
@@ -48,11 +43,6 @@ export class AuthService {
 
   findRoleThenRedirect(route: Router) {
     let token = localStorage.getItem('token');
-
-    console.log('this is my role: ' + decode(token).role);
-
-    console.log('this is my token: ' + token);
-    
 
     switch (decode(token).role) {
       case roles.owner:

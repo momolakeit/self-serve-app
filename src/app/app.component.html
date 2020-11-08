@@ -1,45 +1,101 @@
-<header class="bg-white text-center d-flex justify-content-center"  *ngIf="isConnected()">
-  <img src="../assets/logo.PNG" alt="" class="align-self-center">
-</header>
-<mat-divider></mat-divider>
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-toolbar class="example-toolbar" *ngIf="isConnected()">
+    <button mat-icon-button (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <img src="../assets/logo.PNG" alt="" class="img-fluid mx-auto">
+  </mat-toolbar>
 
-<div id="page-container" >
-  <div id="content-wrap" class="pt-3">
-    <router-outlet></router-outlet>
-  </div>
+  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56" [ngClass]="{'w-50' : mobileQuery.matches,'w-25' : !mobileQuery.matches}">
+
+      <mat-nav-list>
+        <!--OWNER NAV LIST-->
+        <ng-container *ngIf="isOwner()">
+          <a mat-list-item routerLink="adminProductManagment" (click)="snav.toggle()">
+            <div class="d-flex">
+              <mat-icon class="mr-3">store_mall_directory</mat-icon>
+              <p>restaurants</p>
+            </div>
+          </a>
+          <a mat-list-item routerLink="." (click)="snav.toggle()">
+            <div class="d-flex">
+              <mat-icon class="mr-3">restaurant_menu</mat-icon>
+              <p>products</p>
+            </div>
+          </a>
+          <a mat-list-item routerLink="." (click)="snav.toggle()">
+            <div class="d-flex">
+              <mat-icon class="mr-3">card_membership</mat-icon>
+              <p>abonnement</p>
+            </div>
+          </a>
+        </ng-container>
+
+        <a mat-list-item routerLink="." (click)="logout()" (click)="snav.toggle()">
+          <div class="d-flex">
+            <mat-icon class="mr-3">exit_to_app</mat-icon>
+            <p>se déconnecter</p>
+          </div>
+        </a>
+      </mat-nav-list>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
 
 
 <footer class="fixed-bottom">
   <!--CLIENT VIEW-->
-  <ng-container *ngIf="(isClient() || isGuest()) && isConnected()" >
+  <ng-container *ngIf="(isClient() || isGuest()) && isConnected()">
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
-      <mat-button-toggle value="bold" class="w-100" routerLink="clientRequestList"><mat-icon>receipt_long</mat-icon></mat-button-toggle>
-      <mat-button-toggle value="italic" class="w-100"  routerLink="menu"><mat-icon>restaurant_menu</mat-icon></mat-button-toggle>
-      <mat-button-toggle value="underline" class="w-100"  routerLink="waiter"><mat-icon>room_service</mat-icon></mat-button-toggle>
+      <mat-button-toggle value="bold" class="w-100" routerLink="clientRequestList">
+        <mat-icon>receipt_long</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="italic" class="w-100" routerLink="menu">
+        <mat-icon>restaurant_menu</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="underline" class="w-100" routerLink="waiter">
+        <mat-icon>room_service</mat-icon>
+      </mat-button-toggle>
     </mat-button-toggle-group>
   </ng-container>
 
   <!--WAITER VIEW-->
   <ng-container *ngIf="isWaiter() && isConnected()">
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
-      <mat-button-toggle value="italic" class="w-100"><mat-icon>receipt_long</mat-icon></mat-button-toggle>
-      <mat-button-toggle value="underline" class="w-100"><mat-icon matBadge="15" matBadgeColor="warn" matBadgeOverlap="true">room_service</mat-icon></mat-button-toggle>
+      <mat-button-toggle value="italic" class="w-100">
+        <mat-icon>receipt_long</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="underline" class="w-100">
+        <mat-icon matBadge="15" matBadgeColor="warn" matBadgeOverlap="true">room_service</mat-icon>
+      </mat-button-toggle>
     </mat-button-toggle-group>
   </ng-container>
 
   <!--COOK VIEW-->
   <ng-container *ngIf="isCook() && isConnected()">
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
-      <mat-button-toggle value="italic" class="w-100"><mat-icon matBadge="15" matBadgeColor="warn" matBadgeOverlap="true">receipt_long</mat-icon></mat-button-toggle>
+      <mat-button-toggle value="italic" class="w-100">
+        <mat-icon matBadge="15" matBadgeColor="warn" matBadgeOverlap="true">receipt_long</mat-icon>
+      </mat-button-toggle>
     </mat-button-toggle-group>
   </ng-container>
 
   <!--ADMIN VIEW-->
-  <ng-container *ngIf="isOwner() && isConnected()">
+  <ng-container *ngIf="isOwner() && isConnected() && mobileQuery.matches">
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
-      <mat-button-toggle value="italic" class="w-100" routerLink="adminProductManagment"><mat-icon>account_circle</mat-icon></mat-button-toggle>
-      <mat-button-toggle value="underline" class="w-100"><mat-icon>settings</mat-icon></mat-button-toggle>
+      <mat-button-toggle value="italic" class="w-100" routerLink="adminProductManagment">
+        <mat-icon>account_circle</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="underline" class="w-100">
+        <mat-icon>settings</mat-icon>
+      </mat-button-toggle>
     </mat-button-toggle-group>
   </ng-container>
 </footer>
