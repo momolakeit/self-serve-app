@@ -65,7 +65,7 @@ import { SubscriptionDetailsComponent } from './components/subscription-details/
     ProductFormEditCreateComponent,
     AddTableFormComponent,
     OwnerSubscriptionComponent,
-    SubscriptionDetailsComponent
+    SubscriptionDetailsComponent,
   ],
   imports: [
     CommonModule,
