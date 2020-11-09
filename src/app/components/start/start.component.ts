@@ -9,7 +9,7 @@ import { error } from '@angular/compiler/src/util';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KitchenService } from 'src/app/services/kitchen.service';
 import { ConstanteService } from 'src/app/services/constante-service.service';
-
+import {AuthService} from '../../services/auth.service';
 @Component({
   selector: 'app-start',
   templateUrl: './start.component.html',
@@ -22,7 +22,7 @@ export class StartComponent implements OnInit {
   width: number = 110;
   height: number = 200;
 
-  constructor(private authentificationService: AuthentificationService, private route: Router,private activatedRoute: ActivatedRoute, private kitchenService: KitchenService,private constanteService :ConstanteService) { }
+  constructor(private authentificationService: AuthentificationService, private route: Router,private activatedRoute: ActivatedRoute, private kitchenService: KitchenService,private constanteService :ConstanteService,private authService:AuthService) { }
 
   ngOnInit(): void {
     this.findMenu();
@@ -34,7 +34,9 @@ export class StartComponent implements OnInit {
       this.kitchenService.fetchMenuByRestaurantTable(restaurantTableId).subscribe(data => {
         localStorage.setItem("menuId",data.id.toString())
         localStorage.setItem("restaurantTableId",restaurantTableId.toString());
-        console.log(this.constanteService.menuId);
+        if(this.authService.isAuthenticated()){
+          this.route.navigate(['/menu']);
+        }
       });
   });
   }

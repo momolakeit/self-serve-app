@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuDTO } from 'src/app/models/menu-dto';
-import {MenuService} from '../../services/menu.service'
-import {ProductDTO} from '../../models/product-dto';
-import {environment} from '../../../environments/environment';
+import { MenuService } from '../../services/menu.service'
+import { ProductDTO } from '../../models/product-dto';
+import { environment } from '../../../environments/environment';
 import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
-import {BillService} from '../../services/bill.service'
+import { BillService } from '../../services/bill.service'
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -14,34 +14,44 @@ export class MenuComponent implements OnInit {
 
 
   menu: MenuDTO;
-  productToSeeDetail :ProductDTO;
-  listeUrlImagesSpeciaux =[];
+  productToSeeDetail: ProductDTO;
+  listeUrlImagesSpeciaux = [];
   panelOpenState: boolean
-  listeUrlImagesFeatured =[String];
-  
-  slides = [{'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}, {'image': 'https://gsr.dev/material2-carousel/assets/demo.png'},{'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}, {'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}, {'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}];
+  listeUrlImagesFeatured = [String];
+  hasMenuId: boolean;
 
-  
+  slides = [{ 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }];
 
-  constructor(private menuService :MenuService, private billService:BillService) { }
+
+
+  constructor(private menuService: MenuService, private billService: BillService) { }
 
   ngOnInit(): void {
-
-    if(localStorage.getItem("ongoingBill")==null){
-      this.billService.initBill().subscribe(data => {
-        localStorage.setItem("ongoingBill",JSON.stringify(data));   
-      });
-      localStorage.setItem("ongoingBill",JSON.stringify({prixTotal :null,id :null ,date :null,billStatus: null,orderCustomer:null,orderItems :null, restaurant :null}));  
-      console.log(localStorage.getItem("ongoingBill"))
+    if (localStorage.getItem('menuId') == null) {
+      this.hasMenuId = false;
     }
-    this.menuService.getMenuById().subscribe(data =>{
-      this.menu=data;
+    else {
+      this.hasMenuId = true;
+      this.initBill();
+      this.fetchMenu();
+    }
+  }
+  changeProductToSeeDetail = function (product: ProductDTO): void {
+    this.productToSeeDetail = product;
+  };
+  fetchMenu() {
+    this.menuService.getMenuById().subscribe(data => {
+      this.menu = data;
       console.log(this.menu);
-      this.menu.speciaux.forEach(element =>this.listeUrlImagesSpeciaux.push(environment.baseImgPath+element.imgFileDTO.id));
+      this.menu.speciaux.forEach(element => this.listeUrlImagesSpeciaux.push(environment.baseImgPath + element.imgFileDTO.id));
       console.log(this.listeUrlImagesSpeciaux);
     })
   }
-  changeProductToSeeDetail = function (product :ProductDTO): void {
-    this.productToSeeDetail =product;
-  };
+  initBill() {
+    if (localStorage.getItem("ongoingBill") == null) {
+      this.billService.initBill().subscribe(data => {
+        localStorage.setItem("ongoingBill", JSON.stringify(data));
+      });
+    }
+  }
 }

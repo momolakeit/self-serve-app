@@ -1,4 +1,4 @@
-<ng-container *ngIf='menu'>
+<ng-container *ngIf='menu && hasMenuId'>
     <div>
         <div class=" mb-2">
             <h1 style="font-size:larger; " class="text-center text-black">SPECIAUX</h1>
@@ -175,6 +175,9 @@
         </style>
     </div>
 </ng-container>
-<ng-container *ngIf='!menu' class="text-center">
+<ng-container *ngIf='!menu && hasMenuId' class="text-center">
     <div class="loader text-center"></div>
+</ng-container>
+<ng-container *ngIf="!hasMenuId">
+    <input type="file" capture="camera" accept="image/*" id="cameraInput" name="cameraInput">
 </ng-container>

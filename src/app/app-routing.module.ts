@@ -25,7 +25,7 @@ import { SubscriptionDetailsComponent } from './components/subscription-details/
 const routes: Routes = [
   {path: '', redirectTo: '/start', pathMatch: 'full'},
   //all about authentification
-  {path: 'start',canActivate:[LoginGuardService] ,component: StartComponent},
+  {path: 'start',component: StartComponent},
   {path: 'login',canActivate:[LoginGuardService] , component: LoginComponent},
   {path: 'sign-up/:role',canActivate:[LoginGuardService] , component: SignupComponent},
 
