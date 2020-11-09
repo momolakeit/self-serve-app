@@ -10,6 +10,8 @@ import { StripeSubscriptionProducts} from '../models/stripe-subscription-product
 import {CreateSubscriptionRequestDTO} from '../models/create-subscription-request-dto'
 import {StripeSessionCustomerIdDTO} from '../models/stripe-session-customer-id-dto'
 import {SubscriptionEntityDTO} from '../models/subscription-entity-dto'
+import {StripeAccountIdDTO} from '../models/stripe-account-id-dto';
+import {StripeCreateAccountUrlDTO} from '../models/stripe-create-account-url-dto'
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,18 @@ export class PaymentService {
   fetchPaymentIntent(billDTO :BillDTO,restaurentStripeAccount :String):Observable<StripeClientIdResponse>{
     return this.http.post<StripeClientIdResponse>(`${environment.paymentIntentUrl}`,{billDTO: JSON.stringify(billDTO),restaurentStripeAccount:restaurentStripeAccount});
   }
+
+  fetchAccountId(menuId:number):Observable<StripeAccountIdDTO>{
+    return this.http.post<StripeAccountIdDTO>(`${environment.fetchStripeAccountId}`,{menuId:menuId});
+  }
+
+  createStripeAccount(username :string):Observable<StripeCreateAccountUrlDTO>{
+    return this.http.post<StripeCreateAccountUrlDTO>(`${environment.registerOwnerWithStripeUrl}`,{username:username});
+  }
+  saveStripeAccount(accountId:string,username :string):Observable<StripeCreateAccountUrlDTO>{
+    return this.http.post<StripeCreateAccountUrlDTO>(`${environment.saveStripeAccountId}`,{accountId:accountId,username:username});
+  }
+
 
   createPaymentSubscription(customerId:string,paymentMethodId:string,priceId:string):Observable<SubscriptionEntityDTO>{
     return this.http.post<SubscriptionEntityDTO>(`${environment.createSubscriptionUrl}`,{customerId:customerId,paymentMethodId:paymentMethodId,priceId:priceId});
@@ -45,8 +59,8 @@ export class PaymentService {
   getDomainFile():Observable<Blob>{
     return this.http.get<Blob>(`${environment.domainFiLE}`)
   }
-  getPaymentIntent() : Observable<String>{
-    const restaurentStripeAccount="acct_1HQe4hAEW5t84Hq2";
+  getPaymentIntent(restaurentStripeAccount:string) : Observable<String>{
+    //const restaurentStripeAccount="acct_1HQe4hAEW5t84Hq2";
     localStorage.getItem("ongoingBill");
     console.log(JSON.parse(localStorage.getItem("ongoingBill")));
     return this.fetchPaymentIntent(JSON.parse(localStorage.getItem("ongoingBill")),restaurentStripeAccount).pipe(
@@ -56,8 +70,8 @@ export class PaymentService {
       }));
   }
 
-  getPaymentRequestPaymentIntent() : Observable<String>{
-    const restaurentStripeAccount="acct_1HQe4hAEW5t84Hq2";
+  getPaymentRequestPaymentIntent(restaurentStripeAccount:string) : Observable<String>{
+    //const restaurentStripeAccount="acct_1HQe4hAEW5t84Hq2";
     localStorage.getItem("ongoingBill");
     console.log(JSON.parse(localStorage.getItem("ongoingBill")));
     return this.fetchPaymentRequestPaymentIntent(JSON.parse(localStorage.getItem("ongoingBill")),restaurentStripeAccount).pipe(

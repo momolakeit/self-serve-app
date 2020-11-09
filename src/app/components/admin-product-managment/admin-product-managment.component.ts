@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductFormEditCreateComponent } from '../product-form-edit-create/product-form-edit-create.component';
+import {PaymentService} from '../../services/payment.service';
 
 @Component({
   selector: 'app-admin-product-managment',
@@ -34,7 +35,7 @@ export class AdminProductManagmentComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private activatedRoute: ActivatedRoute, private menuService: MenuService, private productService: ProductService, public dialog: MatDialog, private authentificationService: AuthentificationService) {
+  constructor(private activatedRoute: ActivatedRoute, private menuService: MenuService, private productService: ProductService, public dialog: MatDialog, private authentificationService: AuthentificationService,private paymentService:PaymentService) {
   }
 
   ngOnInit() {
@@ -54,7 +55,7 @@ export class AdminProductManagmentComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       let accountId = params['accountId'];
       if (accountId != null) {
-        this.authentificationService.saveStripeAccount(accountId, localStorage.getItem('username')).subscribe(data => {
+        this.paymentService.saveStripeAccount(accountId, localStorage.getItem('username')).subscribe(data => {
           this.setHasStripeAccountId(true);
         })
       }
@@ -80,7 +81,7 @@ export class AdminProductManagmentComponent implements OnInit {
   }
   redirectToStripeRegister() {
     this.loading = true;
-    this.authentificationService.createStripeAccount(localStorage.getItem('username')).subscribe(data => {
+    this.paymentService.createStripeAccount(localStorage.getItem('username')).subscribe(data => {
       console.log(data);
       window.location.href = data.value;
     })

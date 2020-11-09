@@ -24,13 +24,6 @@ export class AuthentificationService {
     return this.http.post<OwnerDTO>(`${environment.authApiUrl}/fetchOwner`,{username:username});
   }
 
-  createStripeAccount(username :string):Observable<StripeCreateAccountUrlDTO>{
-    return this.http.post<StripeCreateAccountUrlDTO>(`${environment.registerOwnerWithStripeUrl}`,{username:username});
-  }
-  saveStripeAccount(accountId:string,username :string):Observable<StripeCreateAccountUrlDTO>{
-    return this.http.post<StripeCreateAccountUrlDTO>(`${environment.saveStripeAccountId}`,{accountId:accountId,username:username});
-  }
-
    //AUTHENTICATION PART
    login(signInForm: SignInForm) : Observable<boolean>{
     return this.getToken(signInForm).pipe(
