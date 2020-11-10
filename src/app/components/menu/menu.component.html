@@ -182,10 +182,8 @@
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <button class="bg-dark " mat-button>
-                    <p id="scanQrCodeTxt" class="text-white"> Scan table QR code</p>
-                    <input type="file" class="m-0 p-0" capture="camera" accept="image/*" id="cameraInput" name="cameraInput" id="inputFile">
-                </button>                
+                <h4>Scannez le code QR de votre table</h4>
+                <zxing-scanner style="height: 100px;" (scanSuccess)="scanSuccessHandler($event)"></zxing-scanner>
             </div>
         </div>
     </div>

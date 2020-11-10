@@ -5,6 +5,7 @@ import { ProductDTO } from '../../models/product-dto';
 import { environment } from '../../../environments/environment';
 import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
 import { BillService } from '../../services/bill.service'
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -53,5 +54,9 @@ export class MenuComponent implements OnInit {
         localStorage.setItem("ongoingBill", JSON.stringify(data));
       });
     }
+  }
+  scanSuccessHandler($event: any){
+    window.location.href = $event;
+
   }
 }

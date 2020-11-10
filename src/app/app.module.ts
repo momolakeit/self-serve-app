@@ -36,6 +36,7 @@ import { ProductFormEditCreateComponent } from './components/product-form-edit-c
 import { AddTableFormComponent } from './components/add-table-form/add-table-form.component';
 import { OwnerSubscriptionComponent } from './components/owner-subscription/owner-subscription.component';
 import { SubscriptionDetailsComponent } from './components/subscription-details/subscription-details.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { SubscriptionDetailsComponent } from './components/subscription-details/
   ],
   imports: [
     CommonModule,
+    ZXingScannerModule,
     BrowserModule,
     MatCarouselModule.forRoot(),
     AppRoutingModule,
