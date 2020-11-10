@@ -9,12 +9,13 @@ import { ProductDTO } from '../models/product-dto';
   providedIn: 'root'
 })
 export class BillService {
+  billDTO: BillDTO;
+  restaurantTableId: String;
 
   constructor(private http: HttpClient) { }
-  billDTO: BillDTO
 
   postNewOrder(billDTO: BillDTO, restaurentTableId: String, product: ProductDTO, commentaire: String): Observable<BillDTO> {
-    return this.http.post<BillDTO>(`${environment.billUrl}/makeOrder`, { billDTO: JSON.stringify(billDTO), restaurentTableId: restaurentTableId, productDTO: JSON.stringify(product), guestUsername: localStorage.getItem("username"), commentaire: commentaire });
+    return this.http.post<BillDTO>(`${environment.billUrl}/makeOrder`, { billDTO: JSON.stringify(billDTO), restaurentTableId: restaurentTableId, productDTO: JSON.stringify(product), guestUsername: "client1@mail.com", commentaire: commentaire });
   }
 
   getBill(billDTO: BillDTO): Observable<BillDTO> {
@@ -22,13 +23,10 @@ export class BillService {
   }
 
   makeOrder(product: ProductDTO, commentaire: String): Observable<BillDTO> {
-
     this.billDTO = JSON.parse(localStorage.getItem("ongoingBill"));
+    this.restaurantTableId = localStorage.getItem("restaurantTableId");
 
-    console.log('my bill');
-    console.log(this.billDTO);
-    
-    return this.postNewOrder(this.billDTO, "1", product, commentaire).pipe(
+    return this.postNewOrder(this.billDTO, this.restaurantTableId, product, commentaire).pipe(
       map(response => {
         return response;
       }));

@@ -33,6 +33,7 @@ export class StartComponent implements OnInit {
       let restaurantTableId = params['restaurantTableId'];
       this.kitchenService.fetchMenuByRestaurantTable(restaurantTableId).subscribe(data => {
         localStorage.setItem("menuId",data.id.toString())
+        localStorage.setItem("restaurantTableId",restaurantTableId.toString());
       });
   });
   }
