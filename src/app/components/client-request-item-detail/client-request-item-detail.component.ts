@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { timer } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { OrderItemDTO } from '../../models/order-item-dto'
@@ -9,70 +10,68 @@ import { OrderItemDTO } from '../../models/order-item-dto'
   styleUrls: ['./client-request-item-detail.component.css']
 })
 export class ClientRequestItemDetailComponent implements OnInit {
-  @Input() orderItemDTO: OrderItemDTO
-  constructor() { }
   nombreDeMinuteRequis = 30;
   nombreDeMinuteRestant = 0;
   nombreDeMinutesSur100 = 100;
   isReady = false
   imgUrl: string;
+  
+  constructor(@Inject(MAT_DIALOG_DATA) public data: OrderItemDTO,public dialogRef: MatDialogRef<ClientRequestItemDetailComponent>) { }
 
   ngOnInit(): void {
   }
-  ngOnChanges() :void {
-    if (this.orderItemDTO != null) {
-      this.imgUrl = environment.baseImgPath;
-      console.log(this.orderItemDTO);
-      console.log(environment.baseImgPath);
-      if (localStorage.getItem(this.orderItemDTO.id.toString()) == null) {
-        localStorage.setItem(this.orderItemDTO.id.toString(), this.nombreDeMinuteRequis.toString());
-      }
-      this.nombreDeMinuteRestant =JSON.parse(localStorage.getItem(this.orderItemDTO.id.toString()));
+
+  getImage(imageId:number){
+    return environment.baseImgPath + imageId;
+  }
+
+  ngOnChanges(): void {
+    if (this.data != null) {
+
+      if (localStorage.getItem(this.data.id.toString()) == null) 
+        localStorage.setItem(this.data.id.toString(), this.nombreDeMinuteRequis.toString());
+      
+      this.nombreDeMinuteRestant = JSON.parse(localStorage.getItem(this.data.id.toString()));
       this.setUpTimeout();
       this.changeOrderStatus();
     }
   }
-  setUpTimeout = function (): void {
-    var source = timer(1000, 1000).subscribe(val => {
-      if (parseInt(localStorage.getItem(this.orderItemDTO.id.toString())) == 0) {
+
+  setUpTimeout() {
+    var source = timer(1000, 1000).subscribe(() => {
+      if (parseInt(localStorage.getItem(this.data.id.toString())) == 0) {
         this.nombreDeMinutesSur100 = 0;
         source.unsubscribe();
       }
       else {
-        this.nombreDeMinuteRestant = parseInt(localStorage.getItem(this.orderItemDTO.id.toString()));
+        this.nombreDeMinuteRestant = parseInt(localStorage.getItem(this.data.id.toString()));
         this.nombreDeMinutesSur100 = (this.nombreDeMinuteRestant * 100) / this.nombreDeMinuteRequis;
-        localStorage.setItem(this.orderItemDTO.id.toString(), this.nombreDeMinuteRestant.toString());
+        localStorage.setItem(this.data.id.toString(), this.nombreDeMinuteRestant.toString());
       }
     });
+  }
 
-  }
-  addTime = function (): void {
-    this.nombreDeMinuteRestant = parseInt(localStorage.getItem(this.orderItemDTO.id.toString()));
-    if (this.nombreDeMinuteRestant >= this.nombreDeMinuteRequis) {
+  addTime() {
+    this.nombreDeMinuteRestant = parseInt(localStorage.getItem(this.data.id.toString()));
+   
+    if (this.nombreDeMinuteRestant >= this.nombreDeMinuteRequis) 
       this.nombreDeMinuteRestant = this.nombreDeMinuteRequis;
-    }
-    else {
-      this.nombreDeMinuteRestant = this.nombreDeMinuteRestant + 5;
-    }
-    localStorage.setItem(this.orderItemDTO.id.toString(), this.nombreDeMinuteRestant.toString());
+    else 
+      this.nombreDeMinuteRestant += 5;
+    
+    localStorage.setItem(this.data.id.toString(), this.nombreDeMinuteRestant.toString());
   }
-  terminerCommande = function (orderItem: OrderItemDTO): void {
-    console.log(this.kitchenService);
-    this.nombreDeMinutesSur100++;
-    this.kitchenService.setOrderItemReady(orderItem).subscribe(data => {
-      this.orderItem = data;
-      console.log("emit")
-      this.countChanged.emit(this.nombreDeMinutesSur100);
-      this.changeOrderStatus();
-    });
-  }
-  changeOrderStatus = function (): void {
-    if (this.orderItemDTO.orderStatus == "READY") {
+
+  changeOrderStatus() {
+    if (this.data.orderStatus.toString() == "READY") 
       this.isReady = false;
-    }
-    if (this.orderItemDTO.orderStatus == "PROGRESS") {
+
+    if (this.data.orderStatus.toString() == "PROGRESS") 
       this.isReady = true;
-    }
+  }
+
+  onNoClick(){
+    this.dialogRef.close();
   }
 
 }

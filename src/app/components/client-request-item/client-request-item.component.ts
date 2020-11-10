@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { OrderItemDTO } from '../../models/order-item-dto'
-import { timer } from 'rxjs';
-import { BillService } from 'src/app/services/bill.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ClientRequestItemDetailComponent } from '../client-request-item-detail/client-request-item-detail.component';
 
 @Component({
   selector: 'app-client-request-item',
@@ -15,20 +15,20 @@ export class ClientRequestItemComponent implements OnInit {
 
   @Input() orderItemDTO: OrderItemDTO
   @Output() orderItemDetailChanged: EventEmitter<OrderItemDTO> = new EventEmitter();
-  constructor(private billService: BillService) { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.setUpTimeout();
   }
 
-  setUpTimeout = () => {
+  setUpTimeout() {
     var today = new Date();
 
     this.nombreDeMinuteRequis = this.orderItemDTO.product.tempsDePreparation;
     this.nombreDeMinuteRestant = Math.round((Date.parse(this.orderItemDTO.tempsDePreparation.toString()) - today.getTime()) / 60000);
 
     if (this.nombreDeMinuteRestant > 0) {
-      this.nombreDeMinuteRestant = this.nombreDeMinuteRestant - 1;
+      this.nombreDeMinuteRestant--;
       this.nombreDeMinutesSur100 = (this.nombreDeMinuteRestant * 100) / this.nombreDeMinuteRequis;
       localStorage.setItem(this.orderItemDTO.id.toString(), this.nombreDeMinuteRestant.toString());
     }
@@ -38,8 +38,11 @@ export class ClientRequestItemComponent implements OnInit {
     }
 
   }
-  sendOrderItemToDetail = () => {
-    this.orderItemDetailChanged.emit(this.orderItemDTO);
-  }
 
+  openDialog() {
+    const dialogRef = this.dialog.open(ClientRequestItemDetailComponent, {
+      data: this.orderItemDTO
+    });
+
+  }
 }

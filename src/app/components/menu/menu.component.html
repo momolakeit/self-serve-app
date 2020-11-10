@@ -1,9 +1,10 @@
+<!--SPECIAUX-->
+
 <div>
     <div class=" mb-2">
         <h1 style="font-size:larger; " class="text-center text-black">SPECIAUX</h1>
     </div>
-    <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel"
-        style="box-shadow: 10px 10px 61px -16px rgba(0,0,0,0.75);">
+    <div id="carouselExampleInterval" class="carousel slide mat-elevation-z5" data-ride="carousel">
         <div class="carousel-inner ">
             <ng-container *ngIf='menu'>
                 <ng-container *ngFor="let product of menu.speciaux; let i = index">
@@ -53,12 +54,12 @@
     </div>
 </div>
 
+<!--CHOIX DU CHEF-->
 <div>
-    <div style="border-bottom: 2px solid white;" class="mt-4 pt-3">
-        <h1 style="font-size:larger; " class="text-center text-black">CHOIX DU CHEF</h1>
+    <div class="mt-4 pt-3">
+        <h1 style="font-size:larger;" class="text-center text-black">CHOIX DU CHEF</h1>
     </div>
-    <div id="carouselExampleInterval2" class="carousel slide mb-4"
-        style="box-shadow: 10px 10px 61px -16px rgba(0,0,0,0.75);" data-ride="carousel">
+    <div id="carouselExampleInterval2" class="carousel slide mb-4 mat-elevation-z5" data-ride="carousel">
         <div class="carousel-inner">
             <ng-container *ngIf='menu'>
                 <ng-container *ngFor="let product of menu.speciaux; let i = index">

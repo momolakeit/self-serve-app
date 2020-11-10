@@ -18,8 +18,6 @@ export class MenuService {
   }
 
   getMenuById(): Observable<MenuDTO> {
-    console.log(this.constanteService.menuId);
-    var menuId = 1;
     return this.fetchMenuById(JSON.parse(localStorage.getItem("menuId"))).pipe(
       map(response => {
         return response;

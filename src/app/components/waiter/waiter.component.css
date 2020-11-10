@@ -1,0 +1,9 @@
+::ng-deep .mat-snack-bar-container{
+    color: black !important;
+    background-color: white !important;
+    border-color:black !important;
+}
+::ng-deep .mat-simple-snackbar-action {
+    color: black;
+    border-color: black !important;
+ }

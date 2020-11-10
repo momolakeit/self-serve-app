@@ -12,13 +12,12 @@ import { DishDetailComponent } from './components/dish-detail/dish-detail.compon
 import { RestaurentOrdersComponent } from './components/restaurent-orders/restaurent-orders.component';
 import { PaymentChoiceComponent } from './components/payment-choice/payment-choice.component';
 import { PaymentFormComponent } from './components/payment-form/payment-form.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClientRequestListComponent } from './components/client-request-list/client-request-list.component';
 import { JwtModule } from '@auth0/angular-jwt';
-import {DemoMaterialModule} from 'src/material-module';
+import { DemoMaterialModule } from 'src/material-module';
 import { AdminProductManagmentComponent } from './components/admin-product-managment/admin-product-managment.component';
-import { RecipeSocketComponent } from './components/recipe-socket/recipe-socket.component';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCarouselModule } from '@ngbmodule/material-carousel';
 import { ContactFormComponent } from './components/contact-form/contact-form.component'
 import { HttpClientModule } from '@angular/common/http';
@@ -26,14 +25,13 @@ import { MenuproductComponent } from './components/menuproduct/menuproduct.compo
 import { CommonModule } from '@angular/common';
 import { RestaurentDishDetailViewComponent } from './components/restaurent-dish-detail-view/restaurent-dish-detail-view.component';
 import { ClientRequestItemComponent } from './components/client-request-item/client-request-item.component';
-import { ClientRequestItemDetailComponent } from './components/client-request-item-detail/client-request-item-detail.component';  
+import { ClientRequestItemDetailComponent } from './components/client-request-item-detail/client-request-item-detail.component';
 import { ParticlesModule } from 'ngx-particle';
 import { WaiterRequestListComponent } from './components/waiter-request-list/waiter-request-list.component';
 import { RestaurantOwnerListComponent } from './components/restaurant-owner-list/restaurant-owner-list.component';
 import { RestaurantFormComponent } from './components/restaurant-form/restaurant-form.component';
 import { ProductFormEditCreateComponent } from './components/product-form-edit-create/product-form-edit-create.component';
 import { AddTableFormComponent } from './components/add-table-form/add-table-form.component';
-import { OwnerPageComponent } from './pages/owner-page/owner-page.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +48,6 @@ import { OwnerPageComponent } from './pages/owner-page/owner-page.component';
     PaymentChoiceComponent,
     PaymentFormComponent,
     ClientRequestListComponent,
-    RecipeSocketComponent,
     ContactFormComponent,
     MenuproductComponent,
     RestaurentDishDetailViewComponent,
@@ -60,8 +57,7 @@ import { OwnerPageComponent } from './pages/owner-page/owner-page.component';
     RestaurantOwnerListComponent,
     RestaurantFormComponent,
     ProductFormEditCreateComponent,
-    AddTableFormComponent,
-    OwnerPageComponent
+    AddTableFormComponent
   ],
   imports: [
     CommonModule,

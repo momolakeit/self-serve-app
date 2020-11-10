@@ -26,6 +26,7 @@ export class DishDetailComponent implements OnInit {
     this.billService.makeOrder(product, this.commentaire).subscribe(data => {
       localStorage.setItem("ongoingBill", JSON.stringify(data));
       this.openSnackBar();
+      this.onNoClick();
     });
   };
 

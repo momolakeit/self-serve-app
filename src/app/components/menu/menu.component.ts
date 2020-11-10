@@ -42,6 +42,7 @@ export class MenuComponent implements OnInit {
 
   openDialog(productDTO:ProductDTO) {
     const dialogRef = this.dialog.open(DishDetailComponent, {
+      autoFocus:false,
       data: productDTO
     });
   }

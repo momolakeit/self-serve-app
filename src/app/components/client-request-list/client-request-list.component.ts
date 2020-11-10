@@ -11,33 +11,35 @@ import { BillService } from '../../services/bill.service'
 })
 export class ClientRequestListComponent implements OnInit {
 
-  constructor(private billService: BillService) { }
   billDTO: BillDTO
   orderItemToPassToModal: OrderItemDTO
   listeTempsRestant = [];
+  constructor(private billService: BillService) { }
 
 
   ngOnInit(): void {
     this.setUpTimeout();
   }
 
-  setUpTimeout = function (): void {
+  setUpTimeout() {
     var source = timer(1000, 50000).subscribe(val => {
       var billDTO = JSON.parse(localStorage.getItem("ongoingBill"));
+      
       this.billService.getBill(billDTO).subscribe(data => {
         this.billDTO = data;
-        console.log(data);
-        console.log(this.billDTO);
-        
       })
     });
   }
 
-  changeOrderItemToPassToModal = function (orderItemDTO: OrderItemDTO): void {
-    console.log("/***************************************salope*********************************************/");
-    console.log(orderItemDTO);
+  changeOrderItemToPassToModal (orderItemDTO: OrderItemDTO) {
     this.orderItemToPassToModal = orderItemDTO;
+  }
 
+  isWaiterProduct(orderItem:OrderItemDTO):boolean{
+    if (!orderItem.productType)
+      return false;
+    
+    return orderItem.productType.toString()!='WAITERCALL'&& orderItem.productType.toString()!='WAITERREQUEST';
   }
 
 }

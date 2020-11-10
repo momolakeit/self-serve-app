@@ -1,4 +1,4 @@
-<mat-card class="example-card w-100">
+<!-- <mat-card class="example-card w-100">
     <mat-card-header>
         <mat-card-title>{{data.name}}</mat-card-title>
     </mat-card-header>
@@ -29,4 +29,55 @@
     <mat-card-actions>
         <button (click)="updateCurrentBill(data)" mat-raised-button class="btn-block btn-dark text-white">Order</button>
     </mat-card-actions>
-</mat-card>
+</mat-card> -->
+
+<div class="pt-0 m-0">
+    <div class="text-right mt-0 pt-0">
+        <button mat-icon-button (click)="onNoClick()">
+            <mat-icon>clear</mat-icon>
+          </button>
+    </div>
+    <div>
+        <h1 class="text-center mb-1">{{data.name}}</h1>
+    </div>
+
+    <div>
+        <img class="img-fluid" style="border-radius: 2px;" [src]="imgUrl">
+    </div>
+
+    <div class="mt-2">
+        <p>Prix : {{data.prix}}$</p>
+        <p class="mb-0">Description:</p>
+        <p class="mt-0">
+            <mat-form-field class="w-100">
+                <textarea matInput autocomplete="off" cdkTextareaAutosize readonly #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5">{{data.description}}</textarea>
+            </mat-form-field>
+        </p>
+    </div>
+
+    <div *ngFor='let option of data.options'>
+        <h4>{{option.name}}</h4>
+        <mat-radio-group aria-label="Select an option">
+            <mat-radio-button *ngFor='let checkItem of option.checkItemList;let i=index;'
+                (click)="updateCheckItem(checkItem,option)" class="mr-2" [value]='i'>
+                {{checkItem.name}}
+            </mat-radio-button>
+        </mat-radio-group>
+    </div>
+
+    <p>
+        <mat-form-field class="w-100">
+            <mat-label>
+                <h4>Requetes Specials</h4>
+            </mat-label>
+            <textarea matInput autocomplete="off" cdkTextareaAutosize [(ngModel)]="commentaire"
+                #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5"></textarea>
+        </mat-form-field>
+    </p>
+
+    <mat-divider></mat-divider>
+
+    <div>
+        <button (click)="updateCurrentBill(data)" mat-raised-button class="btn-block btn-dark text-white">Order</button>
+    </div>
+</div>
