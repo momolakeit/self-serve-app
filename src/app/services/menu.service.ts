@@ -11,7 +11,7 @@ import { ConstanteService } from './constante-service.service';
 })
 export class MenuService {
 
-  constructor(private http: HttpClient,private constanteService : ConstanteService) { }
+  constructor(private http: HttpClient, private constanteService: ConstanteService) { }
 
   fetchMenuById(menuID: number): Observable<MenuDTO> {
     return this.http.post<MenuDTO>(`${environment.menuUrl}/getMenu`, { menuId: menuID });
@@ -19,7 +19,7 @@ export class MenuService {
 
   getMenuById(): Observable<MenuDTO> {
     console.log(this.constanteService.menuId);
-    var menuId =1;
+    var menuId = 1;
     return this.fetchMenuById(JSON.parse(localStorage.getItem("menuId"))).pipe(
       map(response => {
         return response;

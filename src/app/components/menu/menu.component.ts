@@ -4,6 +4,8 @@ import { MenuService } from '../../services/menu.service'
 import { ProductDTO } from '../../models/product-dto';
 import { environment } from '../../../environments/environment';
 import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
+import { DishDetailComponent } from '../dish-detail/dish-detail.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -13,25 +15,22 @@ export class MenuComponent implements OnInit {
 
 
   menu: MenuDTO;
-  productToSeeDetail: ProductDTO;
   listeUrlImagesSpeciaux = [];
   panelOpenState: boolean
   listeUrlImagesFeatured = [String];
 
   slides = [{ 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }];
 
+  constructor(private menuService: MenuService,public dialog: MatDialog) { }
 
-
-  constructor(private menuService: MenuService) { }
-
-  ngOnInit(): void {
+  ngOnInit() {
+    //not clean init should only call methods
     if (localStorage.getItem("ongoingBill") == null) {
       localStorage.setItem("ongoingBill", JSON.stringify({ prixTotal: null, id: null, date: null, billStatus: null, orderCustomer: null, orderItems: null, restaurant: null }));
-      console.log(localStorage.getItem("ongoingBill"))
     }
+
     this.menuService.getMenuById().subscribe(data => {
       this.menu = data;
-      console.log(this.menu);
     })
   }
 
@@ -39,7 +38,11 @@ export class MenuComponent implements OnInit {
     return environment.baseImgPath + imageId;
   }
 
-  changeProductToSeeDetail = function (product: ProductDTO): void {
-    this.productToSeeDetail = product;
-  };
+  // ALL ABOUT THE DIALOG
+
+  openDialog(productDTO:ProductDTO) {
+    const dialogRef = this.dialog.open(DishDetailComponent, {
+      data: productDTO
+    });
+  }
 }

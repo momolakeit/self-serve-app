@@ -1,35 +1,32 @@
-<div class="modal-content bg-dark text-white">
-    <ng-container>
-        <mat-card class="example-card ">
-            <mat-card-header>
-                <mat-card-title>{{productDTO.name}}</mat-card-title>
-            </mat-card-header>
-            <img mat-card-image [src]="imgUrl">
-            <h4>Prix : {{productDTO.prix}}</h4>
-            <mat-card-content>
-                <p>
-                    {{productDTO.description}}
-                </p>
-                <ng-container *ngFor='let option of productDTO.options'>
-                    <h4>{{option.name}}</h4>
-                    <mat-radio-group aria-label="Select an option">
-                        <mat-radio-button *ngFor='let checkItem of option.checkItemList;let i=index;'
-                            (click)="updateCheckItem(checkItem,option)" class="mr-2" [value]='i'>
-                            {{checkItem.name}}
-                        </mat-radio-button>
-                    </mat-radio-group>
-                </ng-container>
+<mat-card class="example-card w-100">
+    <mat-card-header>
+        <mat-card-title>{{data.name}}</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image [src]="imgUrl">
+    <h4>Prix : {{data.prix}}</h4>
+    <mat-card-content>
+        <p>
+            {{data.description}}
+        </p>
+        <ng-container *ngFor='let option of data.options'>
+            <h4>{{option.name}}</h4>
+            <mat-radio-group aria-label="Select an option">
+                <mat-radio-button *ngFor='let checkItem of option.checkItemList;let i=index;'
+                    (click)="updateCheckItem(checkItem,option)" class="mr-2" [value]='i'>
+                    {{checkItem.name}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </ng-container>
 
-                <mat-form-field class="w-100" >
-                    <mat-label><h4>Requetes Specials</h4></mat-label>
-                    <textarea  matInput autocomplete="off" cdkTextareaAutosize [(ngModel)]="commentaire" #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
-                        cdkAutosizeMaxRows="5"></textarea>
-                </mat-form-field>
-            </mat-card-content>
-            <mat-card-actions>
-                <button data-dismiss="modal" (click)="updateCurrentBill(productDTO)" mat-raised-button
-                    class="btn-block btn-dark text-white">Order</button>
-            </mat-card-actions>
-        </mat-card>
-    </ng-container>
-</div>
+        <mat-form-field class="w-100">
+            <mat-label>
+                <h4>Requetes Specials</h4>
+            </mat-label>
+            <textarea matInput autocomplete="off" cdkTextareaAutosize [(ngModel)]="commentaire"
+                #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+        </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+        <button (click)="updateCurrentBill(data)" mat-raised-button class="btn-block btn-dark text-white">Order</button>
+    </mat-card-actions>
+</mat-card>

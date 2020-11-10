@@ -2,7 +2,8 @@
     <div class=" mb-2">
         <h1 style="font-size:larger; " class="text-center text-black">SPECIAUX</h1>
     </div>
-    <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel" style="box-shadow: 10px 10px 61px -16px rgba(0,0,0,0.75);">
+    <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel"
+        style="box-shadow: 10px 10px 61px -16px rgba(0,0,0,0.75);">
         <div class="carousel-inner ">
             <ng-container *ngIf='menu'>
                 <ng-container *ngFor="let product of menu.speciaux; let i = index">
@@ -17,9 +18,7 @@
                                 <p>Prix: {{product.prix}}$</p>
                             </mat-card-content>
                             <mat-card-actions>
-                                <button (click)="changeProductToSeeDetail(product)" data-toggle="modal"
-                                    data-target="#exampleModal" class="btn-dark w-100 text-white"
-                                    mat-button>ADD</button>
+                                <button (click)="openDialog(product)" class="btn-dark w-100 text-white" mat-button>ADD</button>
                             </mat-card-actions>
                         </mat-card>
                     </div>
@@ -35,9 +34,7 @@
                                     <p>Prix: {{product.prix}}$</p>
                                 </mat-card-content>
                                 <mat-card-actions>
-                                    <button (click)="changeProductToSeeDetail(product)" data-toggle="modal"
-                                        data-target="#exampleModal" class="btn-dark w-100 text-white"
-                                        mat-button>ADD</button>
+                                    <button (click)="openDialog(product)" class="btn-dark w-100 text-white" mat-button>ADD</button>
                                 </mat-card-actions>
                             </mat-card>
                         </div>
@@ -55,14 +52,17 @@
         </a>
     </div>
 </div>
+
 <div>
     <div style="border-bottom: 2px solid white;" class="mt-4 pt-3">
         <h1 style="font-size:larger; " class="text-center text-black">CHOIX DU CHEF</h1>
     </div>
-    <div id="carouselExampleInterval2" class="carousel slide mb-4" style="box-shadow: 10px 10px 61px -16px rgba(0,0,0,0.75);" data-ride="carousel">
+    <div id="carouselExampleInterval2" class="carousel slide mb-4"
+        style="box-shadow: 10px 10px 61px -16px rgba(0,0,0,0.75);" data-ride="carousel">
         <div class="carousel-inner">
             <ng-container *ngIf='menu'>
                 <ng-container *ngFor="let product of menu.speciaux; let i = index">
+                   
                     <div *ngIf="i =='0';else nonActive" class="carousel-item active">
                         <mat-card class="example-card">
                             <mat-card-header>
@@ -74,9 +74,7 @@
                                 <p>Prix: {{product.prix}}$</p>
                             </mat-card-content>
                             <mat-card-actions>
-                                <button (click)="changeProductToSeeDetail(product)" data-toggle="modal"
-                                    data-target="#exampleModal" class="btn-dark w-100 text-white"
-                                    mat-button>ADD</button>
+                                <button (click)="openDialog(product)" class="btn-dark w-100 text-white" mat-button>ADD</button>
                             </mat-card-actions>
                         </mat-card>
                     </div>
@@ -92,9 +90,7 @@
                                     <p>Prix: {{product.prix}}$</p>
                                 </mat-card-content>
                                 <mat-card-actions>
-                                    <button (click)="changeProductToSeeDetail(product)" data-toggle="modal"
-                                        data-target="#exampleModal" class="btn-dark w-100 text-white"
-                                        mat-button>ADD</button>
+                                    <button (click)="openDialog(product)" class="btn-dark w-100 text-white"mat-button>ADD</button>
                                 </mat-card-actions>
                             </mat-card>
                         </div>
@@ -121,28 +117,30 @@
                 DEJEUNER
             </mat-panel-title>
         </mat-expansion-panel-header>
+
         <ul style="list-style-type: none;" class=" p-0">
             <ng-container *ngIf='menu'>
                 <li style="border-bottom: 2px solid white;"
                     *ngFor="let product of  menu.dejeuner; index as i; trackBy: trackByFn " class="mb-2 pb-1">
                     <h1 style="font-size: medium;" class="mb-0">{{product.name}}</h1>
+
                     <div class="d-flex justify-content-between align-items-center">
                         <p style="font-size: small;" class="m-0 p-0">{{product.description}}</p>
-                        <button class="btn btn-dark w-25" (click)="changeProductToSeeDetail(product)"
-                            data-toggle="modal" data-target="#exampleModal">
-                            add
-                        </button>
+                        <button class="btn btn-dark w-25" (click)="openDialog(product)">add</button>
                     </div>
                 </li>
             </ng-container>
+
         </ul>
     </mat-expansion-panel>
+
     <mat-expansion-panel hideToggle>
         <mat-expansion-panel-header>
             <mat-panel-title>
                 DINER
             </mat-panel-title>
         </mat-expansion-panel-header>
+
         <ul style="list-style-type: none;" class=" p-0">
             <ng-container *ngIf='menu'>
                 <li style="border-bottom: 2px solid white;"
@@ -150,27 +148,13 @@
                     <h1 style="font-size: medium;" class="mb-0">{{product.name}}</h1>
                     <div class="d-flex justify-content-between align-items-center">
                         <p style="font-size: small;" class="m-0 p-0">{{product.description}}</p>
-                        <button class="btn btn-dark w-25" (click)="changeProductToSeeDetail(product)"
-                            data-toggle="modal" data-target="#exampleModal">
+                        <button class="btn btn-dark w-25" (click)="openDialog(product)">
                             add
                         </button>
                     </div>
                 </li>
             </ng-container>
+
         </ul>
     </mat-expansion-panel>
-
 </mat-accordion>
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content" *ngIf='productToSeeDetail'>
-            <div class="modal-header text-center p-0">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <app-dish-detail [productDTO]='productToSeeDetail'></app-dish-detail>
-        </div>
-    </div>
-</div>

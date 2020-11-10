@@ -26,7 +26,6 @@ export class AppComponent implements OnDestroy  {
   ngOnInit() {
   }
 
-
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
@@ -35,28 +34,29 @@ export class AppComponent implements OnDestroy  {
     return this.authService.isAuthenticated();
   };
 
-  logout() {
-    this.authentificationService.logout();
-    this.router.navigate(['/start']);
-  }
-
+  
   isOwner(): boolean {
     return this.authService.isOwner();
   }
-
+  
   isWaiter(): boolean {
     return this.authService.isWaiter();
   }
-
+  
   isClient(): boolean {
     return this.authService.isClient();
   }
-
+  
   isGuest(): boolean {
     return this.authService.isGuest();
   }
-
+  
   isCook(): boolean {
     return this.authService.isCook();
+  }
+  
+  logout() {
+    this.authentificationService.logout();
+    this.router.navigate(['/start']);
   }
 }
