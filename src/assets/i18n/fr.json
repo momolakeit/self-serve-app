@@ -1,0 +1,76 @@
+{
+    "menu": {
+        "special": "SPECIAUX",
+        "itemPrice" :"Prix",
+        "addBtnTxt":"AJOUTER",
+        "chefChoice":"CHOIX DU CHEF",
+        "dejeuner" :"DEJEUNER",
+        "diner" :"DINER",
+        "qrCodePrompt":"Scannez le code QR de votre table"
+    },
+    "waiter":{
+        "callWaiter":"Appeler Serveur",
+        "demander":"Demander"
+    },
+    "dishDetail":{
+        "prix":"Prix",
+        "specialRequest":"Requêtes Spéciales",
+        "commander":"Commander"
+    },
+    "clientRequestList":{
+        "pageTitle":"Mes commandes",
+        "noOrders":"Vous n'avez aucune commande en cours ",
+        "checkout":"Payer"
+    },
+    "clientRequestItem":{
+        "moreBtnTxt":"Plus"
+    },
+    "clientRequestItemDetail":{
+        "commentaires":"Commentaires",
+        "minutesRestantes":"minutes restantes"
+    },
+    "paymentChoice":{
+        "choosePayment":"Choisir méthode de paiement",
+        "payNow":"Payer maintenant",
+        "requestTerminal":"Demander Terminal"
+    },
+    "paymentForm":{
+        "commandTxt":"Entrez vos informations de carte de crédit",
+        "pay":"Payer",
+        "success":"Paiment réussi"
+    },
+    "subscriptionDetail":{
+        "salutation":"Bonjour",
+        "subscriptionStart":"Début de l'abonement",
+        "cycleEnd":"Fin du cycle de payment",
+        "noSubscription":"Vous avez aucun abonement, veuillez vous inscrire",
+        "perMonth":" par mois",
+        "cancelSub":"Annuler abonnement",
+        "subscribe":"S'abonner"
+    },
+    "ownerSubscription":{
+        "perMonth":"par mois",
+        "choose":"Sélectionner",
+        "subscribe":"S'abonner",
+        "errorOnPayment":"Il y a eu une erreur lors de votre payment ,veuillez reesayer plus tard",
+        "noPlanSelected":"Veuillez selectionner une option de plan pour procéder"
+    },
+    "adminProductManagment":{
+        "title":"Inscrivez vous sur Stripe ",
+        "body":"Nous nous sommes associés avec Stripe pour vous permettre de recevoir vos payment, veuillez vous inscrire afin de recevoir les fonds dans votre compte de banque",
+        "go":"J'y vais ",
+        "later":"Plus tard ",
+        "restaurantSelection":"Choix du restaurant",
+        "selectRestaurant":"Choisir un restaurant",
+        "showProduct":"Voir produits",
+        "myProducts":"Mes produits",
+        "filter":"Filtrer",
+        "imageTxt":"Image",
+        "nameTxt":"Nom",
+        "categoryTxt":"Catégorie",
+        "editTxt":"Modifier",
+        "deleteTxt":"Supprimer",
+        "noDataMatching":"Aucune donné ne correspond au filtre",
+        "addProductTxt":"Ajouter produit"
+    }
+}

@@ -1,0 +1,76 @@
+{
+    "menu": {
+        "special": "SPECIALS",
+        "itemPrice": "Price",
+        "addBtnTxt": "ADD",
+        "chefChoice": "CHEF CHOICE",
+        "dejeuner": "BREAKFAST",
+        "diner": "LUNCH",
+        "qrCodePrompt": "Scan the QR code of your table"
+    },
+    "waiter": {
+        "callWaiter": "Call Waiter",
+        "demander": "Request"
+    },
+    "dishDetail": {
+        "prix": "Price",
+        "specialRequest": "Special Request",
+        "commander": "Order"
+    },
+    "clientRequestList": {
+        "pageTitle": "My orders",
+        "noOrders": "You have no ongoing orders",
+        "checkout": "Checkout"
+    },
+    "clientRequestItem": {
+        "moreBtnTxt": "More"
+    },
+    "clientRequestItemDetail": {
+        "commentaires": "Comments",
+        "minutesRestantes": "remaining minutes"
+    },
+    "paymentChoice": {
+        "choosePayment": "Choose payment method",
+        "payNow": "Pay now",
+        "requestTerminal": "Request Terminal"
+    },
+    "paymentForm": {
+        "commandTxt": "Enter credit card details",
+        "pay": "Pay",
+        "success": "Payment Succeded"
+    },
+    "subscriptionDetail":{
+        "salutation":"Hi",
+        "subscriptionStart":"Beginning of the subscription",
+        "cycleEnd":"End of payment cycle",
+        "noSubscription":"You have no subscription, please register",
+        "perMonth":"per month",
+        "cancelSub":"Cancel subscription",
+        "subscribe":"Subscribe"
+    },
+    "ownerSubscription":{
+        "perMonth":"per month",
+        "choose":"Choose",
+        "subscribe":"Subscribe",
+        "errorOnPayment":"There was an error during your payment,please try again later",
+        "noPlanSelected":"Please select a plan option to proceed"
+    },
+    "adminProductManagment":{
+        "title":"Register on Stripe ",
+        "body":"We have partnered with Stripe to enable you to receive your payment, please sign up to receive the funds in your bank account",
+        "go":"Let's go",
+        "later":"Later",
+        "restaurantSelection":"Restaurant selection",
+        "selectRestaurant":"Select Restaurant",
+        "showProduct":"Show products",
+        "myProducts":"My products",
+        "filter":"Filter",
+        "imageTxt":"Image",
+        "nameTxt":"Name",
+        "categoryTxt":"Category",
+        "editTxt":"Edit",
+        "deleteTxt":"Delete",
+        "noDataMatching":"No data matching the filter",
+        "addProductTxt":"Add Product"
+    }
+}

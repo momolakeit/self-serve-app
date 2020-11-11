@@ -19,7 +19,7 @@ export class AppComponent {
   myParams: object = {};
 
   constructor(private authService:AuthService,private authentificationService: AuthentificationService,private router:Router,private translate: TranslateService){
-    translate.setDefaultLang('en');
+    translate.setDefaultLang('fr');
   }
 
   ngOnInit() {
