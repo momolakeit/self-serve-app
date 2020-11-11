@@ -72,5 +72,53 @@
         "deleteTxt":"Supprimer",
         "noDataMatching":"Aucune donné ne correspond au filtre",
         "addProductTxt":"Ajouter produit"
+    },
+    "restaurantOwnerList":{
+        "title":"Mes restaurants",
+        "filterTxt":"Filtrer",
+        "nameTxt":"Nom",
+        "dateTxt":"Date",
+        "tableTxt":"Tables",
+        "editTxt":"Modifier",
+        "deleteTxt":"Supprimer",
+        "noDataMatching":"Aucune donné ne correspond au filtrer",
+        "addRestaurantBtnTxt":" Ajouter Restaurant"
+    },
+    "restaurantForm":{
+        "restaurantName":"Nom du restaurant",
+        "nomTxt":"Nom",
+        "nomCantBeBlank":"le nom ne peux pas être vide",
+        "tableCountTxt":"Nombre de tables",
+        "amountTxt":"Nombre de tables",
+        "amountCantBeBlank":"Le nombre de tables ne peux pas être vide",
+        "restaurantTableName":"Tables du restaurants",
+        "tableNumberTxt":"Numero de table",
+        "actionTxt":"Action",
+        "deleteTxt":"Supprimer",
+        "cancelTxt":"Annuler",
+        "ajouterTable":"Ajouter table",
+        "creerBtnTxt":"Créer",
+        "updateBtnTxt":"Modifer"
+    },
+    "productEditCreate":{
+        "nameTxt":"Nom",
+        "nameErrorTxt":"Veuillez insérer un nom",
+        "imageErrorTxt":"Veuillez insérer une image",
+        "descriptionTxt":"description",
+        "descriptionError":"Veuillez insérer une description de produit",
+        "priceTxt":"prix",
+        "priceErrorTxt":"Veuillez insérer un numéro valide",
+        "preparationTimeTxt":"Temps de préparation",
+        "preparationTimeError":"Veuillez insérer une durée valide ",
+        "productTypeTxt":"Type de produit",
+        "productMenuTypeTxt":"Type de produit",
+        "addOptionTxt":"Ajouter options",
+        "createOptionTxt":"Créer options",
+        "clearTxt":"Vider",
+        "addTxt":"Ajouter",
+        "addAnOptionTxt":"Ajouter une option",
+        "cancelTxt":"Annuler",
+        "createBtnTxt":"Créer",
+        "updateBtnTxt":"Modifier"
     }
 }

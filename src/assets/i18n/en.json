@@ -72,5 +72,53 @@
         "deleteTxt":"Delete",
         "noDataMatching":"No data matching the filter",
         "addProductTxt":"Add Product"
+    },
+    "restaurantOwnerList":{
+        "title":"My restaurants",
+        "filterTxt":"Filter",
+        "nameTxt":"Name",
+        "dateTxt":"Date",
+        "tableTxt":"Tables",
+        "editTxt":"Edit",
+        "deleteTxt":"Delete",
+        "noDataMatching":"No data matching the filter",
+        "addRestaurantBtnTxt":" Add Restaurant"
+    },
+    "restaurantForm":{
+        "restaurantName":"Restaurant name",
+        "nomTxt":"name",
+        "nomCantBeBlank":"name cannot be blank",
+        "tableCountTxt":"Table count",
+        "amountTxt":"amount",
+        "amountCantBeBlank":"amount cannot be blank",
+        "restaurantTableName":"Restaurant tables",
+        "tableNumberTxt":"Table Number",
+        "actionTxt":"Action",
+        "deleteTxt":"Delete",
+        "ajouterTable":"Add table",
+        "cancelTxt":"Cancel",
+        "creerBtnTxt":"Create",
+        "updateBtnTxt":"Update"
+    },
+    "productEditCreate":{
+        "nameTxt":"Name",
+        "nameErrorTxt":"Please you must enter a name",
+        "imageErrorTxt":"Please you must enter an image",
+        "descriptionTxt":"description",
+        "descriptionError":"Please you must enter a product description",
+        "priceTxt":"price",
+        "priceErrorTxt":"Please you must enter a valid number",
+        "preparationTimeTxt":"Preparation time",
+        "preparationTimeError":"Please you must enter a valid time",
+        "productTypeTxt":"Product type",
+        "productMenuTypeTxt":"Product type",
+        "addOptionTxt":"Add options",
+        "createOptionTxt":"Create options",
+        "clearTxt":"clear",
+        "addTxt":"add",
+        "addAnOptionTxt":"Add an option",
+        "cancelTxt":"Cancel",
+        "createBtnTxt":"Create",
+        "updateBtnTxt":"Update"
     }
 }

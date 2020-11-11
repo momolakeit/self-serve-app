@@ -8,19 +8,18 @@
     <!--restaurant name-->
     <p>
       <mat-form-field appearance="outline" [ngClass]="{'w-75': data,'w-50': !data}">
-        <mat-label>Restaurant name</mat-label>
+        <mat-label> {{ 'restaurantForm.restaurantName' | translate }}</mat-label>
         <input matInput placeholder="Ex. The Keg" formControlName="name" autocomplete="off">
-        <mat-hint>name</mat-hint>
-        <mat-error>name cannot be blank</mat-error>
+        <mat-hint> {{ 'restaurantForm.restaurantName' | translate }}</mat-hint>
+        <mat-error>{{ 'restaurantForm.nomCantBeBlank' | translate }}</mat-error>
       </mat-form-field>
     </p>
-
     <p *ngIf="!data" >
       <mat-form-field appearance="outline" class="w-50">
-        <mat-label>Table count</mat-label>
+        <mat-label>{{ 'restaurantForm.tableCountTxt' | translate }}</mat-label>
         <input matInput type="number" placeholder="Ex. 15" formControlName="tableAmount" autocomplete="off">
-        <mat-hint>amount</mat-hint>
-        <mat-error>amount cannot be blank</mat-error>
+        <mat-hint>{{ 'restaurantForm.amountTxt' | translate }}</mat-hint>
+        <mat-error>{{ 'restaurantForm.amountCantBeBlank' | translate }}</mat-error>
       </mat-form-field>
     </p>
 
@@ -29,14 +28,14 @@
       <mat-divider></mat-divider>
         <div class="text-center">
         <!--HEADER-->
-        <h1 class="text-center">Restaurant tables</h1>
+        <h1 class="text-center">{{ 'restaurantForm.restaurantTableName' | translate }}</h1>
 
         <!--BODY-->
 
         <mat-divider></mat-divider>
         <div class="d-flex justify-content-between p-3">
-          <p class="font-weight-bold">Table Number</p>
-          <p class="font-weight-bold">Action</p>
+          <p class="font-weight-bold">{{ 'restaurantForm.tableNumberTxt' | translate }}</p>
+          <p class="font-weight-bold">{{ 'restaurantForm.actionTxt' | translate }}</p>
         </div>
 
         <mat-divider></mat-divider>
@@ -44,10 +43,10 @@
         <div style="min-height: 300px; max-height: 350px;" class="overflow-auto">
           <div class="d-flex justify-content-between mt-2" *ngFor="let table of data.restaurentTablesDTO">
             <p class="m-1">{{table.tableNumber}}</p>
-            <button mat-raised-button class="btn-dark text-white m-1" (click)="onDeleteTable(table.id)">Delete</button>
+            <button mat-raised-button class="btn-dark text-white m-1" (click)="onDeleteTable(table.id)">{{ 'restaurantForm.deleteTxt' | translate }}</button>
           </div>
         </div>
-        <button mat-raised-button class="btn-dark text-white btn-block" (click)="openDialog()">Add table</button>
+        <button mat-raised-button class="btn-dark text-white btn-block" (click)="openDialog()">{{ 'restaurantForm.ajouterTable' | translate }}</button>
       </div>
 
     </ng-container>
@@ -55,11 +54,11 @@
     <mat-divider></mat-divider>
 
     <div class="d-flex justify-content-between mt-2">
-      <button mat-raised-button class="btn-dark text-white" (click)="onNoClick()">Cancel</button>
+      <button mat-raised-button class="btn-dark text-white" (click)="onNoClick()">{{ 'restaurantForm.cancelTxt' | translate }}</button>
       <button mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()"
-        *ngIf="!data">Create</button>
+        *ngIf="!data">{{ 'restaurantForm.creerBtnTxt' | translate }}</button>
       <button mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()"
-        *ngIf="data">Update</button>
+        *ngIf="data">{{ 'restaurantForm.updateBtnTxt' | translate }}</button>
     </div>
   </div>
 </form>
