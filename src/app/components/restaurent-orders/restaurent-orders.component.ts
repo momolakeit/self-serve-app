@@ -14,7 +14,7 @@ import {PaymentService} from '../../services/payment.service';
   styleUrls: ['./restaurent-orders.component.css']
 })
 export class RestaurentOrdersComponent implements OnInit {
-  panelOpenState: boolean
+  panelOpenStateArray= []
   imgUrl: string;
   allTables: [RestaurantTableDTO];
   allCheckItems = [];
@@ -28,6 +28,7 @@ export class RestaurentOrdersComponent implements OnInit {
   loading : Boolean ;
   isActive :Boolean
   ngOnInit(): void {
+    console.log("yioooooooooooooooooooooooooo !!!!!!")
     this.loading = true;
     this.imgUrl = environment.baseImgPath;
     this.isSubscriptionActive();
@@ -58,6 +59,7 @@ export class RestaurentOrdersComponent implements OnInit {
         this.allTables = data;
         this.allTables = this.filterTableArray(this.allTables);
         this.allTables.forEach(table => {
+          this.panelOpenStateArray.push(false);
           table.nombreItemParTable = 0;
           table = this.setUpTable(table);
         });
@@ -119,6 +121,9 @@ export class RestaurentOrdersComponent implements OnInit {
       }
       table.nombreItemParTable = table.nombreItemParTable + 1;
     }
+  }
+  setPanelOpenValue(position:number,value:boolean){
+    this.panelOpenStateArray[position] =value;
   }
 
 }
