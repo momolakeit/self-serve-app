@@ -3,7 +3,7 @@ import { BillDTO } from "./bill-dto";
 import { OwnerDTO } from "./owner-dto";
 import { CustomPropertyDTO } from "./custom-property-dto";
 import { RestaurantTableDTO } from "./restaurant-table-dto";
-
+import {ImgFileDTO} from "./img-file-dto";
 
 export interface RestaurantDTO {
     id:number;
@@ -12,5 +12,6 @@ export interface RestaurantDTO {
     owner:OwnerDTO;
     customProperty:CustomPropertyDTO;
     menu:MenuDTO;
+    imgFile?: ImgFileDTO;
     restaurantTables:[RestaurantTableDTO];
 }

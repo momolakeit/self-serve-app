@@ -5,7 +5,7 @@ import { ProductDTO } from "./product-dto";
 export interface MenuDTO {
     id:number;
     products:[ProductDTO];
-    restaurant:[RestaurantDTO];
+    restaurant:RestaurantDTO;
     speciaux:[ProductDTO];
     featured:[ProductDTO];
     souper:[ProductDTO];

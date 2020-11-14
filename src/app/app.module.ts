@@ -37,6 +37,7 @@ import { AddTableFormComponent } from './components/add-table-form/add-table-for
 import { OwnerSubscriptionComponent } from './components/owner-subscription/owner-subscription.component';
 import { SubscriptionDetailsComponent } from './components/subscription-details/subscription-details.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { AppBodyComponent } from './components/app-body/app-body.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
     AddTableFormComponent,
     OwnerSubscriptionComponent,
     SubscriptionDetailsComponent,
+    AppBodyComponent,
   ],
   imports: [
     CommonModule,

@@ -4,6 +4,7 @@ import { AuthService } from './services/auth.service';
 import { AuthentificationService } from './services/authentification.service';
 import decode from 'jwt-decode';
 import { Router, NavigationEnd } from '@angular/router';
+import {LogoService} from './services/logo.service'
 
 
 @Component({
@@ -12,15 +13,20 @@ import { Router, NavigationEnd } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  logoUrl:string;
   title = 'self-serve-app';
   width: number = 100;
   height: number = 100;
   myStyle: object = {};
   myParams: object = {};
 
-  constructor(private authService:AuthService,private authentificationService: AuthentificationService,private router:Router){}
+  constructor(private authService:AuthService,private authentificationService: AuthentificationService,private router:Router,private logoService:LogoService){}
 
   ngOnInit() {
+    this.logoService.onRestaurantLogoImgUrl.subscribe(data =>{
+      console.log(data);
+      this.logoUrl = data;
+    })
     this.router.events.subscribe((evt) => {
         if (!(evt instanceof NavigationEnd)) {
             return;
