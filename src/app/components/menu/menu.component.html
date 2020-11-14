@@ -1,7 +1,7 @@
 <ng-container *ngIf='menu && hasMenuId'>
     <div>
         <div class=" mb-2">
-            <h1 style="font-size:larger; " class="text-center text-black">SPECIAUX</h1>
+            <h1 style="font-size:larger; " class="text-center text-black">{{ 'menu.special' | translate }}</h1>
         </div>
         <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel"
             style="box-shadow: 10px 10px 61px -16px rgba(0,0,0,0.75);">
@@ -15,12 +15,12 @@
                             </mat-card-header>
                             <img mat-card-image [src]="listeUrlImagesSpeciaux[i]">
                             <mat-card-content>
-                                <p>Prix: {{product.prix}}$</p>
+                                <p>{{ 'menu.itemPrice' | translate }}: {{product.prix}}$</p>
                             </mat-card-content>
                             <mat-card-actions>
                                 <button (click)="changeProductToSeeDetail(product)" data-toggle="modal"
                                     data-target="#exampleModal" class="btn-dark w-100 text-white"
-                                    mat-button>ADD</button>
+                                    mat-button>{{ 'menu.addBtnTxt' | translate }}</button>
                             </mat-card-actions>
                         </mat-card>
                     </div>
@@ -33,12 +33,12 @@
                                 </mat-card-header>
                                 <img mat-card-image [src]="listeUrlImagesSpeciaux[i]">
                                 <mat-card-content>
-                                    <p>Prix: {{product.prix}}$</p>
+                                    <p>{{ 'menu.itemPrice' | translate }}: {{product.prix}}$</p>
                                 </mat-card-content>
                                 <mat-card-actions>
                                     <button (click)="changeProductToSeeDetail(product)" data-toggle="modal"
                                         data-target="#exampleModal" class="btn-dark w-100 text-white"
-                                        mat-button>ADD</button>
+                                        mat-button>{{ 'menu.addBtnTxt' | translate }}</button>
                                 </mat-card-actions>
                             </mat-card>
                         </div>
@@ -57,7 +57,7 @@
     </div>
     <div>
         <div style="border-bottom: 2px solid white;" class="mt-4 pt-3">
-            <h1 style="font-size:larger; " class="text-center text-black">CHOIX DU CHEF</h1>
+            <h1 style="font-size:larger; " class="text-center text-black">{{ 'menu.chefChoice' | translate }}</h1>
         </div>
         <div id="carouselExampleInterval2" class="carousel slide mb-4"
             style="box-shadow: 10px 10px 61px -16px rgba(0,0,0,0.75);" data-ride="carousel">
@@ -71,12 +71,12 @@
                             </mat-card-header>
                             <img mat-card-image [src]="listeUrlImagesSpeciaux[i]">
                             <mat-card-content>
-                                <p>Prix: {{product.prix}}$</p>
+                                <p>{{ 'menu.itemPrice' | translate }}: {{product.prix}}$</p>
                             </mat-card-content>
                             <mat-card-actions>
                                 <button (click)="changeProductToSeeDetail(product)" data-toggle="modal"
                                     data-target="#exampleModal" class="btn-dark w-100 text-white"
-                                    mat-button>ADD</button>
+                                    mat-button>{{ 'menu.addBtnTxt' | translate }}</button>
                             </mat-card-actions>
                         </mat-card>
                     </div>
@@ -89,12 +89,12 @@
                                 </mat-card-header>
                                 <img mat-card-image [src]="listeUrlImagesSpeciaux[i]">
                                 <mat-card-content>
-                                    <p>Prix: {{product.prix}}$</p>
+                                    <p>{{ 'menu.itemPrice' | translate }}: {{product.prix}}$</p>
                                 </mat-card-content>
                                 <mat-card-actions>
                                     <button (click)="changeProductToSeeDetail(product)" data-toggle="modal"
                                         data-target="#exampleModal" class="btn-dark w-100 text-white"
-                                        mat-button>ADD</button>
+                                        mat-button>{{ 'menu.addBtnTxt' | translate }}</button>
                                 </mat-card-actions>
                             </mat-card>
                         </div>
@@ -117,7 +117,7 @@
         <mat-expansion-panel hideToggle>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    DEJEUNER
+                    {{ 'menu.dejeuner' | translate }}
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <ul style="list-style-type: none;" class=" p-0">
@@ -128,7 +128,7 @@
                         <p style="font-size: small;" class="m-0 p-0">{{product.description}}</p>
                         <button class="btn btn-dark w-25" (click)="changeProductToSeeDetail(product)"
                             data-toggle="modal" data-target="#exampleModal">
-                            add
+                            {{ 'menu.addBtnTxt' | translate }}
                         </button>
                     </div>
                 </li>
@@ -137,7 +137,7 @@
         <mat-expansion-panel hideToggle>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    DINER
+                    {{ 'menu.diner' | translate }}
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <ul style="list-style-type: none;" class=" p-0">
@@ -148,7 +148,7 @@
                         <p style="font-size: small;" class="m-0 p-0">{{product.description}}</p>
                         <button class="btn btn-dark w-25" (click)="changeProductToSeeDetail(product)"
                             data-toggle="modal" data-target="#exampleModal">
-                            add
+                            {{ 'menu.addBtnTxt' | translate }}
                         </button>
                     </div>
                 </li>
@@ -182,7 +182,7 @@
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <h4>Scannez le code QR de votre table</h4>
+                <h4>{{ 'menu.qrCodePrompt' | translate }}</h4>
                 <zxing-scanner style="height: 100px;" (scanSuccess)="scanSuccessHandler($event)"></zxing-scanner>
             </div>
         </div>

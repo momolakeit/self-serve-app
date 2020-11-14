@@ -8,11 +8,11 @@
                     </mat-card-header>
                     <mat-card-content>
                         <p class="ml-3">{{product.productDescription}}</p>
-                        <p class="ml-3">{{product.productPrice}} $ par mois</p>
+                        <p class="ml-3">{{product.productPrice}} $ {{ 'ownerSubscription.perMonth' | translate }}</p>
                     </mat-card-content>
                     <mat-card-actions>
                         <button class="w-100 bg-dark text-white" (click)="changeSubscriptionProduct(product,i)"
-                            mat-button>Sélectionner</button>
+                            mat-button>{{ 'ownerSubscription.choose' | translate }}</button>
                     </mat-card-actions>
                 </mat-card>
             </div>
@@ -28,13 +28,11 @@
 
                     <!-- We'll put the error messages in this element -->
                     <div id="card-errors" role="alert"></div>
-                    <button (click)="submitForm()" class="w-100 bg-dark text-white" mat-button>S'abonner</button>
+                    <button (click)="submitForm()" class="w-100 bg-dark text-white" mat-button>{{ 'ownerSubscription.subscribe' | translate }}</button>
                 </form>
 
-                <p class="text-danger d-none" id="paymentErrorTxt">Il y a eu une erreur lors de votre payment ,
-                    veuillez reesayer plus tard</p>
-                <p class="text-danger d-none" id="subscriptionErrorTxt">Veuillez selectionner une option de plan
-                    pour procéder </p>
+                <p class="text-danger d-none" id="paymentErrorTxt">{{ 'ownerSubscription.errorOnPayment' | translate }}</p>
+                <p class="text-danger d-none" id="subscriptionErrorTxt">{{ 'ownerSubscription.noPlanSelected' | translate }} </p>
             </mat-card>
         </div>
     </div>

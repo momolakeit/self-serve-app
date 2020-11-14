@@ -4,7 +4,7 @@ import { AuthService } from './services/auth.service';
 import { AuthentificationService } from './services/authentification.service';
 import decode from 'jwt-decode';
 import { Router, NavigationEnd } from '@angular/router';
-
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +18,9 @@ export class AppComponent {
   myStyle: object = {};
   myParams: object = {};
 
-  constructor(private authService:AuthService,private authentificationService: AuthentificationService,private router:Router){}
+  constructor(private authService:AuthService,private authentificationService: AuthentificationService,private router:Router,private translate: TranslateService){
+    translate.setDefaultLang('fr');
+  }
 
   ngOnInit() {
     this.router.events.subscribe((evt) => {

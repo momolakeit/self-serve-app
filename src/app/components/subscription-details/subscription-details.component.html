@@ -4,15 +4,15 @@
             <div class="col">
                 <mat-card class="example-card mt-4">
                     <mat-card-header>
-                        <mat-card-title>Bonjour</mat-card-title>
+                        <mat-card-title>{{ 'subscriptionDetail.salutation' | translate }}</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
                         <ng-container *ngIf="(subscriptionEntity.created && subscriptionEntity.periodEnd)">
-                            <p class="ml-3">Début de l'abonement :{{setUpDates(subscriptionEntity.created)}}</p>
-                            <p class="ml-3">Fin du cycle de payment : {{setUpDates(subscriptionEntity.periodEnd)}}</p>
+                            <p class="ml-3">{{ 'subscriptionDetail.subscriptionStart' | translate }} :{{setUpDates(subscriptionEntity.created)}}</p>
+                            <p class="ml-3">{{ 'subscriptionDetail.cycleEnd' | translate }} : {{setUpDates(subscriptionEntity.periodEnd)}}</p>
                         </ng-container>
                         <ng-container *ngIf="!(subscriptionEntity.created && subscriptionEntity.periodEnd)">
-                            <p>Vous avez aucun abonement, veuillez vous inscrire</p>
+                            <p>{{ 'subscriptionDetail.noSubscription' | translate }}</p>
                         </ng-container>
                     </mat-card-content>
                     <mat-card-actions>
@@ -35,14 +35,11 @@
                                         <p class="ml-3">
                                             {{subscriptionEntity.stripeSubscriptionProducts.productDescription}}
                                         </p>
-                                        <p class="ml-3">{{subscriptionEntity.stripeSubscriptionProducts.productPrice}} $
-                                            par
-                                            mois</p>
+                                        <p class="ml-3">{{subscriptionEntity.stripeSubscriptionProducts.productPrice}} $ {{ 'subscriptionDetail.perMonth' | translate }}</p>
                                     </div>
                                     <div class="col w-25">
                                         <button (click)="cancelSubscription()" class="w-100 bg-danger text-white"
-                                            mat-button>Annuler
-                                            abonnement</button>
+                                            mat-button>{{ 'subscriptionDetail.cancelSub' | translate }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +49,7 @@
                                 <div class="row">
                                     <div class="col w-25">
                                         <button routerLink="/subscription" class="w-100 bg-dark text-white"
-                                            mat-button>S'abonner</button>
+                                            mat-button>{{ 'subscriptionDetail.subscribe' | translate }}</button>
                                     </div>
                                 </div>
                             </div>
