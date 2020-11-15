@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MaxSizeValidator } from '@angular-material-components/file-input';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RestaurantSelectionDTO } from 'src/app/models/restaurant-selection-dto';
@@ -12,6 +13,8 @@ import { RestaurantTableDTO } from 'src/app/models/restaurant-table-dto';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { saveAs } from 'file-saver';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { FileInput } from 'ngx-material-file-input';
 
 @Component({
   selector: 'app-restaurant-form',
@@ -23,6 +26,7 @@ export class RestaurantFormComponent implements OnInit {
   restaurantForm: FormGroup;
   displayedColumns: string[] = ['tableNumber', 'download', 'delete'];
   dataSource = new MatTableDataSource<RestaurantTableDTO>([]);
+  maxSize: number = 1024;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -37,7 +41,8 @@ export class RestaurantFormComponent implements OnInit {
   initForm() {
     this.restaurantForm = this.formBuilder.group({
       name: [this.data ? this.data.restaurantName : '', Validators.required],
-      tableAmount: [this.data ? this.data.restaurentTablesDTO.length : '', Validators.required]
+      tableAmount: [this.data ? this.data.restaurentTablesDTO.length : '', Validators.required],
+      image: ['', [MaxSizeValidator(this.maxSize * 1024)]]
     })
 
     this.title = this.data ? 'Restaurant update' : 'Restaurant creation';
@@ -76,10 +81,23 @@ export class RestaurantFormComponent implements OnInit {
     }
   }
 
+  onUploadImage(restaurantId: number) {
+    const file_form: FileInput = this.restaurantForm.get('image').value;
+    const file = file_form.files == undefined ? undefined : file_form.files[0];
+
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+
+    if (file != undefined) 
+      this.kitchenService.saveRestaurantLogo(formData, restaurantId).subscribe(data => this.dialogRef.close('refresh'));
+    else 
+      this.dialogRef.close('refresh');
+  }
+
   // SERVICES
 
   onCreate(restaurantFormDTO: RestaurantFormDTO) {
-    this.kitchenService.createRestaurant(restaurantFormDTO).subscribe(() => this.dialogRef.close('refresh'));
+    this.kitchenService.createRestaurant(restaurantFormDTO).subscribe(data => this.onUploadImage(data.id));
   }
 
   onDownloadQrCode(tableNumber:number,tableId: number) {
@@ -87,7 +105,7 @@ export class RestaurantFormComponent implements OnInit {
   }
 
   onUpdate(restaurantFormDTO: RestaurantFormDTO) {
-    this.kitchenService.updateRestaurantName(restaurantFormDTO.restaurantName, restaurantFormDTO.restaurantId).subscribe(() => this.dialogRef.close('refresh'))
+    this.kitchenService.updateRestaurantName(restaurantFormDTO.restaurantName,restaurantFormDTO.restaurantId).subscribe(data => this.onUploadImage(data.id));
   }
 
   onDeleteTable(tableId: number) {

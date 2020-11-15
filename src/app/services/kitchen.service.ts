@@ -43,10 +43,12 @@ export class KitchenService {
       }));
   }
 
-  createRestaurant(restaurantFormDTO: RestaurantFormDTO){
-    return this.http.post(`${environment.kitchenUrl}/createRestaurant`,restaurantFormDTO);
+  createRestaurant(restaurantFormDTO: RestaurantFormDTO) :Observable<RestaurantDTO>{
+    return this.http.post<RestaurantDTO>(`${environment.kitchenUrl}/createRestaurant`,restaurantFormDTO);
   }
-
+  saveRestaurantLogo(file: FormData, restaurantId: number): Observable<RestaurantDTO> {
+    return this.http.post<RestaurantDTO>(`${environment.kitchenUrl}/logo/${restaurantId}`, file)
+  }
   updateRestaurantName(restaurantName:string,restaurantId: number):Observable<RestaurantDTO>{
     return this.http.post<RestaurantDTO>(`${environment.kitchenUrl}/modifierNomTable`,{restaurantName,restaurantId});
   }
