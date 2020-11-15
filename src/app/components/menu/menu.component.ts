@@ -20,20 +20,23 @@ export class MenuComponent implements OnInit {
   listeUrlImagesSpeciaux = [];
   panelOpenState: boolean
   listeUrlImagesFeatured = [String];
+  productToSeeDetail: ProductDTO;
+  hasMenuId: boolean;
 
   slides = [{ 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }];
 
-  constructor(private menuService: MenuService,public dialog: MatDialog,private billService:BillService) { }
+  constructor(private menuService: MenuService,public dialog: MatDialog, private billService: BillService) { }
 
   ngOnInit() {
     //not clean init should only call methods
-    if (localStorage.getItem("ongoingBill") == null) {
-      localStorage.setItem("ongoingBill", JSON.stringify({ prixTotal: null, id: null, date: null, billStatus: null, orderCustomer: null, orderItems: null, restaurant: null }));
+    if (localStorage.getItem('menuId') == null) {
+      this.hasMenuId = false;
     }
-
-    this.menuService.getMenuById().subscribe(data => {
-      this.menu = data;
-    })
+    else {
+      this.hasMenuId = true;
+      this.initBill();
+      this.fetchMenu();
+    }
   }
 
   getImage(imageId: number): string {
@@ -47,18 +50,8 @@ export class MenuComponent implements OnInit {
       autoFocus:false,
       data: productDTO
     });
- 
-
-  ngOnInit(): void {
-    if (localStorage.getItem('menuId') == null) {
-      this.hasMenuId = false;
-    }
-    else {
-      this.hasMenuId = true;
-      this.initBill();
-      this.fetchMenu();
-    }
   }
+
   changeProductToSeeDetail = function (product: ProductDTO): void {
     this.productToSeeDetail = product;
   };

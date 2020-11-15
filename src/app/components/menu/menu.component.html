@@ -19,7 +19,8 @@
                                 <p>{{ 'menu.itemPrice' | translate }}: {{product.prix}}$</p>
                             </mat-card-content>
                             <mat-card-actions>
-                                <button (click)="openDialog(product)" class="btn-dark w-100 text-white" mat-button>{{ 'menu.addBtnTxt' | translate }}</button>
+                                <button (click)="openDialog(product)" class="btn-dark w-100 text-white"
+                                    mat-button>{{ 'menu.addBtnTxt' | translate }}</button>
                             </mat-card-actions>
                         </mat-card>
                     </div>
@@ -35,22 +36,23 @@
                                     <p>{{ 'menu.itemPrice' | translate }}: {{product.prix}}$</p>
                                 </mat-card-content>
                                 <mat-card-actions>
-                                    <button (click)="openDialog(product)" class="btn-dark w-100 text-white" mat-button>{{ 'menu.addBtnTxt' | translate }}</button>
+                                    <button (click)="openDialog(product)" class="btn-dark w-100 text-white"
+                                        mat-button>{{ 'menu.addBtnTxt' | translate }}</button>
                                 </mat-card-actions>
                             </mat-card>
                         </div>
                     </ng-template>
                 </ng-container>
-            </div>
-            <a class="carousel-control-prev hidden" href="#carouselExampleInterval" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next hidden" href="#carouselExampleInterval" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
+            </ng-container>
         </div>
+        <a class="carousel-control-prev hidden" href="#carouselExampleInterval" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next hidden" href="#carouselExampleInterval" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
 </div>
 
@@ -63,7 +65,7 @@
         <div class="carousel-inner">
             <ng-container *ngIf='menu'>
                 <ng-container *ngFor="let product of menu.speciaux; let i = index">
-                   
+
                     <div *ngIf="i =='0';else nonActive" class="carousel-item active">
                         <mat-card class="example-card">
                             <mat-card-header>
@@ -75,7 +77,8 @@
                                 <p>{{ 'menu.itemPrice' | translate }}: {{product.prix}}$</p>
                             </mat-card-content>
                             <mat-card-actions>
-                                <button (click)="openDialog(product)" class="btn-dark w-100 text-white" mat-button>{{ 'menu.addBtnTxt' | translate }}</button>
+                                <button (click)="openDialog(product)" class="btn-dark w-100 text-white"
+                                    mat-button>{{ 'menu.addBtnTxt' | translate }}</button>
                             </mat-card-actions>
                         </mat-card>
                     </div>
@@ -91,23 +94,25 @@
                                     <p>{{ 'menu.itemPrice' | translate }}: {{product.prix}}$</p>
                                 </mat-card-content>
                                 <mat-card-actions>
-                                    <button (click)="openDialog(product)" class="btn-dark w-100 text-white"mat-button>{{ 'menu.addBtnTxt' | translate }}</button>
+                                    <button (click)="openDialog(product)" class="btn-dark w-100 text-white"
+                                        mat-button>{{ 'menu.addBtnTxt' | translate }}</button>
                                 </mat-card-actions>
                             </mat-card>
                         </div>
                     </ng-template>
                 </ng-container>
-            </div>
-            <a class="carousel-control-prev" href="#carouselExampleInterval2" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleInterval2" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
+            </ng-container>
         </div>
+        <a class="carousel-control-prev" href="#carouselExampleInterval2" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleInterval2" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
+</div>
 
 <!--MENU TITLE + IMAGE + LIST OF ITEMS-->
 <mat-accordion>
@@ -126,7 +131,8 @@
 
                     <div class="d-flex justify-content-between align-items-center">
                         <p style="font-size: small;" class="m-0 p-0">{{product.description}}</p>
-                        <button class="btn btn-dark w-25" (click)="openDialog(product)"> {{ 'menu.addBtnTxt' | translate }}</button>
+                        <button class="btn btn-dark w-25" (click)="openDialog(product)">
+                            {{ 'menu.addBtnTxt' | translate }}</button>
                     </div>
                 </li>
             </ng-container>
