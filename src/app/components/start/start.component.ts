@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { KitchenService } from 'src/app/services/kitchen.service';
 import { ConstanteService } from 'src/app/services/constante-service.service';
 import {AuthService} from '../../services/auth.service';
+import {LogoService} from '../../services/logo.service'
 @Component({
   selector: 'app-start',
   templateUrl: './start.component.html',
@@ -22,7 +23,7 @@ export class StartComponent implements OnInit {
   width: number = 110;
   height: number = 200;
 
-  constructor(private authentificationService: AuthentificationService, private route: Router,private activatedRoute: ActivatedRoute, private kitchenService: KitchenService,private constanteService :ConstanteService,private authService:AuthService) { }
+  constructor(private authentificationService: AuthentificationService, private route: Router,private activatedRoute: ActivatedRoute, private kitchenService: KitchenService,private constanteService :ConstanteService,private authService:AuthService,private logoService:LogoService) { }
 
   ngOnInit(): void {
     this.findMenu();
@@ -34,6 +35,7 @@ export class StartComponent implements OnInit {
       this.kitchenService.fetchMenuByRestaurantTable(restaurantTableId).subscribe(data => {
         localStorage.setItem("menuId",data.id.toString())
         localStorage.setItem("restaurantTableId",restaurantTableId.toString());
+        this.logoService.onRestaurantLogoImgUrl.emit(environment.baseImgPath+data.restaurant.imgFile.id)
         if(this.authService.isAuthenticated()){
           this.route.navigate(['/menu']);
         }
