@@ -6,7 +6,7 @@
             </h4>
         </div>
         <mat-accordion *ngFor="let table of allTables;let i = index">
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel [expanded]="panelOpenStateArray[i]" (opened)="this.setPanelOpenValue(i,true)" (closed)="this.setPanelOpenValue(i,false)">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <div class="container">
@@ -22,9 +22,6 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <ng-container *ngFor='let bill of table.bills'>
-                    <h3 class="border-bottom" *ngIf="!bill.isBillEmpty">
-                        {{bill.orderCustomer.username}}
-                    </h3>
                     <ng-container *ngFor='let orderItem of bill.orderItems'>
                         <app-restaurent-dish-detail-view (countChanged)="initValues($event)" [orderItem]="orderItem">
                         </app-restaurent-dish-detail-view>

@@ -13,21 +13,21 @@ import { RestaurentOrdersComponent } from './components/restaurent-orders/restau
 import { TableDetailPageComponent } from './components/table-detail-page/table-detail-page.component';
 import { PaymentChoiceComponent } from './components/payment-choice/payment-choice.component';
 import { PaymentFormComponent } from './components/payment-form/payment-form.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClientRequestListComponent } from './components/client-request-list/client-request-list.component';
 import { JwtModule } from '@auth0/angular-jwt';
-import {DemoMaterialModule} from 'src/material-module';
+import { DemoMaterialModule } from 'src/material-module';
 import { AdminProductManagmentComponent } from './components/admin-product-managment/admin-product-managment.component';
 import { RecipeSocketComponent } from './components/recipe-socket/recipe-socket.component';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCarouselModule } from '@ngbmodule/material-carousel';
 import { ContactFormComponent } from './components/contact-form/contact-form.component'
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule ,HttpClient } from '@angular/common/http';
 import { MenuproductComponent } from './components/menuproduct/menuproduct.component';
 import { CommonModule } from '@angular/common';
 import { RestaurentDishDetailViewComponent } from './components/restaurent-dish-detail-view/restaurent-dish-detail-view.component';
 import { ClientRequestItemComponent } from './components/client-request-item/client-request-item.component';
-import { ClientRequestItemDetailComponent } from './components/client-request-item-detail/client-request-item-detail.component';  
+import { ClientRequestItemDetailComponent } from './components/client-request-item-detail/client-request-item-detail.component';
 import { ParticlesModule } from 'ngx-particle';
 import { WaiterRequestListComponent } from './components/waiter-request-list/waiter-request-list.component';
 import { RestaurantOwnerListComponent } from './components/restaurant-owner-list/restaurant-owner-list.component';
@@ -37,7 +37,8 @@ import { AddTableFormComponent } from './components/add-table-form/add-table-for
 import { OwnerSubscriptionComponent } from './components/owner-subscription/owner-subscription.component';
 import { SubscriptionDetailsComponent } from './components/subscription-details/subscription-details.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
-import { AppBodyComponent } from './components/app-body/app-body.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,6 @@ import { AppBodyComponent } from './components/app-body/app-body.component';
     AddTableFormComponent,
     OwnerSubscriptionComponent,
     SubscriptionDetailsComponent,
-    AppBodyComponent,
   ],
   imports: [
     CommonModule,
@@ -82,6 +82,13 @@ import { AppBodyComponent } from './components/app-body/app-body.component';
     ReactiveFormsModule,
     HttpClientModule,
     ParticlesModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
@@ -96,3 +103,6 @@ import { AppBodyComponent } from './components/app-body/app-body.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}

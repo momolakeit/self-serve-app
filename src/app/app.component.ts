@@ -6,6 +6,7 @@ import decode from 'jwt-decode';
 import { Router, NavigationEnd } from '@angular/router';
 import {LogoService} from './services/logo.service'
 
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,9 @@ export class AppComponent {
   myStyle: object = {};
   myParams: object = {};
 
-  constructor(private authService:AuthService,private authentificationService: AuthentificationService,private router:Router,private logoService:LogoService){}
+  constructor(private authService:AuthService,private authentificationService: AuthentificationService,private router:Router,private logoService:LogoService,private translate: TranslateService){
+    translate.setDefaultLang('fr');
+  }
 
   ngOnInit() {
     this.logoService.onRestaurantLogoImgUrl.subscribe(data =>{

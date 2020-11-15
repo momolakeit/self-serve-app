@@ -7,14 +7,14 @@
                         <mat-card-title>{{orderItemDTO.product.name}}</mat-card-title>
                     </mat-card-header>
                     <img mat-card-image [src]="imgUrl+ orderItemDTO.product.imgFileDTO.id" alt="Photo of a Shiba Inu">
-                    <h4>COMMENTAIRES :</h4>
+                    <h4>{{'clientRequestItemDetail.commentaires'|translate}} :</h4>
                     <mat-card-content>
                         <p>
                             {{orderItemDTO.product.description}}
                         </p>
                         <div class="container">
                             <div class="row">
-                                {{nombreDeMinuteRestant}} minutes restantes
+                                {{nombreDeMinuteRestant}} {{'clientRequestItemDetail.minutesRestantes'|translate}}
                             </div>
                             <div class="row">
                                 <div class=" col-lg-6  p-0 ">

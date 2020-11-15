@@ -71,11 +71,14 @@ export class AdminProductManagmentComponent implements OnInit {
   fetchOwner() {
     this.authentificationService.getOwner(localStorage.getItem("username")).subscribe(data => {
       console.log(data);
-      if (data.stripeAccountId == null || !data.isStripeEnable) {
+      if (data.stripeAccountId == null || data.isStripeEnable ==false) {
+        console.log("false");
         this.setHasStripeAccountId(false);
       }
       else {
+        console.log("true");
         this.setHasStripeAccountId(true);
+        console.log(this.hasStripeAccountId);
       }
     })
   }
