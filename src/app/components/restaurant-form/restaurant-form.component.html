@@ -27,33 +27,11 @@
     <!--tables count-->
     <ng-container *ngIf="data">
       <mat-divider></mat-divider>
-        <div class="text-center">
-        <!--HEADER-->
-        <h1 class="text-center">{{ 'restaurantForm.restaurantTableName' | translate }}</h1>
-
-
-        <mat-divider></mat-divider>
-        <div class="d-flex justify-content-between p-3">
-          <p class="font-weight-bold">{{ 'restaurantForm.tableNumberTxt' | translate }}</p>
-          <p class="font-weight-bold">{{ 'restaurantForm.actionTxt' | translate }}</p>
-        </div>
-
-        <mat-divider></mat-divider>
-
-        <div style="min-height: 300px; max-height: 350px;" class="overflow-auto">
-          <div class="d-flex justify-content-between mt-2" *ngFor="let table of data.restaurentTablesDTO">
-            <p class="m-1">{{table.tableNumber}}</p>
-            <button mat-raised-button class="btn-dark text-white m-1" (click)="onDeleteTable(table.id)">{{ 'restaurantForm.deleteTxt' | translate }}</button>
-          </div>
-        </div>
-        <button mat-raised-button class="btn-dark text-white btn-block" (click)="openDialog()">Add table</button>
-      </div> -->
-
       <div class="container">
 
         <div class="row pt-3 mb-2">
           <h1 class="text-center mx-auto w-50 border-bottom border-secondary">
-            RESTAURANT TABLES
+            {{ 'restaurantForm.restaurantTableName' | translate }}
           </h1>
           <div class="container">
             <mat-form-field color="primary">
@@ -65,13 +43,15 @@
               <table mat-table [dataSource]="dataSource" matSort>
                 <!-- table number Column -->
                 <ng-container matColumnDef="tableNumber">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Table Number</th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{ 'restaurantForm.tableNumberTxt' | translate }}</th>
                   <td mat-cell *matCellDef="let row">{{ row.tableNumber }}</td>
                 </ng-container>
 
                 <!-- download Column -->
                 <ng-container matColumnDef="download">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Download Qr Code</th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{ 'restaurantForm.downloadQRCodeTxt' | translate }}</th>
                   <td mat-cell *matCellDef="let row">
                     <button mat-icon-button (click)="onDownloadQrCode(row.tableNumber,row.id)">
                       <mat-icon>download</mat-icon>
@@ -81,7 +61,8 @@
 
                 <!-- Delete column-->
                 <ng-container matColumnDef="delete">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header class="pl-5">Delete</th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header class="pl-5">
+                    {{ 'restaurantForm.deleteTxt' | translate }}</th>
                   <td mat-cell *matCellDef="let row">
                     <button mat-icon-button (click)="onDeleteTable(row.id)">
                       <mat-icon>delete</mat-icon>
@@ -101,7 +82,8 @@
 
               <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
             </div>
-            <button mat-raised-button class="btn-dark text-white btn-block" (click)="openDialog()">{{ 'restaurantForm.ajouterTable' | translate }}</button>
+            <button mat-raised-button class="btn-dark text-white btn-block"
+              (click)="openDialog()">{{ 'restaurantForm.ajouterTable' | translate }}</button>
           </div>
         </div>
       </div>
@@ -111,7 +93,8 @@
     <mat-divider></mat-divider>
 
     <div class="d-flex justify-content-between mt-2">
-      <button mat-raised-button class="btn-dark text-white" (click)="onNoClick()">{{ 'restaurantForm.cancelTxt' | translate }}</button>
+      <button mat-raised-button class="btn-dark text-white"
+        (click)="onNoClick()">{{ 'restaurantForm.cancelTxt' | translate }}</button>
       <button mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()"
         *ngIf="!data">{{ 'restaurantForm.creerBtnTxt' | translate }}</button>
       <button mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()"

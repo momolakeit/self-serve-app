@@ -98,7 +98,8 @@
         "ajouterTable":"Add table",
         "cancelTxt":"Cancel",
         "creerBtnTxt":"Create",
-        "updateBtnTxt":"Update"
+        "updateBtnTxt":"Update",
+        "downloadQRCodeTxt":"Download QR Code"
     },
     "productEditCreate":{
         "nameTxt":"Name",

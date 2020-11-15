@@ -81,7 +81,7 @@
         "tableTxt":"Tables",
         "editTxt":"Modifier",
         "deleteTxt":"Supprimer",
-        "noDataMatching":"Aucune donné ne correspond au filtrer",
+        "noDataMatching":"Aucune donné ne correspond au filtre",
         "addRestaurantBtnTxt":" Ajouter Restaurant"
     },
     "restaurantForm":{
@@ -92,13 +92,14 @@
         "amountTxt":"Nombre de tables",
         "amountCantBeBlank":"Le nombre de tables ne peux pas être vide",
         "restaurantTableName":"Tables du restaurants",
-        "tableNumberTxt":"Numero de table",
+        "tableNumberTxt":"Numéro de table",
         "actionTxt":"Action",
         "deleteTxt":"Supprimer",
         "cancelTxt":"Annuler",
         "ajouterTable":"Ajouter table",
         "creerBtnTxt":"Créer",
-        "updateBtnTxt":"Modifer"
+        "updateBtnTxt":"Modifer",
+        "downloadQRCodeTxt":"Télécharger Code QR"
     },
     "productEditCreate":{
         "nameTxt":"Nom",
