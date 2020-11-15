@@ -3,23 +3,32 @@
 // The list of file replacements can be found in `angular.json`.
 // const host = "18.221.184.6";
 const host = "18.188.8.244";
+const port = "";
 const rolePrefix = 'ROLE_';
 
 export const environment = {
   production: false,
-  authApiUrl: `http://${host}/auth`,
-  contactFormUrl: `http://${host}/support`,
-  employeUrl:`http://${host}/rest/employe`,
-  csrfUrl:`http://${host}/csrf`,
-  productUrl:`http://${host}/product`,
-  menuUrl:`http://${host}/menu`,
-  billUrl:`http://${host}/order`,
-  rateUrl:`http://${host}/rate`,
-  paymentIntentUrl:`http://${host}/stripe/fetchPaymentIntent`,
-  paymentRequestIntentUrl:`http://${host}/stripe/fetchPaymentRquestPaymentIntent`,
-  domainFiLE:`http://${host}/order/fetchDomainFile`,
-  baseImgPath:`http://${host}/product/getProductImg/`,
-  kitchenUrl:`http://${host}/rest/kitchen`,
+  authApiUrl: `http://${host}${port}/auth`,
+  contactFormUrl: `http://${host}${port}/support`,
+  employeUrl:`http://${host}${port}/rest/employe`,
+  csrfUrl:`http://${host}${port}/csrf`,
+  productUrl:`http://${host}${port}/product`,
+  menuUrl:`http://${host}${port}/menu`,
+  billUrl:`http://${host}${port}/order`,
+  rateUrl:`http://${host}${port}/rate`,
+  subscriptionProductUrl:`http://${host}${port}/stripe/fetchSubscriptionProducts`,
+  fetchSubscription:`http://${host}${port}/stripe/retreiveSubscription`,
+  cancelSubscriptionUrl:`http://${host}${port}/stripe/cancelSubscription`,
+  registerOwnerWithStripeUrl :`http://${host}${port}/stripe/createStripeAcccount`,
+  saveStripeAccountId :`http://${host}${port}/stripe/saveAccountId`,
+  fetchStripeAccountId:`http://${host}${port}/stripe/getAccountId`,
+  paymentIntentUrl:`http://${host}${port}/stripe/fetchPaymentIntent`,
+  createSubscriptionUrl:`http://${host}${port}/stripe/createSubscription`,
+  fetchSubscriptionSessionUrl: `http://${host}${port}/stripe/fetchSubscriptionSession`,
+  paymentRequestIntentUrl:`http://${host}${port}/stripe/fetchPaymentRquestPaymentIntent`,
+  domainFiLE:`http://${host}${port}/order/fetchDomainFile`,
+  baseImgPath:`http://${host}${port}/product/getProductImg/`,
+  kitchenUrl:`http://${host}${port}/rest/kitchen`,
 };
 
 export const roles={

@@ -14,9 +14,9 @@
 
     <p>
         <mat-form-field class="w-100">
-            <mat-label>name:</mat-label>
+            <mat-label>{{ 'productEditCreate.nameTxt' | translate }}:</mat-label>
             <input matInput placeholder="Ex. Pizza" formControlName="name" type="text">
-            <mat-error>Please you must enter a name</mat-error>
+            <mat-error>{{ 'productEditCreate.nameErrorTxt' | translate }}</mat-error>
         </mat-form-field>
     </p>
 
@@ -24,43 +24,43 @@
         <mat-form-field class="w-100 mt-0">
             <ngx-mat-file-input multiple="false" accept="" color="" placeholder="image:" formControlName="image">
             </ngx-mat-file-input>
-            <mat-error>Please you must enter an image</mat-error>
+            <mat-error>{{ 'productEditCreate.imageErrorTxt' | translate }}</mat-error>
         </mat-form-field>
     </p>
 
 
     <p>
         <mat-form-field class="w-100">
-            <mat-label>description:</mat-label>
+            <mat-label>{{ 'productEditCreate.descriptionTxt' | translate }}:</mat-label>
             <textarea rows="4" matInput placeholder="Enter the product description"
                 formControlName="description"></textarea>
-            <mat-error>Please you must enter a product description</mat-error>
+            <mat-error>{{ 'productEditCreate.descriptionError' | translate }}</mat-error>
         </mat-form-field>
     </p>
 
 
     <p>
         <mat-form-field class="w-50">
-            <mat-label>price:</mat-label>
+            <mat-label>{{ 'productEditCreate.priceTxt' | translate }}:</mat-label>
             <input matInput type="text" formControlName="prix">
             <span matPrefix>$&nbsp;</span>
             <span matSuffix>CAD</span>
-            <mat-error>Please you must enter a valid number</mat-error>
+            <mat-error>{{ 'productEditCreate.priceErrorTxt' | translate }}</mat-error>
         </mat-form-field>
     </p>
 
     <p>
         <mat-form-field class="w-50">
-            <mat-label>Temps De Préparation:</mat-label>
+            <mat-label>{{ 'productEditCreate.preparationTimeTxt' | translate }}:</mat-label>
             <input matInput type="number" placeholder="Ex. mm:ss" formControlName="tempsDePreparation">
-            <mat-error>Please you must enter a valid time</mat-error>
+            <mat-error>{{ 'productEditCreate.preparationTimeError' | translate }}</mat-error>
         </mat-form-field>
     </p>
 
 
     <p>
         <mat-form-field class="w-100">
-            <mat-label>Product type:</mat-label>
+            <mat-label>{{ 'productEditCreate.productTypeTxt' | translate }}:</mat-label>
             <mat-select formControlName="productType">
                 <mat-option *ngFor="let productType of productTypes" [value]="productType">{{productType}}</mat-option>
             </mat-select>
@@ -69,7 +69,7 @@
 
     <p>
         <mat-form-field class="w-100">
-            <mat-label>Product Menu type:</mat-label>
+            <mat-label>{{ 'productEditCreate.productMenuTypeTxt' | translate }}:</mat-label>
             <mat-select formControlName="productMenuType">
                 <mat-option *ngFor="let productMenuType of productMenuTypes" [value]="productMenuType">{{productMenuType}}</mat-option>
             </mat-select>
@@ -83,10 +83,10 @@
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    Add Options
+                    {{ 'productEditCreate.addOptionTxt' | translate }}
                 </mat-panel-title>
                 <mat-panel-description>
-                    Create options
+                    {{ 'productEditCreate.createOptionTxt' | translate }}
                 </mat-panel-description>
             </mat-expansion-panel-header>
 
@@ -135,8 +135,7 @@
                     <mat-divider></mat-divider>
                 </div>
 
-                <button class="btn-block mt-4 mb-5 bg-dark text-white" mat-raised-button (click)="onAddOption()">Add an
-                    option</button>
+                <button class="btn-block mt-4 mb-5 bg-dark text-white" mat-raised-button (click)="onAddOption()">{{ 'productEditCreate.addAnOptionTxt' | translate }}n</button>
             </div>
         </mat-expansion-panel>
     </mat-accordion>
@@ -145,7 +144,7 @@
     <!--FOOTER-->
     <div class="d-flex justify-content-between mt-2">
         <button mat-raised-button class="btn-dark text-white" (click)="onNoClick()">Cancel</button>
-        <button  mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()" *ngIf="!data">Create</button>
-        <button  mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()" *ngIf="data">Update</button>
+        <button  mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()" *ngIf="!data">{{ 'productEditCreate.createBtnTxt' | translate }}</button>
+        <button  mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()" *ngIf="data">{{ 'productEditCreate.updateBtnTxt' | translate }}</button>
     </div>
 </form>

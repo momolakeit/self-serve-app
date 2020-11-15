@@ -17,10 +17,11 @@ import { ClientRequestListComponent } from './components/client-request-list/cli
 import { JwtModule } from '@auth0/angular-jwt';
 import { DemoMaterialModule } from 'src/material-module';
 import { AdminProductManagmentComponent } from './components/admin-product-managment/admin-product-managment.component';
+import { RecipeSocketComponent } from './components/recipe-socket/recipe-socket.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCarouselModule } from '@ngbmodule/material-carousel';
 import { ContactFormComponent } from './components/contact-form/contact-form.component'
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule ,HttpClient } from '@angular/common/http';
 import { MenuproductComponent } from './components/menuproduct/menuproduct.component';
 import { CommonModule } from '@angular/common';
 import { RestaurentDishDetailViewComponent } from './components/restaurent-dish-detail-view/restaurent-dish-detail-view.component';
@@ -32,6 +33,11 @@ import { RestaurantOwnerListComponent } from './components/restaurant-owner-list
 import { RestaurantFormComponent } from './components/restaurant-form/restaurant-form.component';
 import { ProductFormEditCreateComponent } from './components/product-form-edit-create/product-form-edit-create.component';
 import { AddTableFormComponent } from './components/add-table-form/add-table-form.component';
+import { OwnerSubscriptionComponent } from './components/owner-subscription/owner-subscription.component';
+import { SubscriptionDetailsComponent } from './components/subscription-details/subscription-details.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [
@@ -57,10 +63,13 @@ import { AddTableFormComponent } from './components/add-table-form/add-table-for
     RestaurantOwnerListComponent,
     RestaurantFormComponent,
     ProductFormEditCreateComponent,
-    AddTableFormComponent
+    AddTableFormComponent,
+    OwnerSubscriptionComponent,
+    SubscriptionDetailsComponent,
   ],
   imports: [
     CommonModule,
+    ZXingScannerModule,
     BrowserModule,
     MatCarouselModule.forRoot(),
     AppRoutingModule,
@@ -70,6 +79,13 @@ import { AddTableFormComponent } from './components/add-table-form/add-table-for
     ReactiveFormsModule,
     HttpClientModule,
     ParticlesModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
@@ -84,3 +100,6 @@ import { AddTableFormComponent } from './components/add-table-form/add-table-for
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}

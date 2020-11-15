@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {PaymentService} from '../../services/payment.service'
+import {AuthentificationService} from '../../services/authentification.service';
 
 @Component({
   selector: 'app-payment-choice',
@@ -8,14 +9,19 @@ import {PaymentService} from '../../services/payment.service'
 })
 export class PaymentChoiceComponent implements OnInit {
 
-  constructor(private paymentService :PaymentService) { }
+  constructor(private paymentService :PaymentService,private authentificationService :AuthentificationService) { }
   card;
   stripe; // : stripe.Stripe;
   clientSecret;
 
   ngOnInit(): void {
+    this.paymentService.fetchAccountId(parseInt(localStorage.getItem("menuId"))).subscribe(data =>{
+      this.initStripe(data.value);
+    })
+  }
+  initStripe(stripeAccountId:string){
     this.stripe = Stripe('pk_test_51HLwKgC5UoZOX4GRWegBa5FvbtsNbi5Cd7Z5WKYB73jelPNuhpzS69dXKe2V3OWTP4XHt5wjGGD3dzEdJw25duSn00Dlctj1NV');
-    this.paymentService.getPaymentRequestPaymentIntent().subscribe(data => {
+    this.paymentService.getPaymentRequestPaymentIntent(stripeAccountId).subscribe(data => {
       console.log(data  );
       this.clientSecret = data
     });

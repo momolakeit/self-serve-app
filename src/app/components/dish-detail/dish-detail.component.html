@@ -46,7 +46,7 @@
     </div>
 
     <div class="mt-2">
-        <p>Prix : {{data.prix}}$</p>
+        <p>{{ 'dishDetail.prix' | translate }} : {{data.prix}}$</p>
         <p class="mb-0">Description:</p>
         <p class="mt-0">
             <mat-form-field class="w-100">
@@ -68,7 +68,7 @@
     <p>
         <mat-form-field class="w-100">
             <mat-label>
-                <h4>Requetes Specials</h4>
+                <h4>{{ 'dishDetail.specialRequest' | translate }}</h4>
             </mat-label>
             <textarea matInput autocomplete="off" cdkTextareaAutosize [(ngModel)]="commentaire"
                 #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5"></textarea>
@@ -78,6 +78,6 @@
     <mat-divider></mat-divider>
 
     <div>
-        <button (click)="updateCurrentBill(data)" mat-raised-button class="btn-block btn-dark text-white">Order</button>
+        <button (click)="updateCurrentBill(data)" mat-raised-button class="btn-block btn-dark text-white">{{ 'dishDetail.commander' | translate }}</button>
     </div>
 </div>

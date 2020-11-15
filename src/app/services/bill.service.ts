@@ -18,9 +18,14 @@ export class BillService {
     return this.http.post<BillDTO>(`${environment.billUrl}/makeOrder`, { billDTO: JSON.stringify(billDTO), restaurentTableId: restaurentTableId, productDTO: JSON.stringify(product), guestUsername: localStorage.getItem("username"), commentaire: commentaire });
   }
 
-  getBill(billDTO: BillDTO): Observable<BillDTO> {
-    return this.http.post<BillDTO>(`${environment.billUrl}/getBill`, { billId: billDTO.id });
+  initBill(){
+    return this.http.post<BillDTO>(`${environment.billUrl}/initBill`,{});
   }
+
+  getBill(billDTO :BillDTO):Observable<BillDTO>{
+    const returnValue  = this.http.post<BillDTO>(`${environment.billUrl}/getBill`,{billId: billDTO.id});
+    return returnValue;
+ }
 
   makeOrder(product: ProductDTO, commentaire: String): Observable<BillDTO> {
     this.billDTO = JSON.parse(localStorage.getItem("ongoingBill"));

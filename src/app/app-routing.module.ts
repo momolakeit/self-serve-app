@@ -20,6 +20,8 @@ import { ClientGuardService } from './services/client-guard.service';
 import { WaiterGuardService } from './services/waiter-guard.service';
 import { CookGuardService } from './services/cook-guard.service';
 import { LoginGuardService } from './services/login-guard.service';
+import { OwnerSubscriptionComponent } from './components/owner-subscription/owner-subscription.component';
+import { SubscriptionDetailsComponent } from './components/subscription-details/subscription-details.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/start', pathMatch: 'full' },
@@ -45,6 +47,10 @@ const routes: Routes = [
   { path: 'adminProductManagment', canActivate: [OwnerRoleGuardService], component: AdminProductManagmentComponent },
   { path: 'contactForm', canActivate: [OwnerRoleGuardService], component: ContactFormComponent },
 
+  {path: 'adminProductManagment',canActivate:[AuthGuardService,OwnerRoleGuardService], component: AdminProductManagmentComponent},
+  {path: 'subscription',canActivate:[AuthGuardService,OwnerRoleGuardService], component: OwnerSubscriptionComponent},
+  {path: 'subscriptionDetail',canActivate:[AuthGuardService,OwnerRoleGuardService], component: SubscriptionDetailsComponent},
+  
   //not found needs to be at the end or else buggs
   { path: '**', redirectTo: '/not-found' }
 ];

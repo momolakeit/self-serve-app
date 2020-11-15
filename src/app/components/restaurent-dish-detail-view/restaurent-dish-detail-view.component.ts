@@ -28,61 +28,46 @@ export class RestaurentDishDetailViewComponent implements OnInit {
     this.nombreDeMinuteRequis = this.orderItem.product.tempsDePreparation;
     this.nombreDeMinuteRestant = Math.round((Date.parse(this.orderItem.tempsDePreparation.toString()) - today.getTime()) / 60000);
     if (this.nombreDeMinuteRestant > 0) {
-      this.nombreDeMinuteRestant = this.nombreDeMinuteRestant - 1;
-      this.nombreDeMinutesSur100 = (this.nombreDeMinuteRestant * 100) / this.nombreDeMinuteRequis;
-      localStorage.setItem(this.orderItem.id.toString(), this.nombreDeMinuteRestant.toString());
+      this.setUpProgressbar();
     }
     else {
       this.nombreDeMinuteRestant = 0;
       this.nombreDeMinutesSur100 = 0;
     }
 
-    //this.handleTime();
     this.changeOrderStatus();
   }
 
+  setUpProgressbar() {
+    this.nombreDeMinuteRestant = this.nombreDeMinuteRestant - 1;
+    this.nombreDeMinutesSur100 = (this.nombreDeMinuteRestant * 100) / this.nombreDeMinuteRequis;
+  }
+
   handleTime() {
-    //handle time
     var today = new Date();
-
-    localStorage.setItem(this.orderItem.id.toString(), Math.round((Date.parse(this.orderItem.tempsDePreparation.toString()) - today.getTime()) / 60000).toString());
-
     this.nombreDeMinuteRequis = this.orderItem.product.tempsDePreparation;
-
-    if (localStorage.getItem(this.orderItem.id.toString()) == null) {
-      this.nombreDeMinuteRequis = parseInt(localStorage.getItem(this.orderItem.id.toString()));
-    }
     this.setUpTimeout();
   }
 
   setUpTimeout = (): void => {
     var source = timer(1000, 1000).subscribe(() => {
-      if (parseInt(localStorage.getItem(this.orderItem.id.toString())) == 0) {
+      if (this.nombreDeMinuteRestant == 0) {
         this.nombreDeMinutesSur100 = 0;
-        this.nombreDeMinuteRestant = 0;
         source.unsubscribe();
       }
       else {
-        this.nombreDeMinuteRestant = parseInt(localStorage.getItem(this.orderItem.id.toString()));
-        this.nombreDeMinuteRestant = this.nombreDeMinuteRestant - 1;
-        this.nombreDeMinutesSur100 = (this.nombreDeMinuteRestant * 100) / this.nombreDeMinuteRequis;
-        localStorage.setItem(this.orderItem.id.toString(), this.nombreDeMinuteRestant.toString());
+        this.setUpProgressbar();
       }
     });
 
   }
 
   addTime = (): void => {
-    this.nombreDeMinuteRestant = parseInt(localStorage.getItem(this.orderItem.id.toString()));
     this.kitchenService.postMoreTimeForOrder(this.orderItem, 5).subscribe();
-
-    if (this.nombreDeMinuteRestant >= this.nombreDeMinuteRequis) {
-      this.nombreDeMinuteRestant = this.nombreDeMinuteRequis;
-    }
-    else {
-      this.nombreDeMinuteRestant = this.nombreDeMinuteRestant + 5;
-    }
-    localStorage.setItem(this.orderItem.id.toString(), this.nombreDeMinuteRestant.toString());
+    console.log(this.nombreDeMinuteRestant);
+    this.nombreDeMinuteRestant = this.nombreDeMinuteRestant + 5;
+    console.log(this.nombreDeMinuteRestant);
+    this.setUpProgressbar();
   }
 
   terminerCommande = (orderItem: OrderItemDTO): void => {

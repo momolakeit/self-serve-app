@@ -7,14 +7,14 @@ import { environment } from '../../../environments/environment'
 import { OrderItemDTO } from 'src/app/models/order-item-dto';
 import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 import { BillService } from 'src/app/services/bill.service';
-
+import {PaymentService} from '../../services/payment.service';
 @Component({
   selector: 'app-restaurent-orders',
   templateUrl: './restaurent-orders.component.html',
   styleUrls: ['./restaurent-orders.component.css']
 })
 export class RestaurentOrdersComponent implements OnInit {
-  panelOpenState: boolean
+  panelOpenStateArray= []
   imgUrl: string;
   allTables: [RestaurantTableDTO];
   allCheckItems = [];
@@ -23,11 +23,27 @@ export class RestaurentOrdersComponent implements OnInit {
   nombreDeMinuteRestant = 0;
   nombreDeMinutesSur100 = 100;
   isBillDone = false;
-  constructor(private kitchenService: KitchenService) { }
+  constructor(private kitchenService: KitchenService,private paymentService :PaymentService) { }
 
+  loading : Boolean ;
+  isActive :Boolean
   ngOnInit(): void {
+    console.log("yioooooooooooooooooooooooooo !!!!!!")
+    this.loading = true;
     this.imgUrl = environment.baseImgPath;
-    this.initValues();
+    this.isSubscriptionActive();
+  }
+  isSubscriptionActive(){
+    this.paymentService.fetchSubscription("owner@mail.com").subscribe(data =>{
+      if(data.status !="active"){
+        this.isActive = false;
+        this.loading = false;
+      }
+      else{
+        this.isActive=true;
+        this.initValues();
+      }      
+    })
   }
 
   seeIfCheckItemSelected = function (checkItemName: string): boolean {
@@ -39,9 +55,11 @@ export class RestaurentOrdersComponent implements OnInit {
   initValues = function (): void {
     var source = timer(1000, 50000).subscribe(() => {
       this.kitchenService.getAllRestaurantTables().subscribe(data => {
+        this.loading=false;
         this.allTables = data;
         this.allTables = this.filterTableArray(this.allTables);
         this.allTables.forEach(table => {
+          this.panelOpenStateArray.push(false);
           table.nombreItemParTable = 0;
           table = this.setUpTable(table);
         });
@@ -103,6 +121,9 @@ export class RestaurentOrdersComponent implements OnInit {
       }
       table.nombreItemParTable = table.nombreItemParTable + 1;
     }
+  }
+  setPanelOpenValue(position:number,value:boolean){
+    this.panelOpenStateArray[position] =value;
   }
 
 }

@@ -90,12 +90,8 @@
   <!--ADMIN VIEW-->
   <ng-container *ngIf="isOwner() && isConnected() && mobileQuery.matches">
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
-      <mat-button-toggle value="italic" class="w-100" routerLink="adminProductManagment">
-        <mat-icon>account_circle</mat-icon>
-      </mat-button-toggle>
-      <mat-button-toggle value="underline" class="w-100">
-        <mat-icon>settings</mat-icon>
-      </mat-button-toggle>
+      <mat-button-toggle value="italic" class="w-100" routerLink="adminProductManagment"><mat-icon>account_circle</mat-icon></mat-button-toggle>
+      <mat-button-toggle value="underline" class="w-100" routerLink="subscriptionDetail"><mat-icon>card_membership</mat-icon></mat-button-toggle>
     </mat-button-toggle-group>
   </ng-container>
 </footer>

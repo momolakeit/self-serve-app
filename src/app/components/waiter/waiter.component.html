@@ -3,9 +3,8 @@
 </div>-->
 <div class="container" *ngIf="requestProductList">
     <div class="row">
-        <div class="col-sm-6 text-center mt-5">
-            <button mat-button data-toggle="modal" data-target="#exampleModal"
-                (click)="sendClientRequest(waiterCallProduct)" class="btn text-white w-75 btn-dark">CALL WAITER</button>
+        <div class="col-sm-6 text-center mt-5" >
+            <button mat-button (click)="sendClientRequest(waiterCallProduct)" class="btn text-white w-75 btn-dark">{{ 'waiter.callWaiter' | translate }}</button>
         </div>
     </div>
 
@@ -34,9 +33,7 @@
                                 </div>
                             </div>
                             <div class="col ">
-                                <button data-toggle="modal" data-target="#exampleModal"
-                                    (click)="sendClientRequest(product)" mat-button
-                                    class="btn text-white w-75 btn-dark">Request</button>
+                                <button (click)="sendClientRequest(product)" mat-button class="btn text-white  btn-dark">{{ 'waiter.demander' | translate }}</button>
                             </div>
                         </div>
                     </div>

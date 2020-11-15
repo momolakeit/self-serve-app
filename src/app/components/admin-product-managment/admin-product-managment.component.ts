@@ -9,7 +9,10 @@ import { RestaurantSelectionDTO } from 'src/app/models/restaurant-selection-dto'
 import { MenuService } from 'src/app/services/menu.service';
 import { ProductService } from 'src/app/services/product.service';
 import { environment } from 'src/environments/environment';
+import { AuthentificationService } from 'src/app/services/authentification.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductFormEditCreateComponent } from '../product-form-edit-create/product-form-edit-create.component';
+import {PaymentService} from '../../services/payment.service';
 
 @Component({
   selector: 'app-admin-product-managment',
@@ -24,25 +27,74 @@ export class AdminProductManagmentComponent implements OnInit {
   productDTOList: [ProductDTO];
   currentProductToEdit: ProductDTO;
   restaurantSelectionFormControl: FormControl;
+  hasStripeAccountId: boolean;
+  loading: boolean;
 
 
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private menuService: MenuService, private productService: ProductService, public dialog: MatDialog) {
+  constructor(private activatedRoute: ActivatedRoute, private menuService: MenuService, private productService: ProductService, public dialog: MatDialog, private authentificationService: AuthentificationService,private paymentService:PaymentService) {
   }
 
   ngOnInit() {
+    console.log("on init")
+    this.initValues();
+  }
+  
+  initValues(){
+    this.loading = true;
+    this.fetchOwner();
+    this.confirmStripeAccountCreation();
+  }
+
+  
+
+  confirmStripeAccountCreation() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      let accountId = params['accountId'];
+      if (accountId != null) {
+        this.paymentService.saveStripeAccount(accountId, localStorage.getItem('username')).subscribe(data => {
+          this.setHasStripeAccountId(true);
+        })
+      }
+
+    });
+  }
+  setHasStripeAccountId(value: boolean) {
+    this.hasStripeAccountId = value;
     this.getAllRestaurantSelectionDTO();
     this.initForm();
     this.initProductTable();
   }
+  fetchOwner() {
+    this.authentificationService.getOwner(localStorage.getItem("username")).subscribe(data => {
+      console.log(data);
+      if (data.stripeAccountId == null || data.isStripeEnable ==false) {
+        console.log("false");
+        this.setHasStripeAccountId(false);
+      }
+      else {
+        console.log("true");
+        this.setHasStripeAccountId(true);
+        console.log(this.hasStripeAccountId);
+      }
+    })
+  }
+  redirectToStripeRegister() {
+    this.loading = true;
+    this.paymentService.createStripeAccount(localStorage.getItem('username')).subscribe(data => {
+      console.log(data);
+      window.location.href = data.value;
+    })
+  }
+
 
   initForm() {
     const name = localStorage.getItem('restaurantName');
     console.log('my name:' + name);
-    
+
     this.restaurantSelectionFormControl = new FormControl(name ? name : '', Validators.required);
   }
 
@@ -53,14 +105,14 @@ export class AdminProductManagmentComponent implements OnInit {
   }
 
   initProductTable() {
-    if (localStorage.getItem('menuId')) 
+    if (localStorage.getItem('menuId'))
       this.getAllProductsFromRestaurant(parseInt(localStorage.getItem('menuId')));
-    
+
   }
 
   //DIALOG
 
-  openDialog(product:ProductDTO): void {
+  openDialog(product: ProductDTO): void {
     const dialogRef = this.dialog.open(ProductFormEditCreateComponent, {
       width: '550px',
       height: '600px',
@@ -83,6 +135,7 @@ export class AdminProductManagmentComponent implements OnInit {
 
   getAllRestaurantSelectionDTO() {
     this.menuService.getAllRestaurantName().subscribe(data => {
+      this.loading = false;
       this.restaurantSelectionDTOS = data;
     })
   }
@@ -98,7 +151,7 @@ export class AdminProductManagmentComponent implements OnInit {
 
         localStorage.setItem('menuId', `${menuId}`);
 
-        const restaurantName = this.restaurantSelectionDTOS.find((item) =>{
+        const restaurantName = this.restaurantSelectionDTOS.find((item) => {
           return item.menuId === menuId;
         })
 
@@ -108,7 +161,7 @@ export class AdminProductManagmentComponent implements OnInit {
     }
   }
 
-  getImage(imageId:number):string{
+  getImage(imageId: number): string {
     return environment.baseImgPath + imageId;
   }
 

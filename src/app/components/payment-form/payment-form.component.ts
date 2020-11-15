@@ -28,12 +28,15 @@ export class PaymentFormComponent implements OnInit {
 
 
   ngOnInit() {
-    this.initStripe();
+    this.paymentService.fetchAccountId(parseInt(localStorage.getItem("menuId"))).subscribe(data =>{
+      console.log(data);
+      this.initStripe(data.value);
+    })
   }
   
-  initStripe(){
+  initStripe(stripeAccountId:string){
     this.isError = false;
-    this.paymentService.getPaymentIntent().subscribe(data => {
+    this.paymentService.getPaymentIntent(stripeAccountId).subscribe(data => {
       this.clientSecret = data
     });
 

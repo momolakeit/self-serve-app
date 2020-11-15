@@ -1,0 +1,40 @@
+<div class="container" id="subscriptionContainer">
+    <div class="row">
+        <ng-container *ngFor="let product of subscriptionProducts;let i = index;">
+            <div class="col w-50 ">
+                <mat-card (click)="changeSubscriptionProduct(product,i)" class="example-card mt-4">
+                    <mat-card-header>
+                        <mat-card-title>{{product.productName}}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p class="ml-3">{{product.productDescription}}</p>
+                        <p class="ml-3">{{product.productPrice}} $ {{ 'ownerSubscription.perMonth' | translate }}</p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button class="w-100 bg-dark text-white" (click)="changeSubscriptionProduct(product,i)"
+                            mat-button>{{ 'ownerSubscription.choose' | translate }}</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </ng-container>
+    </div>
+    <div class="row">
+        <div class="col w-50">
+            <mat-card class="example-card mt-4">
+                <form id="subscription-form">
+                    <div id="card-element" class="MyCardElement" style="height: 50px;">
+                        <!-- Elements will create input elements here -->
+                    </div>
+
+                    <!-- We'll put the error messages in this element -->
+                    <div id="card-errors" role="alert"></div>
+                    <button (click)="submitForm()" class="w-100 bg-dark text-white" mat-button>{{ 'ownerSubscription.subscribe' | translate }}</button>
+                </form>
+
+                <p class="text-danger d-none" id="paymentErrorTxt">{{ 'ownerSubscription.errorOnPayment' | translate }}</p>
+                <p class="text-danger d-none" id="subscriptionErrorTxt">{{ 'ownerSubscription.noPlanSelected' | translate }} </p>
+            </mat-card>
+        </div>
+    </div>
+</div>
+<div class="loader text-center d-none" id="spinner"></div>

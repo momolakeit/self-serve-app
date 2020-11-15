@@ -6,6 +6,8 @@ import { environment } from '../../../environments/environment';
 import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
 import { DishDetailComponent } from '../dish-detail/dish-detail.component';
 import { MatDialog } from '@angular/material/dialog';
+import { BillService } from '../../services/bill.service'
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -21,7 +23,7 @@ export class MenuComponent implements OnInit {
 
   slides = [{ 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }];
 
-  constructor(private menuService: MenuService,public dialog: MatDialog) { }
+  constructor(private menuService: MenuService,public dialog: MatDialog,private billService:BillService) { }
 
   ngOnInit() {
     //not clean init should only call methods
@@ -45,5 +47,38 @@ export class MenuComponent implements OnInit {
       autoFocus:false,
       data: productDTO
     });
+ 
+
+  ngOnInit(): void {
+    if (localStorage.getItem('menuId') == null) {
+      this.hasMenuId = false;
+    }
+    else {
+      this.hasMenuId = true;
+      this.initBill();
+      this.fetchMenu();
+    }
+  }
+  changeProductToSeeDetail = function (product: ProductDTO): void {
+    this.productToSeeDetail = product;
+  };
+  fetchMenu() {
+    this.menuService.getMenuById().subscribe(data => {
+      this.menu = data;
+      console.log(this.menu);
+      this.menu.speciaux.forEach(element => this.listeUrlImagesSpeciaux.push(environment.baseImgPath + element.imgFileDTO.id));
+      console.log(this.listeUrlImagesSpeciaux);
+    })
+  }
+  initBill() {
+    if (localStorage.getItem("ongoingBill") == null) {
+      this.billService.initBill().subscribe(data => {
+        localStorage.setItem("ongoingBill", JSON.stringify(data));
+      });
+    }
+  }
+  scanSuccessHandler($event: any){
+    window.location.href = $event;
+
   }
 }

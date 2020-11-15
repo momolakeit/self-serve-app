@@ -1,5 +1,8 @@
-import {RestaurantDTO} from './restaurant-dto';
+import { RestaurantDTO } from './restaurant-dto';
 
 export interface OwnerDTO {
-    restaurants:[RestaurantDTO];
+    restaurants: [RestaurantDTO];
+    stripeAccountId:string;
+    stripeCustomerId:string;
+    isStripeEnable :boolean;
 }

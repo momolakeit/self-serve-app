@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { ProductDTO } from '../../models/product-dto';
 import { BillService } from '../../services/bill.service';
 import { CheckItemDTO } from '../../models/check-item-dto'
