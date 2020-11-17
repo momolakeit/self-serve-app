@@ -7,6 +7,9 @@ header{
 div img {
     margin-top: 15px;
 }
+.routing-outlet{
+  margin-bottom: 60px;
+}
 
   
 #page-container {

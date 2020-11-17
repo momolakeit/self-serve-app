@@ -6,7 +6,7 @@
 
 html, body { height: 100%; }
 
-body { margin: 0; font-family: 'Muli', sans-serif; }
+body {margin-bottom: 60px; margin: 0; font-family: 'Muli', sans-serif; }
 
 
 h1, h2, h3, h4, h5 {
