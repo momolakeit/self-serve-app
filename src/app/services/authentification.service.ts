@@ -44,17 +44,9 @@ export class AuthentificationService {
   logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    localStorage.removeItem('ongoingBill');
+    localStorage.removeItem('5');
+    localStorage.removeItem('menuId');
   }
 
-   // OBTAINING USER DETAILS 
-
-  /* getClientDetails(email: string): Observable<Client> {
-    if (this.auth.isAuthenticated()) {
-      return this.http.get<Client>(`${environment.clientUrl}/${email}`).pipe(map((client: Client) => {
-        return client;
-      }));
-    }
-  }*/
-
- 
 }

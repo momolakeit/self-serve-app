@@ -4,6 +4,8 @@ import { MenuService } from '../../services/menu.service'
 import { ProductDTO } from '../../models/product-dto';
 import { environment } from '../../../environments/environment';
 import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
+import { DishDetailComponent } from '../dish-detail/dish-detail.component';
+import { MatDialog } from '@angular/material/dialog';
 import { BillService } from '../../services/bill.service'
 
 @Component({
@@ -15,19 +17,18 @@ export class MenuComponent implements OnInit {
 
 
   menu: MenuDTO;
-  productToSeeDetail: ProductDTO;
   listeUrlImagesSpeciaux = [];
   panelOpenState: boolean
   listeUrlImagesFeatured = [String];
+  productToSeeDetail: ProductDTO;
   hasMenuId: boolean;
 
   slides = [{ 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }];
 
+  constructor(private menuService: MenuService,public dialog: MatDialog, private billService: BillService) { }
 
-
-  constructor(private menuService: MenuService, private billService: BillService) { }
-
-  ngOnInit(): void {
+  ngOnInit() {
+    //not clean init should only call methods
     if (localStorage.getItem('menuId') == null) {
       this.hasMenuId = false;
     }
@@ -37,6 +38,20 @@ export class MenuComponent implements OnInit {
       this.fetchMenu();
     }
   }
+
+  getImage(imageId: number): string {
+    return environment.baseImgPath + imageId;
+  }
+
+  // ALL ABOUT THE DIALOG
+
+  openDialog(productDTO:ProductDTO) {
+    const dialogRef = this.dialog.open(DishDetailComponent, {
+      autoFocus:false,
+      data: productDTO
+    });
+  }
+
   changeProductToSeeDetail = function (product: ProductDTO): void {
     this.productToSeeDetail = product;
   };

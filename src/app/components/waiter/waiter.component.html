@@ -4,7 +4,7 @@
 <div class="container" *ngIf="requestProductList">
     <div class="row">
         <div class="col-sm-6 text-center mt-5" >
-            <button mat-button data-toggle="modal" data-target="#exampleModal" (click)="sendClientRequest(waiterCallProduct)" class="btn text-white w-75 btn-dark">{{ 'waiter.callWaiter' | translate }}</button>
+            <button mat-button (click)="sendClientRequest(waiterCallProduct)" class="btn text-white w-75 btn-dark">{{ 'waiter.callWaiter' | translate }}</button>
         </div>
     </div>
 
@@ -33,24 +33,12 @@
                                 </div>
                             </div>
                             <div class="col ">
-                                <button data-toggle="modal" data-target="#exampleModal" (click)="sendClientRequest(product)" mat-button class="btn text-white  btn-dark">{{ 'waiter.demander' | translate }}</button>
+                                <button (click)="sendClientRequest(product)" mat-button class="btn text-white  btn-dark">{{ 'waiter.demander' | translate }}</button>
                             </div>
                         </div>
                     </div>
                 </li>
             </ul>
-        </div>
-    </div>
-</div>
-<ng-container *ngIf='!requestProductList' class="text-center">
-    <div class="loader text-center"></div>
-</ng-container>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content" >
-            <div  style="height: 50px;">
-                <p class="mt-3 text-center">The waiter is on his/her way</p>
-            </div>
         </div>
     </div>
 </div>

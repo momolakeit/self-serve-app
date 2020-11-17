@@ -1,46 +1,36 @@
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" *ngIf="orderItemDTO" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content bg-dark text-white">
-            <ng-container >
-                <mat-card class="example-card mt-4">
-                    <mat-card-header>
-                        <mat-card-title>{{orderItemDTO.product.name}}</mat-card-title>
-                    </mat-card-header>
-                    <img mat-card-image [src]="imgUrl+ orderItemDTO.product.imgFileDTO.id" alt="Photo of a Shiba Inu">
-                    <h4>{{'clientRequestItemDetail.commentaires'|translate}} :</h4>
-                    <mat-card-content>
-                        <p>
-                            {{orderItemDTO.product.description}}
-                        </p>
-                        <div class="container">
-                            <div class="row">
-                                {{nombreDeMinuteRestant}} {{'clientRequestItemDetail.minutesRestantes'|translate}}
-                            </div>
-                            <div class="row">
-                                <div class=" col-lg-6  p-0 ">
-                                    <mat-progress-bar class="mb-3 mt-3" mode="determinate"
-                                        [value]="nombreDeMinutesSur100">
-                                    </mat-progress-bar>
-                                </div>
-                               
-                            </div>
-                        </div>
-                        <ng-container *ngFor='let option of orderItemDTO.option'>
-                            <h4>{{option.name}}</h4>
-                            <mat-radio-group aria-label="Select an option"
-                                *ngFor='let checkItem of option.checkItemList;let i=index;'>
-                                <mat-radio-button disabled="true" [checked]="checkItem.isActive" class="mr-2"
-                                    [value]='i'>
-                                    {{checkItem.name}}
-                                </mat-radio-button>
-                            </mat-radio-group>
-                        </ng-container>
-                    </mat-card-content>
-                    <mat-card-actions>
-                        <button  data-dismiss="modal" aria-label="Close" mat-button>Done</button>
-                    </mat-card-actions>
-                </mat-card>
-            </ng-container>
-        </div>
+<div *ngIf="data" class="mt-0">
+    <h1 class="text-center">{{data.product.name}}</h1>
+
+    <div>
+        <img class="img-fluid" style="border-radius: 2px;" [src]="getImage(data.product.imgFileDTO.id)" alt="Photo of a Shiba Inu">
     </div>
+
+    <div>
+        <p class="mt-4">COMMENTAIRES :</p>
+        <p>{{data.product.description}}</p>
+
+        <div>
+            <p class="text-left mt-2">{{nombreDeMinuteRestant}} minutes restantes</p>
+
+            <div>
+                <mat-progress-bar class="mb-3 mt-3" mode="determinate" [value]="nombreDeMinutesSur100">
+                </mat-progress-bar>
+            </div>
+        </div>
+
+        <ng-container *ngFor='let option of data.option'>
+            <h4>{{option.name}}</h4>
+
+            <mat-radio-group aria-label="Select an option" *ngFor='let checkItem of option.checkItemList;let i=index;'>
+                <mat-radio-button disabled="true" [checked]="checkItem.isActive" class="mr-2" [value]='i'>
+                    {{checkItem.name}}
+                </mat-radio-button>
+
+            </mat-radio-group>
+        </ng-container>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <button mat-raised-button class="btn-block bg-dark text-white mt-3" (click)="onNoClick()">close</button>
 </div>

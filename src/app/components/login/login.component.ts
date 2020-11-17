@@ -4,6 +4,7 @@ import { AuthentificationService } from 'src/app/services/authentification.servi
 import { Router } from '@angular/router';
 import { SignInForm } from 'src/app/models/sign-in-form';
 import { error } from '@angular/compiler/src/util';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import { error } from '@angular/compiler/src/util';
 export class LoginComponent implements OnInit {
 
   userForm: FormGroup;
-  constructor(private formBuilder: FormBuilder, private route: Router, private authService: AuthentificationService) { }
+  constructor(private authService: AuthService,private formBuilder: FormBuilder, private route: Router, private authentificationService: AuthentificationService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -39,9 +40,12 @@ export class LoginComponent implements OnInit {
       password: formValue['password']
     }
 
-    this.authService.login(signInForm).subscribe((success: boolean) => {
-      if (success) this.route.navigate(['/menu']);
-      else this.getF().username.setErrors({ badCredentials: true });
+    this.authentificationService.login(signInForm).subscribe((success: boolean) => {
+      if (success) this.authService.findRoleThenRedirect(this.route);
+      else {
+        this.getF().username.setErrors({ badCredentials: true });
+        this.getF().password.setErrors({ badCredentials: true });
+      }
 
     }, error => {
       this.getF().username.setErrors({ badCredentials: true });

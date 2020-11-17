@@ -10,7 +10,6 @@ import { SignupComponent } from './components/signup/signup.component';
 import { StartComponent } from './components/start/start.component';
 import { DishDetailComponent } from './components/dish-detail/dish-detail.component';
 import { RestaurentOrdersComponent } from './components/restaurent-orders/restaurent-orders.component';
-import { TableDetailPageComponent } from './components/table-detail-page/table-detail-page.component';
 import { PaymentChoiceComponent } from './components/payment-choice/payment-choice.component';
 import { PaymentFormComponent } from './components/payment-form/payment-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,7 +17,7 @@ import { ClientRequestListComponent } from './components/client-request-list/cli
 import { JwtModule } from '@auth0/angular-jwt';
 import { DemoMaterialModule } from 'src/material-module';
 import { AdminProductManagmentComponent } from './components/admin-product-managment/admin-product-managment.component';
-import { RecipeSocketComponent } from './components/recipe-socket/recipe-socket.component';
+//import { RecipeSocketComponent } from './components/recipe-socket/recipe-socket.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCarouselModule } from '@ngbmodule/material-carousel';
 import { ContactFormComponent } from './components/contact-form/contact-form.component'
@@ -51,12 +50,10 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     StartComponent,
     DishDetailComponent,
     RestaurentOrdersComponent,
-    TableDetailPageComponent,
     AdminProductManagmentComponent,
     PaymentChoiceComponent,
     PaymentFormComponent,
     ClientRequestListComponent,
-    RecipeSocketComponent,
     ContactFormComponent,
     MenuproductComponent,
     RestaurentDishDetailViewComponent,

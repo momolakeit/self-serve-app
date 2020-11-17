@@ -111,7 +111,8 @@ export class ProductFormEditCreateComponent implements OnInit {
         prix: formValue['prix'],
         tempsDePreparation: formValue['tempsDePreparation'],
         productType: formValue['productType'],
-        productMenuType: formValue['productMenuType']
+        productMenuType: formValue['productMenuType'],
+        imgFileDTO: this.data ? this.data.imgFileDTO : null
       }
 
       if (this.data)
@@ -138,9 +139,9 @@ export class ProductFormEditCreateComponent implements OnInit {
     const formData: FormData = new FormData();
     formData.append('file', file);
 
-    if (file != undefined) 
+    if (file != undefined)
       this.productService.saveProductImage(formData, productId).subscribe(() => this.dialogRef.close('refresh'));
-    else 
+    else
       this.dialogRef.close('refresh');
   }
 
@@ -192,25 +193,31 @@ export class ProductFormEditCreateComponent implements OnInit {
       //add option name
       var option: OptionDTO = {
         name: this.getOptions().at(index).get('optionName').value,
-        checkItemList: <CheckItemDTO[]>[]
+        checkItemList: []
       };
 
       //add option checkItemList  by looping
       for (let index2 = 0; index2 < this.getCheckItems(index).length; index2++) {
 
-        var name = this.getCheckItems(index).at(index2).value;
+        var checkItem: CheckItemDTO = {
+          id: null,
+          name: this.getCheckItems(index).at(index2).value.checkItemName,
+          option: null,
+          isActive: null
+        }
 
-        if (option.checkItemList.length > 1)
-          option.checkItemList.push(name);
-        else
-          option.checkItemList[0] = name;
-
+        option.checkItemList.push(checkItem);
       }
 
       options.push(option);
+
+      
     }
 
     this.options = options;
+    console.log('voici mes options:');
+    console.log(this.options);
+
   }
 
   //delete

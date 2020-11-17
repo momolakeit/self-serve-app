@@ -42,6 +42,7 @@ export class StartComponent implements OnInit {
       });
   });
   }
+
   onGuestClicked() {
     //sign up guest
     const signUpForm: SignUpForm = {
@@ -76,7 +77,6 @@ export class StartComponent implements OnInit {
         this.route.navigate(['/menu']);
       else
         console.log("Error could not login");
-
     })
   }
 

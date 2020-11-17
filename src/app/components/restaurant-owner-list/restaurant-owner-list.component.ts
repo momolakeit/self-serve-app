@@ -47,7 +47,8 @@ export class RestaurantOwnerListComponent implements OnInit {
   // ALL ABOUT THE DIALOG
   openDialog(restaurant:RestaurantSelectionDTO){
     const dialogRef = this.dialog.open(RestaurantFormComponent, {
-      width: '550px',
+      width: '60%',
+      maxHeight:'700px',
       data: restaurant
     });
 
