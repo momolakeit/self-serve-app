@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -12,7 +12,8 @@ import { environment } from 'src/environments/environment';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductFormEditCreateComponent } from '../product-form-edit-create/product-form-edit-create.component';
-import {PaymentService} from '../../services/payment.service';
+import { PaymentService } from '../../services/payment.service';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-admin-product-managment',
@@ -29,27 +30,27 @@ export class AdminProductManagmentComponent implements OnInit {
   restaurantSelectionFormControl: FormControl;
   hasStripeAccountId: boolean;
   loading: boolean;
-
-
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private activatedRoute: ActivatedRoute, private menuService: MenuService, private productService: ProductService, public dialog: MatDialog, private authentificationService: AuthentificationService,private paymentService:PaymentService) {
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private activatedRoute: ActivatedRoute, private menuService: MenuService, private productService: ProductService, public dialog: MatDialog, private authentificationService: AuthentificationService, private paymentService: PaymentService) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   ngOnInit() {
-    console.log("on init")
     this.initValues();
   }
-  
-  initValues(){
+
+  initValues() {
     this.loading = true;
     this.fetchOwner();
     this.confirmStripeAccountCreation();
   }
-
-  
 
   confirmStripeAccountCreation() {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -57,9 +58,8 @@ export class AdminProductManagmentComponent implements OnInit {
       if (accountId != null) {
         this.paymentService.saveStripeAccount(accountId, localStorage.getItem('username')).subscribe(data => {
           this.setHasStripeAccountId(true);
-        })
+        });
       }
-
     });
   }
   setHasStripeAccountId(value: boolean) {
@@ -71,7 +71,7 @@ export class AdminProductManagmentComponent implements OnInit {
   fetchOwner() {
     this.authentificationService.getOwner(localStorage.getItem("username")).subscribe(data => {
       console.log(data);
-      if (data.stripeAccountId == null || data.isStripeEnable ==false) {
+      if (data.stripeAccountId == null || data.isStripeEnable == false) {
         console.log("false");
         this.setHasStripeAccountId(false);
       }
