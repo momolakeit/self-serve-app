@@ -5,4 +5,5 @@ export interface CheckItemDTO {
     name:string;
     isActive: boolean;
     option:OptionDTO;
+    prix?:number;
 }

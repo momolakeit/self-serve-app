@@ -15,7 +15,8 @@
     "dishDetail": {
         "prix": "Price",
         "specialRequest": "Special Request",
-        "commander": "Order"
+        "commander": "Order",
+        "addOn":"Add On"
     },
     "clientRequestList": {
         "pageTitle": "My orders",
