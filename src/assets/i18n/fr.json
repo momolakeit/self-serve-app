@@ -15,7 +15,8 @@
     "dishDetail":{
         "prix":"Prix",
         "specialRequest":"Requêtes Spéciales",
-        "commander":"Commander"
+        "commander":"Commander",
+        "addOn":"Ajout"
     },
     "clientRequestList":{
         "pageTitle":"Mes commandes",
@@ -120,6 +121,8 @@
         "addAnOptionTxt":"Ajouter une option",
         "cancelTxt":"Annuler",
         "createBtnTxt":"Créer",
-        "updateBtnTxt":"Modifier"
+        "updateBtnTxt":"Modifier",
+        "addAddonsTxt": "Ajouter extras",
+        "createAddonTxt": "Créer extras"
     }
 }

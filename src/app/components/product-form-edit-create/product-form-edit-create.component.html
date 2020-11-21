@@ -71,12 +71,13 @@
         <mat-form-field class="w-100">
             <mat-label>{{ 'productEditCreate.productMenuTypeTxt' | translate }}:</mat-label>
             <mat-select formControlName="productMenuType">
-                <mat-option *ngFor="let productMenuType of productMenuTypes" [value]="productMenuType">{{productMenuType}}</mat-option>
+                <mat-option *ngFor="let productMenuType of productMenuTypes" [value]="productMenuType">
+                    {{productMenuType}}</mat-option>
             </mat-select>
         </mat-form-field>
     </p>
 
-    
+
     <!--OPTIONS-->
     <mat-divider></mat-divider>
     <mat-accordion>
@@ -91,7 +92,7 @@
             </mat-expansion-panel-header>
 
 
-            <div class="overflow-auto mt-2 w-100" style="height: 400px;" formArrayName="options">
+            <div class="overflow-auto mt-2 w-100" style="max-height: 400px;" formArrayName="options">
 
                 <!-- this represent the options component and we must loop around it -->
                 <div class="row mt-2 mat-elevation-z4 p-2" *ngFor="let option of getOptions().controls let i = index">
@@ -107,35 +108,84 @@
 
                             </div>
                         </div>
-                        <ng-container>
-                            <div class="col-12">
-                                <ng-container formArrayName="checkItems">
-                                    <div class="form-group d-flex justify-content-between"
-                                        *ngFor="let checkItems of getCheckItems(i).controls let j = index">
+                        <div class="col-12">
+                            <ng-container formArrayName="checkItems">
+                                <div class="form-group d-flex justify-content-between"
+                                    *ngFor="let checkItems of getCheckItems(i).controls let j = index">
 
-                                        <ng-container [formGroup]="checkItems">
-                                            <mat-form-field appearance="standard" class="w-100">
-                                                <mat-label>check item {{j + 1}}:</mat-label>
-                                                <input type="text" class="w-75" matInput placeholder="Ex: medium bien"
-                                                    formControlName="checkItemName">
-                                                <mat-icon (click)="deleteCheckItem(i,j)" matSuffix>clear</mat-icon>
-                                                <mat-error>Check item name cannot be empty</mat-error>
-                                            </mat-form-field>
-                                        </ng-container>
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </ng-container>
+                                    <ng-container [formGroup]="checkItems">
+                                        <mat-form-field appearance="standard" class="w-100">
+                                            <mat-label>check item {{j + 1}}:</mat-label>
+                                            <input type="text" class="w-75" matInput placeholder="Ex: medium bien"
+                                                formControlName="checkItemName">
+                                            <mat-icon (click)="deleteCheckItem(i,j)" matSuffix>clear</mat-icon>
+                                            <mat-error>Check item name cannot be empty</mat-error>
+                                        </mat-form-field>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                        </div>
                     </ng-container>
-                    <div class="col-12 text-center d-flex flex-column justify-content-center align-items-end">
-                        <button mat-mini-fab class="bg-dark" (click)="onAddCheckItem(i)">
+
+                    <div class="col-12 text-center d-flex flex-column justify-content-center align-items-center">
+                        <button mat-mini-fab class="bg-dark" (click)="onAddCheckItem()">
                             <mat-icon>add</mat-icon>
                         </button>
                     </div>
                     <mat-divider></mat-divider>
                 </div>
 
-                <button class="btn-block mt-4 mb-5 bg-dark text-white" mat-raised-button (click)="onAddOption()">{{ 'productEditCreate.addAnOptionTxt' | translate }}n</button>
+                <button class="btn-block mt-4 mb-5 bg-dark text-white" mat-raised-button
+                    (click)="onAddOption()">{{ 'productEditCreate.addAnOptionTxt' | translate }}n</button>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+
+    <!--ADDONS-->
+    <mat-divider></mat-divider>
+    <mat-accordion class="mt-3">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ 'productEditCreate.addAddonsTxt' | translate }}
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{ 'productEditCreate.createAddonTxt' | translate }}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+
+            <div class="overflow-auto mt-2 w-100" style="max-height: 400px;" formArrayName="addons">
+
+                <div class="d-flex justify-content-center justify-content-around"
+                    *ngFor="let checkItem of getAddOns().controls let i = index">
+                    <ng-container [formGroup]="checkItem">
+                        <p>
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Extra {{i + 1}}:</mat-label>
+                                <input formControlName="checkItemName" autocomplete="off" type="text" matInput placeholder="Ex: Fromage bleue">
+                                <mat-error>Extra cannot be empty</mat-error>
+                            </mat-form-field>
+                        </p>
+
+                        <p>
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Prix {{i + 1}}:</mat-label>
+                                <input formControlName="price" autocomplete="off" type="number" matInput>
+                                <mat-error>Price cannot be empty</mat-error>
+                            </mat-form-field>
+                        </p>
+
+                        <mat-icon class="mt-3" (click)="deleteAddon(i)">clear</mat-icon>
+                    </ng-container>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button mat-mini-fab class="bg-dark" (click)="onAddCheckItem()">
+                    <mat-icon>add</mat-icon>
+                </button>
             </div>
         </mat-expansion-panel>
     </mat-accordion>
@@ -144,7 +194,9 @@
     <!--FOOTER-->
     <div class="d-flex justify-content-between mt-2">
         <button mat-raised-button class="btn-dark text-white" (click)="onNoClick()">Cancel</button>
-        <button  mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()" *ngIf="!data">{{ 'productEditCreate.createBtnTxt' | translate }}</button>
-        <button  mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()" *ngIf="data">{{ 'productEditCreate.updateBtnTxt' | translate }}</button>
+        <button mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()"
+            *ngIf="!data">{{ 'productEditCreate.createBtnTxt' | translate }}</button>
+        <button mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()"
+            *ngIf="data">{{ 'productEditCreate.updateBtnTxt' | translate }}</button>
     </div>
 </form>

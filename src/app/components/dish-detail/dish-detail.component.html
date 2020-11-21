@@ -35,7 +35,7 @@
     <div class="text-right mt-0 pt-0">
         <button mat-icon-button (click)="onNoClick()">
             <mat-icon>clear</mat-icon>
-          </button>
+        </button>
     </div>
     <div>
         <h1 class="text-center mb-1">{{data.name}}</h1>
@@ -50,7 +50,8 @@
         <p class="mb-0">Description:</p>
         <p class="mt-0">
             <mat-form-field class="w-100">
-                <textarea matInput autocomplete="off" cdkTextareaAutosize readonly #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5">{{data.description}}</textarea>
+                <textarea matInput autocomplete="off" cdkTextareaAutosize readonly #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5">{{data.description}}</textarea>
             </mat-form-field>
         </p>
     </div>
@@ -59,12 +60,23 @@
         <h4>{{option.name}}</h4>
         <mat-radio-group aria-label="Select an option">
             <mat-radio-button *ngFor='let checkItem of option.checkItemList;let i=index;'
-                (click)="updateCheckItem(checkItem,option)" class="mr-2" [value]='i'>
+                (click)="updateOptionCheckItem(checkItem,option)" class="mr-2" [value]='i'>
                 {{checkItem.name}}
+                <ng-container *ngIf="checkItem.prix>0">
+                    {{checkItem.prix}} $
+                </ng-container>
             </mat-radio-button>
         </mat-radio-group>
     </div>
-
+    <p class="mt-2 mb-2">{{ 'dishDetail.addOn' | translate }}:</p>
+    <div *ngFor='let checkItem of data.checkItems'>
+        <mat-checkbox (click)="updateCheckItem(checkItem)" class="example-margin">{{checkItem.name}} 
+            <ng-container
+                *ngIf="checkItem.prix>0">
+                {{checkItem.prix}} $
+            </ng-container>
+        </mat-checkbox>
+    </div>
     <p>
         <mat-form-field class="w-100">
             <mat-label>
@@ -78,6 +90,7 @@
     <mat-divider></mat-divider>
 
     <div>
-        <button (click)="updateCurrentBill(data)" mat-raised-button class="btn-block btn-dark text-white">{{ 'dishDetail.commander' | translate }}</button>
+        <button (click)="updateCurrentBill(data)" mat-raised-button
+            class="btn-block btn-dark text-white">{{ 'dishDetail.commander' | translate }}</button>
     </div>
 </div>
