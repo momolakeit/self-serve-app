@@ -12,7 +12,10 @@ import { environment } from 'src/environments/environment';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductFormEditCreateComponent } from '../product-form-edit-create/product-form-edit-create.component';
-import { PaymentService } from '../../services/payment.service';
+import {PaymentService} from '../../services/payment.service';
+import {Input} from '@angular/core';
+import {OwnerUsernameService} from '../../services/owner-username.service';
+import {AuthService} from '../../services/auth.service';
 import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
@@ -22,6 +25,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 })
 export class AdminProductManagmentComponent implements OnInit {
 
+  @Input() username: string;
   displayedColumns: string[] = ['image', 'name', 'category', 'edit', 'delete'];
   dataSource: MatTableDataSource<ProductDTO>;
   restaurantSelectionDTOS: [RestaurantSelectionDTO];
@@ -36,7 +40,9 @@ export class AdminProductManagmentComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private activatedRoute: ActivatedRoute, private menuService: MenuService, private productService: ProductService, public dialog: MatDialog, private authentificationService: AuthentificationService, private paymentService: PaymentService) {
+  
+  
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private activatedRoute: ActivatedRoute, private menuService: MenuService, private productService: ProductService, public dialog: MatDialog, private authentificationService: AuthentificationService, private paymentService: PaymentService,private ownerUsernameService:OwnerUsernameService,private authService:AuthService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -56,7 +62,7 @@ export class AdminProductManagmentComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       let accountId = params['accountId'];
       if (accountId != null) {
-        this.paymentService.saveStripeAccount(accountId, localStorage.getItem('username')).subscribe(data => {
+        this.paymentService.saveStripeAccount(accountId, this.ownerUsernameService.initUserName()).subscribe(data => {
           this.setHasStripeAccountId(true);
         });
       }
@@ -69,7 +75,7 @@ export class AdminProductManagmentComponent implements OnInit {
     this.initProductTable();
   }
   fetchOwner() {
-    this.authentificationService.getOwner(localStorage.getItem("username")).subscribe(data => {
+    this.authentificationService.getOwner(this.ownerUsernameService.initUserName()).subscribe(data => {
       console.log(data);
       if (data.stripeAccountId == null || data.isStripeEnable == false) {
         console.log("false");
@@ -84,7 +90,7 @@ export class AdminProductManagmentComponent implements OnInit {
   }
   redirectToStripeRegister() {
     this.loading = true;
-    this.paymentService.createStripeAccount(localStorage.getItem('username')).subscribe(data => {
+    this.paymentService.createStripeAccount(this.ownerUsernameService.initUserName()).subscribe(data => {
       console.log(data);
       window.location.href = data.value;
     })
@@ -133,7 +139,7 @@ export class AdminProductManagmentComponent implements OnInit {
   //GET
 
   getAllRestaurantSelectionDTO() {
-    this.menuService.getAllRestaurantName().subscribe(data => {
+    this.menuService.getAllRestaurantName(this.ownerUsernameService.initUserName()).subscribe(data => {
       this.loading = false;
       this.restaurantSelectionDTOS = data;
     })

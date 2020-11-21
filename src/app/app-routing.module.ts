@@ -22,11 +22,17 @@ import { CookGuardService } from './services/cook-guard.service';
 import { LoginGuardService } from './services/login-guard.service';
 import { OwnerSubscriptionComponent } from './components/owner-subscription/owner-subscription.component';
 import { SubscriptionDetailsComponent } from './components/subscription-details/subscription-details.component';
+import { AdminPageComponent } from './components/admin-page/admin-page.component';
+import { AdminGuardService } from './services/admin-guard.service';
+import { AdminOwnerGuardService } from './services/admin-owner-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/start', pathMatch: 'full' },
   { path: 'not-found', canActivate: [AuthGuardService], component: NotFoundComponent },
   
+  //all about admin
+  { path: 'admin',canActivate:[AdminGuardService] ,component: AdminPageComponent },
+
   //all about authentification
   { path: 'start', canActivate: [LoginGuardService], component: StartComponent },
   { path: 'login', canActivate: [LoginGuardService], component: LoginComponent },
@@ -44,10 +50,9 @@ const routes: Routes = [
   { path: 'restaurentOrders', canActivate: [CookGuardService], component: RestaurentOrdersComponent },
   
   //all about admin
-  { path: 'adminProductManagment', canActivate: [OwnerRoleGuardService], component: AdminProductManagmentComponent },
   { path: 'contactForm', canActivate: [OwnerRoleGuardService], component: ContactFormComponent },
 
-  {path: 'adminProductManagment',canActivate:[AuthGuardService,OwnerRoleGuardService], component: AdminProductManagmentComponent},
+  {path: 'adminProductManagment',canActivate:[AuthGuardService,AdminOwnerGuardService], component: AdminProductManagmentComponent},
   {path: 'subscription',canActivate:[AuthGuardService,OwnerRoleGuardService], component: OwnerSubscriptionComponent},
   {path: 'subscriptionDetail',canActivate:[AuthGuardService,OwnerRoleGuardService], component: SubscriptionDetailsComponent},
   

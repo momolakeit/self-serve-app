@@ -24,8 +24,7 @@ export class MenuService {
       }));
   }
 
-  getAllRestaurantName(): Observable<[RestaurantSelectionDTO]> {
-    const ownerUsername = localStorage.getItem('username');
-    return this.http.get<[RestaurantSelectionDTO]>(`${environment.menuUrl}/restaurantName/${ownerUsername}`);
+  getAllRestaurantName(username:string): Observable<[RestaurantSelectionDTO]> {
+    return this.http.get<[RestaurantSelectionDTO]>(`${environment.menuUrl}/restaurantName/${username}`);
   }
 }

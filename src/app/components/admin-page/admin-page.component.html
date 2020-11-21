@@ -1,0 +1,16 @@
+<ul style="list-style-type: none;" class="mt-5 p-0">
+    <li *ngFor="let owner of allOwners" style="border-bottom: 2px solid black;" class="mb-2 pb-1">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1>{{owner.username}}</h1>
+                </div>
+                <div class="col">
+                    <button (click)="onOwnerSubmit(owner.username)" class="btn btn-dark">
+                        {{ 'menu.addBtnTxt' | translate }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
