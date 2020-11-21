@@ -8,7 +8,7 @@ import { RestaurantSelectionDTO } from 'src/app/models/restaurant-selection-dto'
 import { KitchenService } from 'src/app/services/kitchen.service';
 import { MenuService } from 'src/app/services/menu.service';
 import { RestaurantFormComponent } from '../restaurant-form/restaurant-form.component';
-
+import {OwnerUsernameService} from '../../services/owner-username.service';
 @Component({
   selector: 'app-restaurant-owner-list',
   templateUrl: './restaurant-owner-list.component.html',
@@ -23,14 +23,14 @@ export class RestaurantOwnerListComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  constructor(private menuService: MenuService,private kitchenService:KitchenService,public dialog: MatDialog) { }
+  constructor(private menuService: MenuService,private kitchenService:KitchenService,public dialog: MatDialog,private ownerUsernameService:OwnerUsernameService) { }
 
   ngOnInit(): void {
     this.initRestaurants();
   }
 
   initRestaurants(){
-    this.menuService.getAllRestaurantName().subscribe(data =>{
+    this.menuService.getAllRestaurantName(this.ownerUsernameService.initUserName()).subscribe(data =>{
       this.restaurantList = data;
       this.initTable();
     });

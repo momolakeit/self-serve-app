@@ -38,6 +38,7 @@ import { SubscriptionDetailsComponent } from './components/subscription-details/
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AdminPageComponent } from './components/admin-page/admin-page.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     AddTableFormComponent,
     OwnerSubscriptionComponent,
     SubscriptionDetailsComponent,
+    AdminPageComponent,
   ],
   imports: [
     CommonModule,

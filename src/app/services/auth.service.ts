@@ -40,6 +40,10 @@ export class AuthService {
     let token = localStorage.getItem('token');
     return token ? decode(token).role == roles.guest : false;
   }
+  isAdmin():boolean{
+    let token = localStorage.getItem('token');
+    return token ? decode(token).role == roles.admin : false;
+  }
 
   findRoleThenRedirect(route: Router) {
     let token = localStorage.getItem('token');
@@ -59,6 +63,9 @@ export class AuthService {
         break;
       case roles.guest:
         route.navigate(['/menu'])
+        break;
+      case roles.admin:
+        route.navigate(['/admin'])
         break;
       default:
         break;

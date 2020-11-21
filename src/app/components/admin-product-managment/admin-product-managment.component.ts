@@ -13,7 +13,9 @@ import { AuthentificationService } from 'src/app/services/authentification.servi
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductFormEditCreateComponent } from '../product-form-edit-create/product-form-edit-create.component';
 import {PaymentService} from '../../services/payment.service';
-
+import {Input} from '@angular/core';
+import {OwnerUsernameService} from '../../services/owner-username.service';
+import {AuthService} from '../../services/auth.service';
 @Component({
   selector: 'app-admin-product-managment',
   templateUrl: './admin-product-managment.component.html',
@@ -21,6 +23,7 @@ import {PaymentService} from '../../services/payment.service';
 })
 export class AdminProductManagmentComponent implements OnInit {
 
+  @Input() username: string;
   displayedColumns: string[] = ['image', 'name', 'category', 'edit', 'delete'];
   dataSource: MatTableDataSource<ProductDTO>;
   restaurantSelectionDTOS: [RestaurantSelectionDTO];
@@ -35,27 +38,40 @@ export class AdminProductManagmentComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private activatedRoute: ActivatedRoute, private menuService: MenuService, private productService: ProductService, public dialog: MatDialog, private authentificationService: AuthentificationService,private paymentService:PaymentService) {
+  constructor(private activatedRoute: ActivatedRoute, private menuService: MenuService, private productService: ProductService, public dialog: MatDialog, private authentificationService: AuthentificationService,private paymentService:PaymentService,private ownerUsernameService:OwnerUsernameService,private authService:AuthService) {
   }
 
   ngOnInit() {
     console.log("on init")
+     /*this.ownerUsernameService.onOwnerUsernameSubmit.subscribe(value =>{
+      this.username = value;
+      console.log("yioooo"+value);
+    });*/
     this.initValues();
   }
   
   initValues(){
     this.loading = true;
+    //this.initUserName();
     this.fetchOwner();
     this.confirmStripeAccountCreation();
   }
-
+  initUserName(){
+    if(this.authService.isAdmin()){
+      this.username = localStorage.getItem('ownerEmail');
+      console.log(this.username);
+    }
+    else{
+      this.username = localStorage.getItem('username');
+    }
+  }
   
 
   confirmStripeAccountCreation() {
     this.activatedRoute.queryParams.subscribe(params => {
       let accountId = params['accountId'];
       if (accountId != null) {
-        this.paymentService.saveStripeAccount(accountId, localStorage.getItem('username')).subscribe(data => {
+        this.paymentService.saveStripeAccount(accountId, this.ownerUsernameService.initUserName()).subscribe(data => {
           this.setHasStripeAccountId(true);
         })
       }
@@ -69,7 +85,7 @@ export class AdminProductManagmentComponent implements OnInit {
     this.initProductTable();
   }
   fetchOwner() {
-    this.authentificationService.getOwner(localStorage.getItem("username")).subscribe(data => {
+    this.authentificationService.getOwner(this.ownerUsernameService.initUserName()).subscribe(data => {
       console.log(data);
       if (data.stripeAccountId == null || data.isStripeEnable ==false) {
         console.log("false");
@@ -84,7 +100,7 @@ export class AdminProductManagmentComponent implements OnInit {
   }
   redirectToStripeRegister() {
     this.loading = true;
-    this.paymentService.createStripeAccount(localStorage.getItem('username')).subscribe(data => {
+    this.paymentService.createStripeAccount(this.ownerUsernameService.initUserName()).subscribe(data => {
       console.log(data);
       window.location.href = data.value;
     })
@@ -134,7 +150,7 @@ export class AdminProductManagmentComponent implements OnInit {
   //GET
 
   getAllRestaurantSelectionDTO() {
-    this.menuService.getAllRestaurantName().subscribe(data => {
+    this.menuService.getAllRestaurantName(this.ownerUsernameService.initUserName()).subscribe(data => {
       this.loading = false;
       this.restaurantSelectionDTOS = data;
     })

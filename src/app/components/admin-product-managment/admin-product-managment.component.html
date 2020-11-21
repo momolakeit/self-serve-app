@@ -1,5 +1,5 @@
 <ng-container *ngIf="!loading">
-  <ng-container *ngIf="hasStripeAccountId">
+  <ng-container *ngIf="!hasStripeAccountId">
     <div class="container mb-5 pt-5">
 
       <!--RESTAURANT OWNER LIST COMPONENT-->
@@ -121,7 +121,7 @@
       </div>
     </div>
   </ng-container>
-  <ng-container *ngIf="!hasStripeAccountId">
+  <!--<ng-container *ngIf="!hasStripeAccountId">
     <mat-card class="example-card mt-4">
       <mat-card-header>
         <mat-card-title>{{'adminProductManagment.title'|translate}} !</mat-card-title>
@@ -142,7 +142,7 @@
         </div>
       </mat-card-action>
     </mat-card>
-  </ng-container>
+  </ng-container>-->
 </ng-container>
 
 <ng-container *ngIf="loading">

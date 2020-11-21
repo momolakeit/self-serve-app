@@ -15,6 +15,7 @@ import { MatSort } from '@angular/material/sort';
 import { saveAs } from 'file-saver';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { FileInput } from 'ngx-material-file-input';
+import {OwnerUsernameService} from '../../services/owner-username.service'
 
 @Component({
   selector: 'app-restaurant-form',
@@ -30,7 +31,7 @@ export class RestaurantFormComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  constructor(private qrCodeService: QrCodeService, private menuService: MenuService, public dialog: MatDialog, public dialogRef: MatDialogRef<RestaurantFormComponent>, @Inject(MAT_DIALOG_DATA) public data: RestaurantSelectionDTO, private formBuilder: FormBuilder, private kitchenService: KitchenService) { }
+  constructor(private qrCodeService: QrCodeService, private menuService: MenuService, public dialog: MatDialog, public dialogRef: MatDialogRef<RestaurantFormComponent>, @Inject(MAT_DIALOG_DATA) public data: RestaurantSelectionDTO, private formBuilder: FormBuilder, private kitchenService: KitchenService,private ownerUsernameService:OwnerUsernameService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -69,7 +70,7 @@ export class RestaurantFormComponent implements OnInit {
 
       const restaurantFormDTO: RestaurantFormDTO = {
         restaurantId: this.data ? this.data.restaurantId : null,
-        ownerUsername: localStorage.getItem('username'),
+        ownerUsername: this.ownerUsernameService.initUserName(),
         nombreDeTable: formValues['tableAmount'],
         restaurantName: formValues['name']
       }
@@ -119,7 +120,7 @@ export class RestaurantFormComponent implements OnInit {
   }
 
   refreshRestaurant() {
-    this.menuService.getAllRestaurantName().subscribe(data => {
+    this.menuService.getAllRestaurantName(this.ownerUsernameService.initUserName()).subscribe(data => {
       this.data = data.find(restaurantSelection => restaurantSelection.restaurantId == this.data.restaurantId);
 
       this.initTable();
