@@ -13,10 +13,6 @@ export class OwnerRoleGuardService implements CanActivate {
   constructor(private router: Router, private authService: AuthService) { }
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
-    const token = localStorage.getItem('token');
-    // decode the token to get its payload
-    const tokenPayload = decode(token);
-    
     if (!this.authService.isAuthenticated() || !this.authService.isOwner()) {
       this.router.navigate(['not-found']);
       return false;
