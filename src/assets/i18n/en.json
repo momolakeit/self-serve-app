@@ -121,6 +121,8 @@
         "addAnOptionTxt":"Add an option",
         "cancelTxt":"Cancel",
         "createBtnTxt":"Create",
-        "updateBtnTxt":"Update"
+        "updateBtnTxt":"Update",
+        "addAddonsTxt": "Add addons",
+        "createAddonTxt": "Create extras"
     }
 }

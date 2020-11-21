@@ -20,7 +20,6 @@ export class ProductFormEditCreateComponent implements OnInit {
 
   menuId: number = parseInt(localStorage.getItem("menuId"));
   productForm: FormGroup;
-  options: OptionDTO[] = [];
   isHidden: boolean = false;
   title: string;
   productTypes: string[] = Object.keys(ProductType);
@@ -31,7 +30,6 @@ export class ProductFormEditCreateComponent implements OnInit {
   multiple: boolean = false;
   maxSize: number = 1024;
   accept: string = "image/*";
-
 
   constructor(public dialogRef: MatDialogRef<ProductFormEditCreateComponent>, @Inject(MAT_DIALOG_DATA) public data: ProductDTO, private productService: ProductService, private formBuilder: FormBuilder) { }
 
@@ -51,15 +49,30 @@ export class ProductFormEditCreateComponent implements OnInit {
       productType: [this.data ? this.data.productType : '', Validators.required],
       productMenuType: [this.data ? this.data.productMenuType : '', Validators.required],
       image: ['', [MaxSizeValidator(this.maxSize * 1024)]],
-      options: this.formBuilder.array([])
+      options: this.formBuilder.array([]),
+      addons: this.formBuilder.array([])
     });
 
 
     //set up options based on data presence
-    if (this.data)
+    if (this.data){
       this.initOptions();
+      this.initAddOns();
+    }
 
     this.title = this.data ? 'Product update' : 'Product creation';
+  }
+
+  initAddOns(){
+    this.data.checkItems.forEach(checkItemElem => {
+      const checkItem = new FormGroup({
+        id: new FormControl(checkItemElem.id),
+        checkItemName: new FormControl(checkItemElem.name, Validators.required),
+        price: new FormControl(checkItemElem.prix,Validators.required)
+      })
+  
+      this.getAddOns().push(checkItem);
+    });
   }
 
   initOptions() {
@@ -67,7 +80,9 @@ export class ProductFormEditCreateComponent implements OnInit {
     for (let index = 0; index < this.data.options.length; index++) {
 
       const element: OptionDTO = this.data.options[index];
+
       const option: FormGroup = new FormGroup({
+        id: new FormControl(element.id),
         optionName: new FormControl(element.name, Validators.required),
         checkItems: this.formBuilder.array([new FormGroup({
           checkItemName: new FormControl('', Validators.required)
@@ -82,6 +97,7 @@ export class ProductFormEditCreateComponent implements OnInit {
         const checkItem: CheckItemDTO = element.checkItemList[j];
 
         const group = new FormGroup({
+          id: new FormControl(checkItem.id),
           checkItemName: new FormControl(checkItem.name, Validators.required)
         })
 
@@ -99,21 +115,23 @@ export class ProductFormEditCreateComponent implements OnInit {
   onSubmitForm() {
     if (this.productForm.valid) {
 
-      this.updateOptionDtoList();
-
       const formValue = this.productForm.value;
 
       const product: ProductDTO = {
         id: formValue['id'],
         name: formValue['name'],
         description: formValue['description'],
-        options: this.options,
+        options: this.getOptionDtoList(),
         prix: formValue['prix'],
         tempsDePreparation: formValue['tempsDePreparation'],
         productType: formValue['productType'],
         productMenuType: formValue['productMenuType'],
-        imgFileDTO: this.data ? this.data.imgFileDTO : null
+        imgFileDTO: this.data ? this.data.imgFileDTO : null,
+        checkItems: this.getAddonList()
       }
+
+      console.log(product);
+      
 
       if (this.data)
         this.onUpdateProduct(product);
@@ -124,7 +142,6 @@ export class ProductFormEditCreateComponent implements OnInit {
   }
 
   onCreateProduct(product: ProductDTO) {
-    console.log(product);
     this.productService.create(product, this.menuId).subscribe((data) => this.onUploadImage(data.id));
   }
 
@@ -155,6 +172,7 @@ export class ProductFormEditCreateComponent implements OnInit {
 
   onAddOption() {
     const option = new FormGroup({
+      id: new FormControl(null),
       optionName: new FormControl('', Validators.required),
       checkItems: this.formBuilder.array([new FormGroup({
         checkItemName: new FormControl('', Validators.required)
@@ -164,12 +182,14 @@ export class ProductFormEditCreateComponent implements OnInit {
     this.getOptions().push(option);
   }
 
-  onAddCheckItem(id: number) {
-    const group = new FormGroup({
-      checkItemName: new FormControl('', Validators.required)
+  onAddCheckItem() {
+    const checkItem = new FormGroup({
+      id: new FormControl(null),
+      checkItemName: new FormControl('', Validators.required),
+      price: new FormControl('',Validators.required)
     })
-    this.getCheckItems(id).push(group);
-    console.log(this.getCheckItems(id).length);
+
+    this.getAddOns().push(checkItem);
   }
 
   //get
@@ -182,26 +202,32 @@ export class ProductFormEditCreateComponent implements OnInit {
     return this.productForm.get('options') as FormArray;
   }
 
+  getAddOns() {
+    return this.productForm.get('addons') as FormArray;
+  }
 
-  //update
-  updateOptionDtoList() {
+
+  getOptionDtoList():OptionDTO[] {
 
     var options: any[] = [];
 
     for (let index = 0; index < this.getOptions().length; index++) {
+      var optionValue = this.getOptions().at(index);
 
       //add option name
       var option: OptionDTO = {
-        name: this.getOptions().at(index).get('optionName').value,
+        id: optionValue.get('id') ? optionValue.get('id').value : null,
+        name: optionValue.get('optionName').value,
         checkItemList: []
       };
 
       //add option checkItemList  by looping
       for (let index2 = 0; index2 < this.getCheckItems(index).length; index2++) {
+        const checkItemValue = this.getCheckItems(index).at(index2).value;
 
         var checkItem: CheckItemDTO = {
-          id: null,
-          name: this.getCheckItems(index).at(index2).value.checkItemName,
+          id:  checkItemValue.id ? checkItemValue.id : null,
+          name: checkItemValue.checkItemName,
           option: null,
           isActive: null
         }
@@ -210,14 +236,29 @@ export class ProductFormEditCreateComponent implements OnInit {
       }
 
       options.push(option);
-
-      
     }
 
-    this.options = options;
-    console.log('voici mes options:');
-    console.log(this.options);
+    return options;
+  }
 
+  getAddonList():CheckItemDTO[]{
+    var checkItems: CheckItemDTO[] = [];
+
+    for (let index = 0; index < this.getAddOns().length; index++) {
+      const element = this.getAddOns().at(index);
+
+      var checkItem: CheckItemDTO = {
+        id: element.get('id') ? element.get('id').value : null,
+        name: element.get('checkItemName').value,
+        prix: element.get('price').value,
+        option: null,
+        isActive: null
+      }
+
+      checkItems.push(checkItem);
+    }
+
+    return checkItems;
   }
 
   //delete
@@ -227,6 +268,10 @@ export class ProductFormEditCreateComponent implements OnInit {
 
   deleteOption(optionId: number) {
     this.getOptions().removeAt(optionId);
+  }
+
+  deleteAddon(addonId:number){
+    this.getAddOns().removeAt(addonId);
   }
 
 }

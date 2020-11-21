@@ -18,7 +18,7 @@ export interface ProductDTO {
     prix:number;
     tempsDePreparation: number;
     imgFileDTO?: ImgFileDTO;
-    checkItems? : CheckItemDTO;
+    checkItems? : CheckItemDTO[];
     rates?:[RateDTO];
     productType:ProductType;
     productMenuType:ProductMenuType;

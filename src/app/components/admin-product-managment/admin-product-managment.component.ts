@@ -93,7 +93,6 @@ export class AdminProductManagmentComponent implements OnInit {
 
   initForm() {
     const name = localStorage.getItem('restaurantName');
-    console.log('my name:' + name);
 
     this.restaurantSelectionFormControl = new FormControl(name ? name : '', Validators.required);
   }
@@ -114,8 +113,8 @@ export class AdminProductManagmentComponent implements OnInit {
 
   openDialog(product: ProductDTO): void {
     const dialogRef = this.dialog.open(ProductFormEditCreateComponent, {
-      width: '550px',
-      height: '600px',
+      width: this.mobileQuery.matches ? '90%' : '50%',
+      height: '80%',
       data: product
     });
 
