@@ -12,11 +12,7 @@ export class AdminOwnerGuardService {
   constructor(private router: Router, private authService: AuthService) { }
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
-    const token = localStorage.getItem('token');
-    // decode the token to get its payload
-    const tokenPayload = decode(token);
-    
-    if (!this.authService.isAuthenticated() || tokenPayload.role !== roles.admin && tokenPayload.role !== roles.owner) {
+    if (!this.authService.isAuthenticated() || (!this.authService.isAdmin() && !this.authService.isOwner())) {
       this.router.navigate(['not-found']);
       return false;
     }

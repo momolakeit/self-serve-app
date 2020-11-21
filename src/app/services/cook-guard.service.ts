@@ -17,7 +17,7 @@ export class CookGuardService  implements CanActivate {
     // decode the token to get its payload
     const tokenPayload = decode(token);
     
-    if (!this.authService.isAuthenticated() || tokenPayload.role !== roles.cook) {
+    if (!this.authService.isAuthenticated() || !this.authService.isCook()) {
       this.router.navigate(['not-found']);
       return false;
     }

@@ -17,7 +17,7 @@ export class ClientGuardService implements CanActivate {
     // decode the token to get its payload
     const tokenPayload = decode(token);
     
-    if (!this.authService.isAuthenticated() || (tokenPayload.role !== roles.client && tokenPayload.role !== roles.guest)) {
+    if (!this.authService.isAuthenticated() || (this.authService.isClient() && this.authService.isGuest())) {
       this.router.navigate(['not-found']);
       return false;
     }
