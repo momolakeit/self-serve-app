@@ -54,7 +54,6 @@ export class AdminProductManagmentComponent implements OnInit {
 
   initValues() {
     this.loading = true;
-    //this.initUserName();
     this.fetchOwner();
     this.confirmStripeAccountCreation();
   }

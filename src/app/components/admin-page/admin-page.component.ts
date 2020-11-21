@@ -15,14 +15,12 @@ export class AdminPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.adminService.fetchAllOwners().subscribe(data =>{
-      console.log(data);
       this.allOwners = data;
     });
   }
   onOwnerSubmit(ownerUsername:string){
     this.ownerUsernameService.onOwnerUsernameSubmit.emit(ownerUsername);
     localStorage.setItem('ownerEmail',ownerUsername);
-    console.log(ownerUsername)
     this.router.navigate(["/adminProductManagment"]);
   }
 
