@@ -19,6 +19,7 @@ export class DishDetailComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DishDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: ProductDTO, private billService: BillService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    console.log(this.data);
     this.imgUrl = environment.baseImgPath + this.data.imgFileDTO.id;
   }
 
@@ -36,7 +37,7 @@ export class DishDetailComponent implements OnInit {
     });
   }
 
-  updateCheckItem = function (checkItemDTO: CheckItemDTO, optionDTO: OptionDTO): void {
+  updateOptionCheckItem = function (checkItemDTO: CheckItemDTO, optionDTO: OptionDTO): void {
     var currentOption = this.data.options.find(x => x.id == optionDTO.id);
 
     currentOption.checkItemList.forEach(element => {
@@ -46,6 +47,11 @@ export class DishDetailComponent implements OnInit {
     var currentCheckItem = currentOption.checkItemList.find(x => x.id == checkItemDTO.id);
     currentCheckItem.isActive = true;
   };
+  updateCheckItem = function (checkItemDTO: CheckItemDTO): void {
+    var checkItem = this.data.checkItems.find(x => x.id == checkItemDTO.id);
+    checkItem.isActive = true;
+  };
+  
 
   onNoClick() {
     this.dialogRef.close('close');

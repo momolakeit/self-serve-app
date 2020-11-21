@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -16,6 +16,8 @@ import {PaymentService} from '../../services/payment.service';
 import {Input} from '@angular/core';
 import {OwnerUsernameService} from '../../services/owner-username.service';
 import {AuthService} from '../../services/auth.service';
+import { MediaMatcher } from '@angular/cdk/layout';
+
 @Component({
   selector: 'app-admin-product-managment',
   templateUrl: './admin-product-managment.component.html',
@@ -32,40 +34,30 @@ export class AdminProductManagmentComponent implements OnInit {
   restaurantSelectionFormControl: FormControl;
   hasStripeAccountId: boolean;
   loading: boolean;
-
-
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private activatedRoute: ActivatedRoute, private menuService: MenuService, private productService: ProductService, public dialog: MatDialog, private authentificationService: AuthentificationService,private paymentService:PaymentService,private ownerUsernameService:OwnerUsernameService,private authService:AuthService) {
+  
+  
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private activatedRoute: ActivatedRoute, private menuService: MenuService, private productService: ProductService, public dialog: MatDialog, private authentificationService: AuthentificationService, private paymentService: PaymentService,private ownerUsernameService:OwnerUsernameService,private authService:AuthService) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   ngOnInit() {
-    console.log("on init")
-     /*this.ownerUsernameService.onOwnerUsernameSubmit.subscribe(value =>{
-      this.username = value;
-      console.log("yioooo"+value);
-    });*/
     this.initValues();
   }
-  
-  initValues(){
+
+  initValues() {
     this.loading = true;
     //this.initUserName();
     this.fetchOwner();
     this.confirmStripeAccountCreation();
   }
-  initUserName(){
-    if(this.authService.isAdmin()){
-      this.username = localStorage.getItem('ownerEmail');
-      console.log(this.username);
-    }
-    else{
-      this.username = localStorage.getItem('username');
-    }
-  }
-  
 
   confirmStripeAccountCreation() {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -73,9 +65,8 @@ export class AdminProductManagmentComponent implements OnInit {
       if (accountId != null) {
         this.paymentService.saveStripeAccount(accountId, this.ownerUsernameService.initUserName()).subscribe(data => {
           this.setHasStripeAccountId(true);
-        })
+        });
       }
-
     });
   }
   setHasStripeAccountId(value: boolean) {
@@ -87,7 +78,7 @@ export class AdminProductManagmentComponent implements OnInit {
   fetchOwner() {
     this.authentificationService.getOwner(this.ownerUsernameService.initUserName()).subscribe(data => {
       console.log(data);
-      if (data.stripeAccountId == null || data.isStripeEnable ==false) {
+      if (data.stripeAccountId == null || data.isStripeEnable == false) {
         console.log("false");
         this.setHasStripeAccountId(false);
       }
@@ -109,7 +100,6 @@ export class AdminProductManagmentComponent implements OnInit {
 
   initForm() {
     const name = localStorage.getItem('restaurantName');
-    console.log('my name:' + name);
 
     this.restaurantSelectionFormControl = new FormControl(name ? name : '', Validators.required);
   }
@@ -130,8 +120,8 @@ export class AdminProductManagmentComponent implements OnInit {
 
   openDialog(product: ProductDTO): void {
     const dialogRef = this.dialog.open(ProductFormEditCreateComponent, {
-      width: '550px',
-      height: '600px',
+      width: this.mobileQuery.matches ? '90%' : '50%',
+      height: '80%',
       data: product
     });
 
