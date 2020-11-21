@@ -27,6 +27,7 @@ export class RestaurantFormComponent implements OnInit {
   displayedColumns: string[] = ['tableNumber', 'download', 'delete'];
   dataSource = new MatTableDataSource<RestaurantTableDTO>([]);
   maxSize: number = 1024;
+  isButtonLoading: boolean = false;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -92,24 +93,30 @@ export class RestaurantFormComponent implements OnInit {
       this.kitchenService.saveRestaurantLogo(formData, restaurantId).subscribe(data => this.dialogRef.close('refresh'));
     else 
       this.dialogRef.close('refresh');
+
+    this.isButtonLoading = false;
   }
 
   // SERVICES
 
   onCreate(restaurantFormDTO: RestaurantFormDTO) {
+    this.isButtonLoading = true;
     this.kitchenService.createRestaurant(restaurantFormDTO).subscribe(data => this.onUploadImage(data.id));
   }
-
+  
   onDownloadQrCode(tableNumber:number,tableId: number) {
     this.qrCodeService.download(tableId).subscribe(data => saveAs(new Blob([data], { type: data.type }), 'tableNumber' + tableNumber + '.png'));
   }
-
+  
   onUpdate(restaurantFormDTO: RestaurantFormDTO) {
+    this.isButtonLoading = true;
     this.kitchenService.updateRestaurantName(restaurantFormDTO.restaurantName,restaurantFormDTO.restaurantId).subscribe(data => this.onUploadImage(data.id));
   }
 
-  onDeleteTable(tableId: number) {
-    this.kitchenService.deleteTable(tableId, this.data.restaurantId).subscribe(() => this.refreshTables(tableId));
+  onDeleteTable(id: number) {
+    this.data.restaurentTablesDTO.find(table => table.id == id).isLoading = true;
+
+    this.kitchenService.deleteTable(id, this.data.restaurantId).subscribe(() => this.refreshTables(id));
   }
 
   refreshTables(tableId: number) {
@@ -126,7 +133,7 @@ export class RestaurantFormComponent implements OnInit {
     });
   }
 
-  onNoClick(): void {
+  onNoClick() {
     this.dialogRef.close('close');
   }
 

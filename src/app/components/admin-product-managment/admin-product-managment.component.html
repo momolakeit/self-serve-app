@@ -30,8 +30,11 @@
               </div>
 
               <div class="col-lg-4 col-md-4 col-6">
-                <button mat-raised-button class="btn-dark text-white w-100"
+                <button *ngIf="!isVoirProduitLoading" mat-raised-button class="btn-dark text-white w-100"
                   (click)="getAllProductsFromRestaurant(restaurantSelectionFormControl.value)">{{'adminProductManagment.showProduct'|translate}}</button>
+
+                  <mat-spinner class="mx-auto" *ngIf="isVoirProduitLoading" [diameter]="30" [strokeWidth]="5"></mat-spinner>
+
               </div>
             </div>
           </div>
@@ -80,9 +83,10 @@
               <ng-container matColumnDef="edit">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'adminProductManagment.editTxt'|translate}}</th>
                 <td mat-cell *matCellDef="let row">
-                  <button mat-icon-button (click)="changeCurrentProductToEdit(row)">
+                  <button *ngIf="!row.isLoading" mat-icon-button (click)="changeCurrentProductToEdit(row)">
                     <mat-icon>edit</mat-icon>
                   </button>
+                  <mat-spinner *ngIf="row.isLoading" [diameter]="30" [strokeWidth]="5"></mat-spinner>
                 </td>
               </ng-container>
 
@@ -91,10 +95,11 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'adminProductManagment.deleteTxt'|translate}}
                 </th>
                 <td mat-cell *matCellDef="let row">
-                  <button mat-icon-button (click)="deleteProduct(row.id)"
+                 <button *ngIf="!row.isLoading" mat-icon-button (click)="deleteProduct(row.id)"
                     aria-label="Example icon button with a home icon">
                     <mat-icon>delete</mat-icon>
-                  </button>
+                  </button> 
+                  <mat-spinner *ngIf="row.isLoading" [diameter]="30" [strokeWidth]="5"></mat-spinner>
                 </td>
               </ng-container>
 

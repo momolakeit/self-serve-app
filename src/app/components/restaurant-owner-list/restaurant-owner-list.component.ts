@@ -36,8 +36,10 @@ export class RestaurantOwnerListComponent implements OnInit {
     });
   }
 
-  onDeleteRestaurant(restaurantId:number){
-    this.kitchenService.deleteRestaurant(restaurantId).subscribe(data =>{
+  onDeleteRestaurant(id:number){
+    this.restaurantList.find(restaurant => restaurant.restaurantId == id).isLoading = true;
+
+    this.kitchenService.deleteRestaurant(id).subscribe(data =>{
       this.initRestaurants();
     });
 
