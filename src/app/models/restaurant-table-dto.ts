@@ -9,4 +9,5 @@ export interface RestaurantTableDTO {
     menuDTO:MenuDTO;
     restaurant:RestaurantDTO;
     nombreItemParTable:number;
+    isLoading?:boolean;
 }

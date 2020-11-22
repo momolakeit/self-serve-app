@@ -22,4 +22,5 @@ export interface ProductDTO {
     rates?:[RateDTO];
     productType:ProductType;
     productMenuType:ProductMenuType;
+    isLoading?:boolean;
 }

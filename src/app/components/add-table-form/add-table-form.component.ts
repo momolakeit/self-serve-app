@@ -12,6 +12,7 @@ import { KitchenService } from 'src/app/services/kitchen.service';
 export class AddTableFormComponent implements OnInit {
 
   tableNumber: FormControl;
+  isAddingTableLoading:boolean = false;
 
   constructor(private kitchenService: KitchenService,public dialogRef: MatDialogRef<AddTableFormComponent>,@Inject(MAT_DIALOG_DATA) public data: RestaurantSelectionDTO) { }
 
@@ -20,8 +21,14 @@ export class AddTableFormComponent implements OnInit {
   }
 
   onCreateTable(){
-    if (this.tableNumber.valid) 
-      this.kitchenService.addRestaurantTable(this.data.restaurantId,this.tableNumber.value).subscribe(() => this.dialogRef.close('refresh'));
+    if (this.tableNumber.valid) {
+      this.isAddingTableLoading = true;
+      
+      this.kitchenService.addRestaurantTable(this.data.restaurantId,this.tableNumber.value).subscribe(() =>{
+        this.dialogRef.close('refresh')
+        this.isAddingTableLoading = false;
+      });
+    }
   }
 
   onNoClick(): void {

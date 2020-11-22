@@ -5,4 +5,5 @@ export interface RestaurantSelectionDTO {
     menuId: number;
     restaurantName: string;
     restaurentTablesDTO: RestaurantTableDTO[];
+    isLoading?:boolean;
 }
