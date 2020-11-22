@@ -16,6 +16,7 @@ export const environment = {
   menuUrl:`http://${host}${port}/menu`,
   billUrl:`http://${host}${port}/order`,
   rateUrl:`http://${host}${port}/rate`,
+  adminUrl:`http://${host}${port}/admin/getOwners`,
   subscriptionProductUrl:`http://${host}${port}/stripe/fetchSubscriptionProducts`,
   fetchSubscription:`http://${host}${port}/stripe/retreiveSubscription`,
   cancelSubscriptionUrl:`http://${host}${port}/stripe/cancelSubscription`,
@@ -29,6 +30,7 @@ export const environment = {
   domainFiLE:`http://${host}${port}/order/fetchDomainFile`,
   baseImgPath:`http://${host}${port}/product/getProductImg/`,
   kitchenUrl:`http://${host}${port}/rest/kitchen`,
+  qrCodeUrl:`http://${host}${port}/qrcode`,
 };
 
 export const roles={
@@ -37,6 +39,7 @@ export const roles={
   waiter: `${rolePrefix}WAITER`,
   client: `${rolePrefix}CLIENT`,
   guest: `${rolePrefix}GUEST`,
+  admin: `${rolePrefix}ADMIN`
 }
 
 /*
