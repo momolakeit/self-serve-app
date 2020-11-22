@@ -39,7 +39,6 @@ export const roles={
   waiter: `${rolePrefix}WAITER`,
   client: `${rolePrefix}CLIENT`,
   guest: `${rolePrefix}GUEST`,
-  admin: `${rolePrefix}ADMIN`
 }
 
 /*
