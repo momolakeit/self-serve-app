@@ -35,6 +35,7 @@ export class AdminProductManagmentComponent implements OnInit {
   hasStripeAccountId: boolean;
   loading: boolean;
   mobileQuery: MediaQueryList;
+  isVoirProduitLoading: boolean = true;
   private _mobileQueryListener: () => void;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -68,26 +69,27 @@ export class AdminProductManagmentComponent implements OnInit {
       }
     });
   }
+
   setHasStripeAccountId(value: boolean) {
     this.hasStripeAccountId = value;
     this.getAllRestaurantSelectionDTO();
     this.initForm();
     this.initProductTable();
   }
+
   fetchOwner() {
     this.authentificationService.getOwner(this.ownerUsernameService.initUserName()).subscribe(data => {
       console.log(data);
       if (data.stripeAccountId == null || data.isStripeEnable == false) {
-        console.log("false");
         this.setHasStripeAccountId(false);
       }
       else {
-        console.log("true");
         this.setHasStripeAccountId(true);
         console.log(this.hasStripeAccountId);
       }
     })
   }
+
   redirectToStripeRegister() {
     this.loading = true;
     this.paymentService.createStripeAccount(this.ownerUsernameService.initUserName()).subscribe(data => {
@@ -148,6 +150,8 @@ export class AdminProductManagmentComponent implements OnInit {
   getAllProductsFromRestaurant(menuId: number) {
 
     if (this.restaurantSelectionFormControl.valid) {
+      this.isVoirProduitLoading = true;
+      
       this.menuService.fetchMenuById(menuId).subscribe(data => {
 
         this.productDTOList = data.products;
@@ -156,12 +160,12 @@ export class AdminProductManagmentComponent implements OnInit {
 
         localStorage.setItem('menuId', `${menuId}`);
 
-        const restaurantName = this.restaurantSelectionDTOS.find((item) => {
-          return item.menuId === menuId;
-        })
+        const restaurantName = this.restaurantSelectionDTOS.find(item => item.menuId === menuId);
 
-        localStorage.setItem('restaurantName', restaurantName.restaurantName);
-        console.log(this.productDTOList);
+        localStorage.setItem('restaurantName', restaurantName ? restaurantName.restaurantName: '');
+        
+        this.isVoirProduitLoading = false;
+        
       });
     }
   }
@@ -180,6 +184,8 @@ export class AdminProductManagmentComponent implements OnInit {
   //DELETE
 
   deleteProduct(id: number) {
+    this.productDTOList.find(product => product.id == id).isLoading = true;
+
     this.productService.delete(id).subscribe(() => {
       this.getAllProductsFromRestaurant(parseInt(localStorage.getItem('menuId')));
     });
