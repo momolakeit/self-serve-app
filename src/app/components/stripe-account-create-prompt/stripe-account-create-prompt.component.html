@@ -1,0 +1,22 @@
+<ng-container *ngIf="!loading">
+  <div class="container mat-elevation-z3 p-2 mt-5 rounded"
+    [ngClass]="{'w-75' : mobileQuery.matches,'w-50' : !mobileQuery.matches}">
+    <h1 class="text-center border-bottom border-dark mx-auto"
+      [ngClass]="{'w-75' : mobileQuery.matches,'w-50' : !mobileQuery.matches}">
+      {{'adminProductManagment.title'|translate}}
+      !</h1>
+    <p class="w-100 text-justify mx-auto">{{'adminProductManagment.body'|translate}}</p>
+
+    <mat-divider></mat-divider>
+
+    <div class="d-flex justify-content-around mt-2">
+      <button class="btn-dark text-white" (click)="redirectToStripeRegister()"
+        mat-button>{{'adminProductManagment.go'|translate}} !</button>
+      <button class="btn-dark text-white" (click)="navToSubscription()"
+        mat-button>{{'adminProductManagment.later'|translate}} !</button>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="loading">
+  <div class="loader text-center"></div>
+</ng-container>

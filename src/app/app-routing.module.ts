@@ -25,6 +25,7 @@ import { SubscriptionDetailsComponent } from './components/subscription-details/
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
 import { AdminGuardService } from './services/admin-guard.service';
 import { AdminOwnerGuardService } from './services/admin-owner-guard.service';
+import { StripeAccountCreatePromptComponent } from './components/stripe-account-create-prompt/stripe-account-create-prompt.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/start', pathMatch: 'full' },
@@ -55,6 +56,7 @@ const routes: Routes = [
   {path: 'adminProductManagment',canActivate:[AuthGuardService,AdminOwnerGuardService], component: AdminProductManagmentComponent},
   {path: 'subscription',canActivate:[AuthGuardService,OwnerRoleGuardService], component: OwnerSubscriptionComponent},
   {path: 'subscriptionDetail',canActivate:[AuthGuardService,OwnerRoleGuardService], component: SubscriptionDetailsComponent},
+  {path: 'isStripeEnabled',canActivate:[AuthGuardService,OwnerRoleGuardService], component: StripeAccountCreatePromptComponent},
   
   //not found needs to be at the end or else buggs
   { path: '**', redirectTo: '/not-found' }

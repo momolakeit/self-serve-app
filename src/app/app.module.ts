@@ -39,6 +39,7 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
+import { StripeAccountCreatePromptComponent } from './components/stripe-account-create-prompt/stripe-account-create-prompt.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { AdminPageComponent } from './components/admin-page/admin-page.component
     OwnerSubscriptionComponent,
     SubscriptionDetailsComponent,
     AdminPageComponent,
+    StripeAccountCreatePromptComponent,
   ],
   imports: [
     CommonModule,

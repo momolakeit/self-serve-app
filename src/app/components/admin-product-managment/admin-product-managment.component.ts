@@ -54,8 +54,9 @@ export class AdminProductManagmentComponent implements OnInit {
 
   initValues() {
     this.loading = true;
-    this.fetchOwner();
-    this.confirmStripeAccountCreation();
+    this.getAllRestaurantSelectionDTO();
+    this.initForm();
+    this.initProductTable();
   }
 
   confirmStripeAccountCreation() {
@@ -74,28 +75,6 @@ export class AdminProductManagmentComponent implements OnInit {
     this.initForm();
     this.initProductTable();
   }
-  fetchOwner() {
-    this.authentificationService.getOwner(this.ownerUsernameService.initUserName()).subscribe(data => {
-      console.log(data);
-      if (data.stripeAccountId == null || data.isStripeEnable == false) {
-        console.log("false");
-        this.setHasStripeAccountId(false);
-      }
-      else {
-        console.log("true");
-        this.setHasStripeAccountId(true);
-        console.log(this.hasStripeAccountId);
-      }
-    })
-  }
-  redirectToStripeRegister() {
-    this.loading = true;
-    this.paymentService.createStripeAccount(this.ownerUsernameService.initUserName()).subscribe(data => {
-      console.log(data);
-      window.location.href = data.value;
-    })
-  }
-
 
   initForm() {
     const name = localStorage.getItem('restaurantName');

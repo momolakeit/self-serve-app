@@ -4,5 +4,5 @@ export interface OwnerDTO {
     restaurants: [RestaurantDTO];
     stripeAccountId:string;
     stripeCustomerId:string;
-    isStripeEnable :boolean;
+    stripeEnable :boolean;
 }
