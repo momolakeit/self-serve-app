@@ -57,7 +57,6 @@ export class AdminProductManagmentComponent implements OnInit {
     this.loading = true;
     this.getAllRestaurantSelectionDTO();
     this.initForm();
-    this.initProductTable();
   }
 
   confirmStripeAccountCreation() {
@@ -75,7 +74,6 @@ export class AdminProductManagmentComponent implements OnInit {
     this.hasStripeAccountId = value;
     this.getAllRestaurantSelectionDTO();
     this.initForm();
-    this.initProductTable();
   }
 
   initForm() {
@@ -93,6 +91,7 @@ export class AdminProductManagmentComponent implements OnInit {
   initProductTable() {
     if (localStorage.getItem('menuId'))
       this.getAllProductsFromRestaurant(parseInt(localStorage.getItem('menuId')));
+    this.isVoirProduitLoading = false;
 
   }
 
@@ -123,12 +122,14 @@ export class AdminProductManagmentComponent implements OnInit {
     this.menuService.getAllRestaurantName(this.ownerUsernameService.initUserName()).subscribe(data => {
       this.loading = false;
       this.restaurantSelectionDTOS = data;
+      this.initProductTable();
     })
   }
 
   getAllProductsFromRestaurant(menuId: number) {
 
     if (this.restaurantSelectionFormControl.valid) {
+      console.log("yio 1");
       this.isVoirProduitLoading = true;
       
       this.menuService.fetchMenuById(menuId).subscribe(data => {
@@ -143,6 +144,7 @@ export class AdminProductManagmentComponent implements OnInit {
 
         localStorage.setItem('restaurantName', restaurantName ? restaurantName.restaurantName: '');
         
+        console.log("yio 2");
         this.isVoirProduitLoading = false;
         
       });
