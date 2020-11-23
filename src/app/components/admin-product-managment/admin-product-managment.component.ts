@@ -59,22 +59,6 @@ export class AdminProductManagmentComponent implements OnInit {
     this.initForm();
   }
 
-  confirmStripeAccountCreation() {
-    this.activatedRoute.queryParams.subscribe(params => {
-      let accountId = params['accountId'];
-      if (accountId != null) {
-        this.paymentService.saveStripeAccount(accountId, this.ownerUsernameService.initUserName()).subscribe(data => {
-          this.setHasStripeAccountId(true);
-        });
-      }
-    });
-  }
-
-  setHasStripeAccountId(value: boolean) {
-    this.hasStripeAccountId = value;
-    this.getAllRestaurantSelectionDTO();
-    this.initForm();
-  }
 
   initForm() {
     const name = localStorage.getItem('restaurantName');
