@@ -1,4 +1,4 @@
 export class JwtResponse {
     tokenType: string;
-    accessToken: string;
+    token: string;
 }

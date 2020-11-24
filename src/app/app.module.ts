@@ -95,8 +95,8 @@ import { StripeAccountCreatePromptComponent } from './components/stripe-account-
         tokenGetter: () => {
           return localStorage.getItem("token");
         },
-        allowedDomains: ["localhost:8080"],
-        disallowedRoutes: ["localhost:8080/auth/signin", "localhost:8080/auth/signup"]
+        allowedDomains: ["localhost:8081"],
+        disallowedRoutes: ["localhost:8081/auth/signin", "localhost:8081/auth/signup"]
       }
     }),
   ],
