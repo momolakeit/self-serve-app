@@ -164,7 +164,8 @@
                         <p>
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Extra {{i + 1}}:</mat-label>
-                                <input formControlName="checkItemName" autocomplete="off" type="text" matInput placeholder="Ex: Fromage bleue">
+                                <input formControlName="checkItemName" autocomplete="off" type="text" matInput
+                                    placeholder="Ex: Fromage bleue">
                                 <mat-error>Extra cannot be empty</mat-error>
                             </mat-form-field>
                         </p>
@@ -192,11 +193,15 @@
 
 
     <!--FOOTER-->
-    <div class="d-flex justify-content-between mt-2">
+    <div class="d-flex justify-content-between m-2">
         <button mat-raised-button class="btn-dark text-white" (click)="onNoClick()">Cancel</button>
+
         <button mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()"
-            *ngIf="!data">{{ 'productEditCreate.createBtnTxt' | translate }}</button>
+            *ngIf="!data && !isButtonLoading">{{ 'productEditCreate.createBtnTxt' | translate }}</button>
+
         <button mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()"
-            *ngIf="data">{{ 'productEditCreate.updateBtnTxt' | translate }}</button>
+            *ngIf="data && !isButtonLoading">{{ 'productEditCreate.updateBtnTxt' | translate }}</button>
+
+        <mat-spinner *ngIf="isButtonLoading" [diameter]="30" [strokeWidth]="5"></mat-spinner>
     </div>
 </form>

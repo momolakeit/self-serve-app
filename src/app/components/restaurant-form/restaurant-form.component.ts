@@ -30,12 +30,18 @@ export class RestaurantFormComponent implements OnInit {
   maxSize: number = 1024;
   isButtonLoading: boolean = false;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(private qrCodeService: QrCodeService, private menuService: MenuService, public dialog: MatDialog, public dialogRef: MatDialogRef<RestaurantFormComponent>, @Inject(MAT_DIALOG_DATA) public data: RestaurantSelectionDTO, private formBuilder: FormBuilder, private kitchenService: KitchenService,private ownerUsernameService:OwnerUsernameService) { }
 
   ngOnInit(): void {
     this.initForm();
+  }
+
+  ngAfterViewInit(){
+    if (this.data) 
+      this.initTable();
+    
   }
 
   // ALL ABOUT THE FORM
@@ -106,7 +112,15 @@ export class RestaurantFormComponent implements OnInit {
   }
   
   onDownloadQrCode(tableNumber:number,tableId: number) {
-    this.qrCodeService.download(tableId).subscribe(data => saveAs(new Blob([data], { type: data.type }), 'tableNumber' + tableNumber + '.png'));
+    const tableDto : RestaurantTableDTO = this.data.restaurentTablesDTO.find(table => table.id == tableId);
+
+    tableDto.isLoading = true;
+
+    this.qrCodeService.download(tableId).subscribe(data => {
+      saveAs(new Blob([data], { type: data.type }), 'tableNumber' + tableNumber + '.png');
+      
+      tableDto.isLoading = false;
+    });
   }
   
   onUpdate(restaurantFormDTO: RestaurantFormDTO) {

@@ -38,12 +38,9 @@ export class AdminProductManagmentComponent implements OnInit {
   isVoirProduitLoading: boolean = true;
   private _mobileQueryListener: () => void;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
-  
-  
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private activatedRoute: ActivatedRoute, private menuService: MenuService, private productService: ProductService, public dialog: MatDialog, private authentificationService: AuthentificationService, private paymentService: PaymentService,private ownerUsernameService:OwnerUsernameService,private authService:AuthService) {
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private menuService: MenuService, private productService: ProductService, public dialog: MatDialog, private authentificationService: AuthentificationService, private paymentService: PaymentService,private ownerUsernameService:OwnerUsernameService,private authService:AuthService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -52,7 +49,7 @@ export class AdminProductManagmentComponent implements OnInit {
   ngOnInit() {
     this.initValues();
   }
-
+  
   initValues() {
     this.loading = true;
     this.getAllRestaurantSelectionDTO();
@@ -113,7 +110,6 @@ export class AdminProductManagmentComponent implements OnInit {
   getAllProductsFromRestaurant(menuId: number) {
 
     if (this.restaurantSelectionFormControl.valid) {
-      console.log("yio 1");
       this.isVoirProduitLoading = true;
       
       this.menuService.fetchMenuById(menuId).subscribe(data => {
@@ -128,7 +124,6 @@ export class AdminProductManagmentComponent implements OnInit {
 
         localStorage.setItem('restaurantName', restaurantName ? restaurantName.restaurantName: '');
         
-        console.log("yio 2");
         this.isVoirProduitLoading = false;
         
       });
