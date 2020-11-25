@@ -32,6 +32,7 @@ export class AppComponent implements OnDestroy{
   ngOnInit() {
     this.logoService.onRestaurantLogoImgUrl.subscribe(data =>{
       localStorage.setItem('logoUrl',data);
+      this.logoUrl = localStorage.getItem('logoUrl');
     });
     this.logoUrl = localStorage.getItem('logoUrl');
     

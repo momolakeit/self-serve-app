@@ -28,8 +28,6 @@ export class AuthentificationService {
    login(signInForm: SignInForm) : Observable<boolean>{
     return this.getToken(signInForm).pipe(
       map(response => {
-        console.log(response);
-        
         if (response && response.token) {
           localStorage.setItem('token',response.token);
           localStorage.setItem('username',signInForm.username);
