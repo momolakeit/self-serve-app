@@ -41,7 +41,6 @@ export class RestaurantFormComponent implements OnInit {
   ngAfterViewInit(){
     if (this.data) 
       this.initTable();
-    
   }
 
   // ALL ABOUT THE FORM
