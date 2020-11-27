@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isActive">
+<ng-container *ngIf="isActive">
     <ng-container *ngIf="allTables">
         <h1 class="text-center w-25 mx-auto border-bottom border-dark">All Orders</h1>
 
@@ -40,7 +40,7 @@
     </ng-container>
 </ng-container>
 
-<ng-container *ngIf="isActive && !loading">
+<ng-container *ngIf="!isActive && !loading">
     <div class="container">
         <div class="row">
             <div class="col w-100 text-center">
