@@ -24,6 +24,7 @@ export class ProductFormEditCreateComponent implements OnInit {
   title: string;
   productTypes: string[] = Object.keys(ProductType);
   productMenuTypes: string[] = Object.keys(ProductMenuType);
+  isButtonLoading: boolean = false;
 
   //file setup 
   disabled: boolean = false;
@@ -130,14 +131,11 @@ export class ProductFormEditCreateComponent implements OnInit {
         checkItems: this.getAddonList()
       }
 
-      console.log(product);
-      
-
+      this.isButtonLoading = true;
       if (this.data)
         this.onUpdateProduct(product);
       else this.onCreateProduct(product);
 
-      this.dialogRef.close('refresh');
     }
   }
 
@@ -158,8 +156,9 @@ export class ProductFormEditCreateComponent implements OnInit {
 
     if (file != undefined)
       this.productService.saveProductImage(formData, productId).subscribe(() => this.dialogRef.close('refresh'));
-    else
+    else{
       this.dialogRef.close('refresh');
+    }
   }
 
   onNoClick(): void {

@@ -18,7 +18,7 @@
 
         <button mat-raised-button class="text-white bg-dark" (click)="onNoClick()">Cancel</button>
         <button *ngIf="!isAddingTableLoading" mat-raised-button class="text-white bg-dark" (click)="onCreateTable()">Create Table</button>
-        <mat-spinner *ngIf="isAddingTableLoading" class="mx-auto" [diameter]="30" [strokeWidth]="5"></mat-spinner>
+        <mat-spinner *ngIf="isAddingTableLoading" class="ml-auto mr-1" [diameter]="30" [strokeWidth]="5"></mat-spinner>
     </div>
 
 </div>
