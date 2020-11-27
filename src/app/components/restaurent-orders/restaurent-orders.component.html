@@ -1,36 +1,45 @@
 <ng-container *ngIf="isActive">
     <ng-container *ngIf="allTables">
-        <div class="bg-white  text-center">
-            <h4>
-                ALL ORDERS
-            </h4>
-        </div>
-        <mat-accordion *ngFor="let table of allTables;let i = index">
-            <mat-expansion-panel [expanded]="panelOpenStateArray[i]" (opened)="this.setPanelOpenValue(i,true)" (closed)="this.setPanelOpenValue(i,false)">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col w-25">
-                                    <h2>Table {{table.tableNumber}}</h2>
+        <h1 class="text-center w-25 mx-auto border-bottom border-dark">All Orders</h1>
+
+        <!--TABLE LIST-->
+        <div class="container-fluid">
+
+            <div class="row">
+                <mat-accordion class="col-4 mb-4" *ngFor="let table of allTables;let i = index">
+                    <mat-expansion-panel expanded>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col w-25">
+                                            <h2>Table {{table.tableNumber}}</h2>
+                                        </div>
+                                        <div class="col w-75">
+                                            <h2>{{table.nombreItemParTable}} orders </h2>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col w-75">
-                                    <h2>{{table.nombreItemParTable}} orders </h2>
-                                </div>
-                            </div>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <div style="min-height: 500px; max-height: 500px;">
+                            <ng-container *ngFor='let bill of table.bills'>
+                                <ng-container *ngFor='let orderItem of bill.orderItems'>
+                                    <app-restaurent-dish-detail-view (countChanged)="initValues($event)"
+                                        [orderItem]="orderItem">
+                                    </app-restaurent-dish-detail-view>
+                                </ng-container>
+                            </ng-container>
                         </div>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <ng-container *ngFor='let bill of table.bills'>
-                    <ng-container *ngFor='let orderItem of bill.orderItems'>
-                        <app-restaurent-dish-detail-view (countChanged)="initValues($event)" [orderItem]="orderItem">
-                        </app-restaurent-dish-detail-view>
-                    </ng-container>
-                </ng-container>
-            </mat-expansion-panel>
-        </mat-accordion>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+
     </ng-container>
 </ng-container>
+
 <ng-container *ngIf="!isActive && !loading">
     <div class="container">
         <div class="row">
@@ -40,6 +49,7 @@
         </div>
     </div>
 </ng-container>
+
 <ng-container *ngIf="loading">
     <div class="loader text-center"></div>
 </ng-container>

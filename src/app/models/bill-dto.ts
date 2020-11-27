@@ -7,8 +7,8 @@ import {RestaurantDTO} from './restaurant-dto';
 
 export interface BillDTO {
     id: number;
-    orderItems: [OrderItemDTO];
-    orderCustomer: [GuestDTO];
+    orderItems: OrderItemDTO[];
+    orderCustomer: GuestDTO[];
     date: Date;
     prixTotal: number;
     billStatus: BillStatus;
