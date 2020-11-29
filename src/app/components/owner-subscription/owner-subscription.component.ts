@@ -49,11 +49,11 @@ export class OwnerSubscriptionComponent implements OnInit {
     this.getSubscriptionProducts();
   }
 
-  initPaymentRetry(){
+  initPaymentRetry() {
     const latestInvoicePaymentIntentStatus = localStorage.getItem('latestInvoicePaymentIntentStatus');
-    if (latestInvoicePaymentIntentStatus === 'requires_payment_method'){
-      this.isPaymentRetry=true;
-      this.priceId="valeurBidon";
+    if (latestInvoicePaymentIntentStatus === 'requires_payment_method') {
+      this.isPaymentRetry = true;
+      this.priceId = "valeurBidon";
     }
   }
 
@@ -99,13 +99,11 @@ export class OwnerSubscriptionComponent implements OnInit {
   submitForm() {
     this.hideComponent(document.getElementById("subscriptionContainer"));
     this.showComponent(document.getElementById("spinner"));
-    if (this.priceId == null) {
+    if (this.priceId == null && !this.isPaymentRetry) {
       this.hideComponent(document.getElementById("spinner"));
       this.showComponent(document.getElementById("subscriptionContainer"));
-      if(!this.isPaymentRetry){
-        var element = document.getElementById("subscriptionErrorTxt");
-        element.classList.remove("d-none");
-      }
+      var element = document.getElementById("subscriptionErrorTxt");
+      element.classList.remove("d-none");
     }
     else {
       var form = document.getElementById('subscription-form');
