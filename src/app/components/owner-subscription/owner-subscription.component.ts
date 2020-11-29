@@ -18,6 +18,7 @@ export class OwnerSubscriptionComponent implements OnInit {
   isError: boolean;
   errorMsg: string;
   loading = false;
+  isPaymentRetry = false;
   customerId: string;
   priceId: string;
   subscriptionProducts: [StripeSubscriptionProducts];
@@ -41,10 +42,19 @@ export class OwnerSubscriptionComponent implements OnInit {
 
 
   ngOnInit() {
+    this.initPaymentRetry();
     this.hideComponent(document.getElementById("subscriptionContainer"));
     this.showComponent(document.getElementById("spinner"));
     this.fetchCustomerId();
     this.getSubscriptionProducts();
+  }
+
+  initPaymentRetry(){
+    const latestInvoicePaymentIntentStatus = localStorage.getItem('latestInvoicePaymentIntentStatus');
+    if (latestInvoicePaymentIntentStatus === 'requires_payment_method'){
+      this.isPaymentRetry=true;
+      this.priceId="valeurBidon";
+    }
   }
 
   initStripe() {
@@ -92,29 +102,22 @@ export class OwnerSubscriptionComponent implements OnInit {
     if (this.priceId == null) {
       this.hideComponent(document.getElementById("spinner"));
       this.showComponent(document.getElementById("subscriptionContainer"));
-      var element = document.getElementById("subscriptionErrorTxt");
-      element.classList.remove("d-none");
+      if(!this.isPaymentRetry){
+        var element = document.getElementById("subscriptionErrorTxt");
+        element.classList.remove("d-none");
+      }
     }
     else {
       var form = document.getElementById('subscription-form');
 
-
-      // If a previous payment was attempted, get the latest invoice
-      const latestInvoicePaymentIntentStatus = localStorage.getItem(
-        'latestInvoicePaymentIntentStatus'
-      );
-
-      if (latestInvoicePaymentIntentStatus === 'requires_payment_method') {
-        const invoiceId = localStorage.getItem('latestInvoiceId');
-        const isPaymentRetry = true;
+      if (this.isPaymentRetry) {
         // create new payment method & retry payment on invoice with new payment method
         this.createPaymentMethod(
-          isPaymentRetry,
-          invoiceId,
+          this.isPaymentRetry,
         );
       } else {
         // create new payment method & create subscription
-        this.createPaymentMethod(false, null);
+        this.createPaymentMethod(false);
       }
     }
   }
@@ -131,7 +134,7 @@ export class OwnerSubscriptionComponent implements OnInit {
 
     this.priceId = stripeSubscriptionProducts.priceId;
   }
-  createPaymentMethod(isPaymentRetry, invoiceId) {
+  createPaymentMethod(isPaymentRetry) {
     // Set up payment method for recurring usage
     let billingName = "I-SERVE ABONNEMENT";
 
@@ -149,26 +152,17 @@ export class OwnerSubscriptionComponent implements OnInit {
         } else {
           if (isPaymentRetry) {
             // Update the payment method and retry invoice payment
-            /*retryInvoiceWithNewPaymentMethod({
-              customerId: this.customerId,
-              paymentMethodId: result.paymentMethod.id,
-              invoiceId: invoiceId,
-              priceId: this.priceId,
-            });*/
+            this.retryInvoiceWithNewPaymentMethod(
+              this.customerId,
+              result.paymentMethod.id,
+            );
           } else {
             // Create the subscription
             this.paymentService
             this.paymentService.createPaymentSubscription(this.customerId, result.paymentMethod.id, this.priceId).subscribe(result => {
 
               this.showLoader(false);
-              if (result.status != "active") {
-                this.hideComponent(document.getElementById("spinner"));
-                this.showComponent(document.getElementById("subscriptionContainer"));
-                this.handleError();
-              }
-              else {
-                this.router.navigateByUrl("subscriptionDetail");
-              }
+              this.handleSubscriptionCreateRetryResponse(result);
               console.log(result)
             },
               error => {
@@ -184,8 +178,24 @@ export class OwnerSubscriptionComponent implements OnInit {
         }
       });
   }
+  retryInvoiceWithNewPaymentMethod(customerId, paymentMethodId) {
+    this.paymentService.retryPaymentSubscription(customerId, paymentMethodId).subscribe(result => {
+      this.handleSubscriptionCreateRetryResponse(result);
+    })
+  }
   handleError() {
     var element = document.getElementById("paymentErrorTxt");
     element.classList.remove("d-none");
+  }
+  handleSubscriptionCreateRetryResponse(result) {
+    this.showLoader(false);
+    if (result.status != "active") {
+      this.hideComponent(document.getElementById("spinner"));
+      this.showComponent(document.getElementById("subscriptionContainer"));
+      this.handleError();
+    }
+    else {
+      this.router.navigateByUrl("subscriptionDetail");
+    }
   }
 }

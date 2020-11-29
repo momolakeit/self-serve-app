@@ -54,7 +54,8 @@
         "choose":"Choose",
         "subscribe":"Subscribe",
         "errorOnPayment":"There was an error during your payment,please try again later",
-        "noPlanSelected":"Please select a plan option to proceed"
+        "noPlanSelected":"Please select a plan option to proceed",
+        "errorWithPaymentMethod":"There was a error with your last payment , please update your payment method"
     },
     "adminProductManagment":{
         "title":"Register on Stripe ",

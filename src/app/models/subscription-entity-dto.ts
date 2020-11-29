@@ -21,4 +21,5 @@ export class SubscriptionEntityDTO {
 
     errorMessage:string;
 
+    latestInvoiceStatus:string;
 }
