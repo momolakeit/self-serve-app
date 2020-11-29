@@ -54,7 +54,8 @@
         "choose":"Sélectionner",
         "subscribe":"S'abonner",
         "errorOnPayment":"Il y a eu une erreur lors de votre payment ,veuillez reesayer plus tard",
-        "noPlanSelected":"Veuillez selectionner une option de plan pour procéder"
+        "noPlanSelected":"Veuillez selectionner une option de plan pour procéder",
+        "errorWithPaymentMethod":"Il y a eu un problème avec votre dernier paiement , veuillez mettre a jour votre méthode de paiement"
     },
     "adminProductManagment":{
         "title":"Inscrivez vous sur Stripe ",

@@ -34,6 +34,9 @@ export class PaymentService {
     return this.http.post<StripeCreateAccountUrlDTO>(`${environment.saveStripeAccountId}`,{accountId:accountId,username:username});
   }
 
+  retryPaymentSubscription(customerId:string,paymentMethodId:string):Observable<SubscriptionEntityDTO>{
+    return this.http.post<SubscriptionEntityDTO>(`${environment.retrySubscriptionUrl}`,{customerId:customerId,paymentMethodId:paymentMethodId});
+  }
 
   createPaymentSubscription(customerId:string,paymentMethodId:string,priceId:string):Observable<SubscriptionEntityDTO>{
     return this.http.post<SubscriptionEntityDTO>(`${environment.createSubscriptionUrl}`,{customerId:customerId,paymentMethodId:paymentMethodId,priceId:priceId});

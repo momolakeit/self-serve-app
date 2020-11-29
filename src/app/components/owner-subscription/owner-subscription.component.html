@@ -1,5 +1,5 @@
 <div class="container" id="subscriptionContainer">
-    <div class="row">
+    <div class="row" *ngIf="!isPaymentRetry">
         <ng-container *ngFor="let product of subscriptionProducts;let i = index;">
             <div class="col w-50 ">
                 <mat-card (click)="changeSubscriptionProduct(product,i)" class="example-card mt-4">
@@ -19,6 +19,10 @@
         </ng-container>
     </div>
     <div class="row">
+        <div *ngIf="isPaymentRetry" class="p-3 pb-0">
+            <p class="text-danger">{{ 'ownerSubscription.errorWithPaymentMethod' | translate }}</p>    
+        </div>
+        
         <div class="col w-50">
             <mat-card class="example-card mt-4">
                 <form id="subscription-form">

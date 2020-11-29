@@ -11,6 +11,7 @@ export class SubscriptionDetailsComponent implements OnInit {
 
   constructor(private paymentService:PaymentService) { }
   loading : boolean;
+  isLatestInvoicePaid = true;
   ngOnInit(): void {
     this.fetchSubscription();
   }
@@ -18,6 +19,7 @@ export class SubscriptionDetailsComponent implements OnInit {
   fetchSubscription(){
     this.paymentService.fetchSubscription(localStorage.getItem("username")).subscribe(data =>{
       this.subscriptionEntity = data;
+      localStorage.setItem('latestInvoicePaymentIntentStatus',this.subscriptionEntity.latestInvoiceStatus);
     })
   }
   cancelSubscription(){
