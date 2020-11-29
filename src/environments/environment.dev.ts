@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 // const host = "18.221.184.6";
-const host = "18.188.8.244";
+const host = "52.14.48.162";
 const port = "";
 const rolePrefix = 'ROLE_';
 
@@ -39,6 +39,7 @@ export const roles={
   waiter: `${rolePrefix}WAITER`,
   client: `${rolePrefix}CLIENT`,
   guest: `${rolePrefix}GUEST`,
+  admin: `${rolePrefix}ADMIN`
 }
 
 /*
