@@ -48,7 +48,7 @@ const routes: Routes = [
   
   //all about waiter
   { path: 'waiter-request', canActivate: [WaiterGuardService], component: WaiterRequestListComponent },
-  { path: 'restaurentOrders', canActivate: [CookGuardService], component: RestaurentOrdersComponent },
+  { path: 'restaurentOrders', component: RestaurentOrdersComponent },
   
   //all about admin
   { path: 'contactForm', canActivate: [OwnerRoleGuardService], component: ContactFormComponent },

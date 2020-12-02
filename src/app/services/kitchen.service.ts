@@ -25,8 +25,8 @@ export class KitchenService {
   postMoreTimeForOrder(orderItemDTO :OrderItemDTO,tempsAjoute :number): Observable<OrderItemDTO>{
     return this.http.post<OrderItemDTO>(`${environment.kitchenUrl}/changeOrderItemTime`,{orderItemId:orderItemDTO.id,tempsAjoute:tempsAjoute});
   }
-  fetchMenuByRestaurantTable (restaurantTableId :number) :Observable<MenuDTO> {
-    return this.http.post<MenuDTO>(`${environment.kitchenUrl}/findMenuByRestaurantId`,{restaurantTableId:restaurantTableId});
+  fetchMenuByRestaurantTable (tableID :number) :Observable<RestaurantDTO> {
+    return this.http.get<RestaurantDTO>(`${environment.kitchenUrl}/findRestaurantByRestaurantTableId/${tableID}`);
   }
   getAllRestaurantTables() :Observable<[RestaurantTableDTO]>{
     const restaurantId =2;

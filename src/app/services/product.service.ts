@@ -17,11 +17,11 @@ export class ProductService {
     return this.http.get<ProductDTO>(`${environment.productUrl}/${id}`);
   }
 
-  findAllProductFromMenu(menuId: number): Observable<[ProductDTO]> {
-    return this.http.get<[ProductDTO]>(`${environment.productUrl}/menu/${menuId}`);
+  findAllProductFromMenu(restaurantId: number): Observable<[ProductDTO]> {
+    return this.http.get<[ProductDTO]>(`${environment.productUrl}/menu/${restaurantId}`);
   }
-  findAllWaiterRequestProduct(menuId: number): Observable<[ProductDTO]> {
-    return this.http.get<[ProductDTO]>(`${environment.productUrl}/findWaiterRequestProducts/${menuId}`)
+  findAllWaiterRequestProduct(menuId: number): Observable<MenuDTO> {
+    return this.http.get<MenuDTO>(`${environment.productUrl}/findWaiterRequestProducts/${menuId}`)
   }
 
   create(productDTO: ProductDTO, id: number): Observable<ProductDTO> {

@@ -16,12 +16,12 @@ import { BillService } from '../../services/bill.service'
 export class MenuComponent implements OnInit {
 
 
-  menu: MenuDTO;
+  menu: [MenuDTO];
   listeUrlImagesSpeciaux = [];
   panelOpenState: boolean
   listeUrlImagesFeatured = [String];
   productToSeeDetail: ProductDTO;
-  hasMenuId: boolean;
+  hasRestaurantId: boolean;
 
   slides = [{ 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }];
 
@@ -29,11 +29,11 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     //not clean init should only call methods
-    if (localStorage.getItem('menuId') == null) {
-      this.hasMenuId = false;
+    if (localStorage.getItem('restaurantId') == null) {
+      this.hasRestaurantId = false;
     }
     else {
-      this.hasMenuId = true;
+      this.hasRestaurantId = true;
       this.initBill();
       this.fetchMenu();
     }
@@ -56,11 +56,11 @@ export class MenuComponent implements OnInit {
     this.productToSeeDetail = product;
   };
   fetchMenu() {
-    this.menuService.getMenuById().subscribe(data => {
+    this.menuService.getMenuById(JSON.parse(localStorage.getItem("restaurantId"))).subscribe(data => {
       this.menu = data;
       console.log(this.menu);
-      this.menu.speciaux.forEach(element => this.listeUrlImagesSpeciaux.push(environment.baseImgPath + element.imgFileDTO.id));
-      console.log(this.listeUrlImagesSpeciaux);
+     // this.menu.speciaux.forEach(element => this.listeUrlImagesSpeciaux.push(environment.baseImgPath + element.imgFileDTO.id));
+      //console.log(this.listeUrlImagesSpeciaux);
     })
   }
   initBill() {

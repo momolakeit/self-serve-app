@@ -114,7 +114,7 @@ export class AdminProductManagmentComponent implements OnInit {
       
       this.menuService.fetchMenuById(menuId).subscribe(data => {
 
-        this.productDTOList = data.products;
+        //this.productDTOList = data.products;
 
         this.initTable();
 

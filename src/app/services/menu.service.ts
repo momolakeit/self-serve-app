@@ -13,12 +13,12 @@ export class MenuService {
 
   constructor(private http: HttpClient, private constanteService: ConstanteService) { }
 
-  fetchMenuById(menuID: number): Observable<MenuDTO> {
-    return this.http.post<MenuDTO>(`${environment.menuUrl}/getMenu`, { menuId: menuID });
+  fetchMenuById(restaurantId: number): Observable<[MenuDTO]> {
+    return this.http.post<[MenuDTO]>(`${environment.menuUrl}/getMenu`, { restaurantId: restaurantId });
   }
 
-  getMenuById(): Observable<MenuDTO> {
-    return this.fetchMenuById(JSON.parse(localStorage.getItem("menuId"))).pipe(
+  getMenuById(menuId:number): Observable<[MenuDTO]> {
+    return this.fetchMenuById(menuId).pipe(
       map(response => {
         return response;
       }));
