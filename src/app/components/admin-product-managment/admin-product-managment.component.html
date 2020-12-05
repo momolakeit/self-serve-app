@@ -30,7 +30,7 @@
 
             <div class="col-lg-4 col-md-4 col-6">
               <button *ngIf="!isVoirProduitLoading" mat-raised-button class="btn-dark text-white w-100"
-                (click)="getAllProductsFromRestaurant(restaurantSelectionFormControl.value)">{{'adminProductManagment.showMenu'|translate}}</button>
+                (click)="getAllMenuFromRestaurant(restaurantSelectionFormControl.value)">{{'adminProductManagment.showMenu'|translate}}</button>
 
               <mat-spinner class="mx-auto" *ngIf="isVoirProduitLoading" [diameter]="30" [strokeWidth]="5"></mat-spinner>
             </div>

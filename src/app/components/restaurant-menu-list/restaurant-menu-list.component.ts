@@ -63,12 +63,13 @@ export class RestaurantMenuListComponent implements OnInit {
     }
   }
   menuSelectedChanged(menuDTO:MenuDTO){
+    localStorage.setItem("menuId",JSON.stringify(menuDTO.id))
     this.menuService.onMenuSelectedEvent.emit(menuDTO.products);
   }
   openDialog(menuDTO: MenuDTO): void {
     const dialogRef = this.dialog.open(MenuFormEditCreateComponent, {
       width: this.mobileQuery.matches ? '90%' : '50%',
-      height: '80%',
+      height: '25%',
       data: menuDTO
     });
 
