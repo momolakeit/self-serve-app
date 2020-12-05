@@ -57,22 +57,29 @@ export class MenuFormEditCreateComponent implements OnInit {
       }
 
       this.isButtonLoading = true;
-      /*if (this.data)
-        this.onUpdateProduct(menu);*/
-       this.onCreateProduct(menu);
+      if (this.data)
+      {
+        this.onUpdateMenu(menu);
+      }
+      else{
+        this.onCreateMenu(menu);
+      }
 
     }
   }
-  onCreateProduct(menu: MenuDTO) {
+  onCreateMenu(menu: MenuDTO) {
     this.menuService.createMenu(menu.name, this.restaurantId,menu.menuType).subscribe((data)=>{
       this.menuService.onMenuCreatedEvent.emit("menuCreated");
       this.onNoClick()
     });
   }
-  /*
-  onUpdateProduct(product: ProductDTO) {
-    this.productService.update(product).subscribe();
-  }*/
+  
+  onUpdateMenu(menu: MenuDTO) {
+    this.menuService.updateMenu(menu.id,menu.name,menu.menuType).subscribe(()=>{
+      this.menuService.onMenuCreatedEvent.emit("menuCreated");
+      this.onNoClick();
+    });
+  }
   onNoClick(){
     this.dialogRef.close();
   }

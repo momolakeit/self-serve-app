@@ -18,7 +18,9 @@ export class MenuService {
   fetchAllMenuByRestaurantId(restaurantId: number): Observable<[MenuDTO]> {
     return this.http.post<[MenuDTO]>(`${environment.menuUrl}/getMenu`, { restaurantId: restaurantId });
   }
-  
+  updateMenu(menuId:number,menuName:string,menuType:MenuType):Observable<[MenuDTO]> {  
+    return this.http.put<[MenuDTO]>(`${environment.menuUrl}/updateMenu`, { menuId: menuId,menuName:menuName,menuType:menuType });
+  }
 
   deleteMenu(restaurantId: number,menuId:number): Observable<any> {
     return this.http.delete(`${environment.menuUrl}/deleteMenu/${restaurantId}/${menuId}`);

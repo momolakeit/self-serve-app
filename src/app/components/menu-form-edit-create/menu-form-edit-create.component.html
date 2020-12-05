@@ -3,15 +3,6 @@
     <h1 mat-dialog-title class="text-center">{{title}}</h1>
     <mat-divider></mat-divider>
 
-    <!--BODY-->
-
-    <p *ngIf="data">
-        <mat-form-field class="w-100">
-            <mat-label>Id:</mat-label>
-            <input [readonly]="true" matInput type="text" formControlName="id">
-        </mat-form-field>
-    </p>
-
     <p>
         <mat-form-field class="w-100">
             <mat-label>{{ 'productEditCreate.nameTxt' | translate }}:</mat-label>

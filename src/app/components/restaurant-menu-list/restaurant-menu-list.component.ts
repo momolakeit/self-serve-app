@@ -28,7 +28,7 @@ export class RestaurantMenuListComponent implements OnInit {
   dataSourceMenu: MatTableDataSource<MenuDTO>;
   restaurantSelectionDTOS: [RestaurantSelectionDTO];
   productDTOList: [ProductDTO];
-  currentProductToEdit: ProductDTO;
+  currentMenuToEdit: MenuDTO;
   hasStripeAccountId: boolean;
   loading: boolean;
   mobileQuery: MediaQueryList;
@@ -66,6 +66,12 @@ export class RestaurantMenuListComponent implements OnInit {
     localStorage.setItem("menuId",JSON.stringify(menuDTO.id))
     this.menuService.onMenuSelectedEvent.emit(menuDTO.products);
   }
+
+  changeCurrentProductToEdit(menuDTO: MenuDTO) {
+    this.currentMenuToEdit = menuDTO;
+    this.openDialog(this.currentMenuToEdit);
+  }
+  
   openDialog(menuDTO: MenuDTO): void {
     const dialogRef = this.dialog.open(MenuFormEditCreateComponent, {
       width: this.mobileQuery.matches ? '90%' : '50%',
@@ -78,7 +84,7 @@ export class RestaurantMenuListComponent implements OnInit {
         this.initTableMenu();
 
       if (result == 'close') {
-        this.currentProductToEdit = null;
+        this.currentMenuToEdit = null;
       }
     });
   }
