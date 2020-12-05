@@ -23,7 +23,7 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
 
-                        <div style="min-height: 500px; max-height: 500px;">
+                        <div style="min-height: 500px; max-height: 500px;" class="overflow-auto">
                             <ng-container *ngFor='let bill of table.bills'>
                                 <ng-container *ngFor='let orderItem of bill.orderItems'>
                                     <app-restaurent-dish-detail-view (countChanged)="initValues($event)"
