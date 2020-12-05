@@ -17,7 +17,7 @@ import {Input} from '@angular/core';
 import {OwnerUsernameService} from '../../services/owner-username.service';
 import {AuthService} from '../../services/auth.service';
 import { MediaMatcher } from '@angular/cdk/layout';
-
+import { MenuDTO } from 'src/app/models/menu-dto';
 @Component({
   selector: 'app-admin-product-managment',
   templateUrl: './admin-product-managment.component.html',
@@ -27,9 +27,11 @@ export class AdminProductManagmentComponent implements OnInit {
 
   @Input() username: string;
   displayedColumns: string[] = ['image', 'name', 'category', 'edit', 'delete'];
-  dataSource: MatTableDataSource<ProductDTO>;
+  dataSourceProduit: MatTableDataSource<ProductDTO>;
+  dataSourceMenu: MatTableDataSource<MenuDTO>;
   restaurantSelectionDTOS: [RestaurantSelectionDTO];
   productDTOList: [ProductDTO];
+  menuDTOList :[MenuDTO]
   currentProductToEdit: ProductDTO;
   restaurantSelectionFormControl: FormControl;
   hasStripeAccountId: boolean;
@@ -54,6 +56,18 @@ export class AdminProductManagmentComponent implements OnInit {
     this.loading = true;
     this.getAllRestaurantSelectionDTO();
     this.initForm();
+    this.onMenuCreated();
+    this.menuSelectedChanged();  
+  }
+
+  menuSelectedChanged(){
+    this.menuService.onMenuSelectedEvent.subscribe(data =>{
+      this.productDTOList = data;
+      this.initTableProduit();
+    });
+  }
+  onMenuCreated(){
+    this.menuService.onMenuCreatedEvent.subscribe(data=>this.getAllMenuFromRestaurant(parseInt(localStorage.getItem('restaurantId'))))
   }
 
 
@@ -64,14 +78,23 @@ export class AdminProductManagmentComponent implements OnInit {
   }
 
   initTable() {
-    this.dataSource = new MatTableDataSource(this.productDTOList);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.initTableProduit();
+    this.initTableMenu();
+  }
+  initTableProduit(){
+    this.dataSourceProduit = new MatTableDataSource(this.productDTOList);
+    this.dataSourceProduit.paginator = this.paginator;
+    this.dataSourceProduit.sort = this.sort;
+  }
+  initTableMenu(){
+    this.dataSourceMenu = new MatTableDataSource(this.menuDTOList);
+    this.dataSourceMenu.paginator = this.paginator;
+    this.dataSourceMenu.sort = this.sort;
   }
 
   initProductTable() {
-    if (localStorage.getItem('menuId'))
-      this.getAllProductsFromRestaurant(parseInt(localStorage.getItem('menuId')));
+    if (localStorage.getItem('restaurantId'))
+      this.getAllMenuFromRestaurant(parseInt(localStorage.getItem('restaurantId')));
     this.isVoirProduitLoading = false;
 
   }
@@ -107,20 +130,20 @@ export class AdminProductManagmentComponent implements OnInit {
     })
   }
 
-  getAllProductsFromRestaurant(menuId: number) {
+  getAllMenuFromRestaurant(restaurantId: number) {
 
     if (this.restaurantSelectionFormControl.valid) {
       this.isVoirProduitLoading = true;
       
-      this.menuService.fetchMenuById(menuId).subscribe(data => {
+      this.menuService.fetchAllMenuByRestaurantId(restaurantId).subscribe(data => {
 
-        //this.productDTOList = data.products;
-
+        this.menuDTOList = data;
+        console.log(this.menuDTOList);
         this.initTable();
 
-        localStorage.setItem('menuId', `${menuId}`);
+        localStorage.setItem('restaurantId', `${restaurantId}`);
 
-        const restaurantName = this.restaurantSelectionDTOS.find(item => item.menuId === menuId);
+        const restaurantName = this.restaurantSelectionDTOS.find(item => item.restaurantId === restaurantId);
 
         localStorage.setItem('restaurantName', restaurantName ? restaurantName.restaurantName: '');
         
@@ -147,7 +170,7 @@ export class AdminProductManagmentComponent implements OnInit {
     this.productDTOList.find(product => product.id == id).isLoading = true;
 
     this.productService.delete(id).subscribe(() => {
-      this.getAllProductsFromRestaurant(parseInt(localStorage.getItem('menuId')));
+      this.getAllMenuFromRestaurant(parseInt(localStorage.getItem('restaurantId')));
     });
   }
 
@@ -155,10 +178,10 @@ export class AdminProductManagmentComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSourceProduit.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    if (this.dataSourceProduit.paginator) {
+      this.dataSourceProduit.paginator.firstPage();
     }
   }
 

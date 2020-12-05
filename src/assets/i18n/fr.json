@@ -64,15 +64,19 @@
         "restaurantSelection":"Choix du restaurant",
         "selectRestaurant":"Choisir un restaurant",
         "showProduct":"Voir produits",
+        "showMenu":"Voir menus",
         "myProducts":"Mes produits",
+        "MyMenu":"Mes menus",
         "filter":"Filtrer",
         "imageTxt":"Image",
         "nameTxt":"Nom",
         "categoryTxt":"Catégorie",
         "editTxt":"Modifier",
         "deleteTxt":"Supprimer",
+        "viewProductsTtx":"Voir produits",
         "noDataMatching":"Aucune donné ne correspond au filtre",
-        "addProductTxt":"Ajouter produit"
+        "addProductTxt":"Ajouter produit",
+        "addMenuTxt":"Ajouter menu"
     },
     "restaurantOwnerList":{
         "title":"Mes restaurants",

@@ -1,0 +1,43 @@
+<form [formGroup]="menuForm" class="overflow-auto">
+    <!--HEADER-->
+    <h1 mat-dialog-title class="text-center">{{title}}</h1>
+    <mat-divider></mat-divider>
+
+    <!--BODY-->
+
+    <p *ngIf="data">
+        <mat-form-field class="w-100">
+            <mat-label>Id:</mat-label>
+            <input [readonly]="true" matInput type="text" formControlName="id">
+        </mat-form-field>
+    </p>
+
+    <p>
+        <mat-form-field class="w-100">
+            <mat-label>{{ 'productEditCreate.nameTxt' | translate }}:</mat-label>
+            <input matInput placeholder="Ex. Pizza" formControlName="name" type="text">
+            <mat-error>{{ 'productEditCreate.nameErrorTxt' | translate }}</mat-error>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field class="w-100">
+            <mat-label>{{ 'productEditCreate.productTypeTxt' | translate }}:</mat-label>
+            <mat-select formControlName="menuType">
+                <mat-option *ngFor="let menuType of menuTypes" [value]="menuType">{{menuType}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </p>
+
+    <!--FOOTER-->
+    <div class="d-flex justify-content-between m-2">
+        <button mat-raised-button class="btn-dark text-white" (click)="onNoClick()">Cancel</button>
+
+        <button mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()"
+            *ngIf="!data && !isButtonLoading">{{ 'productEditCreate.createBtnTxt' | translate }}</button>
+
+        <button mat-raised-button class="btn-dark text-white" cdkFocusInitial (click)="onSubmitForm()"
+            *ngIf="data && !isButtonLoading">{{ 'productEditCreate.updateBtnTxt' | translate }}</button>
+
+        <mat-spinner *ngIf="isButtonLoading" [diameter]="30" [strokeWidth]="5"></mat-spinner>
+    </div>
+</form>
