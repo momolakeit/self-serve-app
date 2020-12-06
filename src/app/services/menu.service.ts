@@ -15,8 +15,11 @@ export class MenuService {
   onMenuCreatedEvent = new EventEmitter<any>();
   constructor(private http: HttpClient, private constanteService: ConstanteService) { }
 
-  fetchAllMenuByRestaurantId(restaurantId: number): Observable<[MenuDTO]> {
+  fetchFoodMenuByRestaurantId(restaurantId: number): Observable<[MenuDTO]> {
     return this.http.post<[MenuDTO]>(`${environment.menuUrl}/getMenu`, { restaurantId: restaurantId });
+  }
+  fetchAllMenuByRestaurantId(restaurantId: number): Observable<[MenuDTO]> {
+    return this.http.post<[MenuDTO]>(`${environment.menuUrl}/getAllMenu`, { restaurantId: restaurantId });
   }
   updateMenu(menuId:number,menuName:string,menuType:MenuType):Observable<[MenuDTO]> {  
     return this.http.put<[MenuDTO]>(`${environment.menuUrl}/updateMenu`, { menuId: menuId,menuName:menuName,menuType:menuType });
@@ -27,7 +30,7 @@ export class MenuService {
   }
 
   getMenuById(menuId:number): Observable<[MenuDTO]> {
-    return this.fetchAllMenuByRestaurantId(menuId).pipe(
+    return this.fetchFoodMenuByRestaurantId(menuId).pipe(
       map(response => {
         return response;
       }));

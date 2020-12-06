@@ -12,10 +12,10 @@ import { environment } from 'src/environments/environment';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductFormEditCreateComponent } from '../product-form-edit-create/product-form-edit-create.component';
-import {PaymentService} from '../../services/payment.service';
-import {Input} from '@angular/core';
-import {OwnerUsernameService} from '../../services/owner-username.service';
-import {AuthService} from '../../services/auth.service';
+import { PaymentService } from '../../services/payment.service';
+import { Input } from '@angular/core';
+import { OwnerUsernameService } from '../../services/owner-username.service';
+import { AuthService } from '../../services/auth.service';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { MenuDTO } from 'src/app/models/menu-dto';
 @Component({
@@ -31,7 +31,7 @@ export class AdminProductManagmentComponent implements OnInit {
   dataSourceMenu: MatTableDataSource<MenuDTO>;
   restaurantSelectionDTOS: [RestaurantSelectionDTO];
   productDTOList: [ProductDTO];
-  menuDTOList :[MenuDTO]
+  menuDTOList: [MenuDTO]
   currentProductToEdit: ProductDTO;
   restaurantSelectionFormControl: FormControl;
   hasStripeAccountId: boolean;
@@ -42,7 +42,7 @@ export class AdminProductManagmentComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private menuService: MenuService, private productService: ProductService, public dialog: MatDialog, private authentificationService: AuthentificationService, private paymentService: PaymentService,private ownerUsernameService:OwnerUsernameService,private authService:AuthService) {
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private menuService: MenuService, private productService: ProductService, public dialog: MatDialog, private authentificationService: AuthentificationService, private paymentService: PaymentService, private ownerUsernameService: OwnerUsernameService, private authService: AuthService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -51,23 +51,23 @@ export class AdminProductManagmentComponent implements OnInit {
   ngOnInit() {
     this.initValues();
   }
-  
+
   initValues() {
     this.loading = true;
     this.getAllRestaurantSelectionDTO();
     this.initForm();
     this.onMenuCreated();
-    this.menuSelectedChanged();  
+    this.menuSelectedChanged();
   }
 
-  menuSelectedChanged(){
-    this.menuService.onMenuSelectedEvent.subscribe(data =>{
+  menuSelectedChanged() {
+    this.menuService.onMenuSelectedEvent.subscribe(data => {
       this.productDTOList = data;
       this.initTableProduit();
     });
   }
-  onMenuCreated(){
-    this.menuService.onMenuCreatedEvent.subscribe(data=>this.getAllMenuFromRestaurant(parseInt(localStorage.getItem('restaurantId'))))
+  onMenuCreated() {
+    this.menuService.onMenuCreatedEvent.subscribe(data => this.getAllMenuFromRestaurant(parseInt(localStorage.getItem('restaurantId'))))
   }
 
 
@@ -81,12 +81,12 @@ export class AdminProductManagmentComponent implements OnInit {
     this.initTableProduit();
     this.initTableMenu();
   }
-  initTableProduit(){
+  initTableProduit() {
     this.dataSourceProduit = new MatTableDataSource(this.productDTOList);
     this.dataSourceProduit.paginator = this.paginator;
     this.dataSourceProduit.sort = this.sort;
   }
-  initTableMenu(){
+  initTableMenu() {
     this.dataSourceMenu = new MatTableDataSource(this.menuDTOList);
     this.dataSourceMenu.paginator = this.paginator;
     this.dataSourceMenu.sort = this.sort;
@@ -134,21 +134,21 @@ export class AdminProductManagmentComponent implements OnInit {
 
     if (this.restaurantSelectionFormControl.valid) {
       this.isVoirProduitLoading = true;
-      
+
       this.menuService.fetchAllMenuByRestaurantId(restaurantId).subscribe(data => {
 
         this.menuDTOList = data;
-        console.log(this.menuDTOList);
+
         this.initTable();
 
         localStorage.setItem('restaurantId', `${restaurantId}`);
 
         const restaurantName = this.restaurantSelectionDTOS.find(item => item.restaurantId === restaurantId);
 
-        localStorage.setItem('restaurantName', restaurantName ? restaurantName.restaurantName: '');
-        
+        localStorage.setItem('restaurantName', restaurantName ? restaurantName.restaurantName : '');
+
         this.isVoirProduitLoading = false;
-        
+
       });
     }
   }
