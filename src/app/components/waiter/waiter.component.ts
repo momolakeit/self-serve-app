@@ -28,8 +28,6 @@ export class WaiterComponent implements OnInit {
 
       this.requestProductList = data.products;
 
-      console.log(this.requestProductList)
-
       this.waiterCallProduct = this.requestProductList.find(product => product.menuType.toString() == "WAITERCALL");
     });
 

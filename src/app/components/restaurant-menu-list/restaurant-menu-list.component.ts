@@ -89,7 +89,6 @@ export class RestaurantMenuListComponent implements OnInit {
     });
   }
   deleteMenu(menuId:number){
-    console.log(menuId)
     this.menuService.deleteMenu(parseInt(localStorage.getItem('restaurantId')),menuId).subscribe(()=>this.menuService.onMenuCreatedEvent.emit());
   }
 

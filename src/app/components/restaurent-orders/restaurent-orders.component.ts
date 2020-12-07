@@ -74,8 +74,6 @@ export class RestaurentOrdersComponent implements OnInit {
   }
 
   filterOrderItemArrayByProductTypeForBill (orderItems: OrderItemDTO[]): OrderItemDTO[] {
-   console.log(orderItems)
-
     return orderItems.filter(oItem => (oItem.menuType.toString() != "WAITERREQUEST" && oItem.menuType.toString() != "WAITERCALL"));
   }
 

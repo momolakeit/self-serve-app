@@ -128,7 +128,6 @@ export class ProductFormEditCreateComponent implements OnInit {
         imgFileDTO: this.data ? this.data.imgFileDTO : null,
         checkItems: this.getAddonList()
       }
-      console.log("je suis laaa");
 
       this.isButtonLoading = true;
       if (this.data)
