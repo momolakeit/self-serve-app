@@ -33,9 +33,9 @@ export class StartComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       let restaurantTableId = params['restaurantTableId'];
       this.kitchenService.fetchMenuByRestaurantTable(restaurantTableId).subscribe(data => {
-        localStorage.setItem("menuId",data.id.toString())
+        localStorage.setItem("restaurantId",data.id.toString())
         localStorage.setItem("restaurantTableId",restaurantTableId.toString());
-        this.logoService.onRestaurantLogoImgUrl.emit(environment.baseImgPath+data.restaurant.imgFile.id)
+        this.logoService.onRestaurantLogoImgUrl.emit(environment.baseImgPath+data.imgFile.id)
         if(this.authService.isAuthenticated()){
           this.route.navigate(['/menu']);
         }

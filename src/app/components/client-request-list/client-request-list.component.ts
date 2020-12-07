@@ -26,6 +26,7 @@ export class ClientRequestListComponent implements OnInit {
       var billDTO = JSON.parse(localStorage.getItem("ongoingBill"));
       
       this.billService.getBill(billDTO).subscribe(data => {
+        console.log(data)
         this.billDTO = data;
       })
     });
@@ -36,10 +37,10 @@ export class ClientRequestListComponent implements OnInit {
   }
 
   isWaiterProduct(orderItem:OrderItemDTO):boolean{
-    if (!orderItem.productType)
+    if (!orderItem.menuType)
       return false;
     
-    return orderItem.productType.toString()!='WAITERCALL'&& orderItem.productType.toString()!='WAITERREQUEST';
+    return orderItem.menuType.toString()!='WAITERCALL'&& orderItem.menuType.toString()!='WAITERREQUEST';
   }
 
 }

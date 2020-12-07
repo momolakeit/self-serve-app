@@ -57,27 +57,6 @@
         </mat-form-field>
     </p>
 
-
-    <p>
-        <mat-form-field class="w-100">
-            <mat-label>{{ 'productEditCreate.productTypeTxt' | translate }}:</mat-label>
-            <mat-select formControlName="productType">
-                <mat-option *ngFor="let productType of productTypes" [value]="productType">{{productType}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </p>
-
-    <p>
-        <mat-form-field class="w-100">
-            <mat-label>{{ 'productEditCreate.productMenuTypeTxt' | translate }}:</mat-label>
-            <mat-select formControlName="productMenuType">
-                <mat-option *ngFor="let productMenuType of productMenuTypes" [value]="productMenuType">
-                    {{productMenuType}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </p>
-
-
     <!--OPTIONS-->
     <mat-divider></mat-divider>
     <mat-accordion>

@@ -40,6 +40,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
 import { StripeAccountCreatePromptComponent } from './components/stripe-account-create-prompt/stripe-account-create-prompt.component';
+import { MenuFormEditCreateComponent } from './components/menu-form-edit-create/menu-form-edit-create.component';
+import { RestaurantMenuListComponent } from './components/restaurant-menu-list/restaurant-menu-list.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +72,8 @@ import { StripeAccountCreatePromptComponent } from './components/stripe-account-
     SubscriptionDetailsComponent,
     AdminPageComponent,
     StripeAccountCreatePromptComponent,
+    MenuFormEditCreateComponent,
+    RestaurantMenuListComponent,
   ],
   imports: [
     CommonModule,

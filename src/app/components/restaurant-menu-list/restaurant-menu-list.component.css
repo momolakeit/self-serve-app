@@ -1,0 +1,20 @@
+table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  /*::ng-deep .mat-form-field-underline {
+    background-color: white !important;
+  }*/
+  
+  td,
+  th {
+    width: 25%;
+  }
+  
+  /*add more width to the last th*/
+  

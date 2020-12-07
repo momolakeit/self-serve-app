@@ -1,163 +1,32 @@
-<!--SPECIAUX-->
-<ng-container *ngIf='menu && hasMenuId'>
-    <div>
-        <div class=" mb-2">
-            <h1 style="font-size:larger; " class="text-center text-black">{{ 'menu.special' | translate }}</h1>
-        </div>
-        <div id="carouselExampleInterval" class="carousel slide mat-elevation-z5" data-ride="carousel">
-            <div class="carousel-inner ">
-                <ng-container *ngIf='menu'>
-                    <ng-container *ngFor="let product of menu.speciaux; let i = index">
-                        <div *ngIf="i =='0';else nonActive" class="carousel-item active">
-                            <mat-card class="example-card">
-                                <mat-card-header>
-                                    <div mat-card-avatar class="example-header-image"></div>
-                                    <mat-card-title>{{product.name}}</mat-card-title>
-                                </mat-card-header>
-                                <img mat-card-image [src]="getImage(product.imgFileDTO.id)">
-                                <mat-card-content>
-                                    <p>{{ 'menu.itemPrice' | translate }}: {{product.prix}}$</p>
-                                </mat-card-content>
-                                <mat-card-actions>
-                                    <button (click)="openDialog(product)" class="btn-dark w-100 text-white"
-                                        mat-button>{{ 'menu.addBtnTxt' | translate }}</button>
-                                </mat-card-actions>
-                            </mat-card>
-                        </div>
-                        <ng-template #nonActive>
-                            <div class="carousel-item ">
-                                <mat-card class="example-card">
-                                    <mat-card-header>
-                                        <div mat-card-avatar class="example-header-image"></div>
-                                        <mat-card-title>{{product.name}}</mat-card-title>
-                                    </mat-card-header>
-                                    <img mat-card-image [src]="listeUrlImagesSpeciaux[i]">
-                                    <mat-card-content>
-                                        <p>{{ 'menu.itemPrice' | translate }}: {{product.prix}}$</p>
-                                    </mat-card-content>
-                                    <mat-card-actions>
-                                        <button (click)="openDialog(product)" class="btn-dark w-100 text-white"
-                                            mat-button>{{ 'menu.addBtnTxt' | translate }}</button>
-                                    </mat-card-actions>
-                                </mat-card>
-                            </div>
-                        </ng-template>
-                    </ng-container>
-                </ng-container>
-            </div>
-            <a class="carousel-control-prev hidden" href="#carouselExampleInterval" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next hidden" href="#carouselExampleInterval" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </div>
-
-    <!--CHOIX DU CHEF-->
-    <div>
-        <div class="mt-4 pt-3">
-            <h1 style="font-size:larger;" class="text-center text-black">{{ 'menu.chefChoice' | translate }}</h1>
-        </div>
-        <div id="carouselExampleInterval2" class="carousel slide mb-4 mat-elevation-z5" data-ride="carousel">
-            <div class="carousel-inner">
-                <ng-container *ngIf='menu'>
-                    <ng-container *ngFor="let product of menu.speciaux; let i = index">
-
-                        <div *ngIf="i =='0';else nonActive" class="carousel-item active">
-                            <mat-card class="example-card">
-                                <mat-card-header>
-                                    <div mat-card-avatar class="example-header-image"></div>
-                                    <mat-card-title>{{product.name}}</mat-card-title>
-                                </mat-card-header>
-                                <img mat-card-image [src]="listeUrlImagesSpeciaux[i]">
-                                <mat-card-content>
-                                    <p>{{ 'menu.itemPrice' | translate }}: {{product.prix}}$</p>
-                                </mat-card-content>
-                                <mat-card-actions>
-                                    <button (click)="openDialog(product)" class="btn-dark w-100 text-white"
-                                        mat-button>{{ 'menu.addBtnTxt' | translate }}</button>
-                                </mat-card-actions>
-                            </mat-card>
-                        </div>
-                        <ng-template #nonActive>
-                            <div class="carousel-item ">
-                                <mat-card class="example-card">
-                                    <mat-card-header>
-                                        <div mat-card-avatar class="example-header-image"></div>
-                                        <mat-card-title>{{product.name}}</mat-card-title>
-                                    </mat-card-header>
-                                    <img mat-card-image [src]="listeUrlImagesSpeciaux[i]">
-                                    <mat-card-content>
-                                        <p>{{ 'menu.itemPrice' | translate }}: {{product.prix}}$</p>
-                                    </mat-card-content>
-                                    <mat-card-actions>
-                                        <button (click)="openDialog(product)" class="btn-dark w-100 text-white"
-                                            mat-button>{{ 'menu.addBtnTxt' | translate }}</button>
-                                    </mat-card-actions>
-                                </mat-card>
-                            </div>
-                        </ng-template>
-                    </ng-container>
-                </ng-container>
-            </div>
-            <a class="carousel-control-prev" href="#carouselExampleInterval2" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleInterval2" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </div>
-
+<h1 class="text-center border-bottom mt-3">Menu</h1>
+<ng-container *ngIf='menu && hasRestaurantId'>
     <!--MENU TITLE + IMAGE + LIST OF ITEMS-->
-    <mat-accordion>
+    <mat-accordion *ngFor="let menuItem of menu">
         <mat-expansion-panel hideToggle>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    {{ 'menu.dejeuner' | translate }}
+                    {{menuItem.name}}
                 </mat-panel-title>
             </mat-expansion-panel-header>
 
             <ul style="list-style-type: none;" class=" p-0">
                 <ng-container *ngIf='menu'>
                     <li style="border-bottom: 2px solid white;"
-                        *ngFor="let product of  menu.dejeuner; index as i; trackBy: trackByFn " class="mb-2 pb-1">
-                        <h1 style="font-size: medium;" class="mb-0">{{product.name}}</h1>
-
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p style="font-size: small;" class="m-0 p-0">{{product.description}}</p>
-                            <button class="btn btn-dark" (click)="openDialog(product)">
-                                {{ 'menu.addBtnTxt' | translate }}</button>
+                        *ngFor="let product of  menuItem.products; index as i; trackBy: trackByFn "
+                        (click)="openDialog(product)"
+                        class="d-flex justify-content-between align-items-center mat-elevation-z4 mb-2 p-3">
+                        <div class="container">
+                            <div class="row">
+                                <h1 style="font-size: medium;" class="mb-0">{{product.name}}</h1>
+                            </div>
+                            <div class="row">
+                                <p style="font-size: small;" class="m-0 p-0">{{product.description}}</p>
+                            </div>
+                            <div class="row">
+                                <p style="font-size: small;" class="m-0 p-0">${{product.prix}}</p>
+                            </div>
                         </div>
-                    </li>
-                </ng-container>
-
-            </ul>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    {{ 'menu.diner' | translate }}
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-
-            <ul style="list-style-type: none;" class=" p-0">
-                <ng-container *ngIf='menu'>
-                    <li style="border-bottom: 2px solid white;"
-                        *ngFor="let product of  menu.diner; index as i; trackBy: trackByFn " class="mb-2 pb-1">
-                        <h1 style="font-size: medium;" class="mb-0">{{product.name}}</h1>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p style="font-size: small;" class="m-0 p-0">{{product.description}}</p>
-                            <button class="btn btn-dark" (click)="openDialog(product)">
-                                {{ 'menu.addBtnTxt' | translate }}
-                            </button>
-                        </div>
+                        <img mat-card-image class="w-50" [src]="getImage(product.imgFileDTO.id)">
                     </li>
                 </ng-container>
 
@@ -166,10 +35,10 @@
     </mat-accordion>
 </ng-container>
 
-<ng-container *ngIf='!menu && hasMenuId' class="text-center">
+<ng-container *ngIf='!menu && hasRestaurantId' class="text-center">
     <div class="loader text-center"></div>
 </ng-container>
-<ng-container *ngIf="!hasMenuId text-center ">
+<ng-container *ngIf="!hasRestaurantId text-center ">
     <div class="container">
         <div class="row">
             <div class="col text-center">

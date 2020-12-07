@@ -5,6 +5,7 @@ import { ProductType } from "./product-type.enum";
 import { ProductMenuType } from "./product-menu-type.enum";
 import { ImgFileDTO } from "./img-file-dto";
 import {CheckItemDTO} from './check-item-dto'
+import { MenuType } from './menu-type.enum';
 
 
 
@@ -20,7 +21,7 @@ export interface ProductDTO {
     imgFileDTO?: ImgFileDTO;
     checkItems? : CheckItemDTO[];
     rates?:[RateDTO];
-    productType:ProductType;
+    menuType:MenuType;
     productMenuType:ProductMenuType;
     isLoading?:boolean;
 }

@@ -24,11 +24,11 @@ export class WaiterComponent implements OnInit {
   ngOnInit(): void {
     this.imgUrl = environment.baseImgPath;
 
-    this.productService.findAllWaiterRequestProduct(1).subscribe(data => {
+    this.productService.findAllWaiterRequestProduct(JSON.parse(localStorage.getItem('restaurantId'))).subscribe(data => {
 
-      this.requestProductList = data;
+      this.requestProductList = data.products;
 
-      this.waiterCallProduct = this.requestProductList.find(product => product.productType.toString() == "WAITERCALL");
+      this.waiterCallProduct = this.requestProductList.find(product => product.menuType.toString() == "WAITERCALL");
     });
 
   }
@@ -43,11 +43,11 @@ export class WaiterComponent implements OnInit {
     this.imgUrl = environment.baseImgPath;
 
     this.productService.findAllWaiterRequestProduct(1).subscribe(data => {
-      this.requestProductList = data;
+      this.requestProductList = data.products;
     });
 
     this.waiterCallProduct = this.requestProductList.filter(product => {
-      product.productType.toString() == "WAITERCALL";
+      product.menuType.toString() == "WAITERCALL";
     })
   }
 

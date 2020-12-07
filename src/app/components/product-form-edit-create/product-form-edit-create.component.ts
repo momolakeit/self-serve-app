@@ -47,8 +47,6 @@ export class ProductFormEditCreateComponent implements OnInit {
       description: [this.data ? this.data.description : '', Validators.required],
       prix: [this.data ? this.data.prix : '', Validators.required],
       tempsDePreparation: [this.data ? this.data.tempsDePreparation : '', Validators.required],
-      productType: [this.data ? this.data.productType : '', Validators.required],
-      productMenuType: [this.data ? this.data.productMenuType : '', Validators.required],
       image: ['', [MaxSizeValidator(this.maxSize * 1024)]],
       options: this.formBuilder.array([]),
       addons: this.formBuilder.array([])
@@ -125,7 +123,7 @@ export class ProductFormEditCreateComponent implements OnInit {
         options: this.getOptionDtoList(),
         prix: formValue['prix'],
         tempsDePreparation: formValue['tempsDePreparation'],
-        productType: formValue['productType'],
+        menuType: formValue['productType'],
         productMenuType: formValue['productMenuType'],
         imgFileDTO: this.data ? this.data.imgFileDTO : null,
         checkItems: this.getAddonList()
