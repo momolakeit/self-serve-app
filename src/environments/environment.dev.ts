@@ -24,6 +24,7 @@ export const environment = {
   saveStripeAccountId :`http://${host}${port}/stripe/saveAccountId`,
   fetchStripeAccountId:`http://${host}${port}/stripe/getAccountId`,
   paymentIntentUrl:`http://${host}${port}/stripe/fetchPaymentIntent`,
+  retrySubscriptionUrl:`http://${host}${port}/stripe/retrySubscription`,
   createSubscriptionUrl:`http://${host}${port}/stripe/createSubscription`,
   fetchSubscriptionSessionUrl: `http://${host}${port}/stripe/fetchSubscriptionSession`,
   paymentRequestIntentUrl:`http://${host}${port}/stripe/fetchPaymentRquestPaymentIntent`,
