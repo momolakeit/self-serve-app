@@ -99,8 +99,8 @@ import { RestaurantMenuListComponent } from './components/restaurant-menu-list/r
         tokenGetter: () => {
           return localStorage.getItem("token");
         },
-        allowedDomains: ["localhost:8081"],
-        disallowedRoutes: ["localhost:8081/auth/signin", "localhost:8081/auth/signup"]
+        allowedDomains: ["localhost:8081","back-end-dev.i-serve.ca"],
+        disallowedRoutes: ["localhost:8081/auth/signin", "localhost:8081/auth/signup","back-end-dev.i-serve.ca/auth/signin","back-end-dev.i-serve.ca/auth/signup"]
       }
     }),
   ],
