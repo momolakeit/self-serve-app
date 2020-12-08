@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
@@ -29,7 +29,6 @@ export class PaymentFormComponent implements OnInit {
 
   ngOnInit() {
     this.paymentService.fetchAccountId(parseInt(localStorage.getItem("menuId"))).subscribe(data =>{
-      console.log(data);
       this.initStripe(data.value);
     })
   }

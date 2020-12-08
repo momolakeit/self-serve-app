@@ -12,6 +12,4 @@
         <button class="btn mt-5 mr-4 btn-dark text-white" routerLink="/paymentChoice" mat-button>{{ 'clientRequestList.checkout' | translate }}</button>
     </div>
 </ng-container>
-<ng-container *ngIf="!billDTO">
-    <div class="loader text-center"></div>
-</ng-container>
+<mat-spinner class="mx-auto mt-5" *ngIf="!billDTO" [diameter]="30" [strokeWidth]="5"></mat-spinner>

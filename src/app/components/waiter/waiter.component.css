@@ -4,6 +4,7 @@
     border-color:black !important;
 }
 ::ng-deep .mat-simple-snackbar-action {
-    color: black;
-    border-color: black !important;
+    color: white;
+    background-color: black;
+    border-radius: 5px;
  }

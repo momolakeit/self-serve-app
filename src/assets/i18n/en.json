@@ -10,7 +10,9 @@
     },
     "waiter": {
         "callWaiter": "Call Waiter",
-        "demander": "Request"
+        "demander": "Request",
+        "waiterTitle":"WAITER",
+        "waiterDemand":"SPECIFIC DEMAND"
     },
     "dishDetail": {
         "prix": "Price",
@@ -33,7 +35,8 @@
     "paymentChoice": {
         "choosePayment": "Choose payment method",
         "payNow": "Pay now",
-        "requestTerminal": "Request Terminal"
+        "requestTerminal": "Request Terminal",
+        "requestTerminalSnackBar":"The waiter is on his/her way!"
     },
     "paymentForm": {
         "commandTxt": "Enter credit card details",

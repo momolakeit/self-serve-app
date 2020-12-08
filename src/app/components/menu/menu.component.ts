@@ -48,21 +48,21 @@ export class MenuComponent implements OnInit {
   openDialog(productDTO:ProductDTO) {
     const dialogRef = this.dialog.open(DishDetailComponent, {
       autoFocus:false,
-      data: productDTO
+      data: productDTO,
+      maxHeight:'600px'
     });
   }
 
   changeProductToSeeDetail = function (product: ProductDTO): void {
     this.productToSeeDetail = product;
-  };
+  }
+
   fetchMenu() {
     this.menuService.getMenuById(JSON.parse(localStorage.getItem("restaurantId"))).subscribe(data => {
       this.menu = data;
-      console.log(this.menu);
-     // this.menu.speciaux.forEach(element => this.listeUrlImagesSpeciaux.push(environment.baseImgPath + element.imgFileDTO.id));
-      //console.log(this.listeUrlImagesSpeciaux);
     })
   }
+
   initBill() {
     if (localStorage.getItem("ongoingBill") == null) {
       this.billService.initBill().subscribe(data => {
@@ -70,8 +70,8 @@ export class MenuComponent implements OnInit {
       });
     }
   }
+  
   scanSuccessHandler($event: any){
     window.location.href = $event;
-
   }
 }
