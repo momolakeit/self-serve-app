@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef,Component, OnInit } from '@angular/core';
 import {PaymentService} from '../../services/payment.service'
 import {AuthentificationService} from '../../services/authentification.service';
+import {PaymentFormComponent} from "src/app/components/payment-form/payment-form.component";
+import { MatDialog } from '@angular/material/dialog';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-payment-choice',
@@ -9,13 +12,19 @@ import {AuthentificationService} from '../../services/authentification.service';
 })
 export class PaymentChoiceComponent implements OnInit {
 
-  constructor(private paymentService :PaymentService,private authentificationService :AuthentificationService) { }
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,public dialog: MatDialog,private paymentService :PaymentService,private authentificationService :AuthentificationService) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+   }
   card;
   stripe; // : stripe.Stripe;
   clientSecret;
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
 
   ngOnInit(): void {
-    this.paymentService.fetchAccountId(parseInt(localStorage.getItem("menuId"))).subscribe(data =>{
+    this.paymentService.fetchAccountId(parseInt(localStorage.getItem("restaurantId"))).subscribe(data =>{
       this.initStripe(data.value);
     })
   }
@@ -83,6 +92,13 @@ export class PaymentChoiceComponent implements OnInit {
           }
         }
       });
+    });
+  }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(PaymentFormComponent, {
+      width: this.mobileQuery.matches ? '90%' : '50%',
+      height: '35%',
+      panelClass:'payment-form-dialog',
     });
   }
 
