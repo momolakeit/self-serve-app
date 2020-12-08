@@ -50,9 +50,9 @@
 </div>
 
 
-<footer *ngIf="isConnected()" class="fixed-bottom">
+<footer class="fixed-bottom">
   <!--CLIENT VIEW-->
-  <ng-container *ngIf="(isClient() || isGuest())">
+  <ng-container *ngIf="(isClient() || isGuest()) && isConnected()">
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
       <mat-button-toggle value="bold" class="w-100" routerLink="clientRequestList">
         <mat-icon>receipt_long</mat-icon>
@@ -67,7 +67,7 @@
   </ng-container>
 
   <!--WAITER VIEW-->
-  <ng-container *ngIf="isWaiter()">
+  <ng-container *ngIf="isWaiter() && isConnected()">
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
       <mat-button-toggle value="italic" class="w-100">
         <mat-icon>receipt_long</mat-icon>
@@ -79,7 +79,7 @@
   </ng-container>
 
   <!--COOK VIEW-->
-  <ng-container *ngIf="isCook()">
+  <ng-container *ngIf="isCook() && isConnected()">
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
       <mat-button-toggle value="italic" class="w-100">
         <mat-icon matBadge="15" matBadgeColor="warn" matBadgeOverlap="true">receipt_long</mat-icon>
@@ -88,7 +88,7 @@
   </ng-container>
 
   <!--ADMIN VIEW-->
-  <ng-container *ngIf="isOwner() && mobileQuery.matches">
+  <ng-container *ngIf="isOwner() && isConnected() && mobileQuery.matches">
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
       <mat-button-toggle value="italic" class="w-100" routerLink="adminProductManagment"><mat-icon>account_circle</mat-icon></mat-button-toggle>
       <mat-button-toggle value="underline" class="w-100" routerLink="isStripeEnabled"><mat-icon>card_membership</mat-icon></mat-button-toggle>
