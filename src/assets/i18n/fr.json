@@ -18,7 +18,8 @@
         "prix":"Prix",
         "specialRequest":"Requêtes Spéciales",
         "commander":"Commander",
-        "addOn":"Ajout"
+        "addOn":"Ajout",
+        "itemOrderd":"Item commandé"
     },
     "clientRequestList":{
         "pageTitle":"Mes commandes",
