@@ -58,3 +58,13 @@ h1, h2, h3, h4, h5 {
      `<body>` to be our scrolling element for mobile layouts. */
   flex: 1 0 auto;
 }
+::ng-deep .mat-snack-bar-container{
+  color: black !important;
+  background-color: white !important;
+  border-color:black !important;
+}
+::ng-deep .mat-simple-snackbar-action {
+  color: white;
+  background-color: black;
+  border-radius: 5px;
+}
