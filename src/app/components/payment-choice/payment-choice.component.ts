@@ -1,9 +1,11 @@
-import { ChangeDetectorRef,Component, OnInit } from '@angular/core';
-import {PaymentService} from '../../services/payment.service'
-import {AuthentificationService} from '../../services/authentification.service';
-import {PaymentFormComponent} from "src/app/components/payment-form/payment-form.component";
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { PaymentService } from '../../services/payment.service'
+import { AuthentificationService } from '../../services/authentification.service';
+import { PaymentFormComponent } from "src/app/components/payment-form/payment-form.component";
 import { MatDialog } from '@angular/material/dialog';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-payment-choice',
@@ -12,26 +14,39 @@ import { MediaMatcher } from '@angular/cdk/layout';
 })
 export class PaymentChoiceComponent implements OnInit {
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,public dialog: MatDialog,private paymentService :PaymentService,private authentificationService :AuthentificationService) {
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
-   }
   card;
   stripe; // : stripe.Stripe;
   clientSecret;
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
+  durationInSeconds = 5;
+
+  constructor(private translate: TranslateService, private _snackBar: MatSnackBar, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public dialog: MatDialog, private paymentService: PaymentService, private authentificationService: AuthentificationService) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+  }
 
   ngOnInit(): void {
-    this.paymentService.fetchAccountId(parseInt(localStorage.getItem("restaurantId"))).subscribe(data =>{
+    this.paymentService.fetchAccountId(parseInt(localStorage.getItem("restaurantId"))).subscribe(data => {
       this.initStripe(data.value);
     })
   }
-  initStripe(stripeAccountId:string){
+
+  openSnackBar() {
+    this.translate.get('paymentChoice.requestTerminalSnackBar').subscribe(res => {
+      this._snackBar.open(res, 'close', {
+        duration: this.durationInSeconds * 1000,
+      });
+    });
+
+    this._snackBar._openedSnackBarRef.onAction().subscribe(() => this._snackBar.dismiss());
+  }
+
+
+  initStripe(stripeAccountId: string) {
     this.stripe = Stripe('pk_test_51HLwKgC5UoZOX4GRWegBa5FvbtsNbi5Cd7Z5WKYB73jelPNuhpzS69dXKe2V3OWTP4XHt5wjGGD3dzEdJw25duSn00Dlctj1NV');
     this.paymentService.getPaymentRequestPaymentIntent(stripeAccountId).subscribe(data => {
-      console.log(data  );
       this.clientSecret = data
     });
     const elements = this.stripe.elements();
@@ -59,13 +74,13 @@ export class PaymentChoiceComponent implements OnInit {
         document.getElementById('card-element-apple-pay').style.display = 'none';
       }
     });
-    paymentRequest.on('paymentmethod', function(ev) {
+    paymentRequest.on('paymentmethod', function (ev) {
       // Confirm the PaymentIntent without handling potential next actions (yet).
       this.stripe.confirmCardPayment(
         this.clientSecret,
-        {payment_method: ev.paymentMethod.id},
-        {handleActions: false}
-      ).then(function(confirmResult) {
+        { payment_method: ev.paymentMethod.id },
+        { handleActions: false }
+      ).then(function (confirmResult) {
         if (confirmResult.error) {
           // Report to the browser that the payment failed, prompting it to
           // re-show the payment interface, or show an error message and close
@@ -80,7 +95,7 @@ export class PaymentChoiceComponent implements OnInit {
           // instead check for: `paymentIntent.status === "requires_source_action"`.
           if (confirmResult.paymentIntent.status === "requires_action") {
             // Let Stripe.js handle the rest of the payment flow.
-            this.stripe.confirmCardPayment(this.clientSecret).then(function(result) {
+            this.stripe.confirmCardPayment(this.clientSecret).then(function (result) {
               if (result.error) {
                 // The payment failed -- ask your customer for a new payment method.
               } else {
@@ -98,7 +113,7 @@ export class PaymentChoiceComponent implements OnInit {
     const dialogRef = this.dialog.open(PaymentFormComponent, {
       width: this.mobileQuery.matches ? '90%' : '50%',
       height: '35%',
-      panelClass:'payment-form-dialog',
+      panelClass: 'payment-form-dialog',
     });
   }
 

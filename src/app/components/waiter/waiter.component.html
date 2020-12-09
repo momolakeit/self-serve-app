@@ -2,15 +2,21 @@
     <h1 style="font-size:larger; " class="text-center text-white">NEED HELP ?</h1>
 </div>-->
 <div class="container" *ngIf="requestProductList">
+    <div class="row mt-3">
+        <div class="col-sm-8 mt-2">
+            <h1 style="font-size:larger;border-bottom: 2px solid black; border-top: 2px solid black; " class="text-center text-dark">{{'waiter.waiterTitle' | translate}}</h1>
+        </div>
+    </div>
+
     <div class="row">
-        <div class="col-sm-6 text-center mt-5" >
+        <div class="col-sm-6 text-center mt-2" >
             <button mat-button (click)="sendClientRequest(waiterCallProduct)" class="btn text-white w-75 btn-dark">{{ 'waiter.callWaiter' | translate }}</button>
         </div>
     </div>
 
-    <div class="row mt-5" style="border-bottom: 2px solid white; border-top: 2px solid white;">
+    <div class="row mt-3">
         <div class="col-sm-8 mt-2">
-            <h1 style="font-size:larger; " class="text-center text-white">SPECIFIC DEMAND </h1>
+            <h1 style="font-size:larger;border-bottom: 2px solid black; border-top: 2px solid black; " class="text-center text-dark">{{'waiter.waiterDemand' | translate}}</h1>
         </div>
     </div>
 

@@ -41,7 +41,8 @@ export class ClientRequestItemComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(ClientRequestItemDetailComponent, {
-      data: this.orderItemDTO
+      data: this.orderItemDTO,
+      maxHeight:'600px',
     });
 
   }

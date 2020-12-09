@@ -35,9 +35,8 @@
     </mat-accordion>
 </ng-container>
 
-<ng-container *ngIf='!menu && hasRestaurantId' class="text-center">
-    <div class="loader text-center"></div>
-</ng-container>
+<mat-spinner class="mx-auto mt-5" *ngIf="!menu && hasRestaurantId" [diameter]="30" [strokeWidth]="5"></mat-spinner>
+
 <ng-container *ngIf="!hasRestaurantId text-center ">
     <div class="container">
         <div class="row">

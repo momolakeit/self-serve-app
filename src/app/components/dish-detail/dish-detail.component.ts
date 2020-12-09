@@ -19,7 +19,6 @@ export class DishDetailComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DishDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: ProductDTO, private billService: BillService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    console.log(this.data);
     this.imgUrl = environment.baseImgPath + this.data.imgFileDTO.id;
   }
 
@@ -35,6 +34,10 @@ export class DishDetailComponent implements OnInit {
     this.snackBar.open("Item ordered", "Close", {
       duration: 2000,
     });
+
+    this.snackBar._openedSnackBarRef.onAction().subscribe(() =>{
+      this.snackBar.dismiss();
+    })
   }
 
   updateOptionCheckItem = function (checkItemDTO: CheckItemDTO, optionDTO: OptionDTO): void {
