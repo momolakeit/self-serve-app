@@ -86,13 +86,16 @@ export class AdminProductManagmentComponent implements OnInit {
     this.dataSourceProduit.paginator = this.paginator;
     this.dataSourceProduit.sort = this.sort;
   }
+  loadTableProduit(menuDTO:MenuDTO){
+    this.menuService.onMenuSelectedEvent.emit(menuDTO.products);
+  }
   initTableMenu() {
     this.dataSourceMenu = new MatTableDataSource(this.menuDTOList);
     this.dataSourceMenu.paginator = this.paginator;
     this.dataSourceMenu.sort = this.sort;
   }
 
-  initProductTable() {
+  fetchData() {
     if (localStorage.getItem('restaurantId'))
       this.getAllMenuFromRestaurant(parseInt(localStorage.getItem('restaurantId')));
     this.isVoirProduitLoading = false;
@@ -110,7 +113,7 @@ export class AdminProductManagmentComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == 'refresh')
-        this.initProductTable();
+        this.fetchData();
 
       if (result == 'close') {
         this.currentProductToEdit = null;
@@ -126,7 +129,7 @@ export class AdminProductManagmentComponent implements OnInit {
     this.menuService.getAllRestaurantName(this.ownerUsernameService.initUserName()).subscribe(data => {
       this.loading = false;
       this.restaurantSelectionDTOS = data;
-      this.initProductTable();
+      this.fetchData();
     })
   }
 
@@ -148,7 +151,7 @@ export class AdminProductManagmentComponent implements OnInit {
         localStorage.setItem('restaurantName', restaurantName ? restaurantName.restaurantName : '');
 
         this.isVoirProduitLoading = false;
-
+         this.loadTableProduit(this.menuDTOList.find(menu => menu.id ==parseInt(localStorage.getItem('menuId'))));
       });
     }
   }
