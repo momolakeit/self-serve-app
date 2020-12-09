@@ -14,8 +14,8 @@ export class ClientRequestListComponent implements OnInit {
   billDTO: BillDTO
   orderItemToPassToModal: OrderItemDTO
   listeTempsRestant = [];
-  constructor(private billService: BillService) { }
 
+  constructor(private billService: BillService) { }
 
   ngOnInit(): void {
     this.setUpTimeout();
@@ -26,7 +26,6 @@ export class ClientRequestListComponent implements OnInit {
       var billDTO = JSON.parse(localStorage.getItem("ongoingBill"));
       
       this.billService.getBill(billDTO).subscribe(data => {
-        console.log(data)
         this.billDTO = data;
       })
     });

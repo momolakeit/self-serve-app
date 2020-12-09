@@ -10,7 +10,9 @@
     },
     "waiter":{
         "callWaiter":"Appeler Serveur",
-        "demander":"Demander"
+        "demander":"Demander",
+        "waiterTitle":"SERVEUR",
+        "waiterDemand":"DEMANDES SPÉCIFIQUES"
     },
     "dishDetail":{
         "prix":"Prix",
@@ -33,7 +35,8 @@
     "paymentChoice":{
         "choosePayment":"Choisir méthode de paiement",
         "payNow":"Payer maintenant",
-        "requestTerminal":"Demander Terminal"
+        "requestTerminal":"Demander Terminal",
+        "requestTerminalSnackBar":"Le(la) serveur(se) est en route!"
     },
     "paymentForm":{
         "commandTxt":"Entrez vos informations de carte de crédit",
