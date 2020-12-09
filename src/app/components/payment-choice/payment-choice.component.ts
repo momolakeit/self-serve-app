@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
+import { stripeKey } from 'src/environments/environment';
 
 @Component({
   selector: 'app-payment-choice',
@@ -45,7 +46,7 @@ export class PaymentChoiceComponent implements OnInit {
 
 
   initStripe(stripeAccountId: string) {
-    this.stripe = Stripe('pk_test_51HLwKgC5UoZOX4GRWegBa5FvbtsNbi5Cd7Z5WKYB73jelPNuhpzS69dXKe2V3OWTP4XHt5wjGGD3dzEdJw25duSn00Dlctj1NV');
+    this.stripe = Stripe(stripeKey.value);
     this.paymentService.getPaymentRequestPaymentIntent(stripeAccountId).subscribe(data => {
       this.clientSecret = data
     });

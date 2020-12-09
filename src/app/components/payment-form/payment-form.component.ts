@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { PaymentService } from '../../services/payment.service';
 import {Router} from '@angular/router';
+import { stripeKey } from 'src/environments/environment';
 @Component({
   selector: 'app-payment-form',
   templateUrl: './payment-form.component.html',
@@ -39,7 +40,7 @@ export class PaymentFormComponent implements OnInit {
       this.clientSecret = data
     });
 
-    this.stripe = Stripe('pk_test_51HLwKgC5UoZOX4GRWegBa5FvbtsNbi5Cd7Z5WKYB73jelPNuhpzS69dXKe2V3OWTP4XHt5wjGGD3dzEdJw25duSn00Dlctj1NV');
+    this.stripe = Stripe(stripeKey.value);
     const elements = this.stripe.elements();
     this.card = elements.create("card");
     this.card.mount(".card-element");

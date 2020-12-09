@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StripeSubscriptionProducts } from '../../models/stripe-subscription-products'
 import { PaymentService } from '../../services/payment.service'
 import { Router } from '@angular/router';
+import { stripeKey } from 'src/environments/environment';
 
 @Component({
   selector: 'app-owner-subscription',
@@ -64,7 +65,7 @@ export class OwnerSubscriptionComponent implements OnInit {
     });*/
 
 
-    this.stripe = Stripe('pk_test_51HLwKgC5UoZOX4GRWegBa5FvbtsNbi5Cd7Z5WKYB73jelPNuhpzS69dXKe2V3OWTP4XHt5wjGGD3dzEdJw25duSn00Dlctj1NV');
+    this.stripe = Stripe(stripeKey.value);
     const elements = this.stripe.elements();
     this.card = elements.create("card", { style: this.style });
     this.card.mount("#card-element");
