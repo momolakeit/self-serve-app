@@ -12,7 +12,8 @@
         "callWaiter":"Appeler Serveur",
         "demander":"Demander",
         "waiterTitle":"SERVEUR",
-        "waiterDemand":"DEMANDES SPÉCIFIQUES"
+        "waiterDemand":"DEMANDES SPÉCIFIQUES",
+        "waiterComing":"Le/La serveur est en route"
     },
     "dishDetail":{
         "prix":"Prix",

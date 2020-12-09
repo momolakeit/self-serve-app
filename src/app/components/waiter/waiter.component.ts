@@ -5,7 +5,7 @@ import { ProductDTO } from '../../models/product-dto'
 import { ProductService } from '../../services/product.service';
 import { BillService } from '../../services/bill.service'
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-waiter',
@@ -19,7 +19,7 @@ export class WaiterComponent implements OnInit {
   waiterCallProduct: any;
   durationInSeconds: number = 5;
 
-  constructor(private productService: ProductService, private billService: BillService, private _snackBar: MatSnackBar) { }
+  constructor(private translate: TranslateService,private productService: ProductService, private billService: BillService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.imgUrl = environment.baseImgPath;
@@ -33,10 +33,12 @@ export class WaiterComponent implements OnInit {
 
   }
 
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: this.durationInSeconds * 1000,
-    });
+  openSnackBar() {
+    this.translate.get('waiter.waiterComing').subscribe(res =>{
+      this._snackBar.open(res, 'close', {
+        duration: this.durationInSeconds * 1000,
+      });      
+    })
   }
 
   ngOnChanges(): void {
@@ -54,7 +56,7 @@ export class WaiterComponent implements OnInit {
   sendClientRequest(productDTO: ProductDTO) {
     this.billService.makeOrder(productDTO, "").subscribe(data => {
       localStorage.setItem("ongoingBill", JSON.stringify(data))
-      this.openSnackBar("The waiter is on her/his way!","close");
+      this.openSnackBar();
     });
   }
 }
