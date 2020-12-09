@@ -22,9 +22,9 @@ export class PaymentService {
   fetchPaymentIntent(billDTO :BillDTO,restaurentStripeAccount :String):Observable<StripeClientIdResponse>{
     return this.http.post<StripeClientIdResponse>(`${environment.paymentIntentUrl}`,{billDTO: JSON.stringify(billDTO),restaurentStripeAccount:restaurentStripeAccount});
   }
-
-  fetchAccountId(menuId:number):Observable<StripeAccountIdDTO>{
-    return this.http.post<StripeAccountIdDTO>(`${environment.fetchStripeAccountId}`,{menuId:menuId});
+  /*on va chercher le owner du resto et son stripe account id */
+  fetchAccountId(restaurantId:number):Observable<StripeAccountIdDTO>{
+    return this.http.post<StripeAccountIdDTO>(`${environment.fetchStripeAccountId}`,{restaurantId:restaurantId});
   }
 
   createStripeAccount(username :string):Observable<StripeCreateAccountUrlDTO>{

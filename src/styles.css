@@ -31,4 +31,6 @@ h1, h2, h3, h4, h5 {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
-  
+.payment-form-dialog mat-dialog-container {
+    padding: 0px !important;
+}

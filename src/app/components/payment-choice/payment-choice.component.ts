@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { PaymentService } from '../../services/payment.service'
 import { AuthentificationService } from '../../services/authentification.service';
-import { PaymentFormComponent } from '../payment-form/payment-form.component';
+import { PaymentFormComponent } from "src/app/components/payment-form/payment-form.component";
 import { MatDialog } from '@angular/material/dialog';
+import { MediaMatcher } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -12,15 +13,22 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./payment-choice.component.css']
 })
 export class PaymentChoiceComponent implements OnInit {
+
   card;
   stripe; // : stripe.Stripe;
   clientSecret;
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
   durationInSeconds = 5;
 
-  constructor(private translate: TranslateService, private _snackBar: MatSnackBar, public dialog: MatDialog, private paymentService: PaymentService, private authentificationService: AuthentificationService) { }
+  constructor(private translate: TranslateService, private _snackBar: MatSnackBar, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public dialog: MatDialog, private paymentService: PaymentService, private authentificationService: AuthentificationService) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+  }
 
   ngOnInit(): void {
-    this.paymentService.fetchAccountId(parseInt(localStorage.getItem("menuId"))).subscribe(data => {
+    this.paymentService.fetchAccountId(parseInt(localStorage.getItem("restaurantId"))).subscribe(data => {
       this.initStripe(data.value);
     })
   }
@@ -35,10 +43,6 @@ export class PaymentChoiceComponent implements OnInit {
     this._snackBar._openedSnackBarRef.onAction().subscribe(() => this._snackBar.dismiss());
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(PaymentFormComponent, {
-    });
-  }
 
   initStripe(stripeAccountId: string) {
     this.stripe = Stripe('pk_test_51HLwKgC5UoZOX4GRWegBa5FvbtsNbi5Cd7Z5WKYB73jelPNuhpzS69dXKe2V3OWTP4XHt5wjGGD3dzEdJw25duSn00Dlctj1NV');
@@ -103,6 +107,13 @@ export class PaymentChoiceComponent implements OnInit {
           }
         }
       });
+    });
+  }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(PaymentFormComponent, {
+      width: this.mobileQuery.matches ? '90%' : '50%',
+      height: '35%',
+      panelClass: 'payment-form-dialog',
     });
   }
 
