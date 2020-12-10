@@ -12,13 +12,15 @@
         "callWaiter": "Call Waiter",
         "demander": "Request",
         "waiterTitle":"WAITER",
-        "waiterDemand":"SPECIFIC DEMAND"
+        "waiterDemand":"SPECIFIC DEMAND",
+        "waiterComing":"The waiter is on his/her way"
     },
     "dishDetail": {
         "prix": "Price",
         "specialRequest": "Special Request",
         "commander": "Order",
-        "addOn":"Add On"
+        "addOn":"Add On",
+        "itemOrderd":"Item ordered"
     },
     "clientRequestList": {
         "pageTitle": "My orders",

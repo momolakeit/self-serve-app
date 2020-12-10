@@ -12,13 +12,15 @@
         "callWaiter":"Appeler Serveur",
         "demander":"Demander",
         "waiterTitle":"SERVEUR",
-        "waiterDemand":"DEMANDES SPÉCIFIQUES"
+        "waiterDemand":"DEMANDES SPÉCIFIQUES",
+        "waiterComing":"Le/La serveur est en route"
     },
     "dishDetail":{
         "prix":"Prix",
         "specialRequest":"Requêtes Spéciales",
         "commander":"Commander",
-        "addOn":"Ajout"
+        "addOn":"Ajout",
+        "itemOrderd":"Item commandé"
     },
     "clientRequestList":{
         "pageTitle":"Mes commandes",
