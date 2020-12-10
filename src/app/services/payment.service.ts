@@ -73,11 +73,10 @@ export class PaymentService {
       }));
   }
 
-  getPaymentRequestPaymentIntent(restaurentStripeAccount:string) : Observable<String>{
+  getPaymentRequestPaymentIntent(restaurentStripeAccount:string,billDTO:BillDTO) : Observable<String>{
     //const restaurentStripeAccount="acct_1HQe4hAEW5t84Hq2";
     localStorage.getItem("ongoingBill");
-    console.log(JSON.parse(localStorage.getItem("ongoingBill")));
-    return this.fetchPaymentRequestPaymentIntent(JSON.parse(localStorage.getItem("ongoingBill")),restaurentStripeAccount).pipe(
+    return this.fetchPaymentRequestPaymentIntent(billDTO,restaurentStripeAccount).pipe(
       map(response => {
         console.log(response.value)
         return response.value;

@@ -7,6 +7,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { stripeKey } from 'src/environments/environment';
+import { BillDTO } from 'src/app/models/bill-dto';
 
 @Component({
   selector: 'app-payment-choice',
@@ -19,6 +20,7 @@ export class PaymentChoiceComponent implements OnInit {
   stripe; // : stripe.Stripe;
   clientSecret;
   mobileQuery: MediaQueryList;
+  applePaymentInError = false;
   private _mobileQueryListener: () => void;
   durationInSeconds = 5;
 
@@ -47,26 +49,38 @@ export class PaymentChoiceComponent implements OnInit {
 
   initStripe(stripeAccountId: string) {
     this.stripe = Stripe(stripeKey.value);
-    this.paymentService.getPaymentRequestPaymentIntent(stripeAccountId).subscribe(data => {
+    var billDTO = JSON.parse(localStorage.getItem("ongoingBill"));
+    this.paymentService.getPaymentRequestPaymentIntent(stripeAccountId, billDTO).subscribe(data => {
       this.clientSecret = data
+      const elements = this.stripe.elements();
+      var paymentRequest = this.initPaymentRequest(billDTO)
+      var prButton = elements.create('paymentRequestButton', {
+        paymentRequest: paymentRequest,
+      });
+      this.mountPaymentRequestBtn(paymentRequest, prButton);
+      this.onPaymentRequestBtn(paymentRequest);
     });
-    const elements = this.stripe.elements();
-    this.card = elements.create("card");
-    var paymentRequest = this.stripe.paymentRequest({
-      country: 'US',
-      currency: 'usd',
+  }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(PaymentFormComponent, {
+      width: this.mobileQuery.matches ? '90%' : '50%',
+      height: '35%',
+      panelClass: 'payment-form-dialog',
+    });
+  }
+  initPaymentRequest(billDTO: BillDTO): any {
+    return this.stripe.paymentRequest({
+      country: 'CA',
+      currency: 'CAN',
       total: {
-        label: 'Demo total',
-        amount: 1099,
+        label: 'Self Serve',
+        amount: billDTO.prixTotal,
       },
       requestPayerName: true,
       requestPayerEmail: true,
     });
-    this.card.mount(".card-element-apple-pay");
-    var prButton = elements.create('paymentRequestButton', {
-      paymentRequest: paymentRequest,
-    });
-
+  }
+  mountPaymentRequestBtn(paymentRequest: any, prButton: any): void {
     // Check the availability of the Payment Request API first.
     paymentRequest.canMakePayment().then(function (result) {
       if (result) {
@@ -75,6 +89,8 @@ export class PaymentChoiceComponent implements OnInit {
         document.getElementById('card-element-apple-pay').style.display = 'none';
       }
     });
+  }
+  onPaymentRequestBtn(paymentRequest: any): void {
     paymentRequest.on('paymentmethod', function (ev) {
       // Confirm the PaymentIntent without handling potential next actions (yet).
       this.stripe.confirmCardPayment(
@@ -86,6 +102,8 @@ export class PaymentChoiceComponent implements OnInit {
           // Report to the browser that the payment failed, prompting it to
           // re-show the payment interface, or show an error message and close
           // the payment interface.
+          this.changeApplePaymentInError(true);
+          this.changeErrorTxtField(confirmResult.error.message)
           ev.complete('fail');
         } else {
           // Report to the browser that the confirmation was successful, prompting
@@ -99,23 +117,27 @@ export class PaymentChoiceComponent implements OnInit {
             this.stripe.confirmCardPayment(this.clientSecret).then(function (result) {
               if (result.error) {
                 // The payment failed -- ask your customer for a new payment method.
+                this.changeApplePaymentInError(true);
+                this.changeErrorTxtField(confirmResult.error.message)
               } else {
                 // The payment has succeeded.
+                this.changeApplePaymentInError(false);
               }
             });
           } else {
             // The payment has succeeded.
+            this.changeApplePaymentInError(false);
           }
         }
       });
     });
   }
-  openDialog(): void {
-    const dialogRef = this.dialog.open(PaymentFormComponent, {
-      width: this.mobileQuery.matches ? '90%' : '50%',
-      height: '35%',
-      panelClass: 'payment-form-dialog',
-    });
+  changeApplePaymentInError(state: boolean): void {
+    this.applePaymentInError = state;
+  }
+  changeErrorTxtField(errorTxt: string): void {
+    var txtField = document.getElementById("applePaymentInError");
+    txtField.innerText = errorTxt;
   }
 
 }

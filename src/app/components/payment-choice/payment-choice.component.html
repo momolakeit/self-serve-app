@@ -5,6 +5,7 @@
             <form class="w-100 ">
                 <div class="card-element-apple-pay"  id="card-element-apple-pay" style="height: 50 px;"><!--Stripe.js injects the Card Element--></div>
             </form>
+            <p class="text-danger" id="applePaymentInError" *ngIf="applePaymentInError"></p>
         </div>
     </div>
     <div class="row">
