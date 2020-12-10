@@ -3,13 +3,14 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import decode from 'jwt-decode';
 import { roles } from 'src/environments/environment';
+import { KitchenService } from './kitchen.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(public jwtHelper: JwtHelperService) { }
+  constructor(public jwtHelper: JwtHelperService,private kitchenService:KitchenService) { }
 
   isAuthenticated(): boolean {
     let token = localStorage.getItem('token');
@@ -53,9 +54,11 @@ export class AuthService {
         route.navigate(['/adminProductManagment'])
         break;
       case roles.waiter:
+        this.kitchenService.setWaiterRestaurantId();
         route.navigate(['/waiter-request'])
         break;
       case roles.cook:
+        this.kitchenService.setCookRestaurantId();
         route.navigate(['/restaurentOrders'])
         break;
       case roles.client:
