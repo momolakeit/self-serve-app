@@ -32,9 +32,19 @@
                     </mat-radio-button>
                 </mat-radio-group>
             </ng-container>
+            <div class="mt-3 p-0">
+                <div *ngFor='let checkItem of orderItem.checkItems'>
+                    <mat-checkbox (click)="updateCheckItem(checkItem)" disabled="true" [checked]="checkItem.isActive"
+                        class="example-margin">{{checkItem.name}}
+                        <ng-container *ngIf="checkItem.prix>0">
+                            {{checkItem.prix}} $
+                        </ng-container>
+                    </mat-checkbox>
+                </div>    
+            </div>
         </mat-card-content>
         <mat-card-actions>
-            <button (click)="terminerCommande(orderItem)" mat-button>Done</button>
+            <button (click)="terminerCommande(orderItem)" class="w-75 btn btn-default bg-dark text-white" mat-button>Done</button>
         </mat-card-actions>
     </mat-card>
 </ng-container>
