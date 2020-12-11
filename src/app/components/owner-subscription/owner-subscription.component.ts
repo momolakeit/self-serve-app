@@ -23,7 +23,6 @@ export class OwnerSubscriptionComponent implements OnInit {
   priceId: string;
   subscriptionProducts: [StripeSubscriptionProducts];
   loader: boolean;
-  subscriptionContainerEnabled: boolean;
   confirmation;
   style = {
     base: {
@@ -45,7 +44,6 @@ export class OwnerSubscriptionComponent implements OnInit {
   ngOnInit() {
     this.initPaymentRetry();
     this.showLoader(true);
-    this.showSubscriptionContainer(false);
     this.fetchCustomerId();
     this.getSubscriptionProducts();
   }
@@ -60,7 +58,6 @@ export class OwnerSubscriptionComponent implements OnInit {
 
   initStripe() {
     this.isError = false;
-    this.showSubscriptionContainer(true);
     this.stripe = Stripe(stripeKey.value);
     const elements = this.stripe.elements();
     this.card = elements.create("card", { style: this.style });
@@ -72,7 +69,6 @@ export class OwnerSubscriptionComponent implements OnInit {
   getSubscriptionProducts() {
     this.paymentService.fetchSubscriptionProduct().subscribe(data => {
       this.showLoader(false);
-      this.showSubscriptionContainer(true);
       this.subscriptionProducts = data;
       this.initStripe();
     });
@@ -80,21 +76,15 @@ export class OwnerSubscriptionComponent implements OnInit {
   showLoader(isShown: boolean) {
     this.loader = isShown;
   }
-  showSubscriptionContainer(isShown: boolean) {
-    this.subscriptionContainerEnabled = isShown;
-  }
   submitForm() {
-    this.showSubscriptionContainer(false)
     this.showLoader(true);
     if (this.priceId == null && !this.isPaymentRetry) {
       this.showLoader(false);
-      this.showSubscriptionContainer(true)
       var element = document.getElementById("subscriptionErrorTxt");
       element.classList.remove("d-none");
     }
     else {
       var form = document.getElementById('subscription-form');
-
       if (this.isPaymentRetry) {
         // create new payment method & retry payment on invoice with new payment method
         this.createPaymentMethod(this.isPaymentRetry);
@@ -132,7 +122,6 @@ export class OwnerSubscriptionComponent implements OnInit {
       .then((result) => {
         if (result.error) {
           this.showLoader(false);
-          this.showSubscriptionContainer(true);
           this.handleError(result.error.message);
         } else {
           if (isPaymentRetry) {
@@ -143,17 +132,13 @@ export class OwnerSubscriptionComponent implements OnInit {
             );
           } else {
             // Create the subscription
-            this.paymentService
             this.paymentService.createPaymentSubscription(this.customerId, result.paymentMethod.id, this.priceId).subscribe(result => {
 
               this.showLoader(false);
-              this.showSubscriptionContainer(true);
               this.handleSubscriptionCreateRetryResponse(result);
-              console.log(result)
             },
               error => {
                 this.showLoader(false);
-                this.showSubscriptionContainer(true);
                 this.handleError("There was an error during your payment,please try again later");
               },
               () => {
@@ -178,7 +163,6 @@ export class OwnerSubscriptionComponent implements OnInit {
     this.showLoader(false);
     if (result.status != "active") {
       this.showLoader(false);
-      this.showSubscriptionContainer(true);
       this.handleError("There was an error during your payment,please try again later");
     }
     else {

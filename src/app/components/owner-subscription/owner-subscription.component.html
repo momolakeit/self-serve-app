@@ -1,4 +1,4 @@
-<div class="container" [hidden]="!subscriptionContainerEnabled" id="subscriptionContainer">
+<div class="container" [hidden]="loader" id="subscriptionContainer">
     <div class="row" [hidden]="isPaymentRetry">
         <ng-container *ngFor="let product of subscriptionProducts;let i = index;">
             <div class="col w-50 ">
@@ -41,4 +41,4 @@
         </div>
     </div>
 </div>
-<div class="loader text-center d-none" [hidden]="!loader" id="spinner"></div>
+<div class="loader text-center" [hidden]="!loader" id="spinner"></div>
