@@ -71,10 +71,10 @@ export class PaymentChoiceComponent implements OnInit {
   initPaymentRequest(billDTO: BillDTO): any {
     return this.stripe.paymentRequest({
       country: 'CA',
-      currency: 'CAN',
+      currency: 'cad',
       total: {
         label: 'Self Serve',
-        amount: billDTO.prixTotal,
+        amount: billDTO.prixTotal*100,
       },
       requestPayerName: true,
       requestPayerEmail: true,

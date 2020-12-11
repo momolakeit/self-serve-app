@@ -23,7 +23,6 @@ export class PaymentFormComponent implements OnInit {
   cardErrors;
   clientSecret;
   isError: boolean;
-  errorMsg: string;
   loading = false;
   confirmation;
 
@@ -60,13 +59,13 @@ export class PaymentFormComponent implements OnInit {
     }
   };
 
-  showError = function (): void {
+  showError(errorMsgTxt :string): void {
     this.showSpinner(false);
     var errorMsg = document.querySelector("#card-error");
-    errorMsg.textContent = "Votre payment a echouer , veuillez reesayer";
-    setTimeout(function () {
+    errorMsg.textContent = errorMsgTxt;
+    /*setTimeout(function () {
       errorMsg.textContent = "";
-    }, 4000);
+    }, 4000);*/
   };
 
   showSuccess = function (): void {
@@ -102,13 +101,10 @@ export class PaymentFormComponent implements OnInit {
         if (result.error) {
           // Show error to your customer
           this.isError = true;
-          this.errorMsg = result.error.message;
-          console.log(result.error)
-          this.showSpinner(false);
+          this.showError(result.error.message);
 
         } else {
           // The payment succeeded!
-          console.log(result);
           localStorage.clear();
           this.showSuccess();
         }
