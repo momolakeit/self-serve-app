@@ -7,9 +7,13 @@
 
     <div>
         <p class="mt-4">COMMENTAIRES :</p>
-        <p>{{data.product.description}}</p>
+        <p>{{data.commentaires}}</p>
+        
+        <div *ngIf="isReady">
+            <h3 class="mt-2">Ready </h3>
+        </div>
 
-        <div>
+        <div *ngIf="!isReady">
             <p class="text-left mt-2">{{nombreDeMinuteRestant}} minutes restantes</p>
 
             <div>

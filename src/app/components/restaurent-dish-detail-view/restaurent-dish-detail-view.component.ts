@@ -79,10 +79,10 @@ export class RestaurentDishDetailViewComponent implements OnInit {
   }
 
   changeOrderStatus = function (): void {
-    if (this.orderItem.orderStatus == "READY") {
+    if (this.orderItem.orderStatus.toString() == "READY") {
       this.isReady = false;
     }
-    if (this.orderItem.orderStatus == "PROGRESS") {
+    if (this.orderItem.orderStatus.toString() == "PROGRESS") {
       this.isReady = true;
     }
   }
