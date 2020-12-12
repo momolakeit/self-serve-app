@@ -4,14 +4,14 @@
             <mat-card-title>{{orderItem.product.name}}</mat-card-title>
         </mat-card-header>
         <img mat-card-image [src]="imgUrl+ orderItem.product.imgFileDTO.id" alt="Photo of a Shiba Inu">
-        <h4>COMMENTAIRES :</h4>
+        <h4>{{ 'dishDetail.commentaireTxt' | translate }} :</h4>
         <mat-card-content>
             <p>
                 {{orderItem.commentaires}}
             </p>
             <div class="container">
                 <div class="row">
-                    {{nombreDeMinuteRestant}} minutes restantes
+                    {{nombreDeMinuteRestant}} {{ 'dishDetail.minutesRestantesTxt' | translate }}
                 </div>
                 <div class="row">
                     <div class=" col-lg-6 w-75 p-0 ">
@@ -44,7 +44,7 @@
             </div>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button class="btn-block bg-dark text-white mt-3" (click)="terminerCommande(orderItem)" mat-button>Done</button>
+            <button mat-raised-button class="btn-block bg-dark text-white mt-3" (click)="terminerCommande(orderItem)" mat-button>{{ 'dishDetail.finiTxt' | translate }}</button>
         </mat-card-actions>
     </mat-card>
 </ng-container>

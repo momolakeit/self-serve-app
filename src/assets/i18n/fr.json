@@ -20,7 +20,11 @@
         "specialRequest":"Requêtes Spéciales",
         "commander":"Commander",
         "addOn":"Ajout",
-        "itemOrderd":"Item commandé"
+        "itemOrderd":"Item commandé",
+        "commentaireTxt":"commentaires",
+        "minutesRestantesTxt": "minutes restantes",
+        "fermerTxt":"fermer",
+        "finiTxt":"Terminer"
     },
     "clientRequestList":{
         "pageTitle":"Mes commandes",

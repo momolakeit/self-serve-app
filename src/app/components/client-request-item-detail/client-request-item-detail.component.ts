@@ -30,7 +30,6 @@ export class ClientRequestItemDetailComponent implements OnInit {
       this.nombreDeMinuteRestant = 0;
       this.nombreDeMinutesSur100 = 0;
     }
-    console.log("dansaaay");
     this.changeOrderStatus();
   }
 
@@ -69,7 +68,6 @@ export class ClientRequestItemDetailComponent implements OnInit {
     if (this.data.orderStatus.toString() == "PROGRESS") {
       this.isReady = false;
     }
-    console.log(this.isReady);
   }
 
 }
