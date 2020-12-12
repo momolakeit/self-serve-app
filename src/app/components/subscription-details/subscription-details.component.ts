@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {PaymentService} from '../../services/payment.service';
 import {StripeSubscriptionProducts} from '../../models/stripe-subscription-products';
 import {SubscriptionEntityDTO} from '../../models/subscription-entity-dto'
+import {Router} from '@angular/router'
 @Component({
   selector: 'app-subscription-details',
   templateUrl: './subscription-details.component.html',
@@ -9,7 +10,7 @@ import {SubscriptionEntityDTO} from '../../models/subscription-entity-dto'
 })
 export class SubscriptionDetailsComponent implements OnInit {
 
-  constructor(private paymentService:PaymentService) { }
+  constructor(private paymentService:PaymentService,private router:Router) { }
   loading : boolean;
   isLatestInvoicePaid = true;
   ngOnInit(): void {
@@ -20,6 +21,9 @@ export class SubscriptionDetailsComponent implements OnInit {
     this.paymentService.fetchSubscription(localStorage.getItem("username")).subscribe(data =>{
       this.subscriptionEntity = data;
       localStorage.setItem('latestInvoicePaymentIntentStatus',this.subscriptionEntity.latestInvoiceStatus);
+      if(this.subscriptionEntity.latestInvoiceStatus =="requires_payment_method"){
+          this.router.navigate(['/subscription'])
+      }
     })
   }
   cancelSubscription(){
