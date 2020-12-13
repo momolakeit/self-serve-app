@@ -1,5 +1,5 @@
-<div class="container" id="subscriptionContainer">
-    <div class="row" *ngIf="!isPaymentRetry">
+<div class="container" [hidden]="loader" id="subscriptionContainer">
+    <div class="row" [hidden]="isPaymentRetry">
         <ng-container *ngFor="let product of subscriptionProducts;let i = index;">
             <div class="col w-50 ">
                 <mat-card (click)="changeSubscriptionProduct(product,i)" class="example-card mt-4">
@@ -41,4 +41,4 @@
         </div>
     </div>
 </div>
-<div class="loader text-center d-none" id="spinner"></div>
+<div class="loader text-center" [hidden]="!loader" id="spinner"></div>

@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { PaymentService } from '../../services/payment.service';
 import {Router} from '@angular/router';
+import { stripeKey } from 'src/environments/environment';
 @Component({
   selector: 'app-payment-form',
   templateUrl: './payment-form.component.html',
@@ -22,7 +23,6 @@ export class PaymentFormComponent implements OnInit {
   cardErrors;
   clientSecret;
   isError: boolean;
-  errorMsg: string;
   loading = false;
   confirmation;
 
@@ -39,7 +39,7 @@ export class PaymentFormComponent implements OnInit {
       this.clientSecret = data
     });
 
-    this.stripe = Stripe('pk_test_51HLwKgC5UoZOX4GRWegBa5FvbtsNbi5Cd7Z5WKYB73jelPNuhpzS69dXKe2V3OWTP4XHt5wjGGD3dzEdJw25duSn00Dlctj1NV');
+    this.stripe = Stripe(stripeKey.value);
     const elements = this.stripe.elements();
     this.card = elements.create("card");
     this.card.mount(".card-element");
@@ -59,13 +59,13 @@ export class PaymentFormComponent implements OnInit {
     }
   };
 
-  showError = function (): void {
+  showError(errorMsgTxt :string): void {
     this.showSpinner(false);
     var errorMsg = document.querySelector("#card-error");
-    errorMsg.textContent = "Votre payment a echouer , veuillez reesayer";
-    setTimeout(function () {
+    errorMsg.textContent = errorMsgTxt;
+    /*setTimeout(function () {
       errorMsg.textContent = "";
-    }, 4000);
+    }, 4000);*/
   };
 
   showSuccess = function (): void {
@@ -101,13 +101,10 @@ export class PaymentFormComponent implements OnInit {
         if (result.error) {
           // Show error to your customer
           this.isError = true;
-          this.errorMsg = result.error.message;
-          console.log(result.error)
-          this.showSpinner(false);
+          this.showError(result.error.message);
 
         } else {
           // The payment succeeded!
-          console.log(result);
           localStorage.clear();
           this.showSuccess();
         }

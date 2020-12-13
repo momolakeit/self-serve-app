@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StripeSubscriptionProducts } from '../../models/stripe-subscription-products'
 import { PaymentService } from '../../services/payment.service'
 import { Router } from '@angular/router';
+import { stripeKey } from 'src/environments/environment';
 
 @Component({
   selector: 'app-owner-subscription',
@@ -17,7 +18,6 @@ export class OwnerSubscriptionComponent implements OnInit {
   clientSecret;
   isError: boolean;
   errorMsg: string;
-  loading = false;
   isPaymentRetry = false;
   customerId: string;
   priceId: string;
@@ -43,8 +43,7 @@ export class OwnerSubscriptionComponent implements OnInit {
 
   ngOnInit() {
     this.initPaymentRetry();
-    this.hideComponent(document.getElementById("subscriptionContainer"));
-    this.showComponent(document.getElementById("spinner"));
+    this.showLoader(true);
     this.fetchCustomerId();
     this.getSubscriptionProducts();
   }
@@ -59,24 +58,17 @@ export class OwnerSubscriptionComponent implements OnInit {
 
   initStripe() {
     this.isError = false;
-    /*this.paymentService.getPaymentIntent().subscribe(data => {
-      this.clientSecret = data
-    });*/
-
-
-    this.stripe = Stripe('pk_test_51HLwKgC5UoZOX4GRWegBa5FvbtsNbi5Cd7Z5WKYB73jelPNuhpzS69dXKe2V3OWTP4XHt5wjGGD3dzEdJw25duSn00Dlctj1NV');
+    this.stripe = Stripe(stripeKey.value);
     const elements = this.stripe.elements();
     this.card = elements.create("card", { style: this.style });
     this.card.mount("#card-element");
-
   }
   fetchCustomerId() {
     this.paymentService.fetchOwnerCustomerId(localStorage.getItem("username")).subscribe(data => this.customerId = data.customerId);
   }
   getSubscriptionProducts() {
     this.paymentService.fetchSubscriptionProduct().subscribe(data => {
-      this.hideComponent(document.getElementById("spinner"));
-      this.showComponent(document.getElementById("subscriptionContainer"));
+      this.showLoader(false);
       this.subscriptionProducts = data;
       this.initStripe();
     });
@@ -84,35 +76,18 @@ export class OwnerSubscriptionComponent implements OnInit {
   showLoader(isShown: boolean) {
     this.loader = isShown;
   }
-  hideContentContainer() {
-    document.getElementById("subscriptionContainer").classList.add("d-none");
-  }
-  hideSpinner() {
-    document.getElementById("spinner").classList.remove("d-none");
-  }
-  hideComponent(element) {
-    element.classList.add("d-none")
-  }
-  showComponent(element) {
-    element.classList.remove("d-none")
-  }
   submitForm() {
-    this.hideComponent(document.getElementById("subscriptionContainer"));
-    this.showComponent(document.getElementById("spinner"));
+    this.showLoader(true);
     if (this.priceId == null && !this.isPaymentRetry) {
-      this.hideComponent(document.getElementById("spinner"));
-      this.showComponent(document.getElementById("subscriptionContainer"));
+      this.showLoader(false);
       var element = document.getElementById("subscriptionErrorTxt");
       element.classList.remove("d-none");
     }
     else {
       var form = document.getElementById('subscription-form');
-
       if (this.isPaymentRetry) {
         // create new payment method & retry payment on invoice with new payment method
-        this.createPaymentMethod(
-          this.isPaymentRetry,
-        );
+        this.createPaymentMethod(this.isPaymentRetry);
       } else {
         // create new payment method & create subscription
         this.createPaymentMethod(false);
@@ -146,7 +121,8 @@ export class OwnerSubscriptionComponent implements OnInit {
       })
       .then((result) => {
         if (result.error) {
-          //displayError(result);
+          this.showLoader(false);
+          this.handleError(result.error.message);
         } else {
           if (isPaymentRetry) {
             // Update the payment method and retry invoice payment
@@ -156,17 +132,14 @@ export class OwnerSubscriptionComponent implements OnInit {
             );
           } else {
             // Create the subscription
-            this.paymentService
             this.paymentService.createPaymentSubscription(this.customerId, result.paymentMethod.id, this.priceId).subscribe(result => {
 
               this.showLoader(false);
               this.handleSubscriptionCreateRetryResponse(result);
-              console.log(result)
             },
               error => {
-                var element = document.getElementById("errorTxt");
-                element.classList.remove("d-none");
-                console.log(error);
+                this.showLoader(false);
+                this.handleError("There was an error during your payment,please try again later");
               },
               () => {
                 // 'onCompleted' callback.
@@ -181,16 +154,16 @@ export class OwnerSubscriptionComponent implements OnInit {
       this.handleSubscriptionCreateRetryResponse(result);
     })
   }
-  handleError() {
+  handleError(errorTxtValue: string) {
     var element = document.getElementById("paymentErrorTxt");
     element.classList.remove("d-none");
+    element.innerText = errorTxtValue
   }
   handleSubscriptionCreateRetryResponse(result) {
     this.showLoader(false);
     if (result.status != "active") {
-      this.hideComponent(document.getElementById("spinner"));
-      this.showComponent(document.getElementById("subscriptionContainer"));
-      this.handleError();
+      this.showLoader(false);
+      this.handleError("There was an error during your payment,please try again later");
     }
     else {
       this.router.navigateByUrl("subscriptionDetail");
