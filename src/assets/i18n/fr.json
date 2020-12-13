@@ -145,6 +145,10 @@
         "employer":"Comptes Employés"
     },
     "buttons":{
-        "save":"Enregistrer"
+        "save":"Enregistrer",
+        "close":"Fermer"
+    },
+    "dialogMessage":{
+        "userSaved":"Utilisateur enregistrer avec succès!"
     }
 }

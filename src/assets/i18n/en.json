@@ -145,6 +145,10 @@
         "employer":"Employers Accounts"
     },
     "buttons":{
-        "save":"Save"
+        "save":"Save",
+        "close":"Close"
+    },
+    "dialogMessage":{
+        "userSaved":"User saved successfully!"
     }
 }

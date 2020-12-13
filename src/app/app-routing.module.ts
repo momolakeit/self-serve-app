@@ -36,7 +36,7 @@ const routes: Routes = [
   { path: 'admin',canActivate:[AdminGuardService] ,component: AdminPageComponent },
 
   //all about authentification
-  { path: 'start', canActivate:[LoginGuardService], component: StartComponent },
+  { path: 'start', component: StartComponent },
   { path: 'login', canActivate: [LoginGuardService], component: LoginComponent },
   { path: 'sign-up/:role', canActivate: [LoginGuardService], component: SignupComponent },
   

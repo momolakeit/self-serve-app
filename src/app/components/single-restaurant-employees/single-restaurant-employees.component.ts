@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 import { RestaurantEmployerDto } from 'src/app/models/restaurant-user-dto';
 import { RoleName } from 'src/app/models/role-name.enum';
 import { KitchenService } from 'src/app/services/kitchen.service';
@@ -19,7 +20,7 @@ export class SingleRestaurantEmployeesComponent implements OnInit {
   isEmployerSaving: boolean = false;
   isEmployerEditable: boolean = false;
 
-  constructor(private snackBar: MatSnackBar, private kitchenService: KitchenService, private formBuilder: FormBuilder) { }
+  constructor(private translateService:TranslateService,private snackBar: MatSnackBar, private kitchenService: KitchenService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.initForms();
@@ -33,9 +34,11 @@ export class SingleRestaurantEmployeesComponent implements OnInit {
   }
 
   openSnackBar() {
-    this.snackBar.open("user saved successfully!", "Close", {
-      duration: 3000,
-    });
+    this.translateService.get('dialogMessage.userSaved').subscribe(res =>{
+      this.snackBar.open(res, "Close", {
+        duration: 3000,
+      });
+    })
 
     this.snackBar._openedSnackBarRef.onAction().subscribe(() => {
       this.snackBar.dismiss();
