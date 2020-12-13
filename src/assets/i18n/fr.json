@@ -139,5 +139,23 @@
         "updateBtnTxt":"Modifier",
         "addAddonsTxt": "Ajouter extras",
         "createAddonTxt": "Créer extras"
+    },
+    "errorMsg":{
+        "usernameEmpty":"Nom d'utilisateur vide",
+        "usernameExisting":"Nom d'utilisateur existant",
+        "Username":"Nom d'utilisateur",
+        "password":"Mot de passe ne peut pas être vide"
+    },
+    "role":{
+        "waiter":"Serveur",
+        "cook":"Chef",
+        "employer":"Comptes Employés"
+    },
+    "buttons":{
+        "save":"Enregistrer",
+        "close":"Fermer"
+    },
+    "dialogMessage":{
+        "userSaved":"Utilisateur enregistrer avec succès!"
     }
 }

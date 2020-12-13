@@ -139,5 +139,23 @@
         "updateBtnTxt":"Update",
         "addAddonsTxt": "Add addons",
         "createAddonTxt": "Create extras"
+    },
+    "errorMsg":{
+        "usernameEmpty":"Username cannot be empty",
+        "usernameExisting":"Username already exist",
+        "Username":"Username",
+        "password":"Password cannot be empty"
+    },
+    "role":{
+        "waiter":"Waiter",
+        "cook":"Chef",
+        "employer":"Employers Accounts"
+    },
+    "buttons":{
+        "save":"Save",
+        "close":"Close"
+    },
+    "dialogMessage":{
+        "userSaved":"User saved successfully!"
     }
 }

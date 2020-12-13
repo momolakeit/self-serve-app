@@ -1,2 +1,8 @@
 export enum RoleName {
+    ROLE_CLIENT = 'ROLE_CLIENT',
+    ROLE_GUEST = 'ROLE_GUEST',
+    ROLE_OWNER = 'ROLE_OWNER',
+    ROLE_ADMIN = 'ROLE_ADMIN',
+    ROLE_COOK = 'ROLE_COOK',
+    ROLE_WAITER = 'ROLE_WAITER'
 }

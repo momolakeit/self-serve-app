@@ -3,13 +3,14 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import decode from 'jwt-decode';
 import { roles } from 'src/environments/environment';
+import { KitchenService } from './kitchen.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(public jwtHelper: JwtHelperService) { }
+  constructor(public jwtHelper: JwtHelperService,private kitchenService:KitchenService) { }
 
   isAuthenticated(): boolean {
     let token = localStorage.getItem('token');
@@ -46,16 +47,19 @@ export class AuthService {
   }
 
   findRoleThenRedirect(route: Router) {
-    let token = localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username');
 
     switch (decode(token).role) {
       case roles.owner:
         route.navigate(['/adminProductManagment'])
         break;
       case roles.waiter:
+        this.kitchenService.setEmployerRestaurantId(username);
         route.navigate(['/restaurentOrders'])
         break;
       case roles.cook:
+        this.kitchenService.setEmployerRestaurantId(username);
         route.navigate(['/restaurentOrders'])
         break;
       case roles.client:
