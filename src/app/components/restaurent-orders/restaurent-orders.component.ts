@@ -104,8 +104,9 @@ export class RestaurentOrdersComponent implements OnInit {
   setUpBill(bill: BillDTO): BillDTO {
     bill.isBillEmpty = true;
 
-    bill.orderItems = this.authService.isWaiter()?this.filterOrderItemArrayByOrderStatusForBillForWaiter(bill.orderItems) :this.filterOrderItemArrayByOrderStatusForBillForCook(bill.orderItems);
+    //bill.orderItems = this.authService.isWaiter()?this.filterOrderItemArrayByOrderStatusForBillForWaiter(bill.orderItems) :this.filterOrderItemArrayByOrderStatusForBillForCook(bill.orderItems);
 
+    bill.orderItems = this.filterOrderItemArrayByOrderStatusForBillForWaiter(bill.orderItems)
     bill.orderItems = this.filterOrderItemArrayByOrderStatusCompletedForBill(bill.orderItems);
     
     bill.orderItems.forEach(orderItem => {

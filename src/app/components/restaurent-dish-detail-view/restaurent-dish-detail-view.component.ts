@@ -3,7 +3,7 @@ import { timer } from 'rxjs';
 import { OrderItemDTO } from 'src/app/models/order-item-dto';
 import { KitchenService } from 'src/app/services/kitchen.service';
 import { environment } from 'src/environments/environment';
-import {AuthService} from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { OrderStatus } from 'src/app/models/order-status.enum';
 
 @Component({
@@ -21,7 +21,7 @@ export class RestaurentDishDetailViewComponent implements OnInit {
   isReady = false
   imgUrl: string;
 
-  constructor(private kitchenService: KitchenService,private authService:AuthService) { }
+  constructor(private kitchenService: KitchenService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.imgUrl = environment.baseImgPath;
@@ -71,17 +71,15 @@ export class RestaurentDishDetailViewComponent implements OnInit {
 
   terminerCommande = (orderItem: OrderItemDTO): void => {
     this.nombreDeMinutesSur100++;
-    orderItem.orderStatus=OrderStatus.COMPLETED
-    this.kitchenService.updateOrderItem(orderItem)
-    if(this.authService.isWaiter()){
-      orderItem.orderStatus=OrderStatus.COMPLETED;
+    if (this.authService.isWaiter()) {
+      orderItem.orderStatus = OrderStatus.COMPLETED;
     }
-    else{
-      orderItem.orderStatus=OrderStatus.READY;
+    else {
+      orderItem.orderStatus = OrderStatus.READY;
     }
     this.kitchenService.updateOrderItem(orderItem).subscribe();
     this.countChanged.emit(this.nombreDeMinutesSur100);
-    
+
   }
 
 }
