@@ -13,7 +13,6 @@ import { PaymentChoiceComponent } from './components/payment-choice/payment-choi
 import { PaymentFormComponent } from './components/payment-form/payment-form.component';
 import { ClientRequestListComponent } from './components/client-request-list/client-request-list.component';
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
-import { WaiterRequestListComponent } from './components/waiter-request-list/waiter-request-list.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { OwnerRoleGuardService } from './services/role-guard.service';
 import { ClientGuardService } from './services/client-guard.service';
@@ -47,7 +46,6 @@ const routes: Routes = [
   //{path: 'dishDetail',canActivate:[AuthGuardService], component: DishDetailComponent},
   
   //all about waiter
-  { path: 'waiter-request', canActivate: [WaiterGuardService], component: WaiterRequestListComponent },
   { path: 'restaurentOrders', component: RestaurentOrdersComponent },
   
   //all about admin

@@ -22,14 +22,16 @@ export class KitchenService {
   postOrderItemStatusReady(orderItemDTO:OrderItemDTO):Observable<OrderItemDTO>{
     return this.http.post<OrderItemDTO>(`${environment.kitchenUrl}/changeOrderItemStatus`,{orderItemDTO :JSON.stringify(orderItemDTO)});
   }
+  updateOrderItem(orderItemDTO:OrderItemDTO):Observable<OrderItemDTO>{
+    return this.http.put<OrderItemDTO>(`${environment.kitchenUrl}/editOrderItem`,orderItemDTO);
+  }
   postMoreTimeForOrder(orderItemDTO :OrderItemDTO,tempsAjoute :number): Observable<OrderItemDTO>{
     return this.http.post<OrderItemDTO>(`${environment.kitchenUrl}/changeOrderItemTime`,{orderItemId:orderItemDTO.id,tempsAjoute:tempsAjoute});
   }
   fetchMenuByRestaurantTable (tableID :number) :Observable<RestaurantDTO> {
     return this.http.get<RestaurantDTO>(`${environment.kitchenUrl}/findRestaurantByRestaurantTableId/${tableID}`);
   }
-  getAllRestaurantTables() :Observable<[RestaurantTableDTO]>{
-    const restaurantId =2;
+  getAllRestaurantTables(restaurantId:number) :Observable<[RestaurantTableDTO]>{
     return this.fetchKitchenRestaurentTables(restaurantId).pipe(
       map(response =>{
         return response;

@@ -3,6 +3,8 @@ import { timer } from 'rxjs';
 import { OrderItemDTO } from 'src/app/models/order-item-dto';
 import { KitchenService } from 'src/app/services/kitchen.service';
 import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/services/auth.service';
+import { OrderStatus } from 'src/app/models/order-status.enum';
 
 @Component({
   selector: 'app-restaurent-dish-detail-view',
@@ -19,7 +21,7 @@ export class RestaurentDishDetailViewComponent implements OnInit {
   isReady = false
   imgUrl: string;
 
-  constructor(private kitchenService: KitchenService) { }
+  constructor(private kitchenService: KitchenService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.imgUrl = environment.baseImgPath;
@@ -33,8 +35,6 @@ export class RestaurentDishDetailViewComponent implements OnInit {
       this.nombreDeMinuteRestant = 0;
       this.nombreDeMinutesSur100 = 0;
     }
-
-    this.changeOrderStatus();
   }
 
   setUpProgressbar() {
@@ -71,20 +71,15 @@ export class RestaurentDishDetailViewComponent implements OnInit {
 
   terminerCommande = (orderItem: OrderItemDTO): void => {
     this.nombreDeMinutesSur100++;
-    this.kitchenService.setOrderItemReady(orderItem).subscribe(data => {
-      this.orderItem = data;
-      this.countChanged.emit(this.nombreDeMinutesSur100);
-      this.changeOrderStatus();
-    });
-  }
+    if (this.authService.isWaiter()) {
+      orderItem.orderStatus = OrderStatus.COMPLETED;
+    }
+    else {
+      orderItem.orderStatus = OrderStatus.READY;
+    }
+    this.kitchenService.updateOrderItem(orderItem).subscribe();
+    this.countChanged.emit(this.nombreDeMinutesSur100);
 
-  changeOrderStatus = function (): void {
-    if (this.orderItem.orderStatus.toString() == "READY") {
-      this.isReady = false;
-    }
-    if (this.orderItem.orderStatus.toString() == "PROGRESS") {
-      this.isReady = true;
-    }
   }
 
 }

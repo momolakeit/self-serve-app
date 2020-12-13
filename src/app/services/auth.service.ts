@@ -53,7 +53,7 @@ export class AuthService {
         route.navigate(['/adminProductManagment'])
         break;
       case roles.waiter:
-        route.navigate(['/waiter-request'])
+        route.navigate(['/restaurentOrders'])
         break;
       case roles.cook:
         route.navigate(['/restaurentOrders'])

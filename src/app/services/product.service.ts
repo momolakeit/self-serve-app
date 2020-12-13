@@ -20,8 +20,8 @@ export class ProductService {
   findAllProductFromMenu(restaurantId: number): Observable<[ProductDTO]> {
     return this.http.get<[ProductDTO]>(`${environment.productUrl}/menu/${restaurantId}`);
   }
-  findAllWaiterRequestProduct(menuId: number): Observable<MenuDTO> {
-    return this.http.get<MenuDTO>(`${environment.productUrl}/findWaiterRequestProducts/${menuId}`)
+  findAllWaiterRequestProduct(restaurantId: number): Observable<MenuDTO> {
+    return this.http.get<MenuDTO>(`${environment.productUrl}/findWaiterRequestProducts/${restaurantId}`)
   }
 
   create(productDTO: ProductDTO, id: number): Observable<ProductDTO> {
