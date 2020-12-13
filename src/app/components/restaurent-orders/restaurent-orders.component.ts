@@ -9,6 +9,7 @@ import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 import { BillService } from 'src/app/services/bill.service';
 import { PaymentService } from '../../services/payment.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { OrderStatus } from 'src/app/models/order-status.enum';
 @Component({
   selector: 'app-restaurent-orders',
   templateUrl: './restaurent-orders.component.html',
@@ -75,15 +76,15 @@ export class RestaurentOrdersComponent implements OnInit {
   }
 
   filterOrderItemArrayByOrderStatusForBillForCook(orderItems: OrderItemDTO[]): OrderItemDTO[] {
-    return orderItems.filter(oItem => oItem.orderStatus.toString() != "READY");
+    return orderItems.filter(oItem => oItem.orderStatus != OrderStatus.READY);
   }
 
   filterOrderItemArrayByOrderStatusForBillForWaiter(orderItems: OrderItemDTO[]): OrderItemDTO[] {
-    return orderItems.filter(oItem => oItem.orderStatus.toString() == "READY");
+    return orderItems.filter(oItem => oItem.orderStatus == OrderStatus.READY);
   }
 
   filterOrderItemArrayByOrderStatusCompletedForBill(orderItems: OrderItemDTO[]): OrderItemDTO[] {
-    return orderItems.filter(oItem => oItem.orderStatus.toString() != "COMPLETED");
+    return orderItems.filter(oItem => oItem.orderStatus != OrderStatus.COMPLETED);
   }
 
 
@@ -104,9 +105,8 @@ export class RestaurentOrdersComponent implements OnInit {
   setUpBill(bill: BillDTO): BillDTO {
     bill.isBillEmpty = true;
 
-    //bill.orderItems = this.authService.isWaiter()?this.filterOrderItemArrayByOrderStatusForBillForWaiter(bill.orderItems) :this.filterOrderItemArrayByOrderStatusForBillForCook(bill.orderItems);
+    bill.orderItems = this.authService.isWaiter()?this.filterOrderItemArrayByOrderStatusForBillForWaiter(bill.orderItems) :this.filterOrderItemArrayByOrderStatusForBillForCook(bill.orderItems);
 
-    bill.orderItems = this.filterOrderItemArrayByOrderStatusForBillForWaiter(bill.orderItems)
     bill.orderItems = this.filterOrderItemArrayByOrderStatusCompletedForBill(bill.orderItems);
     
     bill.orderItems.forEach(orderItem => {
