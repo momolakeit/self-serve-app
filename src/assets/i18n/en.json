@@ -29,7 +29,8 @@
     "clientRequestList": {
         "pageTitle": "My orders",
         "noOrders": "You have no ongoing orders",
-        "checkout": "Checkout"
+        "checkout": "Checkout",
+        "noOrder": "You have no orders at the moment"
     },
     "clientRequestItem": {
         "moreBtnTxt": "More"
