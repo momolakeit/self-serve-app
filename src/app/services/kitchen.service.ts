@@ -49,6 +49,10 @@ export class KitchenService {
     return this.http.get<RestaurantEmployerDto>(`${environment.kitchenUrl}/restaurantEmployer/${username}`);
   }
 
+  updateOrderItem(orderItemDTO:OrderItemDTO):Observable<OrderItemDTO>{
+    return this.http.put<OrderItemDTO>(`${environment.kitchenUrl}/editOrderItem`,orderItemDTO);
+  }
+
   // Post
 
   addUserToRestaurant(restaurantUserDTO:RestaurantEmployerDto){

@@ -16,8 +16,7 @@ import { ContactFormComponent } from './components/contact-form/contact-form.com
 import { AuthGuardService } from './services/auth-guard.service';
 import { OwnerRoleGuardService } from './services/role-guard.service';
 import { ClientGuardService } from './services/client-guard.service';
-import { WaiterGuardService } from './services/waiter-guard.service';
-import { CookGuardService } from './services/cook-guard.service';
+import { CookAndWaiterGuardService } from './services/cook-waiter-guard.service';
 import { LoginGuardService } from './services/login-guard.service';
 import { OwnerSubscriptionComponent } from './components/owner-subscription/owner-subscription.component';
 import { SubscriptionDetailsComponent } from './components/subscription-details/subscription-details.component';
@@ -47,8 +46,7 @@ const routes: Routes = [
   //{path: 'dishDetail',canActivate:[AuthGuardService], component: DishDetailComponent},
   
   //all about waiter
-  { path: 'waiter-request', canActivate: [WaiterGuardService], component: WaiterRequestListComponent },
-  { path: 'restaurentOrders',canActivate:[CookGuardService] ,component: RestaurentOrdersComponent },
+  { path: 'restaurentOrders',canActivate:[CookAndWaiterGuardService], component: RestaurentOrdersComponent },
   
   //all about admin
   { path: 'contactForm', canActivate: [OwnerRoleGuardService], component: ContactFormComponent },
