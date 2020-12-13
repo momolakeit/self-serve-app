@@ -28,7 +28,6 @@ import { RestaurentDishDetailViewComponent } from './components/restaurent-dish-
 import { ClientRequestItemComponent } from './components/client-request-item/client-request-item.component';
 import { ClientRequestItemDetailComponent } from './components/client-request-item-detail/client-request-item-detail.component';
 import { ParticlesModule } from 'ngx-particle';
-import { WaiterRequestListComponent } from './components/waiter-request-list/waiter-request-list.component';
 import { RestaurantOwnerListComponent } from './components/restaurant-owner-list/restaurant-owner-list.component';
 import { RestaurantFormComponent } from './components/restaurant-form/restaurant-form.component';
 import { ProductFormEditCreateComponent } from './components/product-form-edit-create/product-form-edit-create.component';
@@ -63,7 +62,6 @@ import { RestaurantMenuListComponent } from './components/restaurant-menu-list/r
     RestaurentDishDetailViewComponent,
     ClientRequestItemComponent,
     ClientRequestItemDetailComponent,
-    WaiterRequestListComponent,
     RestaurantOwnerListComponent,
     RestaurantFormComponent,
     ProductFormEditCreateComponent,
