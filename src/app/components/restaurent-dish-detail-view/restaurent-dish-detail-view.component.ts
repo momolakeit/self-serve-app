@@ -26,7 +26,6 @@ export class RestaurentDishDetailViewComponent implements OnInit {
   ngOnInit(): void {
     this.imgUrl = environment.baseImgPath;
     var today = new Date();
-    console.log(this.orderItem);
     this.nombreDeMinuteRequis = this.orderItem.product.tempsDePreparation;
     this.nombreDeMinuteRestant = Math.round((Date.parse(this.orderItem.tempsDePreparation.toString()) - today.getTime()) / 60000);
     if (this.nombreDeMinuteRestant > 0) {

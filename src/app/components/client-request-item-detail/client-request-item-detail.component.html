@@ -2,15 +2,19 @@
     <h1 class="text-center">{{data.product.name}}</h1>
 
     <div>
-        <img class="img-fluid" style="border-radius: 2px;" [src]="getImage(data.product.imgFileDTO.id)" alt="Photo of a Shiba Inu">
+        <img class="img-fluid" style="border-radius: 2px;" [src]="imgUrl+data.product.imgFileDTO.id" alt="Image du produit en question">
     </div>
 
     <div>
-        <p class="mt-4">COMMENTAIRES :</p>
-        <p>{{data.product.description}}</p>
+        <p class="mt-4">{{ 'dishDetail.commentaireTxt' | translate }} :</p>
+        <p>{{data.commentaires}}</p>
+        
+        <div *ngIf="isReady">
+            <h3 class="mt-2">Ready </h3>
+        </div>
 
-        <div>
-            <p class="text-left mt-2">{{nombreDeMinuteRestant}} minutes restantes</p>
+        <div *ngIf="!isReady">
+            <p class="text-left mt-2">{{nombreDeMinuteRestant}} {{ 'dishDetail.minutesRestantesTxt' | translate }}</p>
 
             <div>
                 <mat-progress-bar class="mb-3 mt-3" mode="determinate" [value]="nombreDeMinutesSur100">
@@ -28,9 +32,19 @@
 
             </mat-radio-group>
         </ng-container>
+        <div class="mt-3 p-0">
+            <div *ngFor='let checkItem of data.checkItems'>
+                <mat-checkbox  disabled="true" [checked]="checkItem.isActive"
+                    class="example-margin">{{checkItem.name}}
+                    <ng-container *ngIf="checkItem.prix>0">
+                        {{checkItem.prix}} $
+                    </ng-container>
+                </mat-checkbox>
+            </div>    
+        </div>
     </div>
 
     <mat-divider></mat-divider>
 
-    <button mat-raised-button class="btn-block bg-dark text-white mt-3" (click)="onNoClick()">close</button>
+    <button mat-raised-button class="btn-block bg-dark text-white mt-3" (click)="onNoClick()">{{ 'dishDetail.fermerTxt' | translate }}</button>
 </div>

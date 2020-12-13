@@ -6,19 +6,17 @@
         <div class="container-fluid">
 
             <div class="row">
-                <ng-container *ngFor="let table of allTables;let i = index">
-                    <mat-accordion class="col-4 mb-4" *ngIf="table.nombreItemParTable > 0" >
-                        <mat-expansion-panel expanded>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col w-25">
-                                                <h2>Table {{table.tableNumber}}</h2>
-                                            </div>
-                                            <div class="col w-75">
-                                                <h2>{{table.nombreItemParTable}} orders </h2>
-                                            </div>
+                <mat-accordion class="col-4 mb-4" *ngFor="let table of allTables;let i = index">
+                    <mat-expansion-panel expanded *ngIf="table.nombreItemParTable > 0">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col w-25">
+                                            <h2>Table {{table.tableNumber}}</h2>
+                                        </div>
+                                        <div class="col w-75">
+                                            <h2>{{table.nombreItemParTable}} orders </h2>
                                         </div>
                                     </div>
                                 </mat-panel-title>

@@ -20,7 +20,11 @@
         "specialRequest": "Special Request",
         "commander": "Order",
         "addOn":"Add On",
-        "itemOrderd":"Item ordered"
+        "itemOrderd":"Item ordered",
+        "commentaireTxt":"comments",
+        "minutesRestantesTxt": "minutes left",
+        "fermerTxt":"close",
+        "finiTxt":"Done"
     },
     "clientRequestList": {
         "pageTitle": "My orders",
