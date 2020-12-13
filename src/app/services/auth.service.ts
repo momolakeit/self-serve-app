@@ -47,18 +47,19 @@ export class AuthService {
   }
 
   findRoleThenRedirect(route: Router) {
-    let token = localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username');
 
     switch (decode(token).role) {
       case roles.owner:
         route.navigate(['/adminProductManagment'])
         break;
       case roles.waiter:
-        this.kitchenService.setWaiterRestaurantId();
+        this.kitchenService.setEmployerRestaurantId(username);
         route.navigate(['/waiter-request'])
         break;
       case roles.cook:
-        this.kitchenService.setCookRestaurantId();
+        this.kitchenService.setEmployerRestaurantId(username);
         route.navigate(['/restaurentOrders'])
         break;
       case roles.client:

@@ -8,7 +8,7 @@ import { OrderItemDTO } from '../models/order-item-dto';
 import { RestaurantFormDTO } from '../models/restaurant-form-dto';
 import { RestaurantDTO } from '../models/restaurant-dto';
 import { MenuDTO } from '../models/menu-dto';
-import { RestaurantUserDto } from '../models/restaurant-user-dto';
+import { RestaurantEmployerDto } from '../models/restaurant-user-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -31,31 +31,27 @@ export class KitchenService {
       }));
   }
 
-  setWaiterRestaurantId() {
-    const waiterUsername = localStorage.getItem('username');
-
-    this.http.get<number>(`${environment.kitchenUrl}/waiterRestaurant/${waiterUsername}`).subscribe(data => {
-      localStorage.setItem('restaurantId', JSON.stringify(data));
-    });
+  findEmployerRestaurantId(username:string){
+    return this.http.get<number>(`${environment.kitchenUrl}/employerRestaurant/${username}`);
   }
 
-  setCookRestaurantId() {
-    const cookUsername = localStorage.getItem('username');
-
-    this.http.get<number>(`${environment.kitchenUrl}/cookRestaurant/${cookUsername}`).subscribe(data => {
-      localStorage.setItem('restaurantId', JSON.stringify(data));
-    });
+  setEmployerRestaurantId(username:string){
+    this.findEmployerRestaurantId(username).subscribe( restaurantId =>{
+      localStorage.setItem('restaurantId',JSON.stringify(restaurantId));
+    })
   }
 
-  findAllRestaurantEmployees(): Observable<RestaurantUserDto[]> {
-    const restaurantId = localStorage.getItem('restaurantId');
-
-    return this.http.get<RestaurantUserDto[]>(`${environment.kitchenUrl}/restaurantEmployees/${restaurantId}`);
+  findAllRestaurantEmployers(restaurantId:number): Observable<RestaurantEmployerDto[]> {
+    return this.http.get<RestaurantEmployerDto[]>(`${environment.kitchenUrl}/restaurantEmployers/${restaurantId}`);
+  }
+  
+  findRestaurantEmployer(username:string): Observable<RestaurantEmployerDto> {
+    return this.http.get<RestaurantEmployerDto>(`${environment.kitchenUrl}/restaurantEmployer/${username}`);
   }
 
   // Post
 
-  addUserToRestaurant(restaurantUserDTO:RestaurantUserDto){
+  addUserToRestaurant(restaurantUserDTO:RestaurantEmployerDto){
     return this.http.post(`${environment.kitchenUrl}/addUserToRestaurant`,restaurantUserDTO);
   }
 
@@ -100,7 +96,7 @@ export class KitchenService {
 
   // Put
 
-  updateRestaurantEmployee(restaurantUserDTO:RestaurantUserDto){
+  updateRestaurantEmployee(restaurantUserDTO:RestaurantEmployerDto){
     return this.http.put(`${environment.kitchenUrl}/updateRestaurantUser`,restaurantUserDTO);
   }
 

@@ -1,6 +1,6 @@
 import { RoleName } from "./role-name.enum";
 
-export interface RestaurantUserDto {
+export interface RestaurantEmployerDto {
     id:number;
     username:string;
     password:string;
