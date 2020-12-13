@@ -42,11 +42,7 @@ export class AuthentificationService {
   }
 
   logout(){
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    localStorage.removeItem('ongoingBill');
-    localStorage.removeItem('5');
-    localStorage.removeItem('menuId');
+    localStorage.clear();
   }
 
 }

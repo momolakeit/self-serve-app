@@ -6,6 +6,10 @@
                 <app-client-request-item class="bg-dark" [orderItemDTO]="orderItem">
                 </app-client-request-item>
         </div>
+
+        <div *ngIf="billDTO.orderItems.length == 0">
+            <p>{{'clientRequestList.noOrder' | translate}}</p>
+        </div>
     </div>
 
     <div class="text-right">

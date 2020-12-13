@@ -25,7 +25,8 @@
     "clientRequestList":{
         "pageTitle":"Mes commandes",
         "noOrders":"Vous n'avez aucune commande en cours ",
-        "checkout":"Payer"
+        "checkout":"Payer",
+        "noOrder": "Vous n'avez aucune commande pour l'instant"
     },
     "clientRequestItem":{
         "moreBtnTxt":"Plus"

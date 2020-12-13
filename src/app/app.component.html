@@ -19,13 +19,13 @@
               <p>restaurants</p>
             </div>
           </a>
-          <a mat-list-item routerLink="." (click)="snav.toggle()">
+          <!-- <a mat-list-item routerLink="." (click)="snav.toggle()">
             <div class="d-flex">
               <mat-icon class="mr-3">restaurant_menu</mat-icon>
               <p>products</p>
             </div>
-          </a>
-          <a mat-list-item routerLink="." (click)="snav.toggle()">
+          </a> -->
+          <a mat-list-item routerLink="isStripeEnabled" (click)="snav.toggle()">
             <div class="d-flex">
               <mat-icon class="mr-3">card_membership</mat-icon>
               <p>abonnement</p>
@@ -87,7 +87,7 @@
     </mat-button-toggle-group>
   </ng-container>
 
-  <!--ADMIN VIEW-->
+  <!--OWNER VIEW-->
   <ng-container *ngIf="isOwner() && isConnected() && mobileQuery.matches">
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="w-100">
       <mat-button-toggle value="italic" class="w-100" routerLink="adminProductManagment"><mat-icon>account_circle</mat-icon></mat-button-toggle>
