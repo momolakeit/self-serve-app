@@ -12,6 +12,7 @@ export class ClientRequestItemComponent implements OnInit {
   nombreDeMinuteRequis = 30;
   nombreDeMinuteRestant = 0;
   nombreDeMinutesSur100 = 100;
+  isReady = false;
 
   @Input() orderItemDTO: OrderItemDTO
   @Output() orderItemDetailChanged: EventEmitter<OrderItemDTO> = new EventEmitter();
@@ -19,6 +20,12 @@ export class ClientRequestItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.setUpTimeout();
+    this.checkIfReady();
+  }
+  checkIfReady(){
+    if(this.orderItemDTO.orderStatus.toString() == "READY"){
+      this.isReady =true;
+    }
   }
 
   setUpTimeout() {

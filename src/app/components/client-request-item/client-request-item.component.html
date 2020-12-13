@@ -4,8 +4,11 @@
             <h3 class="mt-2">{{orderItemDTO.product.name}}</h3>
         </div>
         
-        <div class="col-4 text-center">
+        <div class="col-4 text-center" *ngIf="!isReady">
             <h3 class="mt-2">{{nombreDeMinuteRestant}} minutes </h3>
+        </div>
+        <div class="col-4 text-center" *ngIf="isReady">
+            <h3 class="mt-2">Ready </h3>
         </div>
 
         <div class="col-4">
@@ -13,7 +16,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="!isReady">
         <div class="container">
             <div class="row">
                 <div class="col">
