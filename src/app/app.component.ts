@@ -3,12 +3,14 @@ import { AuthService } from './services/auth.service';
 import { AuthentificationService } from './services/authentification.service';
 import { MediaMatcher } from '@angular/cdk/layout';
 
-import decode from 'jwt-decode';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { LogoService } from './services/logo.service'
 
 import { TranslateService } from '@ngx-translate/core';
 import { BillService } from './services/bill.service';
+import { MatDialog } from '@angular/material/dialog';
+import { LogoutDialogComponent } from './components/logout-dialog/logout-dialog.component';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +25,7 @@ export class AppComponent implements OnDestroy {
   private _mobileQueryListener: () => void;
 
 
-  constructor(private billService: BillService, private logoService: LogoService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private authService: AuthService, private authentificationService: AuthentificationService, private router: Router, private translate: TranslateService) {
+  constructor(public dialog: MatDialog, private billService: BillService, private logoService: LogoService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private authService: AuthService, private authentificationService: AuthentificationService, private router: Router, private translate: TranslateService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -75,11 +77,25 @@ export class AppComponent implements OnDestroy {
         if (hasUserPaid) {
           this.authentificationService.logout();
           this.router.navigate(['/start']);
-        }
+        } else
+          this.openDialog();
+
       });
-    }else{
+    } else {
       this.authentificationService.logout();
       this.router.navigate(['/start']);
     }
   }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(LogoutDialogComponent, {
+      width: this.mobileQuery.matches ? '90%' : '50%',
+    });
+
+    dialogRef.afterClosed().subscribe(() =>{
+      this.router.navigate(['/clientRequestList'])
+    })
+
+  }
+
 }

@@ -37,7 +37,7 @@ export class RestaurentOrdersComponent implements OnInit {
   }
 
   isSubscriptionActive() {
-    this.paymentService.fetchSubscription("owner@mail.com").subscribe(data => {
+    this.paymentService.fetchSubscription(JSON.parse(localStorage.getItem('ownerUsername'))).subscribe(data => {
       if (data.status != "active") {
         this.isActive = false;
         this.loading = false;

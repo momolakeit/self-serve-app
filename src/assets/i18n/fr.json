@@ -30,7 +30,7 @@
         "pageTitle":"Mes commandes",
         "noOrders":"Vous n'avez aucune commande en cours ",
         "checkout":"Payer",
-        "noOrder": "Vous n'avez aucune commande pour l'instant"
+        "noOrder": "Vous n'avez aucune commande pour l'instant."
     },
     "clientRequestItem":{
         "moreBtnTxt":"Plus"
@@ -156,6 +156,8 @@
         "close":"Fermer"
     },
     "dialogMessage":{
-        "userSaved":"Utilisateur enregistrer avec succès!"
+        "userSaved":"Utilisateur enregistrer avec succès!",
+        "logoutTitle":"Vous ne pouvez pas vous déconnecter!",
+        "logoutMessage":"Vous devez payer votre facture avant de vous déconnecter."
     }
 }

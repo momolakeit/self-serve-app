@@ -1,1 +1,10 @@
-<p>logout-dialog works!</p>
+<div>
+    <h2 class="text-center">{{'dialogMessage.logoutTitle' | translate}}</h2>
+    <mat-dialog-content class="mat-typography">
+        <p>{{'dialogMessage.logoutMessage' | translate}}</p>
+    </mat-dialog-content>
+    <mat-divider></mat-divider>
+    <mat-dialog-actions align="center">
+        <button class="bg-dark text-white" mat-raised-button mat-dialog-close>Okay</button>
+    </mat-dialog-actions>
+</div>

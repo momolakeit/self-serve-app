@@ -55,12 +55,10 @@ export class AuthService {
         route.navigate(['/adminProductManagment'])
         break;
       case roles.waiter:
-        this.kitchenService.setEmployerRestaurantId(username);
-        route.navigate(['/restaurentOrders'])
+        this.kitchenService.setEmployerRestaurantIdAndOwner(username,route);
         break;
       case roles.cook:
-        this.kitchenService.setEmployerRestaurantId(username);
-        route.navigate(['/restaurentOrders'])
+        this.kitchenService.setEmployerRestaurantIdAndOwner(username,route);
         break;
       case roles.client:
         route.navigate(['/menu'])
