@@ -1,40 +1,37 @@
-<ng-container>
-    <mat-card class="example-card mt-4">
-        <mat-card-header>
-            <mat-card-title>{{orderItem.product.name}}</mat-card-title>
-        </mat-card-header>
-        <img mat-card-image [src]="imgUrl+ orderItem.product.imgFileDTO.id" alt="Photo of a Shiba Inu">
-        <h4>COMMENTAIRES :</h4>
-        <mat-card-content>
-            <p>
-                {{orderItem.commentaires}}
-            </p>
-            <div class="container">
-                <div class="row">
-                    {{nombreDeMinuteRestant}} minutes restantes
+<mat-card class="example-card mt-4">
+    <mat-card-header>
+        <mat-card-title>{{orderItem.product.name}}</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image [src]="imgUrl+ orderItem.product.imgFileDTO.id" alt="Photo of a Shiba Inu">
+    <h4>COMMENTAIRES :</h4>
+    <mat-card-content>
+        <p>
+            {{orderItem.commentaires}}
+        </p>
+        <div class="container">
+            <div class="row">
+                {{nombreDeMinuteRestant}} minutes restantes
+            </div>
+            <div class="row">
+                <div class=" col-lg-6 w-75 p-0 ">
+                    <mat-progress-bar class="mb-3 mt-3" mode="determinate" [value]="nombreDeMinutesSur100">
+                    </mat-progress-bar>
                 </div>
-                <div class="row">
-                    <div class=" col-lg-6 w-75 p-0 ">
-                        <mat-progress-bar class="mb-3 mt-3" mode="determinate" [value]="nombreDeMinutesSur100">
-                        </mat-progress-bar>
-                    </div>
-                    <div class=" col-lg-6 w-25">
-                        <button (click)="addTime()" mat-button>+</button>
-                    </div>
+                <div class=" col-lg-6 w-25">
+                    <button (click)="addTime()" mat-button>+</button>
                 </div>
             </div>
-            <ng-container *ngFor='let option of orderItem.option'>
-                <h4>{{option.name}}</h4>
-                <mat-radio-group aria-label="Select an option"
-                    *ngFor='let checkItem of option.checkItemList;let i=index;'>
-                    <mat-radio-button disabled="true" [checked]="checkItem.isActive" class="mr-2" [value]='i'>
-                        {{checkItem.name}}
-                    </mat-radio-button>
-                </mat-radio-group>
-            </ng-container>
-        </mat-card-content>
-        <mat-card-actions>
-            <button (click)="terminerCommande(orderItem)" mat-button>Done</button>
-        </mat-card-actions>
-    </mat-card>
-</ng-container>
+        </div>
+        <ng-container *ngFor='let option of orderItem.option'>
+            <h4>{{option.name}}</h4>
+            <mat-radio-group aria-label="Select an option" *ngFor='let checkItem of option.checkItemList;let i=index;'>
+                <mat-radio-button disabled="true" [checked]="checkItem.isActive" class="mr-2" [value]='i'>
+                    {{checkItem.name}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </ng-container>
+    </mat-card-content>
+    <mat-card-actions>
+        <button (click)="terminerCommande(orderItem)" mat-button>Done</button>
+    </mat-card-actions>
+</mat-card>

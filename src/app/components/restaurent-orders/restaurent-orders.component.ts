@@ -58,7 +58,6 @@ export class RestaurentOrdersComponent implements OnInit {
   initValues() {
     var source = timer(1000, 50000).subscribe(() => {
       this.kitchenService.fetchKitchenRestaurentTables(parseInt(localStorage.getItem('restaurantId'))).subscribe(data => {
-        console.log(data);
         this.loading = false;
         this.allTables = data;
         this.allTables = this.filterTableArray(this.allTables);
