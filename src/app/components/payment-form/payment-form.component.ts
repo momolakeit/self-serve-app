@@ -110,7 +110,7 @@ export class PaymentFormComponent implements OnInit {
           localStorage.clear();
           this.showSuccess();
           const billDTO: BillDTO = JSON.parse(localStorage.getItem('ongoingBill'));
-          this.billService.makePayment(billDTO.id);
+          this.billService.makePayment(billDTO.id).subscribe();
         }
       });
   }

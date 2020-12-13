@@ -73,12 +73,9 @@ export class AppComponent implements OnDestroy {
     if (this.isClient() || this.isGuest()) {
       this.billService.hasUserPaid().subscribe(hasUserPaid => {
         if (hasUserPaid) {
-          console.log('i was paid');
-          
           this.authentificationService.logout();
           this.router.navigate(['/start']);
-        }else console.log('i was not paid');
-        
+        }
       });
     }else{
       this.authentificationService.logout();
