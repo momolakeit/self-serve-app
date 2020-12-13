@@ -13,12 +13,10 @@ import { PaymentChoiceComponent } from './components/payment-choice/payment-choi
 import { PaymentFormComponent } from './components/payment-form/payment-form.component';
 import { ClientRequestListComponent } from './components/client-request-list/client-request-list.component';
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
-import { WaiterRequestListComponent } from './components/waiter-request-list/waiter-request-list.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { OwnerRoleGuardService } from './services/role-guard.service';
 import { ClientGuardService } from './services/client-guard.service';
-import { WaiterGuardService } from './services/waiter-guard.service';
-import { CookGuardService } from './services/cook-guard.service';
+import { CookAndWaiterGuardService } from './services/cook-waiter-guard.service';
 import { LoginGuardService } from './services/login-guard.service';
 import { OwnerSubscriptionComponent } from './components/owner-subscription/owner-subscription.component';
 import { SubscriptionDetailsComponent } from './components/subscription-details/subscription-details.component';
@@ -26,6 +24,7 @@ import { AdminPageComponent } from './components/admin-page/admin-page.component
 import { AdminGuardService } from './services/admin-guard.service';
 import { AdminOwnerGuardService } from './services/admin-owner-guard.service';
 import { StripeAccountCreatePromptComponent } from './components/stripe-account-create-prompt/stripe-account-create-prompt.component';
+import { AuthService } from './services/auth.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/start', pathMatch: 'full' },
@@ -35,7 +34,7 @@ const routes: Routes = [
   { path: 'admin',canActivate:[AdminGuardService] ,component: AdminPageComponent },
 
   //all about authentification
-  { path: 'start',  component: StartComponent },
+  { path: 'start', component: StartComponent },
   { path: 'login', canActivate: [LoginGuardService], component: LoginComponent },
   { path: 'sign-up/:role', canActivate: [LoginGuardService], component: SignupComponent },
   
@@ -47,8 +46,7 @@ const routes: Routes = [
   //{path: 'dishDetail',canActivate:[AuthGuardService], component: DishDetailComponent},
   
   //all about waiter
-  { path: 'waiter-request', canActivate: [WaiterGuardService], component: WaiterRequestListComponent },
-  { path: 'restaurentOrders', component: RestaurentOrdersComponent },
+  { path: 'restaurentOrders',canActivate:[CookAndWaiterGuardService], component: RestaurentOrdersComponent },
   
   //all about admin
   { path: 'contactForm', canActivate: [OwnerRoleGuardService], component: ContactFormComponent },

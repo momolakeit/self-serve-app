@@ -4,6 +4,7 @@ import { OrderItemDTO } from 'src/app/models/order-item-dto';
 import { OrderStatus } from 'src/app/models/order-status.enum';
 import { KitchenService } from 'src/app/services/kitchen.service';
 import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-restaurent-dish-detail-view',
@@ -20,12 +21,11 @@ export class RestaurentDishDetailViewComponent implements OnInit {
   isReady = false
   imgUrl: string;
 
-  constructor(private kitchenService: KitchenService) { }
+  constructor(private kitchenService: KitchenService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.imgUrl = environment.baseImgPath;
     var today = new Date();
-    console.log(this.orderItem);
     this.nombreDeMinuteRequis = this.orderItem.product.tempsDePreparation;
     this.nombreDeMinuteRestant = Math.round((Date.parse(this.orderItem.tempsDePreparation.toString()) - today.getTime()) / 60000);
     if (this.nombreDeMinuteRestant > 0) {
@@ -35,8 +35,6 @@ export class RestaurentDishDetailViewComponent implements OnInit {
       this.nombreDeMinuteRestant = 0;
       this.nombreDeMinutesSur100 = 0;
     }
-
-    this.changeOrderStatus();
   }
 
   setUpProgressbar() {
@@ -73,22 +71,15 @@ export class RestaurentDishDetailViewComponent implements OnInit {
 
   terminerCommande = (orderItem: OrderItemDTO): void => {
     this.nombreDeMinutesSur100++;
-    this.kitchenService.setOrderItemReady(orderItem).subscribe(data => {
-      this.orderItem = data;
-      this.countChanged.emit(this.nombreDeMinutesSur100);
-      this.changeOrderStatus();
-    });
-  }
+    if (this.authService.isWaiter()) {
+      orderItem.orderStatus = OrderStatus.COMPLETED;
+    }
+    else {
+      orderItem.orderStatus = OrderStatus.READY;
+    }
+    this.kitchenService.updateOrderItem(orderItem).subscribe();
+    this.countChanged.emit(this.nombreDeMinutesSur100);
 
-  changeOrderStatus(): void {
-    if (this.orderItem.orderStatus == OrderStatus.READY) {
-      console.log(this.orderItem.orderStatus);
-      console.log(this.isReady);
-      this.isReady = false;
-    }
-    if (this.orderItem.orderStatus == OrderStatus.PROGRESS) {
-      this.isReady = true;
-    }
   }
 
 }

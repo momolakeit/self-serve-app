@@ -8,6 +8,7 @@ import { OrderItemDTO } from 'src/app/models/order-item-dto';
 import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 import { BillService } from 'src/app/services/bill.service';
 import { PaymentService } from '../../services/payment.service';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-restaurent-orders',
   templateUrl: './restaurent-orders.component.html',
@@ -27,7 +28,7 @@ export class RestaurentOrdersComponent implements OnInit {
   isActive: Boolean;
   panelOpenState = false;
 
-  constructor(private kitchenService: KitchenService, private paymentService: PaymentService) { }
+  constructor(private kitchenService: KitchenService, private paymentService: PaymentService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.loading = true;
@@ -48,7 +49,7 @@ export class RestaurentOrdersComponent implements OnInit {
     })
   }
 
-  seeIfCheckItemSelected (checkItemName: string): boolean {
+  seeIfCheckItemSelected(checkItemName: string): boolean {
     var currentCheckItem = this.allCheckItems.find(checkItem => checkItem.name == checkItemName);
 
     return currentCheckItem.isActive;
@@ -56,7 +57,7 @@ export class RestaurentOrdersComponent implements OnInit {
 
   initValues() {
     var source = timer(1000, 50000).subscribe(() => {
-      this.kitchenService.getAllRestaurantTables().subscribe(data => {
+      this.kitchenService.fetchKitchenRestaurentTables(parseInt(localStorage.getItem('restaurantId'))).subscribe(data => {
         this.loading = false;
         this.allTables = data;
         this.allTables = this.filterTableArray(this.allTables);
@@ -73,34 +74,41 @@ export class RestaurentOrdersComponent implements OnInit {
     return tableToFilter.filter(table => (table.bills.length > 0 && table.bills != null));
   }
 
-  filterOrderItemArrayByProductTypeForBill (orderItems: OrderItemDTO[]): OrderItemDTO[] {
-    return orderItems.filter(oItem => (oItem.menuType.toString() != "WAITERREQUEST" && oItem.menuType.toString() != "WAITERCALL"));
-  }
-
-  filterOrderItemArrayByOrderStatusForBill  (orderItems: OrderItemDTO[]): OrderItemDTO[] {
+  filterOrderItemArrayByOrderStatusForBillForCook(orderItems: OrderItemDTO[]): OrderItemDTO[] {
     return orderItems.filter(oItem => oItem.orderStatus.toString() != "READY");
   }
+
+  filterOrderItemArrayByOrderStatusForBillForWaiter(orderItems: OrderItemDTO[]): OrderItemDTO[] {
+    return orderItems.filter(oItem => oItem.orderStatus.toString() == "READY");
+  }
+
+  filterOrderItemArrayByOrderStatusCompletedForBill(orderItems: OrderItemDTO[]): OrderItemDTO[] {
+    return orderItems.filter(oItem => oItem.orderStatus.toString() != "COMPLETED");
+  }
+
 
   setUpTable(table: RestaurantTableDTO): RestaurantTableDTO {
     table.nombreItemParTable = 0;
 
     table.bills.forEach(bill => {
       bill = this.setUpBill(bill);
+
       table.nombreItemParTable = bill.orderItems.length;
       if (table.nombreItemParTable == 0) {
         bill.isBillEmpty = false;
       }
     })
-
     return table;
   }
 
-  setUpBill (bill: BillDTO): BillDTO {
+  setUpBill(bill: BillDTO): BillDTO {
     bill.isBillEmpty = true;
 
-    bill.orderItems = this.filterOrderItemArrayByProductTypeForBill(bill.orderItems);
-    bill.orderItems = this.filterOrderItemArrayByOrderStatusForBill(bill.orderItems);
+    //bill.orderItems = this.authService.isWaiter()?this.filterOrderItemArrayByOrderStatusForBillForWaiter(bill.orderItems) :this.filterOrderItemArrayByOrderStatusForBillForCook(bill.orderItems);
 
+    bill.orderItems = this.filterOrderItemArrayByOrderStatusForBillForWaiter(bill.orderItems)
+    bill.orderItems = this.filterOrderItemArrayByOrderStatusCompletedForBill(bill.orderItems);
+    
     bill.orderItems.forEach(orderItem => {
       orderItem = this.setUpOrderItem(orderItem);
     })
@@ -108,7 +116,7 @@ export class RestaurentOrdersComponent implements OnInit {
     return bill;
   }
 
-  setUpOrderItem (orderItem: OrderItemDTO): OrderItemDTO {
+  setUpOrderItem(orderItem: OrderItemDTO): OrderItemDTO {
     orderItem.option.forEach(option => {
       option.checkItemList.forEach(checkItem => {
         this.allCheckItems.push(checkItem);

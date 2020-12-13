@@ -10,68 +10,64 @@ import { OrderItemDTO } from '../../models/order-item-dto'
   styleUrls: ['./client-request-item-detail.component.css']
 })
 export class ClientRequestItemDetailComponent implements OnInit {
-  nombreDeMinuteRequis = 30;
+  nombreDeMinuteRequis = 0;
   nombreDeMinuteRestant = 0;
   nombreDeMinutesSur100 = 100;
   isReady = false
   imgUrl: string;
-  
-  constructor(@Inject(MAT_DIALOG_DATA) public data: OrderItemDTO,public dialogRef: MatDialogRef<ClientRequestItemDetailComponent>) { }
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: OrderItemDTO, public dialogRef: MatDialogRef<ClientRequestItemDetailComponent>) { }
 
   ngOnInit(): void {
-  }
-
-  getImage(imageId:number){
-    return environment.baseImgPath + imageId;
-  }
-
-  ngOnChanges(): void {
-    if (this.data != null) {
-
-      if (localStorage.getItem(this.data.id.toString()) == null) 
-        localStorage.setItem(this.data.id.toString(), this.nombreDeMinuteRequis.toString());
-      
-      this.nombreDeMinuteRestant = JSON.parse(localStorage.getItem(this.data.id.toString()));
-      this.setUpTimeout();
-      this.changeOrderStatus();
+    this.imgUrl = environment.baseImgPath;
+    var today = new Date();
+    this.nombreDeMinuteRequis = this.data.product.tempsDePreparation;
+    this.nombreDeMinuteRestant = Math.round((Date.parse(this.data.tempsDePreparation.toString()) - today.getTime()) / 60000);
+    if (this.nombreDeMinuteRestant > 0) {
+      this.setUpProgressbar();
     }
+    else {
+      this.nombreDeMinuteRestant = 0;
+      this.nombreDeMinutesSur100 = 0;
+    }
+    this.changeOrderStatus();
   }
 
-  setUpTimeout() {
+  setUpProgressbar() {
+    this.nombreDeMinuteRestant = this.nombreDeMinuteRestant - 1;
+    this.nombreDeMinutesSur100 = (this.nombreDeMinuteRestant * 100) / this.nombreDeMinuteRequis;
+  }
+
+  handleTime() {
+    var today = new Date();
+    this.nombreDeMinuteRequis = this.data.product.tempsDePreparation;
+    this.setUpTimeout();
+  }
+
+  setUpTimeout = (): void => {
     var source = timer(1000, 1000).subscribe(() => {
-      if (parseInt(localStorage.getItem(this.data.id.toString())) == 0) {
+      if (this.nombreDeMinuteRestant == 0) {
         this.nombreDeMinutesSur100 = 0;
         source.unsubscribe();
       }
       else {
-        this.nombreDeMinuteRestant = parseInt(localStorage.getItem(this.data.id.toString()));
-        this.nombreDeMinutesSur100 = (this.nombreDeMinuteRestant * 100) / this.nombreDeMinuteRequis;
-        localStorage.setItem(this.data.id.toString(), this.nombreDeMinuteRestant.toString());
+        this.setUpProgressbar();
       }
     });
+
   }
 
-  addTime() {
-    this.nombreDeMinuteRestant = parseInt(localStorage.getItem(this.data.id.toString()));
-   
-    if (this.nombreDeMinuteRestant >= this.nombreDeMinuteRequis) 
-      this.nombreDeMinuteRestant = this.nombreDeMinuteRequis;
-    else 
-      this.nombreDeMinuteRestant += 5;
-    
-    localStorage.setItem(this.data.id.toString(), this.nombreDeMinuteRestant.toString());
-  }
-
-  changeOrderStatus() {
-    if (this.data.orderStatus.toString() == "READY") 
-      this.isReady = false;
-
-    if (this.data.orderStatus.toString() == "PROGRESS") 
-      this.isReady = true;
-  }
-
-  onNoClick(){
+  onNoClick() {
     this.dialogRef.close();
+  }
+
+  changeOrderStatus = function (): void {
+    if (this.data.orderStatus.toString() == "READY") {
+      this.isReady = true;
+    }
+    if (this.data.orderStatus.toString() == "PROGRESS") {
+      this.isReady = false;
+    }
   }
 
 }

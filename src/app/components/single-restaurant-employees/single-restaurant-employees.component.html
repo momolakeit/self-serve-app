@@ -1,0 +1,48 @@
+<form class="row" [formGroup]="employerForm" (ngSubmit)="handleEmployerSubmit()">
+    <div class="col-lg-2 pt-4 text-center">
+        <strong *ngIf="role == cookRole">{{'role.cook' | translate}}</strong>
+        <strong *ngIf="role == waiterRole">{{'role.waiter' | translate}}</strong>
+    </div>
+    <div class="col-lg-3 col-sm-12">
+        <p>
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Username</mat-label>
+                <input matInput type="text" autocomplete="off" formControlName="username"
+                    [readonly]="!isEmployerEditable && employer">
+                <mat-error *ngIf="getF().username.hasError('required')">{{'errorMsg.usernameEmpty' | translate}}</mat-error>
+                <mat-error *ngIf="getF().username.hasError('existing')">{{'errorMsg.usernameExisting' | translate}}</mat-error>
+            </mat-form-field>
+        </p>
+    </div>
+    <div class="col-lg-3 col-sm-12">
+        <p>
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Password</mat-label>
+                <input matInput type="text" autocomplete="off" formControlName="password"
+                    [readonly]="!isEmployerEditable && employer">
+                <mat-error *ngIf="getF().password.hasError('required')">{{'errorMsg.password' | translate}}</mat-error>
+            </mat-form-field>
+        </p>
+    </div>
+
+    <div class="col-lg-2 col-sm-12" *ngIf="!isEmployerEditable && employer">
+        <button mat-raised-button class="w-100 mt-2 bg-warning" (click)="onEmployerEditClick()">{{ 'restaurantOwnerList.editTxt' | translate }}</button>
+    </div>
+
+    <ng-container *ngIf="isEmployerEditable && employer">
+        <div class="col-lg-2 col-sm-12" *ngIf="!isEmployerSaving">
+            <button mat-raised-button class="mt-2 w-100 bg-danger text-white" (click)="onEmployerCancelClick()">{{'productEditCreate.cancelTxt' | translate}}</button>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="isEmployerEditable || !employer">
+        <div class="col-lg-2 col-sm-12" *ngIf="!isEmployerSaving">
+            <button type="submit" mat-raised-button class="mt-2 w-100 bg-success text-white">{{'buttons.save' | translate}}</button>
+        </div>
+    </ng-container>
+
+    <div class="col-lg-2 col-sm-12" *ngIf="isEmployerSaving">
+        <mat-spinner [diameter]="30" [strokeWidth]="5"></mat-spinner>
+    </div>
+
+</form>

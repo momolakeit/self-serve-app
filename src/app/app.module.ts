@@ -28,7 +28,6 @@ import { RestaurentDishDetailViewComponent } from './components/restaurent-dish-
 import { ClientRequestItemComponent } from './components/client-request-item/client-request-item.component';
 import { ClientRequestItemDetailComponent } from './components/client-request-item-detail/client-request-item-detail.component';
 import { ParticlesModule } from 'ngx-particle';
-import { WaiterRequestListComponent } from './components/waiter-request-list/waiter-request-list.component';
 import { RestaurantOwnerListComponent } from './components/restaurant-owner-list/restaurant-owner-list.component';
 import { RestaurantFormComponent } from './components/restaurant-form/restaurant-form.component';
 import { ProductFormEditCreateComponent } from './components/product-form-edit-create/product-form-edit-create.component';
@@ -43,6 +42,8 @@ import { StripeAccountCreatePromptComponent } from './components/stripe-account-
 import { MenuFormEditCreateComponent } from './components/menu-form-edit-create/menu-form-edit-create.component';
 import { RestaurantMenuListComponent } from './components/restaurant-menu-list/restaurant-menu-list.component';
 import { LogoutDialogComponent } from './components/logout-dialog/logout-dialog.component';
+import { RestaurantEmployeesComponent } from './components/restaurant-employees/restaurant-employees.component';
+import { SingleRestaurantEmployeesComponent } from './components/single-restaurant-employees/single-restaurant-employees.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,6 @@ import { LogoutDialogComponent } from './components/logout-dialog/logout-dialog.
     RestaurentDishDetailViewComponent,
     ClientRequestItemComponent,
     ClientRequestItemDetailComponent,
-    WaiterRequestListComponent,
     RestaurantOwnerListComponent,
     RestaurantFormComponent,
     ProductFormEditCreateComponent,
@@ -76,6 +76,8 @@ import { LogoutDialogComponent } from './components/logout-dialog/logout-dialog.
     MenuFormEditCreateComponent,
     RestaurantMenuListComponent,
     LogoutDialogComponent,
+    RestaurantEmployeesComponent,
+    SingleRestaurantEmployeesComponent,
   ],
   imports: [
     CommonModule,
