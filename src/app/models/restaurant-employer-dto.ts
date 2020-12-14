@@ -6,5 +6,5 @@ export interface RestaurantEmployerDto {
     password:string;
     restaurantId:number;
     role:RoleName;
-
+    ownerUsername:string;
 }

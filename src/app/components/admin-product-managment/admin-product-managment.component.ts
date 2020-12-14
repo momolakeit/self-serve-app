@@ -42,7 +42,7 @@ export class AdminProductManagmentComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private menuService: MenuService, private productService: ProductService, public dialog: MatDialog, private authentificationService: AuthentificationService, private paymentService: PaymentService, private ownerUsernameService: OwnerUsernameService, private authService: AuthService) {
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private menuService: MenuService, private productService: ProductService, public dialog: MatDialog, private ownerUsernameService: OwnerUsernameService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -145,6 +145,8 @@ export class AdminProductManagmentComponent implements OnInit {
         this.initTable();
 
         localStorage.setItem('restaurantId', `${restaurantId}`);
+
+        this.menuService.onRestaurantSelectedEvent.emit();
 
         const restaurantName = this.restaurantSelectionDTOS.find(item => item.restaurantId === restaurantId);
 

@@ -4,7 +4,7 @@ import { RestaurantSelectionDTO } from '../models/restaurant-selection-dto';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ConstanteService } from './constante-service.service';
 import { MenuType } from '../models/menu-type.enum';
 @Injectable({
@@ -13,6 +13,7 @@ import { MenuType } from '../models/menu-type.enum';
 export class MenuService {
   onMenuSelectedEvent = new EventEmitter<any>();
   onMenuCreatedEvent = new EventEmitter<any>();
+  onRestaurantSelectedEvent = new EventEmitter<any>();
   constructor(private http: HttpClient, private constanteService: ConstanteService) { }
 
   fetchFoodMenuByRestaurantId(restaurantId: number): Observable<[MenuDTO]> {

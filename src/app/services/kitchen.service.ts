@@ -8,7 +8,8 @@ import { OrderItemDTO } from '../models/order-item-dto';
 import { RestaurantFormDTO } from '../models/restaurant-form-dto';
 import { RestaurantDTO } from '../models/restaurant-dto';
 import { MenuDTO } from '../models/menu-dto';
-import { RestaurantEmployerDto } from '../models/restaurant-user-dto';
+import { RestaurantEmployerDto } from '../models/restaurant-employer-dto';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -35,9 +36,11 @@ export class KitchenService {
     return this.http.get<number>(`${environment.kitchenUrl}/employerRestaurant/${username}`);
   }
 
-  setEmployerRestaurantId(username:string){
-    this.findEmployerRestaurantId(username).subscribe( restaurantId =>{
-      localStorage.setItem('restaurantId',JSON.stringify(restaurantId));
+  setEmployerRestaurantIdAndOwner(username:string,router:Router){
+    this.findRestaurantEmployer(username).subscribe(data =>{
+      localStorage.setItem('restaurantId',JSON.stringify(data.restaurantId));
+      localStorage.setItem('ownerUsername',JSON.stringify(data.ownerUsername));
+      router.navigate(['/restaurentOrders'])
     })
   }
 

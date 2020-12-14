@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div class="text-right">
+    <div class="text-right" *ngIf="billDTO.orderItems.length > 0">
         <button class="btn mt-5 mr-4 btn-dark text-white" routerLink="/paymentChoice" mat-button>{{ 'clientRequestList.checkout' | translate }}</button>
     </div>
 </ng-container>

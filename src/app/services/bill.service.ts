@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { BillDTO } from '../models/bill-dto'
 import { map, catchError } from 'rxjs/operators';
 import { ProductDTO } from '../models/product-dto';
+import { BillStatus } from '../models/bill-status.enum';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,9 +23,23 @@ export class BillService {
     return this.http.post<BillDTO>(`${environment.billUrl}/initBill`,{});
   }
 
+  getBillStatus(billId:number):Observable<BillStatus>{
+    return this.http.get<BillStatus>(`${environment.billUrl}/billStatus/${billId}`);
+  }
+
+  hasUserPaid():Observable<boolean>{
+    const billDTO : BillDTO = JSON.parse(localStorage.getItem('ongoingBill'));
+
+    return this.getBillStatus(billDTO.id).pipe(
+      map(data =>{
+        console.log(data);
+        
+      return data == BillStatus.PAYED;
+    }));
+  }
+
   getBill(billDTO :BillDTO):Observable<BillDTO>{
-    const returnValue  = this.http.post<BillDTO>(`${environment.billUrl}/getBill`,{billId: billDTO.id});
-    return returnValue;
+    return this.http.post<BillDTO>(`${environment.billUrl}/getBill`,{billId: billDTO.id});
  }
 
   makeOrder(product: ProductDTO, commentaire: String): Observable<BillDTO> {
@@ -35,6 +50,10 @@ export class BillService {
       map(response => {
         return response;
       }));
+  }
+
+  makePayment(billId:number){
+    return this.http.post(`${environment.billUrl}/makePayment`,billId);
   }
 
 }

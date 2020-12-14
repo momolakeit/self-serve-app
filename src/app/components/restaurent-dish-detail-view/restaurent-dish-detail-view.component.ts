@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { timer } from 'rxjs';
 import { OrderItemDTO } from 'src/app/models/order-item-dto';
+import { OrderStatus } from 'src/app/models/order-status.enum';
 import { KitchenService } from 'src/app/services/kitchen.service';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services/auth.service';
-import { OrderStatus } from 'src/app/models/order-status.enum';
 
 @Component({
   selector: 'app-restaurent-dish-detail-view',

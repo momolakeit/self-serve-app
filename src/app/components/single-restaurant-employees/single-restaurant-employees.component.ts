@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { RestaurantEmployerDto } from 'src/app/models/restaurant-user-dto';
+import { RestaurantEmployerDto } from 'src/app/models/restaurant-employer-dto';
 import { RoleName } from 'src/app/models/role-name.enum';
 import { KitchenService } from 'src/app/services/kitchen.service';
 
@@ -51,6 +51,7 @@ export class SingleRestaurantEmployeesComponent implements OnInit {
   }
 
   // Services
+  
 
   onEmployerEditClick() {
     this.isEmployerEditable = true;
@@ -73,7 +74,8 @@ export class SingleRestaurantEmployeesComponent implements OnInit {
         username: formValue['username'],
         password: formValue['password'],
         restaurantId: JSON.parse(localStorage.getItem('restaurantId')),
-        role: this.role
+        role: this.role,
+        ownerUsername: this.employer ? this.employer.ownerUsername : null
       }
 
       if (this.employer)

@@ -5,6 +5,8 @@ import { catchError, retry } from 'rxjs/operators';
 import { PaymentService } from '../../services/payment.service';
 import {Router} from '@angular/router';
 import { stripeKey } from 'src/environments/environment';
+import { BillService } from 'src/app/services/bill.service';
+import { BillDTO } from 'src/app/models/bill-dto';
 @Component({
   selector: 'app-payment-form',
   templateUrl: './payment-form.component.html',
@@ -12,7 +14,7 @@ import { stripeKey } from 'src/environments/environment';
 })
 export class PaymentFormComponent implements OnInit {
 
-  constructor(private http: HttpClient, private paymentService: PaymentService,private router:Router) { }
+  constructor(private billService:BillService,private http: HttpClient, private paymentService: PaymentService,private router:Router) { }
 
   @Input() amount: number;
   @Input() description: string;
@@ -107,6 +109,8 @@ export class PaymentFormComponent implements OnInit {
           // The payment succeeded!
           localStorage.clear();
           this.showSuccess();
+          const billDTO: BillDTO = JSON.parse(localStorage.getItem('ongoingBill'));
+          this.billService.makePayment(billDTO.id).subscribe();
         }
       });
   }
