@@ -38,8 +38,6 @@ export class KitchenService {
 
   setEmployerRestaurantIdAndOwner(username:string,router:Router){
     this.findRestaurantEmployer(username).subscribe(data =>{
-      console.log('my employer');
-      console.log(data);
       localStorage.setItem('restaurantId',JSON.stringify(data.restaurantId));
       localStorage.setItem('ownerUsername',JSON.stringify(data.ownerUsername));
       router.navigate(['/restaurentOrders'])

@@ -51,6 +51,7 @@ export class SingleRestaurantEmployeesComponent implements OnInit {
   }
 
   // Services
+  
 
   onEmployerEditClick() {
     this.isEmployerEditable = true;

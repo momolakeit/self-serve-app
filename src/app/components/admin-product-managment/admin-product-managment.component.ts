@@ -146,6 +146,8 @@ export class AdminProductManagmentComponent implements OnInit {
 
         localStorage.setItem('restaurantId', `${restaurantId}`);
 
+        this.menuService.onRestaurantSelectedEvent.emit();
+
         const restaurantName = this.restaurantSelectionDTOS.find(item => item.restaurantId === restaurantId);
 
         localStorage.setItem('restaurantName', restaurantName ? restaurantName.restaurantName : '');

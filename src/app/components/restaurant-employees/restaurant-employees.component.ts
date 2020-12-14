@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { RestaurantEmployerDto } from 'src/app/models/restaurant-employer-dto';
 import { RoleName } from 'src/app/models/role-name.enum';
 import { KitchenService } from 'src/app/services/kitchen.service';
+import { MenuService } from 'src/app/services/menu.service';
 import { roles } from 'src/environments/environment';
 
 @Component({
@@ -19,10 +20,14 @@ export class RestaurantEmployeesComponent implements OnInit {
   waiterRole : string = roles.waiter;
 
 
-  constructor(private kitchenService: KitchenService) { }
+  constructor(private menuService:MenuService,private kitchenService: KitchenService) { }
 
   ngOnInit(): void {
     this.initEmployees();
+    this.restaurantSelectChanged();
+  }
+  
+  ngOnChanges(){
   }
 
   initEmployees() {
@@ -35,9 +40,16 @@ export class RestaurantEmployeesComponent implements OnInit {
           this.cook = data[1];
           this.waiter = data[0];
         }
+      }else{
+        this.cook = null;
+        this.waiter = null;
       }
 
       this.callMade = true;
-    })
+    });
+  }
+
+  restaurantSelectChanged(){
+    this.menuService.onRestaurantSelectedEvent.subscribe(() => this.initEmployees());
   }
 }

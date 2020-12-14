@@ -30,9 +30,6 @@ export class BillService {
   hasUserPaid():Observable<boolean>{
     const billDTO : BillDTO = JSON.parse(localStorage.getItem('ongoingBill'));
 
-    console.log('my id:' + billDTO.id);
-    
-
     return this.getBillStatus(billDTO.id).pipe(
       map(data =>{
         console.log(data);
