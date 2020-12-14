@@ -90,7 +90,7 @@
     <mat-divider></mat-divider>
 
     <div>
-        <button (click)="updateCurrentBill(data)" mat-raised-button
+        <button (click)="updateCurrentBill(data)" [disabled]="itemOrdered" mat-raised-button
             class="btn-block btn-dark text-white">{{ 'dishDetail.commander' | translate }}</button>
     </div>
 </div>
