@@ -53,7 +53,7 @@ export class BillService {
   }
 
   makePayment(billId:number){
-    return this.http.post(`${environment.billUrl}/makePayment`,billId);
+    return this.http.post(`${environment.billUrl}/makePayment`,{billId:billId});
   }
 
 }
