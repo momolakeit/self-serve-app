@@ -11,18 +11,18 @@ div img {
   margin-bottom: 60px;
 }
 
-  
+::ng-deep .mat-button-toggle-button:focus {
+  outline: none !important;
+}
+
 #page-container {
-    position: relative;
-    min-height: 100vh;
-  }
+  position: relative;
+  min-height: 100vh;
+}
   
-  #content-wrap {
-    padding-bottom: 2.5rem; /* Footer height */
-  }
-
-  
-
+#content-wrap {
+  padding-bottom: 2.5rem; /* Footer height */
+}
   
 body { margin: 0; font-family: 'Muli', sans-serif; }
 
