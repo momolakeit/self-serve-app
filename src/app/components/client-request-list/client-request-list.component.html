@@ -11,9 +11,11 @@
             <p>{{'clientRequestList.noOrder' | translate}}</p>
         </div>
     </div>
-
+    <div class="text-right">
+        <h3 class="mt-4 mr-4">Prix total : {{billDTO.prixTotal}} $</h3>
+    </div>
     <div class="text-right" *ngIf="billDTO.orderItems.length > 0">
-        <button class="btn mt-5 mr-4 btn-dark text-white" routerLink="/paymentChoice" mat-button>{{ 'clientRequestList.checkout' | translate }}</button>
+        <button class="btn mt-2 mr-4 btn-dark text-white" routerLink="/paymentChoice" mat-button>{{ 'clientRequestList.checkout' | translate }}</button>
     </div>
 </ng-container>
 <mat-spinner class="mx-auto mt-5" *ngIf="!billDTO" [diameter]="30" [strokeWidth]="5"></mat-spinner>
