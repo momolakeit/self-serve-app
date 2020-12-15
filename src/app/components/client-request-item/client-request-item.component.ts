@@ -13,7 +13,6 @@ export class ClientRequestItemComponent implements OnInit {
   nombreDeMinuteRestant = 0;
   nombreDeMinutesSur100 = 100;
   isReady = false;
-
   @Input() orderItemDTO: OrderItemDTO
   @Output() orderItemDetailChanged: EventEmitter<OrderItemDTO> = new EventEmitter();
   constructor(public dialog: MatDialog) { }
@@ -30,7 +29,6 @@ export class ClientRequestItemComponent implements OnInit {
 
   setUpTimeout() {
     var today = new Date();
-
     this.nombreDeMinuteRequis = this.orderItemDTO.product.tempsDePreparation;
     this.nombreDeMinuteRestant = Math.round((Date.parse(this.orderItemDTO.tempsDePreparation.toString()) - today.getTime()) / 60000);
 
