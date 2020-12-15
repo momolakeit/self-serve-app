@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { timer } from 'rxjs';
 import { OrderItemDTO } from 'src/app/models/order-item-dto';
+import { OrderStatus } from 'src/app/models/order-status.enum';
 import { BillDTO } from '../../models/bill-dto'
 import { BillService } from '../../services/bill.service'
 
@@ -40,6 +41,15 @@ export class ClientRequestListComponent implements OnInit {
       return false;
     
     return orderItem.menuType.toString()!='WAITERCALL'&& orderItem.menuType.toString()!='WAITERREQUEST';
+  }
+  isAllOrdersCompleted():boolean{
+    var returnValue= true;
+    this.billDTO.orderItems.forEach(oItem=>{
+      if(oItem.orderStatus!=OrderStatus.COMPLETED){
+        returnValue = false;
+      }
+    })
+    return returnValue;
   }
 
 }
