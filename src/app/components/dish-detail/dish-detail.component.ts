@@ -16,6 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class DishDetailComponent implements OnInit {
   imgUrl: string;
   commentaire: string = "";
+  itemOrdered= false;
 
   constructor(private translate: TranslateService,public dialogRef: MatDialogRef<DishDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: ProductDTO, private billService: BillService, private snackBar: MatSnackBar) { }
 
@@ -24,6 +25,7 @@ export class DishDetailComponent implements OnInit {
   }
 
   updateCurrentBill = (product: ProductDTO) => {
+    this.itemOrdered = true;
     this.billService.makeOrder(product, this.commentaire).subscribe(data => {
       localStorage.setItem("ongoingBill", JSON.stringify(data));
       this.openSnackBar();

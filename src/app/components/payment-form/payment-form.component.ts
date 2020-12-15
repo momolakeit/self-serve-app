@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { PaymentService } from '../../services/payment.service';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { stripeKey } from 'src/environments/environment';
 import { BillService } from 'src/app/services/bill.service';
 import { BillDTO } from 'src/app/models/bill-dto';
@@ -14,7 +14,7 @@ import { BillDTO } from 'src/app/models/bill-dto';
 })
 export class PaymentFormComponent implements OnInit {
 
-  constructor(private billService:BillService,private http: HttpClient, private paymentService: PaymentService,private router:Router) { }
+  constructor(private billService: BillService, private http: HttpClient, private paymentService: PaymentService, private router: Router) { }
 
   @Input() amount: number;
   @Input() description: string;
@@ -27,15 +27,16 @@ export class PaymentFormComponent implements OnInit {
   isError: boolean;
   loading = false;
   confirmation;
+  paymentSucceeded = false;
 
 
   ngOnInit() {
-    this.paymentService.fetchAccountId(parseInt(localStorage.getItem("restaurantId"))).subscribe(data =>{
+    this.paymentService.fetchAccountId(parseInt(localStorage.getItem("restaurantId"))).subscribe(data => {
       this.initStripe(data.value);
     })
   }
-  
-  initStripe(stripeAccountId:string){
+
+  initStripe(stripeAccountId: string) {
     this.isError = false;
     this.paymentService.getPaymentIntent(stripeAccountId).subscribe(data => {
       this.clientSecret = data
@@ -61,7 +62,7 @@ export class PaymentFormComponent implements OnInit {
     }
   };
 
-  showError(errorMsgTxt :string): void {
+  showError(errorMsgTxt: string): void {
     this.showSpinner(false);
     var errorMsg = document.querySelector("#card-error");
     errorMsg.textContent = errorMsgTxt;
@@ -72,21 +73,10 @@ export class PaymentFormComponent implements OnInit {
 
   showSuccess = function (): void {
     this.showSpinner(false);
-    document
-      .querySelector(".result-message a")
-      .setAttribute(
-        "href",
-        "https://dashboard.stripe.com/test/payments/" + "54545"
-      );
-    document.getElementById("waiterArrivalModalLabel").innerHTML = "Payment Succeded !";
-    document.querySelector("#button-paymentSuceeded").classList.remove("hidden");
-    document.querySelector("#button-text").classList.add("hidden");
-    (document.getElementById("submit") as HTMLButtonElement).disabled = true;
-    document.getElementById("submit").classList.add("hidden");
-    document.getElementById("closeCardModal").classList.remove("hidden")
+    document.getElementById("submit").classList.add("btn-success");
   };
 
-  changePage = function (): void{
+  changePage = function (): void {
     this.router.navigateByUrl("/start");
   }
 
@@ -107,10 +97,11 @@ export class PaymentFormComponent implements OnInit {
 
         } else {
           // The payment succeeded!
-          localStorage.clear();
           this.showSuccess();
+          this.paymentSucceeded = true;
           const billDTO: BillDTO = JSON.parse(localStorage.getItem('ongoingBill'));
           this.billService.makePayment(billDTO.id).subscribe();
+          localStorage.clear();
         }
       });
   }
