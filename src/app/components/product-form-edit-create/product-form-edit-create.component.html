@@ -93,13 +93,24 @@
                                     *ngFor="let checkItems of getCheckItems(i).controls let j = index">
 
                                     <ng-container [formGroup]="checkItems">
-                                        <mat-form-field appearance="standard" class="w-100">
-                                            <mat-label>check item {{j + 1}}:</mat-label>
-                                            <input type="text" class="w-75" matInput placeholder="Ex: medium bien"
-                                                formControlName="checkItemName">
-                                            <mat-icon (click)="deleteCheckItem(i,j)" matSuffix>clear</mat-icon>
-                                            <mat-error>Check item name cannot be empty</mat-error>
-                                        </mat-form-field>
+                                        <p>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>check item {{i + 1}}:</mat-label>
+                                                <input formControlName="checkItemName" autocomplete="off" type="text" matInput
+                                                    placeholder="Ex: Fromage bleue">
+                                                <mat-error>check item name be empty</mat-error>
+                                            </mat-form-field>
+                                        </p>
+                
+                                        <p>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>Prix {{i + 1}}:</mat-label>
+                                                <input formControlName="price" autocomplete="off" type="number" matInput>
+                                                <mat-error>Price cannot be empty</mat-error>
+                                            </mat-form-field>
+                                        </p>
+                
+                                        <mat-icon class="mt-3" (click)="deleteCheckItem(i,j)">clear</mat-icon>
                                     </ng-container>
                                 </div>
                             </ng-container>
@@ -107,7 +118,7 @@
                     </ng-container>
 
                     <div class="col-12 text-center d-flex flex-column justify-content-center align-items-center">
-                        <button mat-mini-fab class="bg-dark" (click)="onAddCheckItem()">
+                        <button mat-mini-fab class="bg-dark" (click)="onAddCheckItem(i)">
                             <mat-icon>add</mat-icon>
                         </button>
                     </div>
@@ -163,7 +174,7 @@
             </div>
 
             <div class="text-center">
-                <button mat-mini-fab class="bg-dark" (click)="onAddCheckItem()">
+                <button mat-mini-fab class="bg-dark" (click)="onAddAddOn()">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>

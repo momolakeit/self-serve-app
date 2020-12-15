@@ -91,13 +91,13 @@ export class ProductFormEditCreateComponent implements OnInit {
 
       this.getOptions().push(option);
 
-      //build checkitem const 
       for (let j = 0; j < element.checkItemList.length; j++) {
         const checkItem: CheckItemDTO = element.checkItemList[j];
 
         const group = new FormGroup({
           id: new FormControl(checkItem.id),
-          checkItemName: new FormControl(checkItem.name, Validators.required)
+          checkItemName: new FormControl(checkItem.name, Validators.required),
+          price: new FormControl(checkItem.prix,Validators.required)
         })
 
         if (j == 0)
@@ -172,14 +172,25 @@ export class ProductFormEditCreateComponent implements OnInit {
       id: new FormControl(null),
       optionName: new FormControl('', Validators.required),
       checkItems: this.formBuilder.array([new FormGroup({
-        checkItemName: new FormControl('', Validators.required)
+        checkItemName: new FormControl('', Validators.required),
+        price: new FormControl('',Validators.required)
       })])
     });
 
     this.getOptions().push(option);
   }
 
-  onAddCheckItem() {
+  onAddCheckItem(optionId:number){
+    const checkItem = new FormGroup({
+      id: new FormControl(null),
+      checkItemName: new FormControl('', Validators.required),
+      price: new FormControl('',Validators.required)
+    })
+
+    this.getCheckItems(optionId).push(checkItem);
+  }
+
+  onAddAddOn() {
     const checkItem = new FormGroup({
       id: new FormControl(null),
       checkItemName: new FormControl('', Validators.required),
@@ -226,7 +237,8 @@ export class ProductFormEditCreateComponent implements OnInit {
           id:  checkItemValue.id ? checkItemValue.id : null,
           name: checkItemValue.checkItemName,
           option: null,
-          isActive: null
+          isActive: null,
+          prix: checkItemValue.price
         }
 
         option.checkItemList.push(checkItem);
@@ -258,7 +270,8 @@ export class ProductFormEditCreateComponent implements OnInit {
     return checkItems;
   }
 
-  //delete
+  // Delete
+
   deleteCheckItem(optionId: number, checkItemId: number) {
     this.getCheckItems(optionId).removeAt(checkItemId);
   }
