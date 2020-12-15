@@ -15,19 +15,19 @@ import { roles } from 'src/environments/environment';
 export class RestaurantEmployeesComponent implements OnInit {
   cook: RestaurantEmployerDto;
   waiter: RestaurantEmployerDto;
-  callMade:boolean = false;
-  cookRole : string = roles.cook;
-  waiterRole : string = roles.waiter;
+  callMade: boolean = false;
+  cookRole: string = roles.cook;
+  waiterRole: string = roles.waiter;
 
 
-  constructor(private menuService:MenuService,private kitchenService: KitchenService) { }
+  constructor(private menuService: MenuService, private kitchenService: KitchenService) { }
 
   ngOnInit(): void {
     this.initEmployees();
     this.restaurantSelectChanged();
   }
-  
-  ngOnChanges(){
+
+  ngOnChanges() {
   }
 
   initEmployees() {
@@ -40,7 +40,7 @@ export class RestaurantEmployeesComponent implements OnInit {
           this.cook = data[1];
           this.waiter = data[0];
         }
-      }else{
+      } else {
         this.cook = null;
         this.waiter = null;
       }
@@ -49,7 +49,9 @@ export class RestaurantEmployeesComponent implements OnInit {
     });
   }
 
-  restaurantSelectChanged(){
-    this.menuService.onRestaurantSelectedEvent.subscribe(() => this.initEmployees());
+  restaurantSelectChanged() {
+    this.menuService.onRestaurantSelectedEvent.subscribe(() => {
+      this.initEmployees();
+    });
   }
 }

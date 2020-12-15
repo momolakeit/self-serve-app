@@ -26,6 +26,10 @@ export class SingleRestaurantEmployeesComponent implements OnInit {
     this.initForms();
   }
 
+  ngOnChanges(){
+    this.initForms();
+  }
+
   initForms() {
     this.employerForm = this.formBuilder.group({
       username: [this.employer ? this.employer.username : '', Validators.required],

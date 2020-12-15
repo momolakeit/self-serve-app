@@ -101,6 +101,7 @@ export class RestaurantFormComponent implements OnInit {
       this.dialogRef.close('refresh');
 
     this.isButtonLoading = false;
+    this.menuService.onRestaurantAddEvent.emit();
   }
 
   // SERVICES
