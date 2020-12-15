@@ -14,6 +14,7 @@ export class MenuService {
   onMenuSelectedEvent = new EventEmitter<any>();
   onMenuCreatedEvent = new EventEmitter<any>();
   onRestaurantSelectedEvent = new EventEmitter<any>();
+  onRestaurantAddEvent = new EventEmitter<any>();
   constructor(private http: HttpClient, private constanteService: ConstanteService) { }
 
   fetchFoodMenuByRestaurantId(restaurantId: number): Observable<[MenuDTO]> {

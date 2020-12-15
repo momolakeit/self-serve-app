@@ -58,6 +58,7 @@ export class AdminProductManagmentComponent implements OnInit {
     this.initForm();
     this.onMenuCreated();
     this.menuSelectedChanged();
+    this.onRestaurantAdded();
   }
 
   menuSelectedChanged() {
@@ -66,29 +67,37 @@ export class AdminProductManagmentComponent implements OnInit {
       this.initTableProduit();
     });
   }
+
+  onRestaurantAdded() {
+    this.menuService.onRestaurantAddEvent.subscribe(() => this.getAllRestaurantSelectionDTO());
+  }
+
   onMenuCreated() {
     this.menuService.onMenuCreatedEvent.subscribe(data => this.getAllMenuFromRestaurant(parseInt(localStorage.getItem('restaurantId'))))
   }
 
-
   initForm() {
-    const name = localStorage.getItem('restaurantName');
+    const restaurantId: number = JSON.parse(localStorage.getItem('restaurantId'));
 
-    this.restaurantSelectionFormControl = new FormControl(name ? name : '', Validators.required);
+    this.restaurantSelectionFormControl = new FormControl(restaurantId, Validators.required);
   }
 
   initTable() {
     this.initTableProduit();
     this.initTableMenu();
   }
+
   initTableProduit() {
     this.dataSourceProduit = new MatTableDataSource(this.productDTOList);
     this.dataSourceProduit.paginator = this.paginator;
     this.dataSourceProduit.sort = this.sort;
   }
-  loadTableProduit(menuDTO:MenuDTO){
-    this.menuService.onMenuSelectedEvent.emit(menuDTO.products);
+
+  loadTableProduit(menuDTO: MenuDTO) {
+    if (menuDTO) 
+      this.menuService.onMenuSelectedEvent.emit(menuDTO.products);
   }
+
   initTableMenu() {
     this.dataSourceMenu = new MatTableDataSource(this.menuDTOList);
     this.dataSourceMenu.paginator = this.paginator;
@@ -138,22 +147,19 @@ export class AdminProductManagmentComponent implements OnInit {
     if (this.restaurantSelectionFormControl.valid) {
       this.isVoirProduitLoading = true;
 
+      localStorage.setItem('restaurantId', `${restaurantId}`);
+
+      this.menuService.onRestaurantSelectedEvent.emit();
+
       this.menuService.fetchAllMenuByRestaurantId(restaurantId).subscribe(data => {
 
         this.menuDTOList = data;
 
         this.initTable();
 
-        localStorage.setItem('restaurantId', `${restaurantId}`);
-
-        this.menuService.onRestaurantSelectedEvent.emit();
-
-        const restaurantName = this.restaurantSelectionDTOS.find(item => item.restaurantId === restaurantId);
-
-        localStorage.setItem('restaurantName', restaurantName ? restaurantName.restaurantName : '');
-
         this.isVoirProduitLoading = false;
-         this.loadTableProduit(this.menuDTOList.find(menu => menu.id ==parseInt(localStorage.getItem('menuId'))));
+
+        this.loadTableProduit(this.menuDTOList.find(menu => menu.id == parseInt(localStorage.getItem('menuId'))));
       });
     }
   }
