@@ -7,12 +7,11 @@
             </div>
             <form (submit)="handleForm($event)" class="w-75 ">
                 <div class="card-element "  id="card-element"><!--Stripe.js injects the Card Element--></div>
-                <button id="submit" class="submit">
+                <button id="submit" [disabled]="paymentSucceeded" class="submit">
                     <div class="spinner hidden" id="spinner"></div>
-                    <span id="button-text">{{ 'paymentForm.pay' | translate }}</span>
-                    <span id="button-paymentSuceeded" class="hidden">{{ 'paymentForm.success' | translate }} !</span>
+                    <span id="button-text" *ngIf="!paymentSucceeded">{{ 'paymentForm.pay' | translate }}</span>
+                    <span id="button-paymentSuceeded" *ngIf="paymentSucceeded" >{{ 'paymentForm.success' | translate }} !</span>
                 </button>
-                <button id="closeCardModal" (click)="changePage()" class="text-center hidden" style="background-color: #00F919;" data-dismiss="modal"> Close</button>
                 <p class="result-message hidden">
                     Payment succeeded, see the result in your
                     <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.

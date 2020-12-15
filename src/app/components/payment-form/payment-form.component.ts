@@ -73,12 +73,7 @@ export class PaymentFormComponent implements OnInit {
 
   showSuccess = function (): void {
     this.showSpinner(false);
-    document.getElementById("waiterArrivalModalLabel").innerHTML = "Payment Succeded !";
-    document.querySelector("#button-paymentSuceeded").classList.remove("hidden");
-    document.querySelector("#button-text").classList.add("hidden");
-    (document.getElementById("submit") as HTMLButtonElement).disabled = true;
-    document.getElementById("submit").classList.add("hidden");
-    document.getElementById("closeCardModal").classList.remove("hidden")
+    document.getElementById("submit").classList.add("btn-success");
   };
 
   changePage = function (): void {
@@ -103,6 +98,7 @@ export class PaymentFormComponent implements OnInit {
         } else {
           // The payment succeeded!
           this.showSuccess();
+          this.paymentSucceeded = true;
           const billDTO: BillDTO = JSON.parse(localStorage.getItem('ongoingBill'));
           this.billService.makePayment(billDTO.id).subscribe();
           localStorage.clear();
