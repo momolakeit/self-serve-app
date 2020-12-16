@@ -13,10 +13,6 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  find(id: number): Observable<ProductDTO> {
-    return this.http.get<ProductDTO>(`${environment.productUrl}/${id}`);
-  }
-
   findAllProductFromMenu(restaurantId: number): Observable<[ProductDTO]> {
     return this.http.get<[ProductDTO]>(`${environment.productUrl}/menu/${restaurantId}`);
   }
@@ -29,10 +25,6 @@ export class ProductService {
   }
 
   update(productDTO: ProductDTO): Observable<any> {
-    console.log('mon product avant de le send: ');
-    console.log(productDTO);
-    
-    
     return this.http.put(`${environment.productUrl}`, productDTO);
   }
 

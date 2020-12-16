@@ -74,7 +74,4 @@ export class AppComponent implements OnDestroy {
   logout() {
     this.authentificationService.logoutClientAndGuest(this.billService,this.mobileQuery);
   }
-
-  
-
 }
