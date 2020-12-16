@@ -46,19 +46,25 @@ export class AuthentificationService {
   logoutClientAndGuest(billService:BillService,mobileQuery: MediaQueryList){
     if (this.auth.isClient() || this.auth.isGuest()) {
       if (!billService.isBillExisting()) {
-        localStorage.clear();
-        this.router.navigate(['/start']);
+        this.logoutAction();
         return;
       }
       
       billService.hasUserPaid().subscribe(hasUserPaid => {
         if (hasUserPaid) {
-          localStorage.clear();
-          this.router.navigate(['/start']);
+          this.logoutAction();
         } else
-          this.openDialog(mobileQuery);
+        this.openDialog(mobileQuery);
       });
-    }
+    }else
+      this.logoutAction();
+    
+  }
+  
+  
+  logoutAction(){
+    localStorage.clear();
+    this.router.navigate(['/start']);
   }
 
   openDialog(mobileQuery: MediaQueryList): void {
