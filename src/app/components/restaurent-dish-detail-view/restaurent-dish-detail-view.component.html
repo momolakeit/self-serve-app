@@ -3,9 +3,7 @@
         <mat-card-title>{{orderItem.product.name}}</mat-card-title>
     </mat-card-header>
     <img mat-card-image [src]="imgUrl+ orderItem.product.imgFileDTO.id" alt="Photo of a Shiba Inu">
-    <h4>
-        <h4>{{ 'dishDetail.commentaireTxt' | translate }} :</h4> :
-    </h4>
+    <h4>{{ 'dishDetail.commentaireTxt' | translate }} :</h4>
     <mat-card-content>
         <p>
             {{orderItem.commentaires}}
