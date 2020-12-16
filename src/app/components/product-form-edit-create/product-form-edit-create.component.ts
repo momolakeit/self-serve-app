@@ -123,8 +123,8 @@ export class ProductFormEditCreateComponent implements OnInit {
         options: this.getOptionDtoList(),
         prix: formValue['prix'],
         tempsDePreparation: formValue['tempsDePreparation'],
-        menuType: formValue['productType'],
-        productMenuType: formValue['productMenuType'],
+        menuType: this.data ? this.data.menuType : null,
+        productMenuType: this.data ? this.data.productMenuType : null,
         imgFileDTO: this.data ? this.data.imgFileDTO : null,
         checkItems: this.getAddonList()
       }

@@ -22,7 +22,7 @@
 
     <p>
         <mat-form-field class="w-100 mt-0">
-            <ngx-mat-file-input multiple="false" accept="" color="" placeholder="image:" formControlName="image">
+            <ngx-mat-file-input multiple="false" [accept]="accept" color="" placeholder="image:" formControlName="image">
             </ngx-mat-file-input>
             <mat-error>{{ 'productEditCreate.imageErrorTxt' | translate }}</mat-error>
         </mat-form-field>
