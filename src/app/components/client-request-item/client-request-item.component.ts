@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { OrderItemDTO } from '../../models/order-item-dto'
 import { MatDialog } from '@angular/material/dialog';
 import { ClientRequestItemDetailComponent } from '../client-request-item-detail/client-request-item-detail.component';
+import { OrderStatus } from 'src/app/models/order-status.enum';
 
 @Component({
   selector: 'app-client-request-item',
@@ -13,7 +14,6 @@ export class ClientRequestItemComponent implements OnInit {
   nombreDeMinuteRestant = 0;
   nombreDeMinutesSur100 = 100;
   isReady = false;
-
   @Input() orderItemDTO: OrderItemDTO
   @Output() orderItemDetailChanged: EventEmitter<OrderItemDTO> = new EventEmitter();
   constructor(public dialog: MatDialog) { }
@@ -30,7 +30,6 @@ export class ClientRequestItemComponent implements OnInit {
 
   setUpTimeout() {
     var today = new Date();
-
     this.nombreDeMinuteRequis = this.orderItemDTO.product.tempsDePreparation;
     this.nombreDeMinuteRestant = Math.round((Date.parse(this.orderItemDTO.tempsDePreparation.toString()) - today.getTime()) / 60000);
 
@@ -52,5 +51,8 @@ export class ClientRequestItemComponent implements OnInit {
       maxHeight:'600px',
     });
 
+  }
+  isOrderReadyOrCompleted():boolean{
+    return this.orderItemDTO.orderStatus  == OrderStatus.READY ||this.orderItemDTO.orderStatus  == OrderStatus.COMPLETED
   }
 }
