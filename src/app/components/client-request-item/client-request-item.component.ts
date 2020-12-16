@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { OrderItemDTO } from '../../models/order-item-dto'
 import { MatDialog } from '@angular/material/dialog';
 import { ClientRequestItemDetailComponent } from '../client-request-item-detail/client-request-item-detail.component';
+import { OrderStatus } from 'src/app/models/order-status.enum';
 
 @Component({
   selector: 'app-client-request-item',
@@ -50,5 +51,8 @@ export class ClientRequestItemComponent implements OnInit {
       maxHeight:'600px',
     });
 
+  }
+  isOrderReadyOrCompleted():boolean{
+    return this.orderItemDTO.orderStatus  == OrderStatus.READY ||this.orderItemDTO.orderStatus  == OrderStatus.COMPLETED
   }
 }
