@@ -31,7 +31,6 @@ export class AppBodyComponent {
       let restaurantTableId = params['restaurantTableId'];
       if (restaurantTableId == null) {
         console.log(restaurantTableId);
-        //this.router.navigate(['/menu']);
         this.logoUrl = localStorage.getItem('logoUrl');
       }
       else {
@@ -58,10 +57,6 @@ export class AppBodyComponent {
       localStorage.setItem("restaurantTableId", restaurantTableId.toString());
       this.router.navigate(['/menu']);
     });
-  }
-
-  logout() {
-    this.authentificationService.logout();
   }
 
   isOwner(): boolean {

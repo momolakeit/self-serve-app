@@ -1,6 +1,7 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { timer } from 'rxjs';
+import { OrderStatus } from 'src/app/models/order-status.enum';
 import { environment } from 'src/environments/environment';
 import { OrderItemDTO } from '../../models/order-item-dto'
 
@@ -39,12 +40,11 @@ export class ClientRequestItemDetailComponent implements OnInit {
   }
 
   handleTime() {
-    var today = new Date();
     this.nombreDeMinuteRequis = this.data.product.tempsDePreparation;
     this.setUpTimeout();
   }
 
-  setUpTimeout = (): void => {
+  setUpTimeout() {
     var source = timer(1000, 1000).subscribe(() => {
       if (this.nombreDeMinuteRestant == 0) {
         this.nombreDeMinutesSur100 = 0;
@@ -61,11 +61,11 @@ export class ClientRequestItemDetailComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  changeOrderStatus = function (): void {
-    if (this.data.orderStatus.toString() == "READY") {
+  changeOrderStatus(){
+    if (this.data.orderStatus == OrderStatus.READY) {
       this.isReady = true;
     }
-    if (this.data.orderStatus.toString() == "PROGRESS") {
+    if (this.data.orderStatus == OrderStatus.PROGRESS) {
       this.isReady = false;
     }
   }

@@ -45,7 +45,7 @@ export class DishDetailComponent implements OnInit {
     })
   }
 
-  updateOptionCheckItem = function (checkItemDTO: CheckItemDTO, optionDTO: OptionDTO): void {
+  updateOptionCheckItem (checkItemDTO: CheckItemDTO, optionDTO: OptionDTO){
     var currentOption = this.data.options.find(x => x.id == optionDTO.id);
 
     currentOption.checkItemList.forEach(element => {
@@ -55,7 +55,7 @@ export class DishDetailComponent implements OnInit {
     var currentCheckItem = currentOption.checkItemList.find(x => x.id == checkItemDTO.id);
     currentCheckItem.isActive = true;
   };
-  updateCheckItem = function (checkItemDTO: CheckItemDTO): void {
+  updateCheckItem(checkItemDTO: CheckItemDTO) {
     var checkItem = this.data.checkItems.find(x => x.id == checkItemDTO.id);
     checkItem.isActive = true;
   };

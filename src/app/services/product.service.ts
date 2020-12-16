@@ -32,10 +32,6 @@ export class ProductService {
     return this.http.delete(`${environment.productUrl}/${id}`);
   }
 
-  findMenuSpecial(menuDTO: MenuDTO): Observable<[ProductDTO]> {
-    return this.http.post<[ProductDTO]>(`${environment.productUrl}/findMenuSpecial`, { menuDTO: JSON.stringify(menuDTO) });
-  }
-
   findChoixDuChef(menuDTO: MenuDTO): Observable<[ProductDTO]> {
     return this.http.post<[ProductDTO]>(`${environment.productUrl}/findChoixDuChef`, { menuDTO: JSON.stringify(menuDTO) });
   }
@@ -46,10 +42,6 @@ export class ProductService {
 
   removeProductType(productDTO: ProductDTO): Observable<ProductDTO> {
     return this.http.post<ProductDTO>(`${environment.productUrl}/deleteProductType`, { productDTO: JSON.stringify(productDTO) });
-  }
-
-  setProductChefChoice(productDTO: ProductDTO): Observable<ProductDTO> {
-    return this.http.post<ProductDTO>(`${environment.productUrl}/setMenuChefChoice`, { productDTO: JSON.stringify(productDTO) });
   }
 
   saveProductImage(file: FormData, productId: number): Observable<ProductDTO> {
