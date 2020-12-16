@@ -26,9 +26,12 @@
                         <div style="min-height: 500px; max-height: 500px;" class="overflow-auto">
                             <ng-container *ngFor='let bill of table.bills'>
                                 <ng-container *ngFor='let orderItem of bill.orderItems'>
-                                    <app-restaurent-dish-detail-view (countChanged)="initValues($event)"
+                                    <!-- <app-restaurent-dish-detail-view (countChanged)="initValues($event)"
                                         [orderItem]="orderItem">
-                                    </app-restaurent-dish-detail-view>
+                                    </app-restaurent-dish-detail-view> -->
+                                    <app-restaurant-dish-cook-view (countChanged)="initValues($event)"
+                                        [orderItem]="orderItem">
+                                    </app-restaurant-dish-cook-view>
                                 </ng-container>
                             </ng-container>
                         </div>

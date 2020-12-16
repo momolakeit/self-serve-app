@@ -44,6 +44,7 @@ import { RestaurantMenuListComponent } from './components/restaurant-menu-list/r
 import { LogoutDialogComponent } from './components/logout-dialog/logout-dialog.component';
 import { RestaurantEmployeesComponent } from './components/restaurant-employees/restaurant-employees.component';
 import { SingleRestaurantEmployeesComponent } from './components/single-restaurant-employees/single-restaurant-employees.component';
+import { RestaurantDishCookViewComponent } from './components/restaurant-dish-cook-view/restaurant-dish-cook-view.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { SingleRestaurantEmployeesComponent } from './components/single-restaura
     LogoutDialogComponent,
     RestaurantEmployeesComponent,
     SingleRestaurantEmployeesComponent,
+    RestaurantDishCookViewComponent,
   ],
   imports: [
     CommonModule,

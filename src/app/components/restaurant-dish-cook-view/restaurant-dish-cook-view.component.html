@@ -1,0 +1,46 @@
+<div class="container mat-elevation-z4 mt-2">
+    <div class="row h-100">
+        <div class="col-lg-8">
+            <p><strong>Repas:</strong> {{orderItem.product.name}}</p>
+
+            <ng-container *ngFor="let option of orderItem.option">
+                <div class="d-flex" *ngIf="findActiveOptionCheckItemCount(option) > 0">
+                    <p class="mr-1"><strong>{{option.name}}: </strong></p>
+                    <ng-container *ngFor="let checkItem of option.checkItemList">
+                        <p *ngIf="checkItem.isActive">{{checkItem.name}}</p>
+                    </ng-container>
+                </div>
+            </ng-container>
+
+            <div class="d-flex" *ngIf="findActiveCheckItemsCount() > 0">
+                <p class="mr-1"><strong>Accompagnements:</strong></p>
+                <ng-container *ngFor='let checkItem of orderItem.checkItems'>
+                    <p class="d-inline-block" *ngIf="checkItem.isActive">{{checkItem.name}}</p>
+                </ng-container>
+            </div>
+
+            <p *ngIf="orderItem.commentaires"><strong>{{ 'dishDetail.commentaireTxt' | translate }}:</strong>
+                {{orderItem.commentaires}}</p>
+
+            <div class="container">
+                <div class="row">
+                    {{nombreDeMinuteRestant}} {{ 'dishDetail.minutesRestantesTxt' | translate }}
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 p-0">
+                        <mat-progress-bar class="mb-3 mt-3" mode="determinate" [value]="nombreDeMinutesSur100">
+                        </mat-progress-bar>
+                    </div>
+                    <div class="col-lg-4">
+                        <button (click)="addTime()" mat-button>+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mt-auto pb-2">
+            <button mat-raised-button class="btn-block bg-dark text-white" (click)="terminerCommande(orderItem)"
+            mat-button>{{ 'dishDetail.finiTxt' | translate }}</button>
+        </div>
+    </div>
+</div>
