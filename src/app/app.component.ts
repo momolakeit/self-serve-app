@@ -25,7 +25,7 @@ export class AppComponent implements OnDestroy {
   private _mobileQueryListener: () => void;
 
 
-  constructor(public dialog: MatDialog, private billService: BillService, private logoService: LogoService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private authService: AuthService, private authentificationService: AuthentificationService, private router: Router, private translate: TranslateService) {
+  constructor(private billService: BillService, private logoService: LogoService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private authService: AuthService, private authentificationService: AuthentificationService, private router: Router, private translate: TranslateService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -72,30 +72,9 @@ export class AppComponent implements OnDestroy {
   }
 
   logout() {
-    if (this.isClient() || this.isGuest()) {
-      this.billService.hasUserPaid().subscribe(hasUserPaid => {
-        if (hasUserPaid) {
-          this.authentificationService.logout();
-          this.router.navigate(['/start']);
-        } else
-          this.openDialog();
-
-      });
-    } else {
-      this.authentificationService.logout();
-      this.router.navigate(['/start']);
-    }
+    this.authentificationService.logoutClientAndGuest(this.billService,this.mobileQuery);
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(LogoutDialogComponent, {
-      width: this.mobileQuery.matches ? '90%' : '50%',
-    });
-
-    dialogRef.afterClosed().subscribe(() =>{
-      this.router.navigate(['/clientRequestList'])
-    })
-
-  }
+  
 
 }

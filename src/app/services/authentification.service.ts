@@ -9,13 +9,15 @@ import { HttpClient } from '@angular/common/http';
 import { SignUpForm } from '../models/sign-up-form';
 import { SignInForm } from '../models/sign-in-form';
 import { OwnerDTO } from '../models/owner-dto';
-import {StripeCreateAccountUrlDTO} from '../models/stripe-create-account-url-dto'
+import { BillService } from './bill.service';
+import { MatDialog } from '@angular/material/dialog';
+import { LogoutDialogComponent } from '../components/logout-dialog/logout-dialog.component';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthentificationService {
 
-  constructor(private http: HttpClient,public auth:AuthService,private route:Router) { }
+  constructor(private router:Router,private http: HttpClient,public auth:AuthService,public dialog: MatDialog) { }
 
   getToken(signInForm: SignInForm):Observable<JwtResponse>{
     return this.http.post<JwtResponse>(`${environment.authApiUrl}/signin`,signInForm);
@@ -41,8 +43,33 @@ export class AuthentificationService {
     return this.http.post<string>(`${environment.authApiUrl}/signup`,form);
   }
 
-  logout(){
-    localStorage.clear();
+  logoutClientAndGuest(billService:BillService,mobileQuery: MediaQueryList){
+    if (this.auth.isClient() || this.auth.isGuest()) {
+      if (!billService.isBillExisting()) {
+        localStorage.clear();
+        this.router.navigate(['/start']);
+        return;
+      }
+      
+      billService.hasUserPaid().subscribe(hasUserPaid => {
+        if (hasUserPaid) {
+          localStorage.clear();
+          this.router.navigate(['/start']);
+        } else
+          this.openDialog(mobileQuery);
+      });
+    }
+  }
+
+  openDialog(mobileQuery: MediaQueryList): void {
+    const dialogRef = this.dialog.open(LogoutDialogComponent, {
+      width: mobileQuery.matches ? '90%' : '50%',
+    });
+
+    dialogRef.afterClosed().subscribe(() =>{
+      this.router.navigate(['/clientRequestList'])
+    })
+
   }
 
 }
