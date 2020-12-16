@@ -30,7 +30,7 @@ export class ProductFormEditCreateComponent implements OnInit {
   disabled: boolean = false;
   multiple: boolean = false;
   maxSize: number = 1024;
-  accept: string = "image/*";
+  accept: string = "image/png,image/jpeg,.svg";
 
   constructor(public dialogRef: MatDialogRef<ProductFormEditCreateComponent>, @Inject(MAT_DIALOG_DATA) public data: ProductDTO, private productService: ProductService, private formBuilder: FormBuilder) { }
 
