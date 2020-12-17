@@ -29,7 +29,8 @@ export class BillService {
   }
 
   isBillExisting(): boolean {
-    return JSON.parse(localStorage.getItem('ongoingBill'));
+    const bill : BillDTO = JSON.parse(localStorage.getItem('ongoingBill'));
+    return bill.prixTotal != 0;
   }
 
   hasUserPaid(): Observable<boolean> {
