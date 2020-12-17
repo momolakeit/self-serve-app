@@ -14,7 +14,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class PaymentFormComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<PaymentFormComponent>,private authentificationService:AuthentificationService,private billService: BillService, private http: HttpClient, private paymentService: PaymentService, private router: Router) { }
+  constructor(public dialogRef: MatDialogRef<PaymentFormComponent>, private authentificationService: AuthentificationService, private billService: BillService, private http: HttpClient, private paymentService: PaymentService, private router: Router) { }
 
   @Input() amount: number;
   @Input() description: string;
@@ -101,8 +101,10 @@ export class PaymentFormComponent implements OnInit {
           this.paymentSucceeded = true;
           const billDTO: BillDTO = JSON.parse(localStorage.getItem('ongoingBill'));
           this.billService.makePayment(billDTO.id).subscribe();
-          this.authentificationService.logoutAction();
-          this.dialogRef.close();
+          setTimeout(() => {
+            this.authentificationService.logoutAction();
+            this.dialogRef.close();
+          }, 3000)
         }
       });
   }
