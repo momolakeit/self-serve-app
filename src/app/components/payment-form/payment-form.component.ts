@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
 import { PaymentService } from '../../services/payment.service';
 import { Router } from '@angular/router';
 import { stripeKey } from 'src/environments/environment';
 import { BillService } from 'src/app/services/bill.service';
 import { BillDTO } from 'src/app/models/bill-dto';
+import { AuthentificationService } from 'src/app/services/authentification.service';
+import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-payment-form',
   templateUrl: './payment-form.component.html',
@@ -14,7 +14,7 @@ import { BillDTO } from 'src/app/models/bill-dto';
 })
 export class PaymentFormComponent implements OnInit {
 
-  constructor(private billService: BillService, private http: HttpClient, private paymentService: PaymentService, private router: Router) { }
+  constructor(public dialogRef: MatDialogRef<PaymentFormComponent>,private authentificationService:AuthentificationService,private billService: BillService, private http: HttpClient, private paymentService: PaymentService, private router: Router) { }
 
   @Input() amount: number;
   @Input() description: string;
@@ -101,7 +101,8 @@ export class PaymentFormComponent implements OnInit {
           this.paymentSucceeded = true;
           const billDTO: BillDTO = JSON.parse(localStorage.getItem('ongoingBill'));
           this.billService.makePayment(billDTO.id).subscribe();
-          localStorage.clear();
+          this.authentificationService.logoutAction();
+          this.dialogRef.close();
         }
       });
   }
