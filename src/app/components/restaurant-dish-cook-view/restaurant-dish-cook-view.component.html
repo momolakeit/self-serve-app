@@ -4,18 +4,18 @@
             <p><strong>Repas:</strong> {{orderItem.product.name}}</p>
 
             <ng-container *ngFor="let option of orderItem.option">
-                <div class="d-flex" *ngIf="findActiveOptionCheckItemCount(option) > 0">
+                <div class="d-flex" *ngIf="findActiveOptionCheckItems(option).length > 0">
                     <p class="mr-1"><strong>{{option.name}}: </strong></p>
-                    <ng-container *ngFor="let checkItem of option.checkItemList">
+                    <ng-container *ngFor="let checkItem of findActiveOptionCheckItems(option)">
                         <p *ngIf="checkItem.isActive">{{checkItem.name}}</p>
                     </ng-container>
                 </div>
             </ng-container>
 
-            <div class="d-flex" *ngIf="findActiveCheckItemsCount() > 0">
+            <div class="d-flex" *ngIf="findActiveCheckItems().length > 0">
                 <p class="mr-1"><strong>Accompagnements:</strong></p>
-                <ng-container *ngFor='let checkItem of orderItem.checkItems'>
-                    <p class="d-inline-block" *ngIf="checkItem.isActive">{{checkItem.name}}</p>
+                <ng-container *ngFor='let checkItem of findActiveCheckItems(); let i = index'>
+                    <p class="d-inline-block" *ngIf="checkItem.isActive"> {{checkItem.name}}<span *ngIf="i != findActiveCheckItems().length - 1">,</span></p>
                 </ng-container>
             </div>
 

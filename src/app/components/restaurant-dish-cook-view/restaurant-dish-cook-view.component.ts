@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { timer } from 'rxjs';
+import { CheckItemDTO } from 'src/app/models/check-item-dto';
 import { OptionDTO } from 'src/app/models/option-dto';
 import { OrderItemDTO } from 'src/app/models/order-item-dto';
 import { OrderStatus } from 'src/app/models/order-status.enum';
@@ -27,6 +28,12 @@ export class RestaurantDishCookViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.initTimer();
+    console.log(this.orderItem);
+    
+  }
+
+  ngOnChanges(){
+    this.isDataLoading = false;
   }
 
   initTimer() {
@@ -84,15 +91,14 @@ export class RestaurantDishCookViewComponent implements OnInit {
     
     this.kitchenService.updateOrderItem(orderItem).subscribe();
     this.countChanged.emit(this.nombreDeMinutesSur100);
-    this.isDataLoading = false;
   }
 
-  findActiveCheckItemsCount(): number {
-    return this.orderItem.checkItems.filter(checkItem => checkItem.isActive).length;
+  findActiveCheckItems(): CheckItemDTO[] {
+    return this.orderItem.checkItems.filter(checkItem => checkItem.isActive);
   }
 
-  findActiveOptionCheckItemCount(option: OptionDTO): number {
-    return option.checkItemList.filter(checkItem => checkItem.isActive).length;
+  findActiveOptionCheckItems(option: OptionDTO): CheckItemDTO[] {
+    return option.checkItemList.filter(checkItem => checkItem.isActive);
   }
 
   toggleAssignOrderItem() {
