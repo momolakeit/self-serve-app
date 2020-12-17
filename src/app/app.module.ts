@@ -17,7 +17,6 @@ import { ClientRequestListComponent } from './components/client-request-list/cli
 import { JwtModule } from '@auth0/angular-jwt';
 import { DemoMaterialModule } from 'src/material-module';
 import { AdminProductManagmentComponent } from './components/admin-product-managment/admin-product-managment.component';
-//import { RecipeSocketComponent } from './components/recipe-socket/recipe-socket.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCarouselModule } from '@ngbmodule/material-carousel';
 import { ContactFormComponent } from './components/contact-form/contact-form.component'
