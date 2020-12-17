@@ -23,14 +23,7 @@ export class WaiterComponent implements OnInit {
 
   ngOnInit(): void {
     this.imgUrl = environment.baseImgPath;
-
-    this.productService.findAllWaiterRequestProduct(JSON.parse(localStorage.getItem('restaurantId'))).subscribe(data => {
-
-      this.requestProductList = data.products;
-
-      this.waiterCallProduct = this.requestProductList.find(product => product.menuType.toString() == "WAITERCALL");
-    });
-
+    this.findAllWaiterRequest();
   }
 
   openSnackBar() {
@@ -41,12 +34,19 @@ export class WaiterComponent implements OnInit {
     })
   }
 
+  findAllWaiterRequest(){
+    this.productService.findAllWaiterRequestProduct(JSON.parse(localStorage.getItem('restaurantId'))).subscribe(data => {
+
+      this.requestProductList = data.products;
+
+      this.waiterCallProduct = this.requestProductList.find(product => product.menuType.toString() == "WAITERCALL");
+    });
+  }
+
   ngOnChanges(): void {
     this.imgUrl = environment.baseImgPath;
 
-    this.productService.findAllWaiterRequestProduct(1).subscribe(data => {
-      this.requestProductList = data.products;
-    });
+    this.findAllWaiterRequest();
 
     this.waiterCallProduct = this.requestProductList.filter(product => {
       product.menuType.toString() == "WAITERCALL";
