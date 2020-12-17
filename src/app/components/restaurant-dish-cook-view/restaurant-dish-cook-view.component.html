@@ -1,7 +1,7 @@
 <div class="container mat-elevation-z5 mt-2 pt-2">
     <div class="row h-100">
         <div class="col-lg-8">
-            <p><strong>Repas:</strong> {{orderItem.product.name}}</p>
+            <p><strong>{{'dishDetail.dish' | translate}}:</strong> {{orderItem.product.name}}</p>
 
             <ng-container *ngFor="let option of orderItem.option">
                 <div class="d-flex" *ngIf="findActiveOptionCheckItems(option).length > 0">
@@ -13,9 +13,9 @@
             </ng-container>
 
             <div class="d-flex" *ngIf="findActiveCheckItems().length > 0">
-                <p class="mr-1"><strong>Accompagnements:</strong></p>
+                <p class="mr-1"><strong>{{'dishDetail.sides' | translate}}:</strong></p>
                 <ng-container *ngFor='let checkItem of findActiveCheckItems(); let i = index'>
-                    <p class="d-inline-block" *ngIf="checkItem.isActive"> {{checkItem.name}}<span *ngIf="i != findActiveCheckItems().length - 1">,</span></p>
+                    <p class="d-inline-block" *ngIf="checkItem.isActive"> {{checkItem.name}}<span class="pr-1" *ngIf="i != findActiveCheckItems().length - 1">,</span></p>
                 </ng-container>
             </div>
 
@@ -42,7 +42,7 @@
             <ng-container *ngIf="!isDataLoading">
                 <button mat-raised-button class="btn-block text-white"
                     [ngClass]="{'bg-success' : !orderItem.selected,'bg-secondary' : orderItem.selected}"
-                    (click)="toggleAssignOrderItem()" mat-button>Assigner</button>
+                    (click)="toggleAssignOrderItem()" mat-button>{{'dishDetail.assign' | translate}}</button>
                 <button mat-raised-button class="btn-block bg-dark text-white mt-auto"
                     (click)="terminerCommande(orderItem)" mat-button>{{
                     'dishDetail.finiTxt' | translate }}</button>

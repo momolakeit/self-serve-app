@@ -28,8 +28,6 @@ export class RestaurantDishCookViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.initTimer();
-    console.log(this.orderItem);
-    
   }
 
   ngOnChanges(){

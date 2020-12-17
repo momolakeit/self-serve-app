@@ -21,10 +21,13 @@
         "commander":"Commander",
         "addOn":"Ajout",
         "itemOrderd":"Item commandé",
-        "commentaireTxt":"commentaires",
+        "commentaireTxt":"Commentaires",
         "minutesRestantesTxt": "minutes restantes",
         "fermerTxt":"fermer",
-        "finiTxt":"Terminer"
+        "finiTxt":"Terminer",
+        "dish":"Repas",
+        "sides":"Accompagnement",
+        "assign":"Assigner"
     },
     "clientRequestList":{
         "pageTitle":"Mes commandes",
