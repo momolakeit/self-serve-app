@@ -41,6 +41,7 @@ export class RestaurantOwnerListComponent implements OnInit {
 
     this.kitchenService.deleteRestaurant(id).subscribe(data =>{
       this.initRestaurants();
+      this.menuService.onRestaurantDeletedEvent.emit();
     });
 
     //remove restaurant in data too

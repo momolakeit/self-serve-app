@@ -59,6 +59,7 @@ export class AdminProductManagmentComponent implements OnInit {
     this.onMenuCreated();
     this.menuSelectedChanged();
     this.onRestaurantAdded();
+    this.onRestaurantDeleted();
   }
 
   menuSelectedChanged() {
@@ -70,6 +71,10 @@ export class AdminProductManagmentComponent implements OnInit {
 
   onRestaurantAdded() {
     this.menuService.onRestaurantAddEvent.subscribe(() => this.getAllRestaurantSelectionDTO());
+  }
+
+  onRestaurantDeleted(){
+    this.menuService.onRestaurantDeletedEvent.subscribe(() => this.getAllRestaurantSelectionDTO());
   }
 
   onMenuCreated() {

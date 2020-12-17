@@ -13,10 +13,6 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  find(id: number): Observable<ProductDTO> {
-    return this.http.get<ProductDTO>(`${environment.productUrl}/${id}`);
-  }
-
   findAllProductFromMenu(restaurantId: number): Observable<[ProductDTO]> {
     return this.http.get<[ProductDTO]>(`${environment.productUrl}/menu/${restaurantId}`);
   }
@@ -29,35 +25,11 @@ export class ProductService {
   }
 
   update(productDTO: ProductDTO): Observable<any> {
-    console.log('mon product avant de le send: ');
-    console.log(productDTO);
-    
-    
     return this.http.put(`${environment.productUrl}`, productDTO);
   }
 
   delete(id: number): Observable<any> {
     return this.http.delete(`${environment.productUrl}/${id}`);
-  }
-
-  findMenuSpecial(menuDTO: MenuDTO): Observable<[ProductDTO]> {
-    return this.http.post<[ProductDTO]>(`${environment.productUrl}/findMenuSpecial`, { menuDTO: JSON.stringify(menuDTO) });
-  }
-
-  findChoixDuChef(menuDTO: MenuDTO): Observable<[ProductDTO]> {
-    return this.http.post<[ProductDTO]>(`${environment.productUrl}/findChoixDuChef`, { menuDTO: JSON.stringify(menuDTO) });
-  }
-
-  setProductSpecial(productDTO: ProductDTO): Observable<ProductDTO> {
-    return this.http.post<ProductDTO>(`${environment.productUrl}/setProductSpecial`, { productDTO: JSON.stringify(productDTO) });
-  }
-
-  removeProductType(productDTO: ProductDTO): Observable<ProductDTO> {
-    return this.http.post<ProductDTO>(`${environment.productUrl}/deleteProductType`, { productDTO: JSON.stringify(productDTO) });
-  }
-
-  setProductChefChoice(productDTO: ProductDTO): Observable<ProductDTO> {
-    return this.http.post<ProductDTO>(`${environment.productUrl}/setMenuChefChoice`, { productDTO: JSON.stringify(productDTO) });
   }
 
   saveProductImage(file: FormData, productId: number): Observable<ProductDTO> {

@@ -6,6 +6,7 @@ import { BillDTO } from '../models/bill-dto'
 import { map, catchError } from 'rxjs/operators';
 import { ProductDTO } from '../models/product-dto';
 import { BillStatus } from '../models/bill-status.enum';
+import { error } from '@angular/compiler/src/util';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,28 +20,28 @@ export class BillService {
     return this.http.post<BillDTO>(`${environment.billUrl}/makeOrder`, { billDTO: JSON.stringify(billDTO), restaurentTableId: restaurentTableId, productDTO: JSON.stringify(product), guestUsername: localStorage.getItem("username"), commentaire: commentaire });
   }
 
-  initBill(){
-    return this.http.post<BillDTO>(`${environment.billUrl}/initBill`,{});
+  initBill() {
+    return this.http.post<BillDTO>(`${environment.billUrl}/initBill`, {});
   }
 
-  getBillStatus(billId:number):Observable<BillStatus>{
+  getBillStatus(billId: number): Observable<BillStatus> {
     return this.http.get<BillStatus>(`${environment.billUrl}/billStatus/${billId}`);
   }
 
-  hasUserPaid():Observable<boolean>{
-    const billDTO : BillDTO = JSON.parse(localStorage.getItem('ongoingBill'));
-
-    return this.getBillStatus(billDTO.id).pipe(
-      map(data =>{
-        console.log(data);
-        
-      return data == BillStatus.PAYED;
-    }));
+  isBillExisting(): boolean {
+    return JSON.parse(localStorage.getItem('ongoingBill'));
   }
 
-  getBill(billDTO :BillDTO):Observable<BillDTO>{
-    return this.http.post<BillDTO>(`${environment.billUrl}/getBill`,{billId: billDTO.id});
- }
+  hasUserPaid(): Observable<boolean> {
+    const billDTO: BillDTO = JSON.parse(localStorage.getItem('ongoingBill'));
+
+    return this.getBillStatus(billDTO.id).pipe(
+      map(data => data == BillStatus.PAYED, catchError => false));
+  }
+
+  getBill(billDTO: BillDTO): Observable<BillDTO> {
+    return this.http.post<BillDTO>(`${environment.billUrl}/getBill`, { billId: billDTO.id });
+  }
 
   makeOrder(product: ProductDTO, commentaire: String): Observable<BillDTO> {
     this.billDTO = JSON.parse(localStorage.getItem("ongoingBill"));
@@ -52,8 +53,8 @@ export class BillService {
       }));
   }
 
-  makePayment(billId:number){
-    return this.http.post(`${environment.billUrl}/makePayment`,{billId:billId});
+  makePayment(billId: number) {
+    return this.http.post(`${environment.billUrl}/makePayment`, { billId: billId });
   }
 
 }

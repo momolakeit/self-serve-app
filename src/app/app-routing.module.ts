@@ -7,10 +7,8 @@ import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { WaiterComponent } from './components/waiter/waiter.component';
 import { RestaurentOrdersComponent } from './components/restaurent-orders/restaurent-orders.component';
-import { DishDetailComponent } from './components/dish-detail/dish-detail.component';
 import { AdminProductManagmentComponent } from './components/admin-product-managment/admin-product-managment.component';
 import { PaymentChoiceComponent } from './components/payment-choice/payment-choice.component';
-import { PaymentFormComponent } from './components/payment-form/payment-form.component';
 import { ClientRequestListComponent } from './components/client-request-list/client-request-list.component';
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -24,7 +22,6 @@ import { AdminPageComponent } from './components/admin-page/admin-page.component
 import { AdminGuardService } from './services/admin-guard.service';
 import { AdminOwnerGuardService } from './services/admin-owner-guard.service';
 import { StripeAccountCreatePromptComponent } from './components/stripe-account-create-prompt/stripe-account-create-prompt.component';
-import { AuthService } from './services/auth.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/start', pathMatch: 'full' },
