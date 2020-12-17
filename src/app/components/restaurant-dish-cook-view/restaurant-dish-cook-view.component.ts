@@ -21,6 +21,7 @@ export class RestaurantDishCookViewComponent implements OnInit {
   nombreDeMinutesSur100: number = 100;
   isReady: boolean = false;
   imgUrl: string;
+  isDataLoading: boolean = false;
 
   constructor(private kitchenService: KitchenService, private authService: AuthService) { }
 
@@ -74,21 +75,29 @@ export class RestaurantDishCookViewComponent implements OnInit {
 
   terminerCommande = (orderItem: OrderItemDTO): void => {
     this.nombreDeMinutesSur100++;
-
+    this.isDataLoading = true;
+    
     if (this.authService.isWaiter())
-      orderItem.orderStatus = OrderStatus.COMPLETED;
+    orderItem.orderStatus = OrderStatus.COMPLETED;
     else
-      orderItem.orderStatus = OrderStatus.READY;
-
+    orderItem.orderStatus = OrderStatus.READY;
+    
     this.kitchenService.updateOrderItem(orderItem).subscribe();
     this.countChanged.emit(this.nombreDeMinutesSur100);
+    this.isDataLoading = false;
   }
 
-  findActiveCheckItemsCount():number{
+  findActiveCheckItemsCount(): number {
     return this.orderItem.checkItems.filter(checkItem => checkItem.isActive).length;
   }
 
-  findActiveOptionCheckItemCount(option:OptionDTO):number{
+  findActiveOptionCheckItemCount(option: OptionDTO): number {
     return option.checkItemList.filter(checkItem => checkItem.isActive).length;
+  }
+
+  toggleAssignOrderItem() {
+    this.isDataLoading = true;
+    this.orderItem.selected = !this.orderItem.selected;
+    this.kitchenService.updateOrderItem(this.orderItem).subscribe(() => this.isDataLoading = false);
   }
 }

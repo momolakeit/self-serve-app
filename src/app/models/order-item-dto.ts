@@ -14,5 +14,6 @@ export interface OrderItemDTO {
     checkItems :CheckItemDTO[];
     delaiDePreparation:Date;
     tempsDePreparation :Date;
-    option:OptionDTO[]
+    option:OptionDTO[];
+    selected:boolean;
 }
