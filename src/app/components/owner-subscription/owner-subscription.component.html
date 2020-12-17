@@ -41,4 +41,5 @@
         </div>
     </div>
 </div>
-<div class="loader text-center" [hidden]="!loader" id="spinner"></div>
+
+<mat-spinner *ngIf="loader" class="mx-auto mt-5" [diameter]="60" [strokeWidth]="5">
