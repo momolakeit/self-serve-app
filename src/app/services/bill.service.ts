@@ -30,6 +30,10 @@ export class BillService {
 
   isBillExisting(): boolean {
     const bill : BillDTO = JSON.parse(localStorage.getItem('ongoingBill'));
+
+    if (bill == null) 
+      return false;
+    
     return bill.prixTotal != 0;
   }
 
