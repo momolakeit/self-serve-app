@@ -17,11 +17,12 @@ import {LogoService} from '../../services/logo.service'
   styleUrls: ['./start.component.css']
 })
 export class StartComponent implements OnInit {
-
   myStyle: object = {};
   myParams: object = {};
   width: number = 110;
   height: number = 200;
+  isLoading: boolean = false;
+
 
   constructor(private authentificationService: AuthentificationService, private route: Router,private activatedRoute: ActivatedRoute, private kitchenService: KitchenService,private constanteService :ConstanteService,private authService:AuthService,private logoService:LogoService) { }
 
@@ -45,31 +46,36 @@ export class StartComponent implements OnInit {
 
   onGuestClicked() {
     //sign up guest
+    this.isLoading = true;
+    
     const signUpForm: SignUpForm = {
       username: `Guest-${uuidv1()}`,
       password: `Guest`,
       role: 'guest'
     }
-
+    
     const signInForm: SignInForm = {
       username: signUpForm.username,
       password: signUpForm.password
     }
-
+    
     //sign up guest and if success login guest
     this.authentificationService.signup(signUpForm).subscribe(() => {
       this.loginGuest(signInForm);
     }, error => {
-
-      if (error.status == 200)
+      
+      if (error.status == 200){
         this.loginGuest(signInForm);
-
+        return;
+      }
+      
       if (error.error == "Fail -> Email is already in use!")
-        console.log('Username is already in use');
+      console.log('Username is already in use');
+      
+      this.isLoading = false;
     })
 
   }
-
 
   loginGuest(signInForm: SignInForm) {
     this.authentificationService.login(signInForm).subscribe((success: boolean) => {

@@ -11,14 +11,14 @@ import { MustMatch } from '../../../utilities/must-match-validator';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-
   signUpForm: FormGroup;
   role: string;
+  isLoading: boolean = false;
+
   constructor(private formBuilder: FormBuilder, private authentificationService: AuthentificationService, private router: Router,private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.init();
-
   }
   
   init() {
@@ -43,6 +43,7 @@ export class SignupComponent implements OnInit {
 
   onSubmitForm() {
     if (this.signUpForm.valid) {
+      this.isLoading = true;
       const formValue = this.signUpForm.value;
 
       const signUpForm: SignUpForm = {
@@ -61,6 +62,7 @@ export class SignupComponent implements OnInit {
         if (error.error == "Fail -> Email is already in use!")
           this.getF().username.setErrors({ 'usernameUsed': true });
 
+        this.isLoading = false;
       })
     }
   }
