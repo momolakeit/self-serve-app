@@ -60,6 +60,5 @@
         </div>
     </div>
 </ng-container>
-<ng-container *ngIf ="!subscriptionEntity || loading">
-    <div class="loader text-center"></div>
-</ng-container>
+
+<mat-spinner *ngIf="!subscriptionEntity || loading" class="mx-auto mt-5" [diameter]="60" [strokeWidth]="5"></mat-spinner>

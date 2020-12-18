@@ -88,9 +88,12 @@ export class RestaurantMenuListComponent implements OnInit {
       }
     });
   }
+
   deleteMenu(menuId:number){
     this.menuService.deleteMenu(parseInt(localStorage.getItem('restaurantId')),menuId).subscribe(()=>this.menuService.onMenuCreatedEvent.emit());
   }
 
-
+  isRestaurantSelected():boolean{
+    return localStorage.getItem('restaurantId') != null;
+  }
 }

@@ -21,6 +21,7 @@ export class AppComponent implements OnDestroy {
   logoUrl: string;
   title = 'self-serve-app';
   mobileQuery: MediaQueryList;
+  urlLogoAssets ="assets/iservelogo.svg"
 
   private _mobileQueryListener: () => void;
 
@@ -37,7 +38,11 @@ export class AppComponent implements OnDestroy {
       localStorage.setItem('logoUrl', data);
       this.logoUrl = localStorage.getItem('logoUrl');
     });
-    this.logoUrl = localStorage.getItem('logoUrl');
+    if(!localStorage.getItem('logoUrl')){
+      this.logoUrl = this.urlLogoAssets;
+      console.log(this.logoUrl)
+    }
+    
 
   }
 

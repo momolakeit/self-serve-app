@@ -1,8 +1,9 @@
-<div class="container">
-    <div class="row d-flex justify-content-center flex-column align-items-center col-10 col-lg-6 mx-auto " style="margin-top: 35%;">
-        <button mat-raised-button [disabled]="isLoading" class="m-2 w-100 btn-dark text-white" routerLink="../login">Login</button>
-        <button *ngIf="!isLoading" mat-raised-button class="m-2 w-100 btn-dark text-white" (click)="onGuestClicked()">Continue as guest</button>
-        <mat-spinner *ngIf="isLoading" class="mx-auto" [diameter]="30" [strokeWidth]="5"></mat-spinner>
-        <span class="text-black">Don't have an account yet? <a class="text-primary" [routerLink]="['../sign-up','client']">sign up</a></span>
+<div class="container h-100">
+    <div class="row h-100">
+        <div class="col-10 col-lg-6 my-auto mx-auto">
+            <button mat-raised-button class="m-2 w-100 btn-dark text-white" routerLink="../login">Login</button>
+            <button mat-raised-button class="m-2 w-100 btn-dark text-white" (click)="onGuestClicked()">Continue as guest</button>
+            <span class="text-black ml-2">Don't have an account yet? <a class="text-primary" [routerLink]="['../sign-up','client']">sign up</a></span>
+        </div>
     </div>
 </div>

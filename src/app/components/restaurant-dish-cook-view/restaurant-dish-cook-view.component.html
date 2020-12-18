@@ -1,0 +1,56 @@
+<div class="container mat-elevation-z5 mt-2 pt-2">
+    <div class="row h-100">
+        <div class="col-lg-8">
+            <p><strong>{{'dishDetail.dish' | translate}}:</strong> {{orderItem.product.name}}</p>
+
+            <ng-container *ngFor="let option of orderItem.option">
+                <div class="d-flex" *ngIf="findActiveOptionCheckItems(option).length > 0">
+                    <p class="mr-1"><strong>{{option.name}}: </strong></p>
+                    <ng-container *ngFor="let checkItem of findActiveOptionCheckItems(option)">
+                        <p *ngIf="checkItem.isActive">{{checkItem.name}}</p>
+                    </ng-container>
+                </div>
+            </ng-container>
+
+            <div class="d-flex" *ngIf="findActiveCheckItems().length > 0">
+                <p class="mr-1"><strong>{{'dishDetail.sides' | translate}}:</strong></p>
+                <ng-container *ngFor='let checkItem of findActiveCheckItems(); let i = index'>
+                    <p class="d-inline-block" *ngIf="checkItem.isActive"> {{checkItem.name}}<span class="pr-1" *ngIf="i != findActiveCheckItems().length - 1">,</span></p>
+                </ng-container>
+            </div>
+
+            <p *ngIf="orderItem.commentaires"><strong>{{ 'dishDetail.commentaireTxt' | translate }}:</strong>
+                {{orderItem.commentaires}}</p>
+
+            <div class="container">
+                <div class="row">
+                    {{nombreDeMinuteRestant}} {{ 'dishDetail.minutesRestantesTxt' | translate }}
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 p-0">
+                        <mat-progress-bar class="mb-3 mt-3" mode="determinate" [value]="nombreDeMinutesSur100">
+                        </mat-progress-bar>
+                    </div>
+                    <div class="col-lg-4">
+                        <button (click)="addTime()" mat-button>+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 pb-2 d-flex flex-column align-items-start">
+            <ng-container *ngIf="!isDataLoading">
+                <button mat-raised-button class="btn-block text-white"
+                    [ngClass]="{'bg-success' : !orderItem.selected,'bg-secondary' : orderItem.selected}"
+                    (click)="toggleAssignOrderItem()" mat-button>{{'dishDetail.assign' | translate}}</button>
+                <button mat-raised-button class="btn-block bg-dark text-white mt-auto"
+                    (click)="terminerCommande(orderItem)" mat-button>{{
+                    'dishDetail.finiTxt' | translate }}</button>
+            </ng-container>
+
+            <mat-spinner *ngIf="isDataLoading" class="mx-auto" [diameter]="30" [strokeWidth]="5">
+            </mat-spinner>
+
+        </div>
+    </div>
+</div>

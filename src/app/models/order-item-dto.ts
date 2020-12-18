@@ -11,8 +11,9 @@ export interface OrderItemDTO {
     prix:number;
     commentaires:string;
     menuType : MenuType;
-    checkItems :CheckItemDTO;
+    checkItems :CheckItemDTO[];
     delaiDePreparation:Date;
     tempsDePreparation :Date;
-    option:[OptionDTO]
+    option:OptionDTO[];
+    selected:boolean;
 }

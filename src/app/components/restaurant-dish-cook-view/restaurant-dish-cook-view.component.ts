@@ -1,31 +1,43 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { timer } from 'rxjs';
+import { CheckItemDTO } from 'src/app/models/check-item-dto';
+import { OptionDTO } from 'src/app/models/option-dto';
 import { OrderItemDTO } from 'src/app/models/order-item-dto';
 import { OrderStatus } from 'src/app/models/order-status.enum';
+import { AuthService } from 'src/app/services/auth.service';
 import { KitchenService } from 'src/app/services/kitchen.service';
 import { environment } from 'src/environments/environment';
-import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-restaurent-dish-detail-view',
-  templateUrl: './restaurent-dish-detail-view.component.html',
-  styleUrls: ['./restaurent-dish-detail-view.component.css']
+  selector: 'app-restaurant-dish-cook-view',
+  templateUrl: './restaurant-dish-cook-view.component.html',
+  styleUrls: ['./restaurant-dish-cook-view.component.css']
 })
-export class RestaurentDishDetailViewComponent implements OnInit {
+export class RestaurantDishCookViewComponent implements OnInit {
 
   @Input() orderItem: OrderItemDTO;
   @Output() countChanged: EventEmitter<number> = new EventEmitter();
   nombreDeMinuteRequis: number = 0;
   nombreDeMinuteRestant: number = 0;
   nombreDeMinutesSur100: number = 100;
-  isReady: boolean = false
+  isReady: boolean = false;
   imgUrl: string;
+  isDataLoading: boolean = false;
 
   constructor(private kitchenService: KitchenService, private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.initTimer();
+  }
+
+  ngOnChanges(){
+    this.isDataLoading = false;
+  }
+
+  initTimer() {
     this.imgUrl = environment.baseImgPath;
     var today = new Date();
+
     this.nombreDeMinuteRequis = this.orderItem.product.tempsDePreparation;
     this.nombreDeMinuteRestant = Math.round((Date.parse(this.orderItem.tempsDePreparation.toString()) - today.getTime()) / 60000);
     if (this.nombreDeMinuteRestant > 0) {
@@ -47,7 +59,7 @@ export class RestaurentDishDetailViewComponent implements OnInit {
     this.setUpTimeout();
   }
 
-  setUpTimeout = (): void => {
+  setUpTimeout() {
     var source = timer(1000, 1000).subscribe(() => {
       if (this.nombreDeMinuteRestant == 0) {
         this.nombreDeMinutesSur100 = 0;
@@ -57,7 +69,6 @@ export class RestaurentDishDetailViewComponent implements OnInit {
         this.setUpProgressbar();
       }
     });
-
   }
 
   addTime() {
@@ -67,17 +78,30 @@ export class RestaurentDishDetailViewComponent implements OnInit {
     this.setUpProgressbar();
   }
 
-  terminerCommande(orderItem: OrderItemDTO) {
+  terminerCommande = (orderItem: OrderItemDTO): void => {
     this.nombreDeMinutesSur100++;
-    if (this.authService.isWaiter()) {
-      orderItem.orderStatus = OrderStatus.COMPLETED;
-    }
-    else {
-      orderItem.orderStatus = OrderStatus.READY;
-    }
+    this.isDataLoading = true;
+    
+    if (this.authService.isWaiter())
+    orderItem.orderStatus = OrderStatus.COMPLETED;
+    else
+    orderItem.orderStatus = OrderStatus.READY;
+    
     this.kitchenService.updateOrderItem(orderItem).subscribe();
     this.countChanged.emit(this.nombreDeMinutesSur100);
-
   }
 
+  findActiveCheckItems(): CheckItemDTO[] {
+    return this.orderItem.checkItems.filter(checkItem => checkItem.isActive);
+  }
+
+  findActiveOptionCheckItems(option: OptionDTO): CheckItemDTO[] {
+    return option.checkItemList.filter(checkItem => checkItem.isActive);
+  }
+
+  toggleAssignOrderItem() {
+    this.isDataLoading = true;
+    this.orderItem.selected = !this.orderItem.selected;
+    this.kitchenService.updateOrderItem(this.orderItem).subscribe(() => this.isDataLoading = false);
+  }
 }
