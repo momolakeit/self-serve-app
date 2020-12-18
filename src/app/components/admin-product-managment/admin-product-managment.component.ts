@@ -173,6 +173,10 @@ export class AdminProductManagmentComponent implements OnInit {
     return environment.baseImgPath + imageId;
   }
 
+  isMenuSelected():boolean{
+    return localStorage.getItem('menuId') != null;
+  }
+
   //UPDATE
 
   changeCurrentProductToEdit(product: ProductDTO) {

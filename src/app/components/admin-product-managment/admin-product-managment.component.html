@@ -118,7 +118,7 @@
             </div>
           </div>
           <div class="container">
-            <button class="btn-block btn-dark text-white" mat-raised-button (click)="openDialog(null)">
+            <button [disabled]="!isMenuSelected()" class="btn-block btn-dark text-white" mat-raised-button (click)="openDialog(null)">
               {{'adminProductManagment.addProductTxt'|translate}}
             </button>
           </div>
