@@ -12,7 +12,7 @@
             <ul style="list-style-type: none;" class=" p-0">
                 <ng-container *ngIf='menu'>
                     <li style="border-bottom: 2px solid white;"
-                        *ngFor="let product of  menuItem.products; index as i; trackBy: trackByFn "
+                        *ngFor="let product of menuItem.products; index as i; trackBy: trackByFn "
                         (click)="openDialog(product)"
                         class="d-flex justify-content-between align-items-center mat-elevation-z4 mb-2 p-3">
                         <div class="container">
@@ -26,7 +26,7 @@
                                 <p style="font-size: small;" class="m-0 p-0">${{product.prix}}</p>
                             </div>
                         </div>
-                        <img mat-card-image class="w-50" [src]="getImage(product.imgFileDTO.id)">
+                        <img mat-card-image style="max-height: 100px;" class="w-50" [src]="getImage(product.imgFileDTO.id)">
                     </li>
                 </ng-container>
 

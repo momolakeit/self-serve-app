@@ -10,8 +10,6 @@ import { stripeKey } from 'src/environments/environment';
   styleUrls: ['./owner-subscription.component.css']
 })
 export class OwnerSubscriptionComponent implements OnInit {
-
-  constructor(private paymentService: PaymentService, private router: Router) { }
   stripe; // : stripe.Stripe;
   card;
   cardErrors;
@@ -40,6 +38,7 @@ export class OwnerSubscriptionComponent implements OnInit {
     }
   };
 
+  constructor(private paymentService: PaymentService, private router: Router) { }
 
   ngOnInit() {
     this.initPaymentRetry();
@@ -63,9 +62,11 @@ export class OwnerSubscriptionComponent implements OnInit {
     this.card = elements.create("card", { style: this.style });
     this.card.mount("#card-element");
   }
+
   fetchCustomerId() {
     this.paymentService.fetchOwnerCustomerId(localStorage.getItem("username")).subscribe(data => this.customerId = data.customerId);
   }
+
   getSubscriptionProducts() {
     this.paymentService.fetchSubscriptionProduct().subscribe(data => {
       this.showLoader(false);
@@ -73,9 +74,15 @@ export class OwnerSubscriptionComponent implements OnInit {
       this.initStripe();
     });
   }
+
+  findSubscriptionProductDescription(product: StripeSubscriptionProducts): string[] {
+    return product.productDescription.split(",");
+  }
+
   showLoader(isShown: boolean) {
     this.loader = isShown;
   }
+
   submitForm() {
     this.showLoader(true);
     if (this.priceId == null && !this.isPaymentRetry) {
@@ -107,6 +114,7 @@ export class OwnerSubscriptionComponent implements OnInit {
 
     this.priceId = stripeSubscriptionProducts.priceId;
   }
+
   createPaymentMethod(isPaymentRetry) {
     // Set up payment method for recurring usage
     let billingName = "I-SERVE ABONNEMENT";
@@ -149,24 +157,27 @@ export class OwnerSubscriptionComponent implements OnInit {
         }
       });
   }
+
   retryInvoiceWithNewPaymentMethod(customerId, paymentMethodId) {
     this.paymentService.retryPaymentSubscription(customerId, paymentMethodId).subscribe(result => {
       this.handleSubscriptionCreateRetryResponse(result);
     })
   }
+
   handleError(errorTxtValue: string) {
     var element = document.getElementById("paymentErrorTxt");
     element.classList.remove("d-none");
-    element.innerText = errorTxtValue
+    element.innerText = errorTxtValue;
   }
+
   handleSubscriptionCreateRetryResponse(result) {
     this.showLoader(false);
     if (result.status != "active") {
       this.showLoader(false);
       this.handleError("There was an error during your payment,please try again later");
     }
-    else {
+    else 
       this.router.navigateByUrl("subscriptionDetail");
-    }
+    
   }
 }

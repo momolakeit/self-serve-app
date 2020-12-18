@@ -18,26 +18,24 @@
                     <mat-card-actions>
                     </mat-card-actions>
                 </mat-card>
-
             </div>
         </div>
         <div class="row">
             <div class="col w-50 ">
                 <mat-card class="example-card mt-4">
                     <mat-card-header *ngIf="subscriptionEntity.stripeSubscriptionProducts">
-                        <mat-card-title>{{subscriptionEntity.stripeSubscriptionProducts.productName}}</mat-card-title>
+                        <mat-card-title>{{subscriptionEntity.stripeSubscriptionProducts.productName}}: {{subscriptionEntity.stripeSubscriptionProducts.productPrice | currency}}</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
                         <ng-container *ngIf="subscriptionEntity.stripeSubscriptionProducts">
                             <div class="container">
-                                <div class="row">
-                                    <div class="col w-75">
-                                        <p class="ml-3">
-                                            {{subscriptionEntity.stripeSubscriptionProducts.productDescription}}
+                                <div class="row h-100">
+                                    <div class="col-xl-6 col-lg-6">
+                                        <p class="ml-3" *ngFor="let description of findSubscriptionProductDescription()">
+                                            - {{description}}
                                         </p>
-                                        <p class="ml-3">{{subscriptionEntity.stripeSubscriptionProducts.productPrice}} $ {{ 'subscriptionDetail.perMonth' | translate }}</p>
                                     </div>
-                                    <div class="col w-25">
+                                    <div class="col-xl-6 col-lg-6 mt-auto">
                                         <button (click)="cancelSubscription()" class="w-100 bg-danger text-white"
                                             mat-button>{{ 'subscriptionDetail.cancelSub' | translate }}</button>
                                     </div>
