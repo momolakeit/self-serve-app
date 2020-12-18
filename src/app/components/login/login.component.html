@@ -10,7 +10,7 @@
                     <div class="form-group">
                         <mat-form-field class="w-100">
                             <mat-label>Username</mat-label>
-                            <input matInput type="text" autocomplete="off" formControlName="username">
+                            <input matInput type="text" autocomplete="off" autofocus="true" formControlName="username">
                             <mat-error *ngIf="getF().username.hasError('badCredentials')">Username or Password is
                                 incorrect</mat-error>
                             <mat-error *ngIf="getF().username.hasError('required')">Username cannot be blank</mat-error>

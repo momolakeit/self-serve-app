@@ -16,6 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class DishDetailComponent implements OnInit {
   imgUrl: string;
   commentaire: string = "";
+  commentaireCharacterLimit : number = 60;
   itemOrdered= false;
 
   constructor(private translate: TranslateService,public dialogRef: MatDialogRef<DishDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: ProductDTO, private billService: BillService, private snackBar: MatSnackBar) { }

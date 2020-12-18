@@ -1,5 +1,4 @@
 import { MaxSizeValidator } from '@angular-material-components/file-input';
-import { error } from '@angular/compiler/src/util';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -31,6 +30,7 @@ export class ProductFormEditCreateComponent implements OnInit {
   multiple: boolean = false;
   maxSize: number = 1024;
   accept: string = "image/png,image/jpeg,.svg";
+  commentaireCharacterLimit : number = 80;
 
   constructor(public dialogRef: MatDialogRef<ProductFormEditCreateComponent>, @Inject(MAT_DIALOG_DATA) public data: ProductDTO, private productService: ProductService, private formBuilder: FormBuilder) { }
 
@@ -44,7 +44,7 @@ export class ProductFormEditCreateComponent implements OnInit {
     this.productForm = this.formBuilder.group({
       id: [this.data ? this.data.id : ''],
       name: [this.data ? this.data.name : '', Validators.required],
-      description: [this.data ? this.data.description : '', Validators.required],
+      description: [this.data ? this.data.description : '', [Validators.required,Validators.maxLength(this.commentaireCharacterLimit)]],
       prix: [this.data ? this.data.prix : '', Validators.required],
       tempsDePreparation: [this.data ? this.data.tempsDePreparation : '', Validators.required],
       image: ['', [MaxSizeValidator(this.maxSize * 1024)]],
@@ -201,6 +201,10 @@ export class ProductFormEditCreateComponent implements OnInit {
   }
 
   //get
+
+  getF(){
+    return this.productForm.controls;
+  }
 
   getCheckItems(id: number) {
     return this.getOptions().at(id).get('checkItems') as FormArray;
