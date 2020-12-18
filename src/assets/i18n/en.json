@@ -21,10 +21,13 @@
         "commander": "Order",
         "addOn":"Add On",
         "itemOrderd":"Item ordered",
-        "commentaireTxt":"comments",
+        "commentaireTxt":"Comments",
         "minutesRestantesTxt": "minutes left",
         "fermerTxt":"close",
-        "finiTxt":"Done"
+        "finiTxt":"Done",
+        "dish":"Dish",
+        "sides":"Sides",
+        "assign":"Assign"
     },
     "clientRequestList": {
         "pageTitle": "My orders",
