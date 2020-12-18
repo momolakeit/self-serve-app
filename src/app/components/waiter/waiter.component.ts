@@ -6,6 +6,7 @@ import { ProductService } from '../../services/product.service';
 import { BillService } from '../../services/bill.service'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
+import { MenuType } from 'src/app/models/menu-type.enum';
 
 @Component({
   selector: 'app-waiter',
@@ -39,7 +40,7 @@ export class WaiterComponent implements OnInit {
 
       this.requestProductList = data.products;
 
-      this.waiterCallProduct = this.requestProductList.find(product => product.menuType.toString() == "WAITERCALL");
+      this.waiterCallProduct = this.requestProductList.find(product => product.menuType == MenuType.WAITERCALL);
     });
   }
 
@@ -48,9 +49,7 @@ export class WaiterComponent implements OnInit {
 
     this.findAllWaiterRequest();
 
-    this.waiterCallProduct = this.requestProductList.filter(product => {
-      product.menuType.toString() == "WAITERCALL";
-    })
+    this.waiterCallProduct = this.requestProductList.filter(product => product.menuType == MenuType.WAITERCALL);
   }
 
   sendClientRequest(productDTO: ProductDTO) {
