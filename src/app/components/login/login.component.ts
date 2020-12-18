@@ -12,9 +12,10 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
   userForm: FormGroup;
-  constructor(private authService: AuthService,private formBuilder: FormBuilder, private route: Router, private authentificationService: AuthentificationService) { }
+  isLoading: boolean = false;
+  
+  constructor(private authService: AuthService, private formBuilder: FormBuilder, private route: Router, private authentificationService: AuthentificationService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -33,24 +34,30 @@ export class LoginComponent implements OnInit {
 
 
   onSubmitForm() {
-    const formValue = this.userForm.value;
+    if (this.userForm.valid) {
+      this.isLoading = true;
 
-    const signInForm: SignInForm = {
-      username: formValue['username'],
-      password: formValue['password']
-    }
+      const formValue = this.userForm.value;
 
-    this.authentificationService.login(signInForm).subscribe((success: boolean) => {
-      if (success) this.authService.findRoleThenRedirect(this.route);
-      else {
-        this.getF().username.setErrors({ badCredentials: true });
-        this.getF().password.setErrors({ badCredentials: true });
+      const signInForm: SignInForm = {
+        username: formValue['username'],
+        password: formValue['password']
       }
 
-    }, error => {
-      this.getF().username.setErrors({ badCredentials: true });
-      this.getF().password.setErrors({ badCredentials: true });
-    });
+      this.authentificationService.login(signInForm).subscribe((success: boolean) => {
+        if (success) this.authService.findRoleThenRedirect(this.route);
+        else {
+          this.getF().username.setErrors({ badCredentials: true });
+          this.getF().password.setErrors({ badCredentials: true });
+          this.isLoading = false;
+        }
+
+      }, error => {
+        this.getF().username.setErrors({ badCredentials: true });
+        this.getF().password.setErrors({ badCredentials: true });
+        this.isLoading = false;
+      });
+    }
 
   }
 }

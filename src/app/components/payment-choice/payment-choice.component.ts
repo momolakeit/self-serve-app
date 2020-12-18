@@ -62,7 +62,7 @@ export class PaymentChoiceComponent implements OnInit {
     });
   }
   openDialog(): void {
-    const dialogRef = this.dialog.open(PaymentFormComponent, {
+    this.dialog.open(PaymentFormComponent, {
       width: this.mobileQuery.matches ? '90%' : '50%',
       height: '35%',
       panelClass: 'payment-form-dialog',

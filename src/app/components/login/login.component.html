@@ -29,9 +29,9 @@
 
                 </div>
 
-                <div class="card-footer">
-                    <button mat-raised-button class="btn-block bg-dark text-white">Submit</button>
-                </div>
+            <div class="card-footer">
+                <button *ngIf="!isLoading" mat-raised-button class="btn-block bg-dark text-white">Submit</button>
+                <mat-spinner *ngIf="isLoading" class="mx-auto" [diameter]="30" [strokeWidth]="5"></mat-spinner>
             </div>
         </form>
     </div>

@@ -6,6 +6,7 @@ import { ProductService } from '../../services/product.service';
 import { BillService } from '../../services/bill.service'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
+import { MenuType } from 'src/app/models/menu-type.enum';
 
 @Component({
   selector: 'app-waiter',
@@ -23,14 +24,7 @@ export class WaiterComponent implements OnInit {
 
   ngOnInit(): void {
     this.imgUrl = environment.baseImgPath;
-
-    this.productService.findAllWaiterRequestProduct(JSON.parse(localStorage.getItem('restaurantId'))).subscribe(data => {
-
-      this.requestProductList = data.products;
-
-      this.waiterCallProduct = this.requestProductList.find(product => product.menuType.toString() == "WAITERCALL");
-    });
-
+    this.findAllWaiterRequest();
   }
 
   openSnackBar() {
@@ -41,16 +35,21 @@ export class WaiterComponent implements OnInit {
     })
   }
 
+  findAllWaiterRequest(){
+    this.productService.findAllWaiterRequestProduct(JSON.parse(localStorage.getItem('restaurantId'))).subscribe(data => {
+
+      this.requestProductList = data.products;
+
+      this.waiterCallProduct = this.requestProductList.find(product => product.menuType == MenuType.WAITERCALL);
+    });
+  }
+
   ngOnChanges(): void {
     this.imgUrl = environment.baseImgPath;
 
-    this.productService.findAllWaiterRequestProduct(1).subscribe(data => {
-      this.requestProductList = data.products;
-    });
+    this.findAllWaiterRequest();
 
-    this.waiterCallProduct = this.requestProductList.filter(product => {
-      product.menuType.toString() == "WAITERCALL";
-    })
+    this.waiterCallProduct = this.requestProductList.filter(product => product.menuType == MenuType.WAITERCALL);
   }
 
   sendClientRequest(productDTO: ProductDTO) {
