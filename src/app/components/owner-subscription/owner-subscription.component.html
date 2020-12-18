@@ -1,13 +1,13 @@
 <div class="container" [hidden]="loader" id="subscriptionContainer">
     <div class="row" [hidden]="isPaymentRetry">
         <ng-container *ngFor="let product of subscriptionProducts;let i = index;">
-            <div class="col w-50 ">
+            <div class="col-6 w-50 ">
                 <mat-card (click)="changeSubscriptionProduct(product,i)" class="example-card mt-4">
                     <mat-card-header>
                         <mat-card-title>{{product.productName}}</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                        <p class="ml-3">{{product.productDescription}}</p>
+                        <p class="ml-3" *ngFor="let description of findSubscriptionProductDescription(product)">- {{description}}</p>
                         <p class="ml-3">{{product.productPrice}} $ {{ 'ownerSubscription.perMonth' | translate }}</p>
                     </mat-card-content>
                     <mat-card-actions>
@@ -23,7 +23,7 @@
             <p class="text-danger">{{ 'ownerSubscription.errorWithPaymentMethod' | translate }}</p>    
         </div>
         
-        <div class="col w-50">
+        <div class="col-12 w-50">
             <mat-card class="example-card mt-4">
                 <form id="subscription-form">
                     <div id="card-element" class="MyCardElement" style="height: 50px;">

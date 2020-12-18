@@ -31,10 +31,10 @@
 
     <p>
         <mat-form-field class="w-100">
-            <mat-label>{{ 'productEditCreate.descriptionTxt' | translate }}:</mat-label>
-            <textarea rows="4" matInput placeholder="Enter the product description"
+            <mat-label>{{ 'productEditCreate.descriptionTxt' | translate }} {{getF().description.value.length > 0 ? getF().description.value.length + '/' + commentaireCharacterLimit  : ''}}:</mat-label>
+            <textarea [maxlength]="commentaireCharacterLimit" rows="4" matInput placeholder="Enter the product description"
                 formControlName="description"></textarea>
-            <mat-error>{{ 'productEditCreate.descriptionError' | translate }}</mat-error>
+            <mat-error *ngIf="getF().description.hasError('required')">{{ 'productEditCreate.descriptionError' | translate }}</mat-error>
         </mat-form-field>
     </p>
 

@@ -25,13 +25,15 @@ export class MenuComponent implements OnInit {
 
   slides = [{ 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }, { 'image': 'https://gsr.dev/material2-carousel/assets/demo.png' }];
 
-  constructor(private menuService: MenuService,public dialog: MatDialog, private billService: BillService) { }
+  constructor(private menuService: MenuService, public dialog: MatDialog, private billService: BillService) { }
 
   ngOnInit() {
-    //not clean init should only call methods
-    if (localStorage.getItem('restaurantId') == null) {
+    this.initMenu();
+  }
+
+  initMenu() {
+    if (localStorage.getItem('restaurantId') == null)
       this.hasRestaurantId = false;
-    }
     else {
       this.hasRestaurantId = true;
       this.initBill();
@@ -45,15 +47,15 @@ export class MenuComponent implements OnInit {
 
   // ALL ABOUT THE DIALOG
 
-  openDialog(productDTO:ProductDTO) {
+  openDialog(productDTO: ProductDTO) {
     const dialogRef = this.dialog.open(DishDetailComponent, {
-      autoFocus:false,
+      autoFocus: false,
       data: productDTO,
-      maxHeight:'600px'
+      maxHeight: '600px'
     });
   }
 
-  changeProductToSeeDetail = function (product: ProductDTO): void {
+  changeProductToSeeDetail(product: ProductDTO) {
     this.productToSeeDetail = product;
   }
 
@@ -70,8 +72,8 @@ export class MenuComponent implements OnInit {
       });
     }
   }
-  
-  scanSuccessHandler($event: any){
+
+  scanSuccessHandler($event: any) {
     window.location.href = $event;
   }
 }

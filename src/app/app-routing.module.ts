@@ -48,10 +48,10 @@ const routes: Routes = [
   //all about admin
   { path: 'contactForm', canActivate: [OwnerRoleGuardService], component: ContactFormComponent },
 
-  {path: 'adminProductManagment',canActivate:[AuthGuardService,AdminOwnerGuardService], component: AdminProductManagmentComponent},
-  {path: 'subscription',canActivate:[AuthGuardService,OwnerRoleGuardService], component: OwnerSubscriptionComponent},
-  {path: 'subscriptionDetail',canActivate:[AuthGuardService,OwnerRoleGuardService], component: SubscriptionDetailsComponent},
-  {path: 'isStripeEnabled',canActivate:[AuthGuardService,OwnerRoleGuardService], component: StripeAccountCreatePromptComponent},
+  {path: 'adminProductManagment',canActivate:[AdminOwnerGuardService], component: AdminProductManagmentComponent},
+  {path: 'subscription',canActivate:[OwnerRoleGuardService], component: OwnerSubscriptionComponent},
+  {path: 'subscriptionDetail',canActivate:[OwnerRoleGuardService], component: SubscriptionDetailsComponent},
+  {path: 'isStripeEnabled',canActivate:[OwnerRoleGuardService], component: StripeAccountCreatePromptComponent},
   
   //not found needs to be at the end or else buggs
   { path: '**', redirectTo: '/not-found' }
