@@ -42,6 +42,9 @@ export class AppComponent implements OnDestroy {
       this.logoUrl = this.urlLogoAssets;
       console.log(this.logoUrl)
     }
+    else{
+      this.logoUrl = localStorage.getItem('logoUrl');
+    }
     
 
   }
