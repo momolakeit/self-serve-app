@@ -8,6 +8,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { stripeKey } from 'src/environments/environment';
 import { BillDTO } from 'src/app/models/bill-dto';
+import { ProductService } from '../../services/product.service'
+import { MenuType } from 'src/app/models/menu-type.enum';
+import { ProductDTO } from 'src/app/models/product-dto';
+import {BillService} from 'src/app/services/bill.service';
 
 @Component({
   selector: 'app-payment-choice',
@@ -21,19 +25,20 @@ export class PaymentChoiceComponent implements OnInit {
   clientSecret;
   mobileQuery: MediaQueryList;
   applePaymentInError = false;
+  requestTerminalProduct :ProductDTO;
   private _mobileQueryListener: () => void;
   durationInSeconds = 5;
+  btnDisabled =false;
 
-  constructor(private translate: TranslateService, private _snackBar: MatSnackBar, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public dialog: MatDialog, private paymentService: PaymentService, private authentificationService: AuthentificationService) {
+  constructor(private translate: TranslateService, private _snackBar: MatSnackBar, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public dialog: MatDialog, private productService: ProductService,private billService:BillService ,private paymentService: PaymentService, private authentificationService: AuthentificationService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   ngOnInit(): void {
-    this.paymentService.fetchAccountId(parseInt(localStorage.getItem("restaurantId"))).subscribe(data => {
-      this.initStripe(data.value);
-    })
+    this.fetchOwnerAccountId();
+    this.findAllWaiterRequest();
   }
 
   openSnackBar() {
@@ -45,8 +50,25 @@ export class PaymentChoiceComponent implements OnInit {
 
     this._snackBar._openedSnackBarRef.onAction().subscribe(() => this._snackBar.dismiss());
   }
+  fetchOwnerAccountId(){
+    this.paymentService.fetchAccountId(parseInt(localStorage.getItem("restaurantId"))).subscribe(data => {
+      this.initStripe(data.value);
+    });
+  }
+  findAllWaiterRequest() {
+    this.productService.findAllWaiterRequestProduct(JSON.parse(localStorage.getItem('restaurantId'))).subscribe(data => {
 
+      this.requestTerminalProduct = data.products.find(product => product.menuType == MenuType.TERMINALREQUEST);
 
+    });
+  }
+
+  requestTerminal(){
+    this.billService.makeOrder(this.requestTerminalProduct, "").subscribe(data=>{
+      this.btnDisabled = true;
+      this.openSnackBar();
+    });
+  }
   initStripe(stripeAccountId: string) {
     this.stripe = Stripe(stripeKey.value);
     var billDTO = JSON.parse(localStorage.getItem("ongoingBill"));
@@ -74,7 +96,7 @@ export class PaymentChoiceComponent implements OnInit {
       currency: 'cad',
       total: {
         label: 'Self Serve',
-        amount: billDTO.prixTotal*100,
+        amount: billDTO.prixTotal * 100,
       },
       requestPayerName: true,
       requestPayerEmail: true,
