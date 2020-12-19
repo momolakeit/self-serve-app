@@ -1,39 +1,41 @@
 <ng-container *ngIf="isActive">
     <ng-container *ngIf="allTables">
-        <h1 class="text-center w-25 mx-auto border-bottom border-dark">All Orders</h1>
+        <h1 class="text-center w-25 mx-auto border-bottom border-dark mt-5 mb-4">All Orders</h1>
 
         <!--TABLE LIST-->
         <div class="container-fluid">
 
             <div class="row">
-                <mat-accordion class="col-xl-4 col-lg-5 col-4 mb-4" *ngFor="let table of allTables;let i = index">
-                    <mat-expansion-panel expanded *ngIf="table.nombreItemParTable > 0">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col w-25">
-                                            <h2>Table {{table.tableNumber}}</h2>
-                                        </div>
-                                        <div class="col w-75">
-                                            <h2>{{table.nombreItemParTable}} orders </h2>
+                <ng-container *ngFor="let table of allTables;let i = index">
+                    <mat-accordion class="col-xl-4 col-lg-5 col-md-5 col-sm-5 col-5 mb-4" *ngIf="table.nombreItemParTable > 0">
+                        <mat-expansion-panel expanded *ngIf="table.nombreItemParTable > 0">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col w-25">
+                                                <h2>Table {{table.tableNumber}}</h2>
+                                            </div>
+                                            <div class="col w-75">
+                                                <h2>{{table.nombreItemParTable}} orders </h2>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
 
-                        <div style="min-height: 500px; max-height: 500px;" class="overflow-auto">
-                            <ng-container *ngFor='let bill of table.bills'>
-                                <ng-container *ngFor='let orderItem of bill.orderItems'>
-                                    <app-restaurant-dish-cook-view (countChanged)="initValues($event)"
-                                        [orderItem]="orderItem">
-                                    </app-restaurant-dish-cook-view>
+                            <div style="min-height: 500px; max-height: 500px;" class="overflow-auto">
+                                <ng-container *ngFor='let bill of table.bills'>
+                                    <ng-container *ngFor='let orderItem of bill.orderItems'>
+                                        <app-restaurant-dish-cook-view (countChanged)="initValues($event)"
+                                            [orderItem]="orderItem">
+                                        </app-restaurant-dish-cook-view>
+                                    </ng-container>
                                 </ng-container>
-                            </ng-container>
-                        </div>
-                    </mat-expansion-panel>
-                </mat-accordion>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </ng-container>
             </div>
         </div>
     </ng-container>
