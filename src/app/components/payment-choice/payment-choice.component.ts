@@ -12,6 +12,8 @@ import { ProductService } from '../../services/product.service'
 import { MenuType } from 'src/app/models/menu-type.enum';
 import { ProductDTO } from 'src/app/models/product-dto';
 import {BillService} from 'src/app/services/bill.service';
+import { timer } from 'rxjs';
+import { BillStatus } from 'src/app/models/bill-status.enum';
 
 @Component({
   selector: 'app-payment-choice',
@@ -67,7 +69,18 @@ export class PaymentChoiceComponent implements OnInit {
     this.billService.makeOrder(this.requestTerminalProduct, "").subscribe(data=>{
       this.btnDisabled = true;
       this.openSnackBar();
+      this.checkBillStatus();
     });
+  }
+  checkBillStatus(){
+    var billDTO = JSON.parse(localStorage.getItem('ongoingBill'))
+    timer(1000, 50000).subscribe(() => {
+      this.billService.getBillStatus(billDTO.id).subscribe(data =>{
+        if(data == BillStatus.PAYED){
+            this.authentificationService.logoutAction();
+        }
+      })
+    })
   }
   initStripe(stripeAccountId: string) {
     this.stripe = Stripe(stripeKey.value);

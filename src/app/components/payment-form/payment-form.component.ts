@@ -100,11 +100,10 @@ export class PaymentFormComponent implements OnInit {
           this.showSuccess();
           this.paymentSucceeded = true;
           const billDTO: BillDTO = JSON.parse(localStorage.getItem('ongoingBill'));
-          this.billService.makePayment(billDTO.id).subscribe();
-          setTimeout(() => {
+          this.billService.makePayment(billDTO.id).subscribe(()=>{
             this.authentificationService.logoutAction();
             this.dialogRef.close();
-          }, 3000)
+          });
         }
       });
   }
