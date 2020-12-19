@@ -27,7 +27,8 @@
         "finiTxt":"Done",
         "dish":"Dish",
         "sides":"Sides",
-        "assign":"Assign"
+        "assign":"Assign",
+        "totalPriceTxt":"Total price"
     },
     "clientRequestList": {
         "pageTitle": "My orders",

@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { timer } from 'rxjs';
+import { BillDTO } from 'src/app/models/bill-dto';
 import { CheckItemDTO } from 'src/app/models/check-item-dto';
+import { MenuType } from 'src/app/models/menu-type.enum';
 import { OptionDTO } from 'src/app/models/option-dto';
 import { OrderItemDTO } from 'src/app/models/order-item-dto';
 import { OrderStatus } from 'src/app/models/order-status.enum';
@@ -16,6 +18,7 @@ import { environment } from 'src/environments/environment';
 export class RestaurantDishCookViewComponent implements OnInit {
 
   @Input() orderItem: OrderItemDTO;
+  @Input() billDTO:BillDTO;
   @Output() countChanged: EventEmitter<number> = new EventEmitter();
   nombreDeMinuteRequis: number = 0;
   nombreDeMinuteRestant: number = 0;
@@ -57,6 +60,15 @@ export class RestaurantDishCookViewComponent implements OnInit {
   handleTime() {
     this.nombreDeMinuteRequis = this.orderItem.product.tempsDePreparation;
     this.setUpTimeout();
+  }
+
+  isOrderItemTerminalRequest():boolean{
+    var isProductTerminalRequest =false;
+    if(this.orderItem.menuType==MenuType.TERMINALREQUEST)
+    {
+      isProductTerminalRequest = true;
+    }
+    return isProductTerminalRequest;
   }
 
   setUpTimeout() {
