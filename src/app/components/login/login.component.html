@@ -1,6 +1,7 @@
 <div class="container h-100">
     <div class="row h-100">
-        <form class="col-12 col-sm-12 col-lg-7 col-xl-7 mx-auto my-auto" [formGroup]="userForm" (ngSubmit)="onSubmitForm()">
+        <form class="col-12 col-sm-12 col-lg-7 col-xl-7 mx-auto my-auto" [formGroup]="userForm"
+            (ngSubmit)="onSubmitForm()">
             <div class="card mat-elevation-z8">
                 <div class="card-header bg-dark">
                     <h1 class="text-center text-white">Login</h1>
@@ -29,9 +30,10 @@
 
                 </div>
 
-            <div class="card-footer">
-                <button *ngIf="!isLoading" mat-raised-button class="btn-block bg-dark text-white">Submit</button>
-                <mat-spinner *ngIf="isLoading" class="mx-auto" [diameter]="30" [strokeWidth]="5"></mat-spinner>
+                <div class="card-footer">
+                    <button *ngIf="!isLoading" mat-raised-button class="btn-block bg-dark text-white">Submit</button>
+                    <mat-spinner *ngIf="isLoading" class="mx-auto" [diameter]="30" [strokeWidth]="5"></mat-spinner>
+                </div>
             </div>
         </form>
     </div>
