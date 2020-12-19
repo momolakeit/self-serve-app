@@ -4,11 +4,10 @@
             <div class="col-6 w-50 ">
                 <mat-card (click)="changeSubscriptionProduct(product,i)" class="example-card mt-4">
                     <mat-card-header>
-                        <mat-card-title>{{product.productName}}</mat-card-title>
+                        <mat-card-title>{{product.productName}}: {{product.productPrice | currency}}</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
                         <p class="ml-3" *ngFor="let description of findSubscriptionProductDescription(product)">- {{description}}</p>
-                        <p class="ml-3">{{product.productPrice}} $ {{ 'ownerSubscription.perMonth' | translate }}</p>
                     </mat-card-content>
                     <mat-card-actions>
                         <button class="w-100 bg-dark text-white" (click)="changeSubscriptionProduct(product,i)"
