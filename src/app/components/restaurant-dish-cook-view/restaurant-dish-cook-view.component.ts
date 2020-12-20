@@ -63,12 +63,7 @@ export class RestaurantDishCookViewComponent implements OnInit {
   }
 
   isOrderItemTerminalRequest():boolean{
-    var isProductTerminalRequest =false;
-    if(this.orderItem.menuType==MenuType.TERMINALREQUEST)
-    {
-      isProductTerminalRequest = true;
-    }
-    return isProductTerminalRequest;
+    return this.orderItem.menuType==MenuType.TERMINALREQUEST;
   }
 
   setUpTimeout() {
