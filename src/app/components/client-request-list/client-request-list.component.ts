@@ -25,32 +25,24 @@ export class ClientRequestListComponent implements OnInit {
 
   setUpTimeout() {
     var source = timer(1000, 50000).subscribe(val => {
-      var billDTO = JSON.parse(localStorage.getItem("ongoingBill"));
-      
+      var billDTO : BillDTO = JSON.parse(localStorage.getItem("ongoingBill"));
+
       this.billService.getBill(billDTO).subscribe(data => {
         this.billDTO = data;
       })
     });
   }
 
-  changeOrderItemToPassToModal (orderItemDTO: OrderItemDTO) {
+  changeOrderItemToPassToModal(orderItemDTO: OrderItemDTO) {
     this.orderItemToPassToModal = orderItemDTO;
   }
 
-  isWaiterProduct(orderItem:OrderItemDTO):boolean{
-    if (!orderItem.menuType)
-      return false;
-    
-    return orderItem.menuType!=MenuType.WAITERCALL&& orderItem.menuType!=MenuType.WAITERREQUEST;
+  isWaiterProduct(orderItem: OrderItemDTO): boolean {
+    return orderItem.menuType ? orderItem.menuType != MenuType.WAITERCALL && orderItem.menuType != MenuType.WAITERREQUEST : false;
   }
-  isAllOrdersCompleted():boolean{
-    var returnValue= true;
-    this.billDTO.orderItems.forEach(oItem=>{
-      if(oItem.orderStatus!=OrderStatus.COMPLETED){
-        returnValue = false;
-      }
-    })
-    return returnValue;
+
+  isAllOrdersCompleted(): boolean {
+    return !this.billDTO.orderItems.some(orderItem => orderItem.orderStatus != OrderStatus.COMPLETED);
   }
 
 }
