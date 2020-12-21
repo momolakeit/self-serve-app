@@ -27,9 +27,6 @@ export class RestaurantEmployeesComponent implements OnInit {
     this.restaurantSelectChanged();
   }
 
-  ngOnChanges() {
-  }
-
   initEmployees() {
     this.kitchenService.findAllRestaurantEmployers(JSON.parse(localStorage.getItem('restaurantId'))).subscribe(data => {
       if (data.length >= 1) {
@@ -50,8 +47,6 @@ export class RestaurantEmployeesComponent implements OnInit {
   }
 
   restaurantSelectChanged() {
-    this.menuService.onRestaurantSelectedEvent.subscribe(() => {
-      this.initEmployees();
-    });
+    this.menuService.onRestaurantSelectedEvent.subscribe(() => this.initEmployees());
   }
 }

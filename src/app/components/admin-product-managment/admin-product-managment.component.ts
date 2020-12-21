@@ -152,9 +152,10 @@ export class AdminProductManagmentComponent implements OnInit {
     if (this.restaurantSelectionFormControl.valid) {
       this.isVoirProduitLoading = true;
 
-      localStorage.setItem('restaurantId', `${restaurantId}`);
+      if (localStorage.getItem('restaurantId')) 
+        this.menuService.onRestaurantSelectedEvent.emit();
 
-      this.menuService.onRestaurantSelectedEvent.emit();
+      localStorage.setItem('restaurantId', `${restaurantId}`);
 
       this.menuService.fetchAllMenuByRestaurantId(restaurantId).subscribe(data => {
 
