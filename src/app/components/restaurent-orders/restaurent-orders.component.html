@@ -7,7 +7,7 @@
 
             <div class="row">
                 <ng-container *ngFor="let table of allTables;let i = index">
-                    <mat-accordion class="col-xl-4 col-lg-5 col-md-5 col-sm-5 col-5 mb-4" *ngIf="table.nombreItemParTable > 0">
+                    <mat-accordion class="col-xl-4 col-lg-5 col-md-5 col-sm-12 col-12 mb-4" *ngIf="table.nombreItemParTable > 0">
                         <mat-expansion-panel expanded *ngIf="table.nombreItemParTable > 0">
                             <mat-expansion-panel-header>
                                 <mat-panel-title>

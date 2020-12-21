@@ -6,7 +6,6 @@ import { BillDTO } from '../models/bill-dto'
 import { map, catchError } from 'rxjs/operators';
 import { ProductDTO } from '../models/product-dto';
 import { BillStatus } from '../models/bill-status.enum';
-import { error } from '@angular/compiler/src/util';
 @Injectable({
   providedIn: 'root'
 })

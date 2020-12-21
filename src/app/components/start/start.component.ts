@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { myParams, myStyle } from '../../../utilities/particlejsdata';
 import { v1 as uuidv1 } from 'uuid';
 import { SignUpForm } from 'src/app/models/sign-up-form';
 import { SignInForm } from 'src/app/models/sign-in-form';
-import { environment, roles } from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
 import { AuthentificationService } from 'src/app/services/authentification.service';
-import { error } from '@angular/compiler/src/util';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KitchenService } from 'src/app/services/kitchen.service';
-import { ConstanteService } from 'src/app/services/constante-service.service';
 import {AuthService} from '../../services/auth.service';
 import {LogoService} from '../../services/logo.service'
 @Component({
@@ -24,7 +21,7 @@ export class StartComponent implements OnInit {
   isLoading: boolean = false;
 
 
-  constructor(private authentificationService: AuthentificationService, private route: Router,private activatedRoute: ActivatedRoute, private kitchenService: KitchenService,private constanteService :ConstanteService,private authService:AuthService,private logoService:LogoService) { }
+  constructor(private authentificationService: AuthentificationService, private route: Router,private activatedRoute: ActivatedRoute, private kitchenService: KitchenService,private authService:AuthService,private logoService:LogoService) { }
 
   ngOnInit(): void {
     this.findMenu();
