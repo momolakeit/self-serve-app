@@ -15,12 +15,12 @@ import { MenuType } from 'src/app/models/menu-type.enum';
 })
 export class WaiterComponent implements OnInit {
 
-  requestProductList: [ProductDTO]
+  requestProductList: ProductDTO[]
   imgUrl: string;
   waiterCallProduct: any;
   durationInSeconds: number = 5;
 
-  constructor(private translate: TranslateService,private productService: ProductService, private billService: BillService, private _snackBar: MatSnackBar) { }
+  constructor(private translate: TranslateService, private productService: ProductService, private billService: BillService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.imgUrl = environment.baseImgPath;
@@ -28,19 +28,19 @@ export class WaiterComponent implements OnInit {
   }
 
   openSnackBar() {
-    this.translate.get('waiter.waiterComing').subscribe(res =>{
+    this.translate.get('waiter.waiterComing').subscribe(res => {
       this._snackBar.open(res, 'close', {
         duration: this.durationInSeconds * 1000,
-      });      
+      });
     })
   }
 
-  findAllWaiterRequest(){
+  findAllWaiterRequest() {
     this.productService.findAllWaiterRequestProduct(JSON.parse(localStorage.getItem('restaurantId'))).subscribe(data => {
+      this.waiterCallProduct = data.products.find(product => product.menuType == MenuType.WAITERCALL);
 
-      this.requestProductList = data.products;
+      this.requestProductList = data.products.filter(prod => (prod.menuType != MenuType.TERMINALREQUEST && prod.menuType != MenuType.WAITERCALL));
 
-      this.waiterCallProduct = this.requestProductList.find(product => product.menuType == MenuType.WAITERCALL);
     });
   }
 

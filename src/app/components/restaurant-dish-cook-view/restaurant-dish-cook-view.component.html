@@ -15,7 +15,8 @@
             <div class="d-flex" *ngIf="findActiveCheckItems().length > 0">
                 <p class="mr-1"><strong>{{'dishDetail.sides' | translate}}:</strong></p>
                 <ng-container *ngFor='let checkItem of findActiveCheckItems(); let i = index'>
-                    <p class="d-inline-block" *ngIf="checkItem.isActive"> {{checkItem.name}}<span class="pr-1" *ngIf="i != findActiveCheckItems().length - 1">,</span></p>
+                    <p class="d-inline-block" *ngIf="checkItem.isActive"> {{checkItem.name}}<span class="pr-1"
+                            *ngIf="i != findActiveCheckItems().length - 1">,</span></p>
                 </ng-container>
             </div>
 
@@ -46,6 +47,8 @@
                 <button mat-raised-button class="btn-block bg-dark text-white mt-auto"
                     (click)="terminerCommande(orderItem)" mat-button>{{
                     'dishDetail.finiTxt' | translate }}</button>
+                <h3 *ngIf="isOrderItemTerminalRequest()">{{ 'dishDetail.totalPriceTxt' | translate }}
+                    {{billDTO.prixTotal}} $</h3>
             </ng-container>
 
             <mat-spinner *ngIf="isDataLoading" class="mx-auto" [diameter]="30" [strokeWidth]="5">
