@@ -104,7 +104,7 @@ export class PaymentFormComponent implements OnInit {
             setTimeout(() => {
               this.authentificationService.logoutAction();
               this.dialogRef.close();
-            })
+            },3000)
           });
         }
       });
