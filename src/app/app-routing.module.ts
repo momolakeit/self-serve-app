@@ -22,6 +22,7 @@ import { AdminPageComponent } from './components/admin-page/admin-page.component
 import { AdminGuardService } from './services/admin-guard.service';
 import { AdminOwnerGuardService } from './services/admin-owner-guard.service';
 import { StripeAccountCreatePromptComponent } from './components/stripe-account-create-prompt/stripe-account-create-prompt.component';
+import {PaymentChoiceGuardService} from './services/payment-choice-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/start', pathMatch: 'full' },
@@ -39,8 +40,7 @@ const routes: Routes = [
   { path: 'waiter', canActivate: [ClientGuardService], component: WaiterComponent },
   { path: 'clientRequestList', canActivate: [ClientGuardService], component: ClientRequestListComponent },
   { path: 'menu', canActivate: [ClientGuardService], component: MenuComponent },
-  { path: 'paymentChoice', canActivate: [ClientGuardService], component: PaymentChoiceComponent },
-  //{path: 'dishDetail',canActivate:[AuthGuardService], component: DishDetailComponent},
+  { path: 'paymentChoice', canActivate: [ClientGuardService,PaymentChoiceGuardService], component: PaymentChoiceComponent },
   
   //all about waiter
   { path: 'restaurentOrders',canActivate:[CookAndWaiterGuardService], component: RestaurentOrdersComponent },
