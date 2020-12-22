@@ -164,5 +164,13 @@
         "userSaved":"User saved successfully!",
         "logoutTitle":"You cannot logout!",
         "logoutMessage":"In order to logout you must pay you bill first."
+    },
+    "restaurantOrder":{
+        "title":"All Orders",
+        "buttonOrdersToServe":"ORDERS TO SERVE",
+        "buttonOrdersInKitchen":"ORDERS IN KITCHEN",
+        "buttonServedOrders":"ORDERS SERVED",
+        "noOrder":"You have no orders at the moment!",
+        "subscription":"You need to subscribe in order to access Iserve options"
     }
 }

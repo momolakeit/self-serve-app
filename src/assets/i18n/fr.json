@@ -164,5 +164,13 @@
         "userSaved":"Utilisateur enregistrer avec succès!",
         "logoutTitle":"Vous ne pouvez pas vous déconnecter!",
         "logoutMessage":"Vous devez payer votre facture avant de vous déconnecter."
+    },
+    "restaurantOrder":{
+        "title":"Commandes",
+        "buttonOrdersToServe":"COMMANDE À SERVIR",
+        "buttonOrdersInKitchen":"COMMANDE EN CUISINE",
+        "buttonServedOrders":"COMMANDE SERVIE",
+        "noOrder":"Vous n'avez aucune commande pour l'instant!",
+        "subscription":"Veuillez vous abonner pour pouvoir accéder aux options de IServe"
     }
 }
