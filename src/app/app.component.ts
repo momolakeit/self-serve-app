@@ -36,6 +36,7 @@ export class AppComponent implements OnDestroy {
       localStorage.setItem('logoUrl', data);
       this.logoUrl = localStorage.getItem('logoUrl');
     });
+    
     if(!localStorage.getItem('logoUrl')){
       this.logoUrl = this.urlLogoAssets;
       this.styleMaxHeightLogo = "max-height: 130px;";
@@ -44,8 +45,6 @@ export class AppComponent implements OnDestroy {
       this.logoUrl = localStorage.getItem('logoUrl');
       this.styleMaxHeightLogo = "max-height: 50px;";
     }
-    
-
   }
 
   ngOnDestroy(): void {
