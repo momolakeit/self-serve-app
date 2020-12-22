@@ -3,7 +3,7 @@
     <button mat-icon-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <img [src]="logoUrl" style="max-height: 150px;" alt="logo" class="img-fluid mx-auto mb-1">
+    <img [src]="logoUrl" [style]="styleMaxHeightLogo" alt="logo" class="img-fluid mx-auto mb-1">
   </mat-toolbar>
 
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">

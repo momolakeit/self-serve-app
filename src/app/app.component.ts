@@ -19,6 +19,7 @@ export class AppComponent implements OnDestroy {
   title = 'self-serve-app';
   mobileQuery: MediaQueryList;
   urlLogoAssets ="assets/iservelogo.svg"
+  styleMaxHeightLogo:string = "";
 
   private _mobileQueryListener: () => void;
 
@@ -37,9 +38,11 @@ export class AppComponent implements OnDestroy {
     });
     if(!localStorage.getItem('logoUrl')){
       this.logoUrl = this.urlLogoAssets;
+      this.styleMaxHeightLogo = "max-height: 130px;";
     }
     else{
       this.logoUrl = localStorage.getItem('logoUrl');
+      this.styleMaxHeightLogo = "max-height: 50px;";
     }
     
 
