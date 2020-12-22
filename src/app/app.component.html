@@ -3,7 +3,7 @@
     <button mat-icon-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <img [src]="logoUrl"  style="height: 50px;" alt="" class="img-fluid mx-auto w-25 mr-3">
+    <img [src]="logoUrl" style="max-height: 150px;" alt="logo" class="img-fluid mx-auto mb-1">
   </mat-toolbar>
 
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
@@ -19,7 +19,8 @@
               <p>restaurants</p>
             </div>
           </a>
-          <!-- <a mat-list-item routerLink="." (click)="snav.toggle()">
+          <!-- je le garde ici car j'en aurais besoin bientot
+            <a mat-list-item routerLink="." (click)="snav.toggle()">
             <div class="d-flex">
               <mat-icon class="mr-3">restaurant_menu</mat-icon>
               <p>products</p>

@@ -5,8 +5,6 @@ import { timer } from 'rxjs';
 import { BillDTO } from '../../models/bill-dto';
 import { environment } from '../../../environments/environment'
 import { OrderItemDTO } from 'src/app/models/order-item-dto';
-import { throwToolbarMixedModesError } from '@angular/material/toolbar';
-import { BillService } from 'src/app/services/bill.service';
 import { PaymentService } from '../../services/payment.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderStatus } from 'src/app/models/order-status.enum';
@@ -60,11 +58,9 @@ export class RestaurentOrdersComponent implements OnInit {
     var source = timer(1000, 50000).subscribe(() => {
       this.kitchenService.fetchKitchenRestaurentTables(parseInt(localStorage.getItem('restaurantId'))).subscribe(data => {
         this.loading = false;
-        this.allTables = data;
-        this.allTables = this.filterTableArray(this.allTables);
+        this.allTables = this.filterTableArray(data);
         this.allTables.forEach(table => {
           this.panelOpenStateArray.push(false);
-          table.nombreItemParTable = 0;
           table = this.setUpTable(table);
         });
       });
@@ -72,20 +68,20 @@ export class RestaurentOrdersComponent implements OnInit {
   }
 
   filterTableArray(tableToFilter: RestaurantTableDTO[]): RestaurantTableDTO[] {
-    return tableToFilter.filter(table => (table.bills.length > 0 && table.bills != null));
+    return tableToFilter.filter(table => table.bills.length > 0);
   }
 
   filterOrderItemArrayByOrderStatusForBillForCook(orderItems: OrderItemDTO[]): OrderItemDTO[] {
-    return orderItems.filter(oItem => oItem.orderStatus != OrderStatus.READY);
+    return orderItems.filter(oItem => oItem.orderStatus == OrderStatus.PROGRESS);
   }
 
   filterOrderItemArrayByOrderStatusForBillForWaiter(orderItems: OrderItemDTO[]): OrderItemDTO[] {
     return orderItems.filter(oItem => oItem.orderStatus == OrderStatus.READY);
   }
 
-  filterOrderItemArrayByOrderStatusCompletedForBill(orderItems: OrderItemDTO[]): OrderItemDTO[] {
-    return orderItems.filter(oItem => oItem.orderStatus != OrderStatus.COMPLETED);
-  }
+  // filterOrderItemArrayByOrderStatusCompletedForBill(orderItems: OrderItemDTO[]): OrderItemDTO[] {
+  //   return orderItems.filter(oItem => oItem.orderStatus != OrderStatus.COMPLETED);
+  // }
 
 
   setUpTable(table: RestaurantTableDTO): RestaurantTableDTO {
@@ -105,10 +101,8 @@ export class RestaurentOrdersComponent implements OnInit {
   setUpBill(bill: BillDTO): BillDTO {
     bill.isBillEmpty = true;
 
-    bill.orderItems = this.authService.isWaiter()?this.filterOrderItemArrayByOrderStatusForBillForWaiter(bill.orderItems) :this.filterOrderItemArrayByOrderStatusForBillForCook(bill.orderItems);
+    bill.orderItems = this.authService.isWaiter() ? this.filterOrderItemArrayByOrderStatusForBillForWaiter(bill.orderItems) : this.filterOrderItemArrayByOrderStatusForBillForCook(bill.orderItems);
 
-    bill.orderItems = this.filterOrderItemArrayByOrderStatusCompletedForBill(bill.orderItems);
-    
     bill.orderItems.forEach(orderItem => {
       orderItem = this.setUpOrderItem(orderItem);
     })
@@ -126,7 +120,7 @@ export class RestaurentOrdersComponent implements OnInit {
   }
 
   setNumberOfItemInTable(table, orderItem, bill) {
-    if (orderItem.orderStatus != "READY") {
+    if (orderItem.orderStatus != OrderStatus.READY) {
       if (table.nombreItemParTable == 0) {
         bill.isBillEmpty = false;
       }

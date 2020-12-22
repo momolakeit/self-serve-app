@@ -8,9 +8,6 @@ import { LogoService } from './services/logo.service'
 
 import { TranslateService } from '@ngx-translate/core';
 import { BillService } from './services/bill.service';
-import { MatDialog } from '@angular/material/dialog';
-import { LogoutDialogComponent } from './components/logout-dialog/logout-dialog.component';
-import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-root',
@@ -40,7 +37,6 @@ export class AppComponent implements OnDestroy {
     });
     if(!localStorage.getItem('logoUrl')){
       this.logoUrl = this.urlLogoAssets;
-      console.log(this.logoUrl)
     }
     else{
       this.logoUrl = localStorage.getItem('logoUrl');
