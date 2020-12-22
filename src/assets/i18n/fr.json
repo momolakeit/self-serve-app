@@ -27,7 +27,8 @@
         "finiTxt":"Terminer",
         "dish":"Repas",
         "sides":"Accompagnement",
-        "assign":"Assigner"
+        "assign":"Assigner",
+        "totalPriceTxt":"Prix total"
     },
     "clientRequestList":{
         "pageTitle":"Mes commandes",

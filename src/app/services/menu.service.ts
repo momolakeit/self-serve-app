@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ConstanteService } from './constante-service.service';
 import { MenuType } from '../models/menu-type.enum';
 @Injectable({
   providedIn: 'root'
@@ -16,7 +15,7 @@ export class MenuService {
   onRestaurantSelectedEvent = new EventEmitter<any>();
   onRestaurantAddEvent = new EventEmitter<any>();
   onRestaurantDeletedEvent = new EventEmitter<any>();
-  constructor(private http: HttpClient, private constanteService: ConstanteService) { }
+  constructor(private http: HttpClient) { }
 
   fetchFoodMenuByRestaurantId(restaurantId: number): Observable<[MenuDTO]> {
     return this.http.post<[MenuDTO]>(`${environment.menuUrl}/getMenu`, { restaurantId: restaurantId });
