@@ -32,6 +32,10 @@ export class AppComponent implements OnDestroy {
   }
 
   ngOnInit() {
+    this.handleLogo();
+  }
+  
+  handleLogo(){
     this.logoService.onRestaurantLogoImgUrl.subscribe(data => {
       localStorage.setItem('logoUrl', data);
       this.logoUrl = localStorage.getItem('logoUrl');
@@ -43,7 +47,7 @@ export class AppComponent implements OnDestroy {
     }
     else{
       this.logoUrl = localStorage.getItem('logoUrl');
-      this.styleMaxHeightLogo = "max-height: 50px;";
+      this.styleMaxHeightLogo = "max-height: 40px;";
     }
   }
 

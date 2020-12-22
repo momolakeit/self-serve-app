@@ -19,6 +19,7 @@ export class RestaurantDishCookViewComponent implements OnInit {
 
   @Input() orderItem: OrderItemDTO;
   @Input() billDTO:BillDTO;
+  @Input() shouldTerminate:boolean;
   @Output() countChanged: EventEmitter<number> = new EventEmitter();
   nombreDeMinuteRequis: number = 0;
   nombreDeMinuteRestant: number = 0;

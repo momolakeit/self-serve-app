@@ -32,7 +32,7 @@
                         <mat-progress-bar class="mb-3 mt-3" mode="determinate" [value]="nombreDeMinutesSur100">
                         </mat-progress-bar>
                     </div>
-                    <div class="col-xl-8 col-lg-4 col-2">
+                    <div class="col-xl-4 col-lg-4 col-2">
                         <button (click)="addTime()" mat-button>+</button>
                     </div>
                 </div>
@@ -43,9 +43,10 @@
             <ng-container *ngIf="!isDataLoading">
                 <button mat-raised-button class="btn-block text-white"
                     [ngClass]="{'bg-success' : !orderItem.selected,'bg-secondary' : orderItem.selected}"
-                    (click)="toggleAssignOrderItem()" mat-button>{{'dishDetail.assign' | translate}}</button>
+                    (click)="toggleAssignOrderItem()" *ngIf="shouldTerminate" mat-button>{{'dishDetail.assign' |
+                    translate}}</button>
                 <button mat-raised-button class="btn-block bg-dark text-white mt-auto"
-                    (click)="terminerCommande(orderItem)" mat-button>{{
+                    (click)="terminerCommande(orderItem)" *ngIf="shouldTerminate" mat-button>{{
                     'dishDetail.finiTxt' | translate }}</button>
                 <h3 *ngIf="isOrderItemTerminalRequest()">{{ 'dishDetail.totalPriceTxt' | translate }}
                     {{billDTO.prixTotal}} $</h3>

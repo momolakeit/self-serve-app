@@ -1,31 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { KitchenService } from '../../services/kitchen.service';
 import { RestaurantTableDTO } from '../../models/restaurant-table-dto'
-import { timer } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { BillDTO } from '../../models/bill-dto';
 import { environment } from '../../../environments/environment'
 import { OrderItemDTO } from 'src/app/models/order-item-dto';
 import { PaymentService } from '../../services/payment.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderStatus } from 'src/app/models/order-status.enum';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { CheckItemDTO } from 'src/app/models/check-item-dto';
 @Component({
   selector: 'app-restaurent-orders',
   templateUrl: './restaurent-orders.component.html',
   styleUrls: ['./restaurent-orders.component.css']
 })
 export class RestaurentOrdersComponent implements OnInit {
-  panelOpenStateArray = []
   imgUrl: string;
   allTables: RestaurantTableDTO[];
-  allCheckItems = [];
+  allCheckItems: CheckItemDTO[] = [];
   allBills: BillDTO[];
-  nombreDeMinuteRequis = 0;
-  nombreDeMinuteRestant = 0;
-  nombreDeMinutesSur100 = 100;
-  isBillDone = false;
-  loading: Boolean;
-  isActive: Boolean;
-  panelOpenState = false;
+  nombreDeMinuteRequis: number = 0;
+  nombreDeMinuteRestant: number = 0;
+  nombreDeMinutesSur100: number = 100;
+  isBillDone: boolean = false;
+  loading: boolean;
+  isActive: boolean;
+  source;
+  selected: string = "";
+  ORDERS_TO_SERVE: string = "ORDERS_TO_SERVE";
+  ORDERS_IN_KITCHEN: string = "ORDERS_IN_KITCHEN";
+  ORDERS_SERVED: string = "ORDERS_SERVED";
 
   constructor(private kitchenService: KitchenService, private paymentService: PaymentService, private authService: AuthService) { }
 
@@ -48,23 +53,67 @@ export class RestaurentOrdersComponent implements OnInit {
     })
   }
 
-  seeIfCheckItemSelected(checkItemName: string): boolean {
-    var currentCheckItem = this.allCheckItems.find(checkItem => checkItem.name == checkItemName);
-
-    return currentCheckItem.isActive;
-  }
 
   initValues() {
-    var source = timer(1000, 50000).subscribe(() => {
+    this.handleLoadingAndSelectedAndTimer();
+
+    this.source = timer(1000, 50000).subscribe(() => {
       this.kitchenService.fetchKitchenRestaurentTables(parseInt(localStorage.getItem('restaurantId'))).subscribe(data => {
-        this.loading = false;
         this.allTables = this.filterTableArray(data);
-        this.allTables.forEach(table => {
-          this.panelOpenStateArray.push(false);
-          table = this.setUpTable(table);
-        });
+        this.allTables.forEach(table => table = this.setUpTable(table,this.selected));
+        this.loading = false;
       });
     });
+  }
+
+  initOrdersToServe(){
+    this.loading = true;
+    this.selected = this.ORDERS_TO_SERVE;
+    localStorage.setItem('selected',this.selected);
+    this.initValues();
+  }
+
+  initAwaitingOrders() {
+    this.loading = true;
+    this.selected = this.ORDERS_IN_KITCHEN;
+    localStorage.setItem('selected',this.selected);
+    this.initValues();
+  }
+
+  initCompletedOrders() {
+    this.loading = true;
+    this.selected = this.ORDERS_SERVED;
+    localStorage.setItem('selected',this.selected);
+    this.initValues();
+  }
+
+  setUpTable(table: RestaurantTableDTO,selected:string): RestaurantTableDTO {
+    table.nombreItemParTable = 0;
+
+    table.bills.forEach(bill => {
+      bill = this.setUpBill(bill,selected);
+
+      table.nombreItemParTable = bill.orderItems.length;
+
+      bill.isBillEmpty = table.nombreItemParTable != 0;
+    });
+
+    return table;
+  }
+
+  setUpBill(bill: BillDTO, selected: string): BillDTO {
+    bill.isBillEmpty = true;
+
+    if (selected == this.ORDERS_IN_KITCHEN)
+      bill.orderItems = this.filterOrderItemArrayByOrderStatusForBillForCook(bill.orderItems);
+    else if (selected == this.ORDERS_SERVED)
+      bill.orderItems = this.filterOrderItemArrayByCompletedOrderStatusForBillForWaiter(bill.orderItems);
+    else
+      bill.orderItems = this.authService.isWaiter() ? this.filterOrderItemArrayByOrderStatusForBillForWaiter(bill.orderItems) : this.filterOrderItemArrayByOrderStatusForBillForCook(bill.orderItems);
+
+    bill.orderItems.forEach(orderItem => orderItem = this.setUpOrderItem(orderItem));
+
+    return bill;
   }
 
   filterTableArray(tableToFilter: RestaurantTableDTO[]): RestaurantTableDTO[] {
@@ -79,44 +128,20 @@ export class RestaurentOrdersComponent implements OnInit {
     return orderItems.filter(oItem => oItem.orderStatus == OrderStatus.READY);
   }
 
-  // filterOrderItemArrayByOrderStatusCompletedForBill(orderItems: OrderItemDTO[]): OrderItemDTO[] {
-  //   return orderItems.filter(oItem => oItem.orderStatus != OrderStatus.COMPLETED);
-  // }
-
-
-  setUpTable(table: RestaurantTableDTO): RestaurantTableDTO {
-    table.nombreItemParTable = 0;
-
-    table.bills.forEach(bill => {
-      bill = this.setUpBill(bill);
-
-      table.nombreItemParTable = bill.orderItems.length;
-      if (table.nombreItemParTable == 0) {
-        bill.isBillEmpty = false;
-      }
-    })
-    return table;
-  }
-
-  setUpBill(bill: BillDTO): BillDTO {
-    bill.isBillEmpty = true;
-
-    bill.orderItems = this.authService.isWaiter() ? this.filterOrderItemArrayByOrderStatusForBillForWaiter(bill.orderItems) : this.filterOrderItemArrayByOrderStatusForBillForCook(bill.orderItems);
-
-    bill.orderItems.forEach(orderItem => {
-      orderItem = this.setUpOrderItem(orderItem);
-    })
-
-    return bill;
+  filterOrderItemArrayByCompletedOrderStatusForBillForWaiter(orderItems: OrderItemDTO[]): OrderItemDTO[] {
+    return orderItems.filter(oItem => oItem.orderStatus == OrderStatus.COMPLETED);
   }
 
   setUpOrderItem(orderItem: OrderItemDTO): OrderItemDTO {
-    orderItem.option.forEach(option => {
-      option.checkItemList.forEach(checkItem => {
-        this.allCheckItems.push(checkItem);
-      })
-    })
+    orderItem.option.forEach(option => option.checkItemList.forEach(checkItem => this.allCheckItems.push(checkItem)));
     return orderItem;
+  }
+
+  handleLoadingAndSelectedAndTimer() {
+    this.selected = localStorage.getItem('selected') ? localStorage.getItem('selected') : this.ORDERS_TO_SERVE;
+
+    if (this.source)
+      this.source.unsubscribe();
   }
 
   setNumberOfItemInTable(table, orderItem, bill) {
@@ -128,8 +153,11 @@ export class RestaurentOrdersComponent implements OnInit {
     }
   }
 
-  setPanelOpenValue(position: number, value: boolean) {
-    this.panelOpenStateArray[position] = value;
+  isAllTablesEmpty(): boolean {
+    return !this.allTables.some(table => table.nombreItemParTable > 0);
   }
 
+  seeIfCheckItemSelected(checkItemName: string): boolean {
+    return this.allCheckItems.find(checkItem => checkItem.name == checkItemName).isActive;
+  }
 }
