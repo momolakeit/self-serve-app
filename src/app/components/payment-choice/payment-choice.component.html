@@ -1,4 +1,4 @@
-<div class="container  text-center ">
+<div class="container  text-center " *ngIf="loading">
     <h3 class="pt-4 ">{{ 'paymentChoice.choosePayment' | translate }}</h3>
     <div class="row">
         <div class="col-sm-6">
@@ -21,3 +21,4 @@
         </div>
     </div>
 </div>
+<mat-spinner class="mx-auto mt-5" *ngIf="!loading" [diameter]="30" [strokeWidth]="5"></mat-spinner>

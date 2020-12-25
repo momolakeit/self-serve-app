@@ -10,19 +10,23 @@ import { BillService } from '../services/bill.service'
 @Injectable({
   providedIn: 'root'
 })
-export class PaymentChoiceGuardService {
+export class RequestTerminalGuardService {
 
   constructor(private router: Router, private billService: BillService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     var billDTO: BillDTO = JSON.parse(localStorage.getItem("ongoingBill"));
 
-    return this.billService.getBill(billDTO).pipe(
-      map(data => {
-        if(data.orderItems.some(orderItem => orderItem.orderStatus != OrderStatus.COMPLETED)&& data.billStatus != BillStatus.TERMINALREQUESTWATING){
-          this.router.navigate(['/clientRequestList'])
+    if (billDTO) {
+      this.billService.getBill(billDTO).subscribe(data => {
+        console.log(data)
+        if (data.billStatus == BillStatus.TERMINALREQUESTWATING) {
+          console.log('yeee')
+          this.router.navigate(['/paymentChoice'])
           return false;
-        }else return true;
-      }));
+        } else return true;
+      });
+    }
+    return true;
   }
 }
