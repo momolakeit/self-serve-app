@@ -18,6 +18,9 @@ export class BillService {
   postNewOrder(billDTO: BillDTO, restaurentTableId: String, product: ProductDTO, commentaire: String): Observable<BillDTO> {
     return this.http.post<BillDTO>(`${environment.billUrl}/makeOrder`, { billDTO: JSON.stringify(billDTO), restaurentTableId: restaurentTableId, productDTO: JSON.stringify(product), guestUsername: localStorage.getItem("username"), commentaire: commentaire });
   }
+  updateBill(billDTO: BillDTO):Observable<BillDTO>{
+    return this.http.put<BillDTO>(`${environment.billUrl}/updateBills`,  billDTO);
+  }
 
   initBill() {
     return this.http.post<BillDTO>(`${environment.billUrl}/initBill`, {});
@@ -28,11 +31,11 @@ export class BillService {
   }
 
   isBillExisting(): boolean {
-    const bill : BillDTO = JSON.parse(localStorage.getItem('ongoingBill'));
+    const bill: BillDTO = JSON.parse(localStorage.getItem('ongoingBill'));
 
-    if (bill == null) 
+    if (bill == null)
       return false;
-    
+
     return bill.prixTotal != 0;
   }
 

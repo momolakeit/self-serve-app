@@ -23,7 +23,7 @@ import { AdminGuardService } from './services/admin-guard.service';
 import { AdminOwnerGuardService } from './services/admin-owner-guard.service';
 import { StripeAccountCreatePromptComponent } from './components/stripe-account-create-prompt/stripe-account-create-prompt.component';
 import {PaymentChoiceGuardService} from './services/payment-choice-guard.service';
-
+import {RequestTerminalGuardService} from './services/request-terminal-guard.service';
 const routes: Routes = [
   { path: '', redirectTo: '/start', pathMatch: 'full' },
   { path: 'not-found', canActivate: [AuthGuardService], component: NotFoundComponent },
@@ -37,9 +37,9 @@ const routes: Routes = [
   { path: 'sign-up/:role', canActivate: [LoginGuardService], component: SignupComponent },
   
   //all about clients
-  { path: 'waiter', canActivate: [ClientGuardService], component: WaiterComponent },
-  { path: 'clientRequestList', canActivate: [ClientGuardService], component: ClientRequestListComponent },
-  { path: 'menu', canActivate: [ClientGuardService], component: MenuComponent },
+  { path: 'waiter', canActivate: [ClientGuardService,RequestTerminalGuardService], component: WaiterComponent },
+  { path: 'clientRequestList', canActivate: [ClientGuardService,RequestTerminalGuardService], component: ClientRequestListComponent },
+  { path: 'menu', canActivate: [ClientGuardService,RequestTerminalGuardService], component: MenuComponent },
   { path: 'paymentChoice', canActivate: [ClientGuardService,PaymentChoiceGuardService], component: PaymentChoiceComponent },
   
   //all about waiter

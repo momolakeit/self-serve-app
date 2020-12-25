@@ -11,7 +11,7 @@ import { BillDTO } from 'src/app/models/bill-dto';
 import { ProductService } from '../../services/product.service'
 import { MenuType } from 'src/app/models/menu-type.enum';
 import { ProductDTO } from 'src/app/models/product-dto';
-import {BillService} from 'src/app/services/bill.service';
+import { BillService } from 'src/app/services/bill.service';
 import { timer } from 'rxjs';
 import { BillStatus } from 'src/app/models/bill-status.enum';
 
@@ -27,20 +27,23 @@ export class PaymentChoiceComponent implements OnInit {
   clientSecret;
   mobileQuery: MediaQueryList;
   applePaymentInError = false;
-  requestTerminalProduct :ProductDTO;
+  requestTerminalProduct: ProductDTO;
   private _mobileQueryListener: () => void;
   durationInSeconds = 5;
-  btnDisabled =false;
+  btnDisabled = false;
+  loading = false;
 
-  constructor(private translate: TranslateService, private _snackBar: MatSnackBar, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public dialog: MatDialog, private productService: ProductService,private billService:BillService ,private paymentService: PaymentService, private authentificationService: AuthentificationService) {
+  constructor(private translate: TranslateService, private _snackBar: MatSnackBar, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public dialog: MatDialog, private productService: ProductService, private billService: BillService, private paymentService: PaymentService, private authentificationService: AuthentificationService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   ngOnInit(): void {
+    this.checkBillStatus(JSON.parse(localStorage.getItem('ongoingBill')));
     this.fetchOwnerAccountId();
     this.findAllWaiterRequest();
+    this.checkBillStatusOnRepeat();
   }
 
   openSnackBar() {
@@ -52,7 +55,7 @@ export class PaymentChoiceComponent implements OnInit {
 
     this._snackBar._openedSnackBarRef.onAction().subscribe(() => this._snackBar.dismiss());
   }
-  fetchOwnerAccountId(){
+  fetchOwnerAccountId() {
     this.paymentService.fetchAccountId(parseInt(localStorage.getItem("restaurantId"))).subscribe(data => {
       this.initStripe(data.value);
     });
@@ -61,25 +64,39 @@ export class PaymentChoiceComponent implements OnInit {
     this.productService.findAllWaiterRequestProduct(JSON.parse(localStorage.getItem('restaurantId'))).subscribe(data => {
 
       this.requestTerminalProduct = data.products.find(product => product.menuType == MenuType.TERMINALREQUEST);
+      this.loading = true;
 
     });
   }
 
-  requestTerminal(){
-    this.billService.makeOrder(this.requestTerminalProduct, "").subscribe(data=>{
+  requestTerminal() {
+    this.billService.makeOrder(this.requestTerminalProduct, "").subscribe(data => {
       this.btnDisabled = true;
+      this.updateBillStatus()
       this.openSnackBar();
-      this.checkBillStatus();
     });
   }
-  checkBillStatus(){
+  updateBillStatus() {
+    var billDTO: BillDTO = JSON.parse(localStorage.getItem('ongoingBill'));
+    billDTO.billStatus = BillStatus.TERMINALREQUESTWATING;
+    this.billService.updateBill(billDTO).subscribe(data => {
+      localStorage.setItem('ongoingBill', JSON.stringify(data));
+    })
+  }
+  checkBillStatusOnRepeat() {
     var billDTO = JSON.parse(localStorage.getItem('ongoingBill'))
     timer(1000, 50000).subscribe(() => {
-      this.billService.getBillStatus(billDTO.id).subscribe(data =>{
-        if(data == BillStatus.PAYED){
-            this.authentificationService.logoutAction();
-        }
-      })
+      this.checkBillStatus(billDTO);
+    })
+  }
+  checkBillStatus(billDTO: BillDTO) {
+    this.billService.getBillStatus(billDTO.id).subscribe(data => {
+      if (data == BillStatus.PAYED) {
+        this.authentificationService.logoutAction();
+      }
+      else if (data == BillStatus.TERMINALREQUESTWATING) {
+        this.btnDisabled = true;
+      }
     })
   }
   initStripe(stripeAccountId: string) {
