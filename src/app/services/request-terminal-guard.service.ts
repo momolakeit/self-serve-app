@@ -19,7 +19,6 @@ export class RequestTerminalGuardService {
 
     if (billDTO) {
       this.billService.getBill(billDTO).subscribe(data => {
-        console.log(data)
         if (data.billStatus == BillStatus.TERMINALREQUESTWATING) {
           console.log('yeee')
           this.router.navigate(['/paymentChoice'])
