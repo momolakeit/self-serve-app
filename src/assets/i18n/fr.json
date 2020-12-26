@@ -35,6 +35,8 @@
         "noOrders":"Vous n'avez aucune commande en cours ",
         "checkout":"Payer",
         "noOrder": "Vous n'avez aucune commande pour l'instant.",
+        "price" :"Prix",
+        "tips":"Pourboire",
         "totalPrice":"Prix total"
     },
     "clientRequestItem":{

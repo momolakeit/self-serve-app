@@ -35,6 +35,8 @@
         "noOrders": "You have no ongoing orders",
         "checkout": "Checkout",
         "noOrder": "You have no orders at the moment.",
+        "price" :"Price",
+        "tips":"Tip",
         "totalPrice":"Total price"
     },
     "clientRequestItem": {
