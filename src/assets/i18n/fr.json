@@ -169,10 +169,21 @@
     },
     "restaurantOrder":{
         "title":"Commandes",
-        "buttonOrdersToServe":"COMMANDE À SERVIR",
-        "buttonOrdersInKitchen":"COMMANDE EN CUISINE",
-        "buttonServedOrders":"COMMANDE SERVIE",
+        "buttonOrdersToServe":"COMMANDES À SERVIR",
+        "buttonOrdersInKitchen":"COMMANDES EN CUISINE",
+        "buttonServedOrders":"COMMANDES SERVIES",
         "noOrder":"Vous n'avez aucune commande pour l'instant!",
         "subscription":"Veuillez vous abonner pour pouvoir accéder aux options de IServe"
+    },
+    "date":{
+        "errorStart":"Date de début invalide",
+        "errorEnd":"Date de fin invalide",
+        "dateRange":"Entrez une plage de dates"
+    },
+    "billPage":{
+        "seeBill":"Voir Factures",
+        "bills":"Factures",
+        "username":"Nom d'utilisateur",
+        "download":"Télécharger pdf"
     }
 }

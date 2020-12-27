@@ -24,6 +24,7 @@ import { AdminOwnerGuardService } from './services/admin-owner-guard.service';
 import { StripeAccountCreatePromptComponent } from './components/stripe-account-create-prompt/stripe-account-create-prompt.component';
 import {PaymentChoiceGuardService} from './services/payment-choice-guard.service';
 import {RequestTerminalGuardService} from './services/request-terminal-guard.service';
+import { OwnerBillsPageComponent } from './components/owner-bills-page/owner-bills-page.component';
 const routes: Routes = [
   { path: '', redirectTo: '/start', pathMatch: 'full' },
   { path: 'not-found', canActivate: [AuthGuardService], component: NotFoundComponent },
@@ -49,6 +50,7 @@ const routes: Routes = [
   { path: 'contactForm', canActivate: [OwnerRoleGuardService], component: ContactFormComponent },
 
   {path: 'adminProductManagment',canActivate:[AdminOwnerGuardService], component: AdminProductManagmentComponent},
+  {path: 'ownerBills',canActivate:[OwnerRoleGuardService], component: OwnerBillsPageComponent},
   {path: 'subscription',canActivate:[OwnerRoleGuardService], component: OwnerSubscriptionComponent},
   {path: 'subscriptionDetail',canActivate:[OwnerRoleGuardService], component: SubscriptionDetailsComponent},
   {path: 'isStripeEnabled',canActivate:[OwnerRoleGuardService], component: StripeAccountCreatePromptComponent},

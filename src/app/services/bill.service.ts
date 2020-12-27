@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { BillDTO } from '../models/bill-dto'
 import { map, catchError } from 'rxjs/operators';
 import { ProductDTO } from '../models/product-dto';
+import { FindBillBetweenDateRequestDTO } from '../models/find-bill-between-date-request-dto';
 import { BillStatus } from '../models/bill-status.enum';
 @Injectable({
   providedIn: 'root'
@@ -63,5 +64,13 @@ export class BillService {
   makePayment(billId: number) {
     return this.http.post(`${environment.billUrl}/makePayment`, { billId: billId });
   }
+
+  findAllPaidBillsByRestaurant(restaurantId:number):Observable<BillDTO[]>{
+    return this.http.get<BillDTO[]>(`${environment.billUrl}/getAllPaidBills/${restaurantId}`);
+  }  
+ 
+  findAllPaidBillsByRestaurantBetweenDates(findBillBetweenDateRequestDTO: FindBillBetweenDateRequestDTO):Observable<BillDTO[]>{
+    return this.http.post<BillDTO[]>(`${environment.billUrl}/getPaidBillsBetweenDates`,findBillBetweenDateRequestDTO);
+  }  
 
 }
