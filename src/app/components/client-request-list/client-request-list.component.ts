@@ -5,6 +5,7 @@ import { OrderItemDTO } from 'src/app/models/order-item-dto';
 import { OrderStatus } from 'src/app/models/order-status.enum';
 import { BillDTO } from '../../models/bill-dto'
 import { BillService } from '../../services/bill.service'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-client-request-list',
@@ -16,18 +17,20 @@ export class ClientRequestListComponent implements OnInit {
   billDTO: BillDTO
   orderItemToPassToModal: OrderItemDTO
   listeTempsRestant = [];
+  loading = true;
 
-  constructor(private billService: BillService) { }
+  constructor(private billService: BillService, private router: Router) { }
 
   ngOnInit(): void {
     this.setUpTimeout();
+    this.billDTO = this.getBill();
+    this.loading = false;
   }
 
   setUpTimeout() {
     var source = timer(1000, 50000).subscribe(val => {
-      var billDTO : BillDTO = JSON.parse(localStorage.getItem("ongoingBill"));
 
-      this.billService.getBill(billDTO).subscribe(data => {
+      this.billService.getBill(this.billDTO).subscribe(data => {
         this.billDTO = data;
       })
     });
@@ -37,12 +40,35 @@ export class ClientRequestListComponent implements OnInit {
     this.orderItemToPassToModal = orderItemDTO;
   }
 
+  changeBillTipPercentage(value: number) {
+    this.changeBillTipValue((value * this.billDTO.prix) / 100);
+  }
+  changeBillTipValue(value: number) {
+    this.billDTO.tips = parseFloat(value.toFixed(2));
+    this.billDTO.prixTotal = this.billDTO.prix + this.billDTO.tips;
+  }
+
+  initBillValues() {
+    this.changeBillTipValue(parseFloat(this.billDTO.tips.toString()))
+  }
+
   isWaiterProduct(orderItem: OrderItemDTO): boolean {
     return orderItem.menuType ? orderItem.menuType != MenuType.WAITERCALL && orderItem.menuType != MenuType.WAITERREQUEST : false;
   }
 
   isAllOrdersCompleted(): boolean {
     return !this.billDTO.orderItems.some(orderItem => orderItem.orderStatus != OrderStatus.COMPLETED);
+  }
+  getBill(): BillDTO {
+    return JSON.parse(localStorage.getItem("ongoingBill"));
+  }
+  payNow() {
+    this.loading = true;
+    this.billService.updateBill(this.billDTO).subscribe(data => {
+      localStorage.setItem("ongoingBill",JSON.stringify(data))
+      console.log(data);
+      this.router.navigateByUrl("/paymentChoice")
+    })
   }
 
 }

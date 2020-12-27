@@ -8,7 +8,6 @@ import { OrderItemDTO } from 'src/app/models/order-item-dto';
 import { PaymentService } from '../../services/payment.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderStatus } from 'src/app/models/order-status.enum';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { CheckItemDTO } from 'src/app/models/check-item-dto';
 @Component({
   selector: 'app-restaurent-orders',
