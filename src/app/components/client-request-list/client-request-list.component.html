@@ -1,4 +1,4 @@
-<ng-container *ngIf="billDTO">
+<ng-container *ngIf="!loading">
     <div class="container">
         <h2 class="font-weight-normal text-left mt-1">{{ 'clientRequestList.pageTitle' | translate }}</h2>
 
@@ -11,11 +11,25 @@
             <p>{{'clientRequestList.noOrder' | translate}}</p>
         </div>
     </div>
-    <div class="text-right" *ngIf="billDTO.orderItems.length > 0">
-        <h3 class="mt-4 mr-4"><strong>{{'clientRequestList.totalPrice' | translate}}:</strong> {{billDTO.prix.toFixed(2)}} $</h3>
-        <h3 class="mt-4 mr-4"><strong>{{'clientRequestList.totalPrice' | translate}}:</strong> {{billDTO.tips.toFixed(2)}} $</h3>
+    <div class="container text-center" *ngIf="isAllOrdersCompleted()">
+        <h2 class="font-weight-normal text-left mt-1">{{'clientRequestList.tips' | translate}}</h2>
+        <ng-container>
+            <button mat-raised-button (click)="changeBillTipPercentage(15)" class="m-1" style="width: 30%;" >15 %</button>
+            <button mat-raised-button (click)="changeBillTipPercentage(20)" class="m-1" style="width: 30%;" > 20 %</button>
+            <button mat-raised-button (click)="changeBillTipPercentage(25)" class="m-1" style="width: 30%;" > 25 %</button>
+        </ng-container>  
+        <div class="container text-left mt-4">
+            <mat-form-field class="example-full-width">
+                <mat-label>{{'clientRequestList.tips' | translate}}</mat-label>
+                <input matInput placeholder="2.00" id="tipsValue" type="number" [(ngModel)]="billDTO.tips" (input)="initBillValues()" >
+            </mat-form-field>
+        </div>      
+    </div>
+    <div class="container text-right" *ngIf="billDTO.orderItems.length > 0">
+        <h3 class="mt-4 mr-4"><strong>{{'clientRequestList.tips' | translate}}:</strong> {{billDTO.tips.toFixed(2)}} $</h3>
+        <h3 class="mt-4 mr-4"><strong>{{'clientRequestList.price' | translate}}:</strong> {{billDTO.prix.toFixed(2)}} $</h3>
         <h3 class="mt-4 mr-4"><strong>{{'clientRequestList.totalPrice' | translate}}:</strong> {{billDTO.prixTotal.toFixed(2)}} $</h3>
-        <button class="btn mt-2 mr-4 btn-dark text-white" *ngIf="isAllOrdersCompleted()" routerLink="/paymentChoice" mat-button>{{ 'clientRequestList.checkout' | translate }}</button>
+        <button class="btn mt-2 mr-4 btn-dark text-white" *ngIf="isAllOrdersCompleted()" (click)="payNow()" mat-button>{{ 'clientRequestList.checkout' | translate }}</button>
     </div>
 </ng-container>
-<mat-spinner class="mx-auto mt-5" *ngIf="!billDTO" [diameter]="30" [strokeWidth]="5"></mat-spinner>
+<mat-spinner class="mx-auto mt-5" *ngIf="loading" [diameter]="30" [strokeWidth]="5"></mat-spinner>
