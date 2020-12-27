@@ -9,13 +9,9 @@ import { RestaurantSelectionDTO } from 'src/app/models/restaurant-selection-dto'
 import { MenuService } from 'src/app/services/menu.service';
 import { ProductService } from 'src/app/services/product.service';
 import { environment } from 'src/environments/environment';
-import { AuthentificationService } from 'src/app/services/authentification.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ProductFormEditCreateComponent } from '../product-form-edit-create/product-form-edit-create.component';
-import { PaymentService } from '../../services/payment.service';
 import { Input } from '@angular/core';
 import { OwnerUsernameService } from '../../services/owner-username.service';
-import { AuthService } from '../../services/auth.service';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { MenuDTO } from 'src/app/models/menu-dto';
 @Component({
