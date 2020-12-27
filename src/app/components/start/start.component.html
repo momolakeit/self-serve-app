@@ -4,6 +4,8 @@
             <button mat-raised-button class="m-2 w-100 btn-dark text-white" routerLink="../login">Login</button>
             <button mat-raised-button class="m-2 w-100 btn-dark text-white" (click)="onGuestClicked()">Continue as guest</button>
             <span class="text-black ml-2">Don't have an account yet? <a class="text-primary" [routerLink]="['../sign-up','client']">sign up</a></span>
+            <br>
+            <span class="text-black ml-2">Owner? Register here <a class="text-primary" [routerLink]="['../sign-up','owner']">sign up</a></span>
         </div>
     </div>
 </div>
