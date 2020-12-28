@@ -46,6 +46,11 @@ export const stripeKey ={
   value : 'pk_test_51HLwKgC5UoZOX4GRWegBa5FvbtsNbi5Cd7Z5WKYB73jelPNuhpzS69dXKe2V3OWTP4XHt5wjGGD3dzEdJw25duSn00Dlctj1NV'
 }
 
+export const jwtUrls={
+  allowedDomains: ["back-end-dev.i-serve.ca"],
+  disallowedRoutes:["back-end-dev.i-serve.ca/auth/signin","back-end-dev.i-serve.ca/auth/signup"]
+}
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
