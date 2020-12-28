@@ -45,6 +45,7 @@ import { RestaurantEmployeesComponent } from './components/restaurant-employees/
 import { SingleRestaurantEmployeesComponent } from './components/single-restaurant-employees/single-restaurant-employees.component';
 import { RestaurantDishCookViewComponent } from './components/restaurant-dish-cook-view/restaurant-dish-cook-view.component';
 import { OwnerBillsPageComponent } from './components/owner-bills-page/owner-bills-page.component';
+import { jwtUrls } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -106,8 +107,8 @@ import { OwnerBillsPageComponent } from './components/owner-bills-page/owner-bil
         tokenGetter: () => {
           return localStorage.getItem("token");
         },
-        allowedDomains: ["localhost:8081","back-end-dev.i-serve.ca"],
-        disallowedRoutes: ["localhost:8081/auth/signin", "localhost:8081/auth/signup","back-end-dev.i-serve.ca/auth/signin","back-end-dev.i-serve.ca/auth/signup"]
+        allowedDomains: jwtUrls.allowedDomains,
+        disallowedRoutes: jwtUrls.disallowedRoutes
       }
     }),
   ],
