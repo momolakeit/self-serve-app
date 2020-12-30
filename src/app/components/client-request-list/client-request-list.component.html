@@ -11,7 +11,7 @@
             <p>{{'clientRequestList.noOrder' | translate}}</p>
         </div>
     </div>
-    <div class="container text-center" *ngIf="isAllOrdersCompleted()">
+    <div class="container text-center" *ngIf="isAllOrdersCompleted() && billDTO.orderItems.length > 0">
         <h2 class="font-weight-normal text-left mt-1">{{'clientRequestList.tips' | translate}}</h2>
         <ng-container>
             <button mat-raised-button (click)="changeBillTipPercentage(15)" class="m-1" style="width: 30%;" >15 %</button>
