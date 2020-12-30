@@ -33,7 +33,7 @@
                         </mat-progress-bar>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-2">
-                        <button (click)="addTime()" mat-button>+</button>
+                        <button *ngIf="shouldTerminate" (click)="addTime()" mat-button>+</button>
                     </div>
                 </div>
             </div>
