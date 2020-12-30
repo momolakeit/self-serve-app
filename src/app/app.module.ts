@@ -21,7 +21,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCarouselModule } from '@ngbmodule/material-carousel';
 import { ContactFormComponent } from './components/contact-form/contact-form.component'
 import { HttpClientModule ,HttpClient } from '@angular/common/http';
-import { MenuproductComponent } from './components/menuproduct/menuproduct.component';
 import { CommonModule } from '@angular/common';
 import { RestaurentDishDetailViewComponent } from './components/restaurent-dish-detail-view/restaurent-dish-detail-view.component';
 import { ClientRequestItemComponent } from './components/client-request-item/client-request-item.component';
@@ -63,7 +62,6 @@ import { jwtUrls } from 'src/environments/environment';
     PaymentFormComponent,
     ClientRequestListComponent,
     ContactFormComponent,
-    MenuproductComponent,
     RestaurentDishDetailViewComponent,
     ClientRequestItemComponent,
     ClientRequestItemDetailComponent,

@@ -66,7 +66,6 @@ export class ClientRequestListComponent implements OnInit {
     this.loading = true;
     this.billService.updateBill(this.billDTO).subscribe(data => {
       localStorage.setItem("ongoingBill",JSON.stringify(data))
-      console.log(data);
       this.router.navigateByUrl("/paymentChoice")
     })
   }
