@@ -39,6 +39,7 @@ export class AppComponent implements OnDestroy {
     this.logoService.onRestaurantLogoImgUrl.subscribe(data => {
       localStorage.setItem('logoUrl', data);
       this.logoUrl = localStorage.getItem('logoUrl');
+      this.styleMaxHeightLogo = "max-height: 40px;";
     });
     
     if(!localStorage.getItem('logoUrl')){

@@ -57,7 +57,7 @@ export class ClientRequestListComponent implements OnInit {
   }
 
   isAllOrdersCompleted(): boolean {
-    return !this.billDTO.orderItems.some(orderItem => orderItem.orderStatus != OrderStatus.COMPLETED);
+    return this.billDTO.orderItems ? !this.billDTO.orderItems.some(orderItem => orderItem.orderStatus != OrderStatus.COMPLETED) : false;
   }
   getBill(): BillDTO {
     return JSON.parse(localStorage.getItem("ongoingBill"));
@@ -66,7 +66,6 @@ export class ClientRequestListComponent implements OnInit {
     this.loading = true;
     this.billService.updateBill(this.billDTO).subscribe(data => {
       localStorage.setItem("ongoingBill",JSON.stringify(data))
-      console.log(data);
       this.router.navigateByUrl("/paymentChoice")
     })
   }

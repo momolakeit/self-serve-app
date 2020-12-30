@@ -37,7 +37,7 @@ export class BillService {
     if (bill == null)
       return false;
 
-    return bill.prixTotal != 0;
+    return bill.prix != 0 && bill.prixTotal != null;
   }
 
   hasUserPaid(): Observable<boolean> {
