@@ -51,10 +51,9 @@ const routes: Routes = [
 
   {path: 'adminProductManagment',canActivate:[AdminOwnerGuardService], component: AdminProductManagmentComponent},
   {path: 'ownerBills',canActivate:[OwnerRoleGuardService], component: OwnerBillsPageComponent},
-  {path: 'subscription',canActivate:[OwnerRoleGuardService], component: OwnerSubscriptionComponent},
-  {path: 'subscriptionDetail',canActivate:[OwnerRoleGuardService], component: SubscriptionDetailsComponent},
   {path: 'isStripeEnabled',canActivate:[OwnerRoleGuardService], component: StripeAccountCreatePromptComponent},
-  
+  // {path: 'subscription',canActivate:[OwnerRoleGuardService], component: OwnerSubscriptionComponent},
+  //{path: 'subscriptionDetail',canActivate:[OwnerRoleGuardService], component: SubscriptionDetailsComponent},
   //not found needs to be at the end or else buggs
   { path: '**', redirectTo: '/not-found' }
 ];
