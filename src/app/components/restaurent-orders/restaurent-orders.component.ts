@@ -40,8 +40,8 @@ export class RestaurentOrdersComponent implements OnInit {
   }
 
   isSubscriptionActive() {
-    this.paymentService.fetchSubscription(JSON.parse(localStorage.getItem('ownerUsername'))).subscribe(data => {
-      if (data.status != "active") {
+    this.paymentService.fetchAccountId(JSON.parse(localStorage.getItem('restaurantId'))).subscribe(data => {
+      if (!data.value) {
         this.isActive = false;
         this.loading = false;
       }

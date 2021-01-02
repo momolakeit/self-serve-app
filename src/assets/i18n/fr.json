@@ -173,7 +173,7 @@
         "buttonOrdersInKitchen":"COMMANDES EN CUISINE",
         "buttonServedOrders":"COMMANDES SERVIES",
         "noOrder":"Vous n'avez aucune commande pour l'instant!",
-        "subscription":"Veuillez vous abonner pour pouvoir accéder aux options de IServe"
+        "stripeAccount":"Vous devez vous inscrire auprès de Stripe pour traiter les paiements, communiquer avec le gérant du restaurant"
     },
     "date":{
         "errorStart":"Date de début invalide",
