@@ -168,4 +168,15 @@ export class RestaurentOrdersComponent implements OnInit {
   seeIfCheckItemSelected(checkItemName: string): boolean {
     return this.allCheckItems.find(checkItem => checkItem.name == checkItemName).isActive;
   }
+
+  getMinutes():string{
+    const minutes : number = Math.floor(this.timer / 60);
+    return minutes >= 1 ? minutes > 1 ? minutes < 10 ? '0' + minutes : minutes.toString() : '0' + minutes : '00';
+  }
+
+  getSeconds():string{
+    const minutes : number = Math.floor(this.timer / 60);
+    const secondsLeft : number = this.timer - minutes * 60;
+    return secondsLeft  < 10 ? '0' + secondsLeft : secondsLeft.toString();
+  }
 }
