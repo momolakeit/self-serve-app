@@ -174,7 +174,8 @@
         "buttonServedOrders":"ORDERS SERVED",
         "noOrder":"You have no orders at the moment!",
         "subscription":"You need to subscribe in order to access Iserve options",
-        "secondsMessage":"seconds before refresh:"
+        "secondsMessage":"seconds before refresh:",
+        "stripeAccount":"You need to register with Stripe to process payments , communicate with the restaurant manager"
     },
     "date":{
         "errorStart":"Invalid start date",

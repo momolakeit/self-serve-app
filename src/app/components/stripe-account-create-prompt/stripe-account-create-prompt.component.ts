@@ -29,7 +29,7 @@ export class StripeAccountCreatePromptComponent implements OnInit {
   fetchOwner() {
     this.authentificationService.getOwner(this.ownerUsernameService.initUserName()).subscribe(data => {
       if (data.stripeAccountId != null && data.stripeEnable == true) {
-        this.navToSubscription();
+        this.navToAdmin();
       }
     })
   }
@@ -45,13 +45,13 @@ export class StripeAccountCreatePromptComponent implements OnInit {
       let accountId = params['accountId'];
       if (accountId != null) {
         this.paymentService.saveStripeAccount(accountId, this.ownerUsernameService.initUserName()).subscribe(data => {
-          this.navToSubscription();
+          this.navToAdmin();
         });
       }
     });
   }
 
-  navToSubscription(){
-    this.router.navigate(["/subscriptionDetail"]);
+  navToAdmin(){
+    this.router.navigate(["/adminProductManagment"]);
   }
 }
