@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mb-5">
 
     <!--RESTAURANT CHOICE-->
 
@@ -62,7 +62,7 @@
                     <p *ngIf="bill.orderCustomer"><strong>{{'billPage.username' | translate}}:</strong> {{bill.orderCustomer.username}}</p>
                     <p><strong>Date:</strong> {{formatDate(bill.date)}}</p>
                     <p><strong>Items:</strong></p>
-                    <p *ngFor="let orderItem of bill.orderItems">- {{orderItem.product.name}} {{orderItem.prix}}</p>
+                    <p *ngFor="let orderItem of bill.orderItems">- {{orderItem.product.name}} {{orderItem.prix}}$</p>
                     <mat-divider></mat-divider>
                     <p class="mt-1"><strong>Total:</strong> {{bill.prixTotal}}$</p>
                 </div>
