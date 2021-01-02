@@ -19,9 +19,8 @@ export class RestaurentOrdersComponent implements OnInit {
   allTables: RestaurantTableDTO[];
   allCheckItems: CheckItemDTO[] = [];
   allBills: BillDTO[];
-  nombreDeMinuteRequis: number = 0;
-  nombreDeMinuteRestant: number = 0;
-  nombreDeMinutesSur100: number = 100;
+  timer:number = 0;
+  interval:number = 50000;
   isBillDone: boolean = false;
   loading: boolean;
   isActive: boolean;
@@ -34,9 +33,15 @@ export class RestaurentOrdersComponent implements OnInit {
   constructor(private kitchenService: KitchenService, private paymentService: PaymentService, private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.setSmallVariables();
+    this.isSubscriptionActive();
+  }
+  
+  setSmallVariables(){
     this.loading = true;
     this.imgUrl = environment.baseImgPath;
-    this.isSubscriptionActive();
+    
+    timer(1000, 1000).subscribe(() => this.timer--);
   }
 
   isSubscriptionActive() {
@@ -56,12 +61,16 @@ export class RestaurentOrdersComponent implements OnInit {
   initValues() {
     this.handleLoadingAndSelectedAndTimer();
 
-    this.source = timer(1000, 50000).subscribe(() => {
+
+    this.source = timer(1000, this.interval).subscribe(() => {
+      this.timer = parseInt(Math.round(this.interval / 1000).toFixed(2));
+
       this.kitchenService.fetchKitchenRestaurentTables(parseInt(localStorage.getItem('restaurantId'))).subscribe(data => {
         this.allTables = this.filterTableArray(data);
         this.allTables.forEach(table => table = this.setUpTable(table,this.selected));
         this.loading = false;
       });
+      
     });
   }
 

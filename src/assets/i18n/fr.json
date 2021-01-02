@@ -173,7 +173,8 @@
         "buttonOrdersInKitchen":"COMMANDES EN CUISINE",
         "buttonServedOrders":"COMMANDES SERVIES",
         "noOrder":"Vous n'avez aucune commande pour l'instant!",
-        "subscription":"Veuillez vous abonner pour pouvoir accéder aux options de IServe"
+        "subscription":"Veuillez vous abonner pour pouvoir accéder aux options de IServe",
+        "secondsMessage":"secondes avant rafraîchissement:"
     },
     "date":{
         "errorStart":"Date de début invalide",
