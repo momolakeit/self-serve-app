@@ -6,6 +6,7 @@ import { OrderStatus } from 'src/app/models/order-status.enum';
 import { BillDTO } from '../../models/bill-dto'
 import { BillService } from '../../services/bill.service'
 import { Router } from '@angular/router';
+import { RestaurantType } from 'src/app/models/restaurant-type.enum';
 
 @Component({
   selector: 'app-client-request-list',
@@ -18,11 +19,13 @@ export class ClientRequestListComponent implements OnInit {
   orderItemToPassToModal: OrderItemDTO
   listeTempsRestant = [];
   loading = true;
+  isRestaurantDineIn: boolean;
 
   constructor(private billService: BillService, private router: Router) { }
 
   ngOnInit(): void {
     this.setUpTimeout();
+    this.changeIsRestaurantDineIn();
     this.billDTO = this.getBill();
     this.loading = false;
   }
@@ -65,9 +68,12 @@ export class ClientRequestListComponent implements OnInit {
   payNow() {
     this.loading = true;
     this.billService.updateBill(this.billDTO).subscribe(data => {
-      localStorage.setItem("ongoingBill",JSON.stringify(data))
+      localStorage.setItem("ongoingBill", JSON.stringify(data))
       this.router.navigateByUrl("/paymentChoice")
     })
+  }
+  changeIsRestaurantDineIn(){
+    this.isRestaurantDineIn =localStorage.getItem('restaurantType') == RestaurantType.DINEIN.toString();
   }
 
 }

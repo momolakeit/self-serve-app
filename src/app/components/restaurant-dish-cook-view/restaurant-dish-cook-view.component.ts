@@ -6,6 +6,7 @@ import { MenuType } from 'src/app/models/menu-type.enum';
 import { OptionDTO } from 'src/app/models/option-dto';
 import { OrderItemDTO } from 'src/app/models/order-item-dto';
 import { OrderStatus } from 'src/app/models/order-status.enum';
+import { RestaurantType } from 'src/app/models/restaurant-type.enum';
 import { AuthService } from 'src/app/services/auth.service';
 import { KitchenService } from 'src/app/services/kitchen.service';
 import { environment } from 'src/environments/environment';
@@ -90,7 +91,7 @@ export class RestaurantDishCookViewComponent implements OnInit {
     this.nombreDeMinutesSur100++;
     this.isDataLoading = true;
     
-    if (this.authService.isWaiter())
+    if (this.authService.isWaiter()|| localStorage.getItem('restaurantType')==RestaurantType.FASTFOOD)
     orderItem.orderStatus = OrderStatus.COMPLETED;
     else
     orderItem.orderStatus = OrderStatus.READY;

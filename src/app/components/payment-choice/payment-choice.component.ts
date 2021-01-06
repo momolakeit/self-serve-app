@@ -14,6 +14,7 @@ import { ProductDTO } from 'src/app/models/product-dto';
 import { BillService } from 'src/app/services/bill.service';
 import { timer } from 'rxjs';
 import { BillStatus } from 'src/app/models/bill-status.enum';
+import { RestaurantType } from 'src/app/models/restaurant-type.enum';
 
 @Component({
   selector: 'app-payment-choice',
@@ -32,6 +33,7 @@ export class PaymentChoiceComponent implements OnInit {
   durationInSeconds = 5;
   btnDisabled = false;
   loading = false;
+  isDineIn: boolean;
 
   constructor(private translate: TranslateService, private _snackBar: MatSnackBar, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public dialog: MatDialog, private productService: ProductService, private billService: BillService, private paymentService: PaymentService, private authentificationService: AuthentificationService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -190,6 +192,9 @@ export class PaymentChoiceComponent implements OnInit {
   changeErrorTxtField(errorTxt: string): void {
     var txtField = document.getElementById("applePaymentInError");
     txtField.innerText = errorTxt;
+  }
+  isRestaurantDineIn() {
+    this.isDineIn = localStorage.getItem('restaurantType') == RestaurantType.DINEIN.toString();
   }
 
 }

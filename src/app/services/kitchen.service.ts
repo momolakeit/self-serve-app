@@ -39,6 +39,7 @@ export class KitchenService {
   setEmployerRestaurantIdAndOwner(username:string,router:Router){
     this.findRestaurantEmployer(username).subscribe(data =>{
       localStorage.setItem('restaurantId',JSON.stringify(data.restaurantId));
+      localStorage.setItem("restaurantType",data.restaurantType.toString())
       localStorage.setItem('ownerUsername',JSON.stringify(data.ownerUsername));
       router.navigate(['/restaurentOrders'])
     })
@@ -67,6 +68,9 @@ export class KitchenService {
   }
   postOrderItemStatusReady(orderItemDTO: OrderItemDTO): Observable<OrderItemDTO> {
     return this.http.post<OrderItemDTO>(`${environment.kitchenUrl}/changeOrderItemStatus`, { orderItemDTO: JSON.stringify(orderItemDTO) });
+  }
+  fetchRestaurant(id :number): Observable<OrderItemDTO> {
+    return this.http.get<OrderItemDTO>(`${environment.kitchenUrl}/restaurant/`+id);
   }
   postMoreTimeForOrder(orderItemDTO: OrderItemDTO, tempsAjoute: number): Observable<OrderItemDTO> {
     return this.http.post<OrderItemDTO>(`${environment.kitchenUrl}/changeOrderItemTime`, { orderItemId: orderItemDTO.id, tempsAjoute: tempsAjoute });

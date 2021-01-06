@@ -6,6 +6,7 @@ import { BillDTO } from '../models/bill-dto'
 import { BillStatus } from '../models/bill-status.enum';
 import { OrderStatus } from '../models/order-status.enum';
 import { BillService } from '../services/bill.service'
+import {RestaurantType} from '../models/restaurant-type.enum'
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +20,16 @@ export class PaymentChoiceGuardService {
 
     return this.billService.getBill(billDTO).pipe(
       map(data => {
-        if(data.orderItems.some(orderItem => orderItem.orderStatus != OrderStatus.COMPLETED)&& data.billStatus != BillStatus.TERMINALREQUESTWATING){
+        if(data.orderItems.some(orderItem => orderItem.orderStatus != OrderStatus.COMPLETED)&& this.isBillStatusTerminalRequestWaiting(data) && this.isRestaurantDineIn()){
           this.router.navigate(['/clientRequestList'])
           return false;
         }else return true;
       }));
+  }
+  isBillStatusTerminalRequestWaiting(billDTO:BillDTO):boolean{
+    return billDTO.billStatus != BillStatus.TERMINALREQUESTWATING;
+  }
+  isRestaurantDineIn():boolean{
+    return localStorage.getItem("restaurantType")==RestaurantType.DINEIN.toString();
   }
 }

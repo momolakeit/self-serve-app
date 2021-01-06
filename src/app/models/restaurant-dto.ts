@@ -4,6 +4,7 @@ import { OwnerDTO } from "./owner-dto";
 import { CustomPropertyDTO } from "./custom-property-dto";
 import { RestaurantTableDTO } from "./restaurant-table-dto";
 import {ImgFileDTO} from "./img-file-dto";
+import {RestaurantType} from "./restaurant-type.enum"
 
 export interface RestaurantDTO {
     id:number;
@@ -14,4 +15,5 @@ export interface RestaurantDTO {
     menu:MenuDTO;
     imgFile?: ImgFileDTO;
     restaurantTables:[RestaurantTableDTO];
+    restaurantType : RestaurantType
 }

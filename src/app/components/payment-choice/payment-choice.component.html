@@ -14,7 +14,7 @@
                 style="border: none; height: 50px;">{{ 'paymentChoice.payNow' | translate }}</button>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="isDineIn">
         <div class="col-sm-6 text-center">
             <button class="btn btn-dark  text-white mt-4 w-100" [disabled]="btnDisabled" mat-button (click)="requestTerminal()"
                 style=" border: none; height: 50px;">{{ 'paymentChoice.requestTerminal' | translate }}</button>
