@@ -7,6 +7,9 @@ import { BillDTO } from '../../models/bill-dto'
 import { BillService } from '../../services/bill.service'
 import { Router } from '@angular/router';
 import { RestaurantType } from 'src/app/models/restaurant-type.enum';
+import { KitchenService } from 'src/app/services/kitchen.service';
+import { BillStatus } from 'src/app/models/bill-status.enum';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 
 @Component({
   selector: 'app-client-request-list',
@@ -19,13 +22,12 @@ export class ClientRequestListComponent implements OnInit {
   orderItemToPassToModal: OrderItemDTO
   listeTempsRestant = [];
   loading = true;
-  isRestaurantDineIn: boolean;
+  isBillPayed = false;
 
-  constructor(private billService: BillService, private router: Router) { }
+  constructor(private billService: BillService, private router: Router, private kitchenService: KitchenService, private authentificationService: AuthentificationService) { }
 
   ngOnInit(): void {
     this.setUpTimeout();
-    this.changeIsRestaurantDineIn();
     this.billDTO = this.getBill();
     this.loading = false;
   }
@@ -35,6 +37,10 @@ export class ClientRequestListComponent implements OnInit {
 
       this.billService.getBill(this.billDTO).subscribe(data => {
         this.billDTO = data;
+        console.log(data.billStatus)
+        if (this.billDTO.billStatus == BillStatus.PAYED) {
+             this.isBillPayed = true;
+        }
       })
     });
   }
@@ -72,8 +78,13 @@ export class ClientRequestListComponent implements OnInit {
       this.router.navigateByUrl("/paymentChoice")
     })
   }
-  changeIsRestaurantDineIn(){
-    this.isRestaurantDineIn =localStorage.getItem('restaurantType') == RestaurantType.DINEIN.toString();
+  isRestaurantDineIn(): boolean {
+    return this.kitchenService.isRestaurantDineIn();;
   }
-
+  isRestaurantFastFood(): boolean {
+    return this.kitchenService.isRestaurantFastFood();;
+  }
+  close() {
+    this.authentificationService.logoutAction();
+  }
 }

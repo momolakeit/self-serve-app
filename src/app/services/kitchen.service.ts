@@ -10,6 +10,7 @@ import { RestaurantDTO } from '../models/restaurant-dto';
 import { MenuDTO } from '../models/menu-dto';
 import { RestaurantEmployerDto } from '../models/restaurant-employer-dto';
 import { Router } from '@angular/router';
+import { RestaurantType } from '../models/restaurant-type.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -109,6 +110,12 @@ export class KitchenService {
 
   updateRestaurantEmployee(restaurantUserDTO:RestaurantEmployerDto){
     return this.http.put(`${environment.kitchenUrl}/updateRestaurantUser`,restaurantUserDTO);
+  }
+  isRestaurantFastFood():boolean{
+    return localStorage.getItem('restaurantType') == RestaurantType.FASTFOOD.toString();
+  }
+  isRestaurantDineIn():boolean{
+    return localStorage.getItem('restaurantType') == RestaurantType.DINEIN.toString();
   }
 
 }

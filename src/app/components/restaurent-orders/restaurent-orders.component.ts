@@ -67,6 +67,7 @@ export class RestaurentOrdersComponent implements OnInit {
       this.kitchenService.fetchKitchenRestaurentTables(parseInt(localStorage.getItem('restaurantId'))).subscribe(data => {
         console.log(data);
         this.allTables = this.filterTableArray(data);
+        console.log(this.allTables)
         this.allTables.forEach(table => table = this.setUpTable(table, this.selected));
         this.loading = false;
       });
