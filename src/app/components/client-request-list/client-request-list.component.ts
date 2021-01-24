@@ -37,10 +37,7 @@ export class ClientRequestListComponent implements OnInit {
 
       this.billService.getBill(this.billDTO).subscribe(data => {
         this.billDTO = data;
-        console.log(data.billStatus)
-        if (this.billDTO.billStatus == BillStatus.PAYED) {
-             this.isBillPayed = true;
-        }
+        this.isBillPayed = (this.billDTO.billStatus == BillStatus.PAYED);
       })
     });
   }

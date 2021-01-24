@@ -120,7 +120,6 @@ export class PaymentChoiceComponent implements OnInit {
       console.log(data.orderItems.every(orderItem=> orderItem.orderStatus ==OrderStatus.COMPLETED));
       if(data.orderItems.every(orderItem=> orderItem.orderStatus ==OrderStatus.COMPLETED))
         this.authentificationService.logoutAction();
-        console.log('salut')
     })
   }
   initStripe(stripeAccountId: string) {
