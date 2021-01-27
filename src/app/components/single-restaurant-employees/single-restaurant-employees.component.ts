@@ -20,13 +20,13 @@ export class SingleRestaurantEmployeesComponent implements OnInit {
   isEmployerSaving: boolean = false;
   isEmployerEditable: boolean = false;
 
-  constructor(private translateService:TranslateService,private snackBar: MatSnackBar, private kitchenService: KitchenService, private formBuilder: FormBuilder) { }
+  constructor(private translateService: TranslateService, private snackBar: MatSnackBar, private kitchenService: KitchenService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.initForms();
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     this.initForms();
   }
 
@@ -38,7 +38,7 @@ export class SingleRestaurantEmployeesComponent implements OnInit {
   }
 
   openSnackBar() {
-    this.translateService.get('dialogMessage.userSaved').subscribe(res =>{
+    this.translateService.get('dialogMessage.userSaved').subscribe(res => {
       this.snackBar.open(res, "Close", {
         duration: 3000,
       });
@@ -55,7 +55,7 @@ export class SingleRestaurantEmployeesComponent implements OnInit {
   }
 
   // Services
-  
+
 
   onEmployerEditClick() {
     this.isEmployerEditable = true;
@@ -78,6 +78,7 @@ export class SingleRestaurantEmployeesComponent implements OnInit {
         username: formValue['username'],
         password: formValue['password'],
         restaurantId: JSON.parse(localStorage.getItem('restaurantId')),
+        restaurantType: null,
         role: this.role,
         ownerUsername: this.employer ? this.employer.ownerUsername : null
       }
@@ -119,8 +120,8 @@ export class SingleRestaurantEmployeesComponent implements OnInit {
     this.refetchEmployer(employer);
   }
 
-  refetchEmployer(employer: RestaurantEmployerDto){
-    this.kitchenService.findRestaurantEmployer(employer.username).subscribe(data =>{
+  refetchEmployer(employer: RestaurantEmployerDto) {
+    this.kitchenService.findRestaurantEmployer(employer.username).subscribe(data => {
       this.employer = data;
       this.initForms();
     });

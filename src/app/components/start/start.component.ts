@@ -32,6 +32,7 @@ export class StartComponent implements OnInit {
       let restaurantTableId = params['restaurantTableId'];
       this.kitchenService.fetchMenuByRestaurantTable(restaurantTableId).subscribe(data => {
         localStorage.setItem("restaurantId",data.id.toString())
+        localStorage.setItem("restaurantType",data.restaurantType.toString())
         localStorage.setItem("restaurantTableId",restaurantTableId.toString());
         this.logoService.onRestaurantLogoImgUrl.emit(environment.baseImgPath+data.imgFile.id)
         if(this.authService.isAuthenticated()){

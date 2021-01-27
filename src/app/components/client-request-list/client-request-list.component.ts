@@ -6,6 +6,10 @@ import { OrderStatus } from 'src/app/models/order-status.enum';
 import { BillDTO } from '../../models/bill-dto'
 import { BillService } from '../../services/bill.service'
 import { Router } from '@angular/router';
+import { RestaurantType } from 'src/app/models/restaurant-type.enum';
+import { KitchenService } from 'src/app/services/kitchen.service';
+import { BillStatus } from 'src/app/models/bill-status.enum';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 
 @Component({
   selector: 'app-client-request-list',
@@ -18,8 +22,9 @@ export class ClientRequestListComponent implements OnInit {
   orderItemToPassToModal: OrderItemDTO
   listeTempsRestant = [];
   loading = true;
+  isBillPayed = false;
 
-  constructor(private billService: BillService, private router: Router) { }
+  constructor(private billService: BillService, private router: Router, private kitchenService: KitchenService, private authentificationService: AuthentificationService) { }
 
   ngOnInit(): void {
     this.setUpTimeout();
@@ -32,6 +37,7 @@ export class ClientRequestListComponent implements OnInit {
 
       this.billService.getBill(this.billDTO).subscribe(data => {
         this.billDTO = data;
+        this.isBillPayed = (this.billDTO.billStatus == BillStatus.PAYED);
       })
     });
   }
@@ -65,9 +71,17 @@ export class ClientRequestListComponent implements OnInit {
   payNow() {
     this.loading = true;
     this.billService.updateBill(this.billDTO).subscribe(data => {
-      localStorage.setItem("ongoingBill",JSON.stringify(data))
+      localStorage.setItem("ongoingBill", JSON.stringify(data))
       this.router.navigateByUrl("/paymentChoice")
     })
   }
-
+  isRestaurantDineIn(): boolean {
+    return this.kitchenService.isRestaurantDineIn();;
+  }
+  isRestaurantFastFood(): boolean {
+    return this.kitchenService.isRestaurantFastFood();;
+  }
+  close() {
+    this.authentificationService.logoutAction();
+  }
 }

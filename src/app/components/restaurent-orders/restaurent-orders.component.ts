@@ -19,8 +19,8 @@ export class RestaurentOrdersComponent implements OnInit {
   allTables: RestaurantTableDTO[];
   allCheckItems: CheckItemDTO[] = [];
   allBills: BillDTO[];
-  timer:number = 0;
-  interval:number = 50000;
+  timer: number = 0;
+  interval: number = 50000;
   isBillDone: boolean = false;
   loading: boolean;
   isActive: boolean;
@@ -36,11 +36,11 @@ export class RestaurentOrdersComponent implements OnInit {
     this.setSmallVariables();
     this.isSubscriptionActive();
   }
-  
-  setSmallVariables(){
+
+  setSmallVariables() {
     this.loading = true;
     this.imgUrl = environment.baseImgPath;
-    
+
     timer(1000, 1000).subscribe(() => this.timer--);
   }
 
@@ -64,42 +64,41 @@ export class RestaurentOrdersComponent implements OnInit {
 
     this.source = timer(1000, this.interval).subscribe(() => {
       this.timer = parseInt(Math.round(this.interval / 1000).toFixed(2));
-
       this.kitchenService.fetchKitchenRestaurentTables(parseInt(localStorage.getItem('restaurantId'))).subscribe(data => {
         this.allTables = this.filterTableArray(data);
-        this.allTables.forEach(table => table = this.setUpTable(table,this.selected));
+        this.allTables.forEach(table => table = this.setUpTable(table, this.selected));
         this.loading = false;
       });
-      
+
     });
   }
 
-  initOrdersToServe(){
+  initOrdersToServe() {
     this.loading = true;
     this.selected = this.ORDERS_TO_SERVE;
-    localStorage.setItem('selected',this.selected);
+    localStorage.setItem('selected', this.selected);
     this.initValues();
   }
 
   initAwaitingOrders() {
     this.loading = true;
     this.selected = this.ORDERS_IN_KITCHEN;
-    localStorage.setItem('selected',this.selected);
+    localStorage.setItem('selected', this.selected);
     this.initValues();
   }
 
   initCompletedOrders() {
     this.loading = true;
     this.selected = this.ORDERS_SERVED;
-    localStorage.setItem('selected',this.selected);
+    localStorage.setItem('selected', this.selected);
     this.initValues();
   }
 
-  setUpTable(table: RestaurantTableDTO,selected:string): RestaurantTableDTO {
+  setUpTable(table: RestaurantTableDTO, selected: string): RestaurantTableDTO {
     table.nombreItemParTable = 0;
 
     table.bills.forEach(bill => {
-      bill = this.setUpBill(bill,selected);
+      bill = this.setUpBill(bill, selected);
 
       table.nombreItemParTable = bill.orderItems.length;
 
@@ -169,14 +168,14 @@ export class RestaurentOrdersComponent implements OnInit {
     return this.allCheckItems.find(checkItem => checkItem.name == checkItemName).isActive;
   }
 
-  getMinutes():string{
-    const minutes : number = Math.floor(this.timer / 60);
+  getMinutes(): string {
+    const minutes: number = Math.floor(this.timer / 60);
     return minutes >= 1 ? minutes > 1 ? minutes < 10 ? '0' + minutes : minutes.toString() : '0' + minutes : '00';
   }
 
-  getSeconds():string{
-    const minutes : number = Math.floor(this.timer / 60);
-    const secondsLeft : number = this.timer - minutes * 60;
-    return secondsLeft  < 10 ? '0' + secondsLeft : secondsLeft.toString();
+  getSeconds(): string {
+    const minutes: number = Math.floor(this.timer / 60);
+    const secondsLeft: number = this.timer - minutes * 60;
+    return secondsLeft < 10 ? '0' + secondsLeft : secondsLeft.toString();
   }
 }

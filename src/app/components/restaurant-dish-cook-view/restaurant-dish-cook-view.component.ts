@@ -6,6 +6,7 @@ import { MenuType } from 'src/app/models/menu-type.enum';
 import { OptionDTO } from 'src/app/models/option-dto';
 import { OrderItemDTO } from 'src/app/models/order-item-dto';
 import { OrderStatus } from 'src/app/models/order-status.enum';
+import { RestaurantType } from 'src/app/models/restaurant-type.enum';
 import { AuthService } from 'src/app/services/auth.service';
 import { KitchenService } from 'src/app/services/kitchen.service';
 import { environment } from 'src/environments/environment';
@@ -18,8 +19,8 @@ import { environment } from 'src/environments/environment';
 export class RestaurantDishCookViewComponent implements OnInit {
 
   @Input() orderItem: OrderItemDTO;
-  @Input() billDTO:BillDTO;
-  @Input() shouldTerminate:boolean;
+  @Input() billDTO: BillDTO;
+  @Input() shouldTerminate: boolean;
   @Output() countChanged: EventEmitter<number> = new EventEmitter();
   nombreDeMinuteRequis: number = 0;
   nombreDeMinuteRestant: number = 0;
@@ -34,7 +35,7 @@ export class RestaurantDishCookViewComponent implements OnInit {
     this.initTimer();
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     this.isDataLoading = false;
   }
 
@@ -63,8 +64,8 @@ export class RestaurantDishCookViewComponent implements OnInit {
     this.setUpTimeout();
   }
 
-  isOrderItemTerminalRequest():boolean{
-    return this.orderItem.menuType==MenuType.TERMINALREQUEST;
+  isOrderItemTerminalRequest(): boolean {
+    return this.orderItem.menuType == MenuType.TERMINALREQUEST;
   }
 
   setUpTimeout() {
@@ -89,12 +90,12 @@ export class RestaurantDishCookViewComponent implements OnInit {
   terminerCommande = (orderItem: OrderItemDTO): void => {
     this.nombreDeMinutesSur100++;
     this.isDataLoading = true;
-    
-    if (this.authService.isWaiter())
-    orderItem.orderStatus = OrderStatus.COMPLETED;
+
+    if (this.authService.isWaiter() || this.kitchenService.isRestaurantFastFood())
+      orderItem.orderStatus = OrderStatus.COMPLETED;
     else
-    orderItem.orderStatus = OrderStatus.READY;
-    
+      orderItem.orderStatus = OrderStatus.READY;
+
     this.kitchenService.updateOrderItem(orderItem).subscribe();
     this.countChanged.emit(this.nombreDeMinutesSur100);
   }

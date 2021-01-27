@@ -14,6 +14,9 @@ import { ProductDTO } from 'src/app/models/product-dto';
 import { BillService } from 'src/app/services/bill.service';
 import { timer } from 'rxjs';
 import { BillStatus } from 'src/app/models/bill-status.enum';
+import { RestaurantType } from 'src/app/models/restaurant-type.enum';
+import { KitchenService } from 'src/app/services/kitchen.service';
+import { OrderStatus } from 'src/app/models/order-status.enum';
 
 @Component({
   selector: 'app-payment-choice',
@@ -32,18 +35,25 @@ export class PaymentChoiceComponent implements OnInit {
   durationInSeconds = 5;
   btnDisabled = false;
   loading = false;
+  isDineIn: boolean;
 
-  constructor(private translate: TranslateService, private _snackBar: MatSnackBar, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public dialog: MatDialog, private productService: ProductService, private billService: BillService, private paymentService: PaymentService, private authentificationService: AuthentificationService) {
+  constructor(private translate: TranslateService, private _snackBar: MatSnackBar, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public dialog: MatDialog, private productService: ProductService, private billService: BillService, private paymentService: PaymentService, private authentificationService: AuthentificationService,private kitchenService:KitchenService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   ngOnInit(): void {
-    this.checkBillStatus(JSON.parse(localStorage.getItem('ongoingBill')));
+    if(this.kitchenService.isRestaurantDineIn()){
+      this.checkBillStatus(JSON.parse(localStorage.getItem('ongoingBill')));
+      this.checkBillStatusOnRepeat();
+    }
+    else{
+      this.checkOrderItemsBillOnRepeat()
+    }
     this.fetchOwnerAccountId();
     this.findAllWaiterRequest();
-    this.checkBillStatusOnRepeat();
+    this.isRestaurantDineIn();
   }
 
   openSnackBar() {
@@ -89,6 +99,12 @@ export class PaymentChoiceComponent implements OnInit {
       this.checkBillStatus(billDTO);
     })
   }
+  checkOrderItemsBillOnRepeat() {
+    var billDTO = JSON.parse(localStorage.getItem('ongoingBill'))
+    timer(1000, 50000).subscribe(() => {
+      this.checkOrderItemsBill(billDTO);
+    })
+  }
   checkBillStatus(billDTO: BillDTO) {
     this.billService.getBillStatus(billDTO.id).subscribe(data => {
       if (data == BillStatus.PAYED) {
@@ -97,6 +113,13 @@ export class PaymentChoiceComponent implements OnInit {
       else if (data == BillStatus.TERMINALREQUESTWATING) {
         this.btnDisabled = true;
       }
+    })
+  }
+  checkOrderItemsBill(billDTO: BillDTO) {
+    this.billService.getBill(billDTO).subscribe(data => {
+      console.log(data.orderItems.every(orderItem=> orderItem.orderStatus ==OrderStatus.COMPLETED));
+      if(data.orderItems.every(orderItem=> orderItem.orderStatus ==OrderStatus.COMPLETED))
+        this.authentificationService.logoutAction();
     })
   }
   initStripe(stripeAccountId: string) {
@@ -190,6 +213,9 @@ export class PaymentChoiceComponent implements OnInit {
   changeErrorTxtField(errorTxt: string): void {
     var txtField = document.getElementById("applePaymentInError");
     txtField.innerText = errorTxt;
+  }
+  isRestaurantDineIn() {
+    this.isDineIn = this.kitchenService.isRestaurantDineIn(); ;
   }
 
 }

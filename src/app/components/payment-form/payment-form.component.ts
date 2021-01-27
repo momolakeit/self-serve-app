@@ -7,6 +7,8 @@ import { BillService } from 'src/app/services/bill.service';
 import { BillDTO } from 'src/app/models/bill-dto';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { RestaurantType } from 'src/app/models/restaurant-type.enum';
+import { KitchenService } from 'src/app/services/kitchen.service';
 @Component({
   selector: 'app-payment-form',
   templateUrl: './payment-form.component.html',
@@ -14,7 +16,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class PaymentFormComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<PaymentFormComponent>, private authentificationService: AuthentificationService, private billService: BillService, private http: HttpClient, private paymentService: PaymentService, private router: Router) { }
+  constructor(public dialogRef: MatDialogRef<PaymentFormComponent>,private kitchenService:KitchenService, private authentificationService: AuthentificationService, private billService: BillService, private http: HttpClient, private paymentService: PaymentService, private router: Router) { }
 
   @Input() amount: number;
   @Input() description: string;
@@ -100,12 +102,14 @@ export class PaymentFormComponent implements OnInit {
           this.showSuccess();
           this.paymentSucceeded = true;
           const billDTO: BillDTO = JSON.parse(localStorage.getItem('ongoingBill'));
-          this.billService.makePayment(billDTO.id).subscribe(() => {
-            setTimeout(() => {
-              this.authentificationService.logoutAction();
-              this.dialogRef.close();
-            },3000)
-          });
+            this.billService.makePayment(billDTO.id).subscribe(() => {
+              if(this.kitchenService.isRestaurantDineIn()){
+                setTimeout(() => {
+                  this.authentificationService.logoutAction();
+                  this.dialogRef.close();
+                }, 3000)                
+              }
+            });
         }
       });
   }
